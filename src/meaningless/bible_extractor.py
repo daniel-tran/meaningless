@@ -49,15 +49,20 @@ def get_passage(passage_name):
     source_site = 'https://www.biblegateway.com/passage/?{0}'.format(source_site_params)
     soup = BeautifulSoup(__get_page(source_site), 'html.parser')
 
+    for h3 in soup.find_all('h3'):
+        # Don't collect contents from an invalid verse, since they do not exist.
+        # A fail-fast approach can be taken by checking for certain indicators of invalidity.
+        if h3.contents[0] == 'No results found.':
+            print('WARNING: "{0}" is not a valid passage.'.format(passage_name))
+            return ''
+        # Ignore section headings
+        h3.decompose()
     for br in soup.find_all('br'):
         # <br> tags will naturally be ignored when getting text
         br.replace_with('\n')
     for h1 in soup.find_all('h1'):
         # Ignore passage display
         h1.decompose()
-    for h3 in soup.find_all('h3'):
-        # Ignore section headings
-        h3.decompose()
     for h4 in soup.find_all('h4'):
         # Ignore subsection headings, such as those in Ezekiel 40
         h4.decompose()
@@ -92,13 +97,6 @@ def get_passage(passage_name):
         # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
         p.string = '\n{0}'.format(p.text)
     all_text = soup.find('div', {'class': 'version-{0}'.format(translation)})
-
-    # Don't collect contents from an invalid verse, since they do not exist.
-    # However, the main verse slide still has this passage name, so that
-    # an off-screen passage is still possible.
-    if not all_text:
-        print('WARNING: "{0}" is not a valid passage.'.format(passage_name))
-        return ''
 
     # Do any final touch-ups to the passage contents
     return all_text.text.strip()

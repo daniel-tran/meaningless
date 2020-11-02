@@ -19,6 +19,10 @@ class UnitTests(unittest.TestCase):
         text = bible_extractor.get_passage('')
         self.assertEqual('', text, 'Empty passage should result in an empty string')
 
+    def test_get_passage_invalid(self):
+        text = bible_extractor.get_passage('Barnabas 7')
+        self.assertEqual('', text, 'Invalid passage should result in an empty string')
+
     def test_get_passage_in_table_form(self):
         text = bible_extractor.get_passage('Nehemiah 7:30 - 31')
         self.assertEqual('\u00b3\u2070\xa0of Ramah and Geba 621 \u00b3\u00b9\xa0of Mikmash 122', text,
