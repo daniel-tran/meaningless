@@ -75,22 +75,18 @@ def get_passage(passage_name):
     # Ignore the footer area, which is composed of several main tags
     [blacklisted_class.decompose() for blacklisted_class in soup.find_all('div', {'class': re.compile(
             'footnotes|dropdowns|crossrefs|passage-other-trans')})]
-    for sup in soup.find_all('sup', {'class': 'versenum'}):
-        # Preserve superscript verse numbers by using their Unicode counterparts
-        sup.string = __superscript_numbers(sup.text)
-    for td in soup.find_all('td', {'class': 'right'}):
-        # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
-        # spacing is not preserved when collecting the text. Therefore, a space is manually injected
-        # into the right cell's text to stop it from joining the left cell's text.
-        # TODO: If a verse with >2 columns is found, this WILL need to be updated to be more dynamic
-        td.string = ' {0}'.format(td.text)
-    for p in soup.find_all('p'):
-        # Preserve paragraph spacing
-        # Use p.string because p.text is read-only
-        # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
-        p.string = '\n{0}'.format(p.text)
-    all_text = soup.find('div', {'class': 'version-{0}'.format(translation)})
+    # Preserve superscript verse numbers by using their Unicode counterparts
+    [sup.replace_with(__superscript_numbers(sup.text)) for sup in soup.find_all('sup', {'class': 'versenum'})]
+    # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
+    # spacing is not preserved when collecting the text. Therefore, a space is manually injected
+    # into the right cell's text to stop it from joining the left cell's text.
+    # TODO: If a verse with >2 columns is found, this WILL need to be updated to be more dynamic
+    [td.replace_with(' {0}'.format(td.text)) for td in soup.find_all('td', {'class': 'right'})]
+    # Preserve paragraph spacing by manually pre-pending a new line
+    # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
+    [p.replace_with('\n{0}'.format(p.text)) for p in soup.find_all('p')]
 
+    all_text = soup.find('div', {'class': 'version-{0}'.format(translation)})
     # Do any final touch-ups to the passage contents
     return all_text.text.strip()
 
