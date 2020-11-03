@@ -57,34 +57,27 @@ def get_passage(passage_name):
             return ''
         # Ignore section headings
         h3.decompose()
-    for br in soup.find_all('br'):
-        # <br> tags will naturally be ignored when getting text
-        br.replace_with('\n')
-    for h1 in soup.find_all('h1'):
-        # Ignore passage display
-        h1.decompose()
-    for h4 in soup.find_all('h4'):
-        # Ignore subsection headings, such as those in Ezekiel 40
-        h4.decompose()
-    for readFullChapter in soup.find_all('a', {'class': 'full-chap-link'}):
-        # Ignore the "Read Full Chapter" text, which is carefully embedded within the passage
-        readFullChapter.decompose()
-    for crossReference in soup.find_all('sup', {'class': 'crossreference'}):
-        # Ignore cross references
-        crossReference.decompose()
-    for chapter_num in soup.find_all('span', {'class': 'chapternum'}):
-        # Convert chapter numbers into new lines
-        chapter_num.replace_with('\n')
+
+    # <br> tags will naturally be ignored when getting text
+    [br.replace_with('\n') for br in soup.find_all('br')]
+    # Ignore passage display
+    [h1.decompose() for h1 in soup.find_all('h1')]
+    # Ignore subsection headings, such as those in Ezekiel 40
+    [h4.decompose() for h4 in soup.find_all('h4')]
+    # Ignore the "Read Full Chapter" text, which is carefully embedded within the passage
+    [readFullChapter.decompose() for readFullChapter in soup.find_all('a', {'class': 'full-chap-link'})]
+    # Ignore cross references
+    [crossReference.decompose() for crossReference in soup.find_all('sup', {'class': 'crossreference'})]
+    # Convert chapter numbers into new lines
+    [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
+    # Ignore in-line footnotes
+    [footnote.decompose() for footnote in soup.find_all('sup', {'class': 'footnote'})]
+    # Ignore the footer area, which is composed of several main tags
+    [blacklisted_class.decompose() for blacklisted_class in soup.find_all('div', {'class': re.compile(
+            'footnotes|dropdowns|crossrefs|passage-other-trans')})]
     for sup in soup.find_all('sup', {'class': 'versenum'}):
         # Preserve superscript verse numbers by using their Unicode counterparts
         sup.string = __superscript_numbers(sup.text)
-    for footnote in soup.find_all('sup', {'class': 'footnote'}):
-        # Ignore in-line footnotes
-        footnote.decompose()
-    for blacklisted_class in soup.find_all('div', {'class': re.compile(
-            'footnotes|dropdowns|crossrefs|passage-other-trans')}):
-        # Ignore the footer area, which is composed of several main tags
-        blacklisted_class.decompose()
     for td in soup.find_all('td', {'class': 'right'}):
         # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
         # spacing is not preserved when collecting the text. Therefore, a space is manually injected
