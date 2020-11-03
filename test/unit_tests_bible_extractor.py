@@ -63,6 +63,54 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('''{0}
 {1}'''.format(ez40_19, ez40_20), text, 'Passage is incorrect')
 
+    def test_get_passage_with_indentations(self):
+        text = bible_extractor.get_passage('Ecclesiastes 1:3')
+        ecc1_3 = ['\u00b3\xa0What do people gain from all their labors',
+                  '\xa0\xa0\xa0\xa0at which they toil under the sun?'
+                  ]
+        # Preserve leading spaces in the second line of the passage
+        self.assertEqual('\n'.join(ecc1_3), text, 'Passage is incorrect')
+
+    def test_get_passage_with_extended_dash(self):
+        text = bible_extractor.get_passage('Psalms 42:6')
+        psalm_6 = ['\u2076\xa0My soul is downcast within me;',
+                   '\xa0\xa0\xa0\xa0therefore I will remember you',
+                   'from the land of the Jordan,',
+                   '\xa0\xa0\xa0\xa0the heights of Hermon—from Mount Mizar.'
+                   ]
+        # The extended dash is a Unicode character, and should be preserved
+        self.assertEqual('\n'.join(psalm_6), text, 'Passage is incorrect')
+
+    def test_get_passage_with_spaced_out_passage_details(self):
+        text = bible_extractor.get_passage('  Titus                       2                 :                     1  ')
+        titus2_1 = 'You, however, must teach what is appropriate to sound doctrine.'
+        # The Bible Gateway search engine currently removes superfluous spaces in the passage string
+        self.assertEqual(titus2_1, text, 'Passage is incorrect')
+
+    def test_get_passage_with_dual_unicode_quotation_marks(self):
+        text = bible_extractor.get_passage('Leviticus 15:12')
+        lev15_12 = '\u00b9\u00b2\xa0\u201c\u2018A clay pot that the man touches must be broken,' \
+                   ' and any wooden article is to be rinsed with water.'
+        # Preserve both sets of Unicode quotation marks
+        self.assertEqual(lev15_12, text, 'Passage is incorrect')
+
+    def test_get_passage_with_poetry_indentation(self):
+        text = bible_extractor.get_passage('Deuteronomy 7:10')
+        deut7_10 = ['\u00b9\u2070\xa0But',
+                    'those who hate him he will repay to their face by destruction;',
+                    '\xa0\xa0\xa0\xa0he will not be slow to repay to their face those who hate him.']
+        # In some cases, passage sections are nested within another <div> tag, presumably to apply CSS indentation
+        self.assertEqual('\n'.join(deut7_10), text, 'Passage is incorrect')
+
+    def test_get_passage_with_max_passage_limitation(self):
+        text = bible_extractor.get_passage('Genesis 1:1 - 40:38')
+        gen10_15 = ['\u00b9\u2075\xa0Canaan was the father of',
+                    'Sidon his firstborn, and of the Hittites,']
+        # The Bible Gateway search engine has a certain limit on the number of passages that can be requested at once.
+        # Not much is currently known about this limitation, but users should be aware of this during use.
+        # In this particular case, the last verse to return should be Genesis 10:15
+        self.assertTrue(text.endswith('\n'.join(gen10_15)), 'Passage is incorrect')
+
 
 if __name__ == "__main__":
     unittest.main()
