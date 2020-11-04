@@ -88,7 +88,7 @@ def get_passage(passage_name):
 
     all_text = soup.find('div', {'class': 'version-{0}'.format(translation)})
     # Do any final touch-ups to the passage contents
-    return all_text.text.strip()
+    return all_text.text.strip().replace('\xa0', ' ')
 
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.
