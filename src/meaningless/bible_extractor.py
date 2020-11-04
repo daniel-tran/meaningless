@@ -71,12 +71,10 @@ def get_passage(passage_name):
     #    - Ignore in-line footnotes
     # div with one of the 'footnotes', 'dropdowns', 'crossrefs', 'passage-other-trans' classes
     #    - Ignore the footer area, which is composed of several main tags
-    removable_tags = soup.find_all('h1') \
-        + soup.find_all('h4') \
+    removable_tags = soup.find_all(re.compile('^h1$|^h4$')) \
         + soup.find_all('a', {'class': 'full-chap-link'}) \
-        + soup.find_all('sup', {'class': 'crossreference'}) \
-        + soup.find_all('sup', {'class': 'footnote'}) \
-        + soup.find_all('div', {'class': re.compile('footnotes|dropdowns|crossrefs|passage-other-trans')})
+        + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
+        + soup.find_all('div', {'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')})
     [tag.decompose() for tag in removable_tags]
 
     # <br> tags will naturally be ignored when getting text
