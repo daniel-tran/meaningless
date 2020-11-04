@@ -49,18 +49,17 @@ def get_passage(passage_name):
     source_site = 'https://www.biblegateway.com/passage/?{0}'.format(source_site_params)
     soup = BeautifulSoup(__get_page(source_site), 'html.parser')
 
-    for h3 in soup.find_all('h3'):
-        # Don't collect contents from an invalid verse, since they do not exist.
-        # A fail-fast approach can be taken by checking for certain indicators of invalidity.
-        if h3.contents[0] == 'No results found.':
-            print('WARNING: "{0}" is not a valid passage.'.format(passage_name))
-            return ''
-        # Ignore section headings
-        h3.decompose()
+    # Don't collect contents from an invalid verse, since they do not exist.
+    # A fail-fast approach can be taken by checking for certain indicators of invalidity.
+    if soup.h3 and soup.h3.text == 'No results found.':
+        print('WARNING: "{0}" is not a valid passage.'.format(passage_name))
+        return ''
 
     # Compile the list of tags to remove from the parsed web page, corresponding to the following elements:
     # h1
     #    - Ignore passage display
+    # h3
+    #    - Ignore section headings
     # h4
     #    - Ignore subsection headings, such as those in Ezekiel 40
     # a with 'full-chap-link' class
@@ -71,7 +70,7 @@ def get_passage(passage_name):
     #    - Ignore in-line footnotes
     # div with one of the 'footnotes', 'dropdowns', 'crossrefs', 'passage-other-trans' classes
     #    - Ignore the footer area, which is composed of several main tags
-    removable_tags = soup.find_all(re.compile('^h1$|^h4$')) \
+    removable_tags = soup.find_all(re.compile('^h1$|^h3$|^h4$')) \
         + soup.find_all('a', {'class': 'full-chap-link'}) \
         + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
         + soup.find_all('div', {'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')})
