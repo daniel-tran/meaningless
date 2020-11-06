@@ -111,6 +111,21 @@ class UnitTests(unittest.TestCase):
         # In this particular case, the last verse to return should be Genesis 10:15
         self.assertTrue(text.endswith('\n'.join(gen10_15)), 'Passage is incorrect')
 
+    def test_get_empty_passage(self):
+        text = bible_extractor.get_passage('Luke 17:36')
+        luke17_36 = '\u00b3\u2076'
+        # In rare cases, the passage can be empty/non-existent depending on the particular translation used.
+        # For NIV, this passage is left empty, but ESV outright omits the passage.
+        self.assertEqual(luke17_36, text, 'Passage is incorrect')
+
+    def test_get_empty_passage_midway(self):
+        text = bible_extractor.get_passage('Luke 23:16 - 18')
+        luke17 = ['\u00b9\u2076 Therefore, I will punish him and then release him.\u201d \u00b9\u2077  ',
+                  '\u00b9\u2078 But the whole crowd shouted, \u201cAway with this man! Release Barabbas to us!\u201d'
+                  ]
+        # An empty passage in the middle of two other passages preserves its spaces
+        self.assertEqual('\n'.join(luke17), text, 'Passage is incorrect')
+
 
 if __name__ == "__main__":
     unittest.main()

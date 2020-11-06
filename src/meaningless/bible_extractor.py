@@ -22,18 +22,27 @@ machine actively refused it>
     return content
 
 
-def __superscript_numbers(text):
+def __superscript_numbers(text, normalise_empty_passage=True):
     """
     A helper function that converts a string's numeric characters into their superscript Unicode variations
+    :param text: String to process
+    :param normalise_empty_passage: If True, performs additional replacements to normalise other characters that would
+                                    be considered non-standard formatting. Mostly used to handle the case of empty
+                                    passages such as Luke 17:36.
 
-    >>> __superscript_numbers('0123456789')
+    >>> __superscript_numbers('[0123456789]')
     '\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079'
     >>> __superscript_numbers('Antidisestablishmentarianism')
     'Antidisestablishmentarianism'
+    >>> __superscript_numbers('[7]', False)
+    '[\u2077]'
     """
-    return text.replace('0', '\u2070').replace('1', '\u00b9').replace('2', '\u00b2').replace('3', '\u00b3') \
-               .replace('4', '\u2074').replace('5', '\u2075').replace('6', '\u2076').replace('7', '\u2077') \
-               .replace('8', '\u2078').replace('9', '\u2079')
+    superscript_text = text
+    if normalise_empty_passage:
+        superscript_text = text.replace('[', '').replace(']', '')
+    return superscript_text.replace('0', '\u2070').replace('1', '\u00b9').replace('2', '\u00b2') \
+                           .replace('3', '\u00b3').replace('4', '\u2074').replace('5', '\u2075') \
+                           .replace('6', '\u2076').replace('7', '\u2077').replace('8', '\u2078').replace('9', '\u2079')
 
 
 def get_passage(passage_name):
