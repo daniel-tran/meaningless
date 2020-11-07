@@ -104,6 +104,23 @@ def get_passage(passage_name):
     # Do any final touch-ups to the passage contents
     return all_text.text.strip().replace('\xa0', ' ')
 
+
+def get_passage_as_list(passage_name):
+    """
+    Gets all the text for a particular Bible passage from www.biblegateway.com, as a list of strings.
+    Unlike get_passage(), the superscript passage numbers are NOT preserved.
+    :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
+    :return: Bible passage as a list with preserved line breaks
+    """
+    passage_text = get_passage(passage_name)
+
+    # TODO Add option to preserve superscript passage numbers? It might actually be useful after all
+    passage_list = re.split('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+ ', passage_text)
+    # Remove the first empty item
+    if len(passage_list[0]) <= 0:
+        passage_list.pop(0)
+    return passage_list
+
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.
     import doctest
