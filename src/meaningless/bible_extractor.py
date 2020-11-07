@@ -45,11 +45,13 @@ def __superscript_numbers(text, normalise_empty_passage=True):
                            .replace('6', '\u2076').replace('7', '\u2077').replace('8', '\u2078').replace('9', '\u2079')
 
 
-def get_passage(passage_name):
+def get_passage(passage_name, passage_separator=''):
     """
     Gets all the text for a particular Bible passage from www.biblegateway.com
     Keep in mind that this logic will likely break when the page structure of said site is changed.
     :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
+    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
+                              Mainly used to separate passages in a more customised way.
     :return: Bible passage as a string with preserved line breaks
     """
     translation = 'NIV'
@@ -90,7 +92,9 @@ def get_passage(passage_name):
     # Convert chapter numbers into new lines
     [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
     # Preserve superscript verse numbers by using their Unicode counterparts
-    [sup.replace_with(__superscript_numbers(sup.text)) for sup in soup.find_all('sup', {'class': 'versenum'})]
+    # Add in the custom passage separator as well while access to the verse numbers is still available
+    [sup.replace_with('{0}{1}'.format(passage_separator, __superscript_numbers(sup.text)))
+        for sup in soup.find_all('sup', {'class': 'versenum'})]
     # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
     # spacing is not preserved when collecting the text. Therefore, a space is manually injected
     # into the right cell's text to stop it from joining the left cell's text.
@@ -112,10 +116,12 @@ def get_passage_as_list(passage_name):
     :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
     :return: Bible passage as a list with preserved line breaks
     """
-    passage_text = get_passage(passage_name)
+    # Use a string that is guaranteed to not occur anywhere in the Bible in any translation.
+    # This now becomes the splitting string so that superscript passage numbers can be preserved.
+    passage_separator = '-_-'
+    passage_text = get_passage(passage_name, passage_separator=passage_separator)
 
-    # TODO Add option to preserve superscript passage numbers? It might actually be useful after all
-    passage_list = re.split('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+ ', passage_text)
+    passage_list = re.split(passage_separator, passage_text)
     # Remove the first empty item
     if len(passage_list[0]) <= 0:
         passage_list.pop(0)

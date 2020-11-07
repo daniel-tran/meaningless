@@ -126,12 +126,20 @@ class UnitTests(unittest.TestCase):
         # An empty passage in the middle of two other passages preserves its spaces
         self.assertEqual('\n'.join(luke17), text, 'Passage is incorrect')
 
+    def test_get_passage_with_passage_separator(self):
+        text = bible_extractor.get_passage('3 John 1:3 - 4', passage_separator='\n\n')
+        john = ['\u00b3 It gave me great joy when some believers came and testified about your faithfulness to the '
+                'truth, telling how you continue to walk in it. ',
+                '\u2074 I have no greater joy than to hear that my children are walking in the truth.']
+        # These two passages continue on the same line, but the separator should force them onto new lines
+        self.assertEqual('\n\n'.join(john), text, 'Passage is incorrect')
+
     # -------------- Tests for get_passage_as_list --------------
 
     def test_get_passage_as_list(self):
         text = bible_extractor.get_passage_as_list('1 John 1:8 - 9')
-        john = ['If we claim to be without sin, we deceive ourselves and the truth is not in us. ',
-                'If we confess our sins, he is faithful and just and will forgive us our sins and purify '
+        john = ['\u2078 If we claim to be without sin, we deceive ourselves and the truth is not in us. ',
+                '\u2079 If we confess our sins, he is faithful and just and will forgive us our sins and purify '
                 'us from all unrighteousness.']
         self.assertEqual(john, text, 'Passage is incorrect')
 
