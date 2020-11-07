@@ -45,13 +45,14 @@ def __superscript_numbers(text, normalise_empty_passage=True):
                            .replace('6', '\u2076').replace('7', '\u2077').replace('8', '\u2078').replace('9', '\u2079')
 
 
-def get_passage(passage_name, passage_separator=''):
+def get_passage(passage_name, passage_separator='', show_passage_numbers=True):
     """
     Gets all the text for a particular Bible passage from www.biblegateway.com
     Keep in mind that this logic will likely break when the page structure of said site is changed.
     :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
     :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
                               Mainly used to separate passages in a more customised way.
+    :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
     :return: Bible passage as a string with preserved line breaks
     """
     translation = 'NIV'
@@ -104,22 +105,28 @@ def get_passage(passage_name, passage_separator=''):
     # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
     [p.replace_with('\n{0}'.format(p.text)) for p in soup.find_all('p')]
 
-    all_text = soup.find('div', {'class': 'version-{0}'.format(translation)})
+    all_text = soup.find('div', {'class': 'version-{0}'.format(translation)}).text
+
+    # Remove all superscript numbers if the passage numbers should be hidden
+    if not show_passage_numbers:
+        all_text = re.sub('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+\s', '', all_text)
     # Do any final touch-ups to the passage contents
-    return all_text.text.strip().replace('\xa0', ' ')
+    return all_text.strip().replace('\xa0', ' ')
 
 
-def get_passage_as_list(passage_name):
+def get_passage_as_list(passage_name, show_passage_numbers=True):
     """
     Gets all the text for a particular Bible passage from www.biblegateway.com, as a list of strings.
     Unlike get_passage(), the superscript passage numbers are NOT preserved.
     :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
+    :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
     :return: Bible passage as a list with preserved line breaks
     """
     # Use a string that is guaranteed to not occur anywhere in the Bible in any translation.
     # This now becomes the splitting string so that superscript passage numbers can be preserved.
     passage_separator = '-_-'
-    passage_text = get_passage(passage_name, passage_separator=passage_separator)
+    passage_text = get_passage(passage_name, passage_separator=passage_separator,
+                               show_passage_numbers=show_passage_numbers)
 
     passage_list = re.split(passage_separator, passage_text)
     # Remove the first empty item

@@ -134,6 +134,24 @@ class UnitTests(unittest.TestCase):
         # These two passages continue on the same line, but the separator should force them onto new lines
         self.assertEqual('\n\n'.join(john), text, 'Passage is incorrect')
 
+    def test_get_passage_without_passage_numbers(self):
+        text = bible_extractor.get_passage('2 John 1:2', show_passage_numbers=False)
+        john = 'because of the truth, which lives in us and will be with us forever:'
+        self.assertEqual(john, text, 'Passage is incorrect')
+
+    def test_get_passage_with_passage_separator_without_passage_numbers(self):
+        text = bible_extractor.get_passage('Jude 1:22 - 23', passage_separator='\n\n', show_passage_numbers=False)
+        jude1 = ['Be merciful to those who doubt; ',
+                 'save others by snatching them from the fire; to others show mercy, '
+                 'mixed with fear—hating even the clothing stained by corrupted flesh.']
+        self.assertEqual('\n\n'.join(jude1), text, 'Passage is incorrect')
+
+    def test_get_empty_passage_without_passage_numbers(self):
+        text = bible_extractor.get_passage('Luke 17:36', show_passage_numbers=False)
+        luke17_36 = ''
+        # Without the passage number, the resulting passage text is empty even though the passage is "valid"
+        self.assertEqual(luke17_36, text, 'Passage is incorrect')
+
     # -------------- Tests for get_passage_as_list --------------
 
     def test_get_passage_as_list(self):
@@ -146,6 +164,13 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_as_list_empty(self):
         text = bible_extractor.get_passage_as_list('')
         self.assertEqual([], text, 'Passage is incorrect')
+
+    def test_get_passage_as_list_without_passage_numbers(self):
+        text = bible_extractor.get_passage_as_list('Haggai 1:3 - 4', show_passage_numbers=False)
+        haggai1 = ['Then the word of the Lord came through the prophet Haggai: ',
+                   '\u201cIs it a time for you yourselves to be living in your paneled houses, '
+                   'while this house remains a ruin?\u201d']
+        self.assertEqual(haggai1, text, 'Passage is incorrect')
 
 if __name__ == "__main__":
     unittest.main()
