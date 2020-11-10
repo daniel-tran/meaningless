@@ -158,5 +158,40 @@ class UnitTests(unittest.TestCase):
                      ]
         self.assertEqual('\n'.join(eccl11_12), text, 'Passage is incorrect')
 
+    def test_get_yaml_passage_range_reverse_parameters(self):
+        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 10, 1, 9, 18)
+        # Chapter 10 is after chapter 9, so this should not work
+        self.assertEqual('', text, 'Passage is incorrect')
+        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9, 2, 9, 1)
+        # Verse 2 is after verse 1, so this should not work either
+        self.assertEqual('', text, 'Passage is incorrect')
+
+    def test_get_yaml_passage_range_negative_numbers(self):
+        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 1, -1, 1, 1)
+        eccl = 'The words of the Teacher, son of David, king in Jerusalem:'
+        # This should apply value normalisation logic to ensure that negative values don't break the execution flow
+        self.assertEqual(eccl, text, 'Passage is incorrect')
+        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', -1, 1, 1, 1)
+        # Same normalisation should also apply for negative chapter numbers as well
+        self.assertEqual(eccl, text, 'Passage is incorrect')
+
+    def test_get_yaml_passage_range_excessive_numbers(self):
+        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9000, 1, 9000, 2)
+        sample1 = ['Remember your Creator',
+                   '    in the days of your youth,',
+                   'before the days of trouble come',
+                   '    and the years approach when you will say,',
+                   '    \u201cI find no pleasure in them\u201d\u2014',
+                   '\u00b2 before the sun and the light',
+                   '    and the moon and the stars grow dark,',
+                   '    and the clouds return after the rain;']
+        # Excessive chapters should just default to the last chapter of the book
+        self.assertEqual('\n'.join(sample1), text, 'Passage is incorrect')
+        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 1, 9000, 1, 9001)
+        sample2 = ['\u00b9\u2078 For with much wisdom comes much sorrow;',
+                   '    the more knowledge, the more grief.']
+        # Excessive passages should just default to the last passage of the given chapter
+        self.assertEqual('\n'.join(sample2), text, 'Passage is incorrect')
+
 if __name__ == "__main__":
     unittest.main()

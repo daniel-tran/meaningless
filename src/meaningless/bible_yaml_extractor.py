@@ -36,6 +36,24 @@ def __get_module_directory():
     return os.path.dirname(__file__)
 
 
+def __get_capped_integer(number, min_value=1, max_value=100):
+    """
+    A helper function to limit an integer between an upper and lower bound
+    :param number: Number to keep limited
+    :param min_value: Lowest possible value assigned when number is lower than this
+    :param max_value: Highest possible value assigned when number is larger than this
+    :return: Integer that adheres to min_value <= number <= max_value
+
+    >>> __get_capped_integer(42)
+    42
+    >>> __get_capped_integer(0, min_value=7)
+    7
+    >>> __get_capped_integer(42, max_value=7)
+    7
+    """
+    return min(max(number, min_value), max_value)
+
+
 def get_yaml_passage(book, chapter, passage):
     """
     Gets a single passage from the YAML Bible files
@@ -96,10 +114,14 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
     :param passage_to: Last passage number to get in the last chapter
     :return: All passages between the two passages (inclusive) as text
     """
+
     translation = 'NIV'
     # Use __file__ to ensure the file is read relative to the module location
     document = __read_yaml_file('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
     passage_list = []
+    # Apply a boundary to the chapters to prevent invalid keys being accessed
+    chapter_from = __get_capped_integer(chapter_from, max_value=len(document[book].keys()))
+    chapter_to = __get_capped_integer(chapter_to, max_value=len(document[book].keys()))
     # Extend the range by 1 since chapter_to is also included in the iteration
     for chapter in range(chapter_from, chapter_to + 1):
         # Determine the range of passages to extract from the chapter
@@ -107,10 +129,12 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
         passage_final = len(document[book][chapter].keys())
         if chapter == chapter_from:
             # For the first chapter, an initial set of passages can be ignored (undercuts the passage selection)
-            passage_initial = passage_from
+            # Apply a boundary to the passage to prevent invalid keys being accessed
+            passage_initial = __get_capped_integer(passage_from, max_value=passage_final)
         if chapter == chapter_to:
             # For the last chapter, a trailing set of passages can be ignored (exceeds the passage selection)
-            passage_final = passage_to
+            # Apply a boundary to the passage to prevent invalid keys being accessed
+            passage_final = __get_capped_integer(passage_to, max_value=passage_final)
         # Extend the range by 1 since the last passage is also included in the iteration
         [passage_list.append(document[book][chapter][passage]) for passage in range(passage_initial, passage_final + 1)]
         # Start each chapter on a new line
@@ -122,4 +146,5 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
 
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.
-    print('Oink')
+    import doctest
+    doctest.testmod(verbose=True, optionflags=doctest.ELLIPSIS)
