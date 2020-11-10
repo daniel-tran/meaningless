@@ -13,7 +13,8 @@ class UnitTests(unittest.TestCase):
 
     def test_yaml_download(self):
         bible_yaml_downloader.yaml_download('Philemon', file_location='./tmp/test_yaml_download/')
-        self.assertTrue(filecmp.cmp('./tmp/test_yaml_download/NIV/Philemon.yaml', './static/NIV/Philemon.yaml'),
+        self.assertTrue(filecmp.cmp('./tmp/test_yaml_download/NIV/Philemon.yaml',
+                                    './static/NIV/test_yaml_download.yaml'),
                         'Files do not match')
 
     def test_yaml_download_without_passage_numbers(self):
@@ -21,7 +22,8 @@ class UnitTests(unittest.TestCase):
                                             file_location='./tmp/test_yaml_download_without_passage_numbers/',
                                             show_passage_numbers=False)
         self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_without_passage_numbers/NIV/Philemon.yaml',
-                                    './static/NIV/Philemon - no passage numbers.yaml'), 'Files do not match')
+                                    './static/NIV/test_yaml_download_without_passage_numbers.yaml'),
+                        'Files do not match')
 
     def test_yaml_download_invalid_book(self):
         bible_yaml_downloader.yaml_download('Barnabas', file_location='./tmp/test_yaml_download_invalid_book/')
