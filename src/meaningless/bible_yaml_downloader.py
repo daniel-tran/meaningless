@@ -1,5 +1,5 @@
 import os
-import meaningless.bible_extractor
+from meaningless import bible_extractor, yaml_file_interface
 from ruamel.yaml import YAML
 
 # Storing the value of each book with its total number of chapters.
@@ -90,7 +90,6 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True):
         print('WARNING: "{0}" is not a valid book'.format(book))
         return 1
 
-    yaml = YAML()
     translation = 'NIV'
     chapters = __chapter_count_mappings[book]
     document = {book: {}}
@@ -99,8 +98,7 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True):
     for chapter in range(1, chapters + 1):
         # Incrementally extract the book contents on a per-chapter basis to avoid exceeding
         # the text limit that can be returned in a single search on the Bible Gateway site.
-        passage_list = meaningless.bible_extractor.get_passage_as_list('{0} {1}'.format(book, chapter),
-                                                                       show_passage_numbers)
+        passage_list = bible_extractor.get_passage_as_list('{0} {1}'.format(book, chapter), show_passage_numbers)
         document[book][chapter] = {}
         passage_num = 1
         for passage in passage_list:
@@ -108,13 +106,7 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True):
             # TODO In different translations, empty passages are omitted so this is a fairly naive counter
             passage_num += 1
 
-    # Mode can be left as the default value, but don't throw an error when the folder already exists
-    os.makedirs('{0}/{1}/'.format(file_location, translation), exist_ok=True)
-    # Use UTF-8 encoding to allow for Unicode characters to be written to the file
-    with open('{0}/{1}/{2}.yaml'.format(file_location, translation, book), 'w', newline='', encoding='utf-8') as file:
-        yaml.dump(document, file)
-    file.close()
-    return 0
+    return yaml_file_interface.write('{0}/{1}/{2}.yaml'.format(file_location, translation, book), document)
 
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.

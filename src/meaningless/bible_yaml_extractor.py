@@ -1,31 +1,7 @@
 import os
 from ruamel.yaml import YAML
 from ruamel.yaml.parser import ParserError
-
-
-def __read_yaml_file(data_file):
-    """
-    A helper function to read a YAML data file
-    :param data_file: Path the data file to read
-    :return: Contents of the file
-    """
-    contents = []
-
-    # Easier to proactively detect non-existent YAML file than to rely on reactive exception handling
-    if not os.path.exists(data_file):
-        print('WARNING: "{0}" does not exist'.format(data_file))
-        return contents
-
-    try:
-        # Use UTF-8 encoding to be able to read Unicode characters
-        with open(data_file, 'r', encoding='utf-8') as file:
-            loader = YAML(typ="safe")  # 'Safe' means it won't load unknown tags
-            contents = loader.load(file)
-        file.close()
-    except ParserError:
-        # Exception handling requires importing explicit components under ruamel.yaml
-        print('WARNING: "{0}" does not contain valid YAML syntax'.format(data_file))
-    return contents
+from meaningless import yaml_file_interface
 
 
 def __get_module_directory():
@@ -85,7 +61,7 @@ def get_yaml_chapter(book, chapter):
     :return: All passages in the chapter as text
     """
     translation = 'NIV'
-    document = __read_yaml_file('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
+    document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
     chapter_length = len(document[book][chapter].keys())
     return get_yaml_passage_range(book, chapter, 1, chapter, chapter_length)
 
@@ -99,7 +75,7 @@ def get_yaml_chapters(book, chapter_from, chapter_to):
     :return: All passages between chapter_from and chapter_to (inclusive) as text
     """
     translation = 'NIV'
-    document = __read_yaml_file('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
+    document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
     chapter_to_length = len(document[book][chapter_to].keys())
     return get_yaml_passage_range(book, chapter_from, 1, chapter_to, chapter_to_length)
 
@@ -117,7 +93,7 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
 
     translation = 'NIV'
     # Use __file__ to ensure the file is read relative to the module location
-    document = __read_yaml_file('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
+    document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
     passage_list = []
     # Apply a boundary to the chapters to prevent invalid keys being accessed
     chapter_from = __get_capped_integer(chapter_from, max_value=len(document[book].keys()))
