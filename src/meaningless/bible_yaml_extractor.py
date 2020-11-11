@@ -36,7 +36,7 @@ def get_yaml_passage(book, chapter, passage):
     :param book: Name of the book
     :param chapter: Chapter number
     :param passage: Passage number
-    :return: The passage as text
+    :return: The passage as text. Empty string if the passage is invalid.
     """
     return get_yaml_passage_range(book, chapter, passage, chapter, passage)
 
@@ -48,7 +48,7 @@ def get_yaml_passages(book, chapter, passage_from, passage_to):
     :param chapter: Chapter number
     :param passage_from: First passage number to get
     :param passage_to: Last passage number to get
-    :return: The passages between passage_from and passage_to (inclusive) as text
+    :return: The passages between the specified passages (inclusive) as text. Empty string if the passage is invalid.
     """
     return get_yaml_passage_range(book, chapter, passage_from, chapter, passage_to)
 
@@ -58,10 +58,14 @@ def get_yaml_chapter(book, chapter):
     Gets a single chapter from the YAML Bible files
     :param book: Name of the book
     :param chapter: Chapter number
-    :return: All passages in the chapter as text
+    :return: All passages in the chapter as text. Empty string if the passage is invalid.
     """
     translation = 'NIV'
     document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
+    # Fail-fast on invalid passages
+    if not document:
+        print('WARNING: "{0} {1}" is not valid'.format(book, chapter))
+        return ''
     chapter_length = len(document[book][chapter].keys())
     return get_yaml_passage_range(book, chapter, 1, chapter, chapter_length)
 
@@ -72,10 +76,14 @@ def get_yaml_chapters(book, chapter_from, chapter_to):
     :param book: Name of the book
     :param chapter_from: First chapter number to get
     :param chapter_to: Last chapter number to get
-    :return: All passages between chapter_from and chapter_to (inclusive) as text
+    :return: All passages between the specified chapters (inclusive) as text. Empty string if the passage is invalid.
     """
     translation = 'NIV'
     document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
+    # Fail-fast on invalid passages
+    if not document:
+        print('WARNING: "{0} {1} - {2}" is not valid'.format(book, chapter_from, chapter_to))
+        return ''
     chapter_to_length = len(document[book][chapter_to].keys())
     return get_yaml_passage_range(book, chapter_from, 1, chapter_to, chapter_to_length)
 
@@ -88,13 +96,18 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
     :param passage_from: First passage number to get in the first chapter
     :param chapter_to: Last chapter number to get
     :param passage_to: Last passage number to get in the last chapter
-    :return: All passages between the two passages (inclusive) as text
+    :return: All passages between the two passages (inclusive) as text. Empty string if the passage is invalid.
     """
 
     translation = 'NIV'
     # Use __file__ to ensure the file is read relative to the module location
     document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
     passage_list = []
+    # Fail-fast on invalid passages
+    if not document:
+        print('WARNING: "{0} {1}:{2} - {3}:{4}" is not valid'.format(book, chapter_from, passage_from, chapter_to,
+                                                                   passage_to))
+        return ''
     # Apply a boundary to the chapters to prevent invalid keys being accessed
     chapter_from = __get_capped_integer(chapter_from, max_value=len(document[book].keys()))
     chapter_to = __get_capped_integer(chapter_to, max_value=len(document[book].keys()))

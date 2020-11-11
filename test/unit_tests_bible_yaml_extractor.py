@@ -193,5 +193,25 @@ class UnitTests(unittest.TestCase):
         # Excessive passages should just default to the last passage of the given chapter
         self.assertEqual('\n'.join(sample2), text, 'Passage is incorrect')
 
+    def test_get_yaml_passage_invalid(self):
+        text = bible_yaml_extractor.get_yaml_passage('Barnabas', 2, 26)
+        self.assertEqual('', text, 'Passage is incorrect')
+
+    def test_get_yaml_passages_invalid(self):
+        text = bible_yaml_extractor.get_yaml_passages('Barnabas', 2, 26, 27)
+        self.assertEqual('', text, 'Passage is incorrect')
+
+    def test_get_yaml_chapter_invalid(self):
+        text = bible_yaml_extractor.get_yaml_chapter('Barnabas', 2)
+        self.assertEqual('', text, 'Passage is incorrect')
+
+    def test_get_yaml_chapters_invalid(self):
+        text = bible_yaml_extractor.get_yaml_chapters('Barnabas', 2, 3)
+        self.assertEqual('', text, 'Passage is incorrect')
+
+    def test_get_yaml_passage_range_invalid(self):
+        text = bible_yaml_extractor.get_yaml_passage_range('Barnabas', 2, 3, 2, 4)
+        self.assertEqual('', text, 'Passage is incorrect')
+
 if __name__ == "__main__":
     unittest.main()
