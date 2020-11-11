@@ -2,6 +2,7 @@ import os
 from ruamel.yaml import YAML
 from ruamel.yaml.parser import ParserError
 from meaningless import yaml_file_interface
+import re
 
 
 def __get_module_directory():
@@ -30,34 +31,37 @@ def __get_capped_integer(number, min_value=1, max_value=100):
     return min(max(number, min_value), max_value)
 
 
-def get_yaml_passage(book, chapter, passage):
+def get_yaml_passage(book, chapter, passage, show_passage_numbers=True):
     """
     Gets a single passage from the YAML Bible files
     :param book: Name of the book
     :param chapter: Chapter number
     :param passage: Passage number
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
     :return: The passage as text. Empty string if the passage is invalid.
     """
-    return get_yaml_passage_range(book, chapter, passage, chapter, passage)
+    return get_yaml_passage_range(book, chapter, passage, chapter, passage, show_passage_numbers)
 
 
-def get_yaml_passages(book, chapter, passage_from, passage_to):
+def get_yaml_passages(book, chapter, passage_from, passage_to, show_passage_numbers=True):
     """
     Gets a range of passages of the same chapter from the YAML Bible files
     :param book: Name of the book
     :param chapter: Chapter number
     :param passage_from: First passage number to get
     :param passage_to: Last passage number to get
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
     :return: The passages between the specified passages (inclusive) as text. Empty string if the passage is invalid.
     """
-    return get_yaml_passage_range(book, chapter, passage_from, chapter, passage_to)
+    return get_yaml_passage_range(book, chapter, passage_from, chapter, passage_to, show_passage_numbers)
 
 
-def get_yaml_chapter(book, chapter):
+def get_yaml_chapter(book, chapter, show_passage_numbers=True):
     """
     Gets a single chapter from the YAML Bible files
     :param book: Name of the book
     :param chapter: Chapter number
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
     :return: All passages in the chapter as text. Empty string if the passage is invalid.
     """
     translation = 'NIV'
@@ -67,15 +71,16 @@ def get_yaml_chapter(book, chapter):
         print('WARNING: "{0} {1}" is not valid'.format(book, chapter))
         return ''
     chapter_length = len(document[book][chapter].keys())
-    return get_yaml_passage_range(book, chapter, 1, chapter, chapter_length)
+    return get_yaml_passage_range(book, chapter, 1, chapter, chapter_length, show_passage_numbers)
 
 
-def get_yaml_chapters(book, chapter_from, chapter_to):
+def get_yaml_chapters(book, chapter_from, chapter_to, show_passage_numbers=True):
     """
     Gets a range of passages from a specified chapters selection from the YAML Bible files
     :param book: Name of the book
     :param chapter_from: First chapter number to get
     :param chapter_to: Last chapter number to get
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
     :return: All passages between the specified chapters (inclusive) as text. Empty string if the passage is invalid.
     """
     translation = 'NIV'
@@ -85,10 +90,10 @@ def get_yaml_chapters(book, chapter_from, chapter_to):
         print('WARNING: "{0} {1} - {2}" is not valid'.format(book, chapter_from, chapter_to))
         return ''
     chapter_to_length = len(document[book][chapter_to].keys())
-    return get_yaml_passage_range(book, chapter_from, 1, chapter_to, chapter_to_length)
+    return get_yaml_passage_range(book, chapter_from, 1, chapter_to, chapter_to_length, show_passage_numbers)
 
 
-def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage_to):
+def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, show_passage_numbers=True):
     """
     Gets a range of passages from one specific passage to another passage from the YAML Bible files
     :param book: Name of the book
@@ -96,6 +101,7 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
     :param passage_from: First passage number to get in the first chapter
     :param chapter_to: Last chapter number to get
     :param passage_to: Last passage number to get in the last chapter
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
     :return: All passages between the two passages (inclusive) as text. Empty string if the passage is invalid.
     """
 
@@ -106,7 +112,7 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
     # Fail-fast on invalid passages
     if not document:
         print('WARNING: "{0} {1}:{2} - {3}:{4}" is not valid'.format(book, chapter_from, passage_from, chapter_to,
-                                                                   passage_to))
+                                                                     passage_to))
         return ''
     # Apply a boundary to the chapters to prevent invalid keys being accessed
     chapter_from = __get_capped_integer(chapter_from, max_value=len(document[book].keys()))
@@ -130,7 +136,14 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
         passage_list.append('\n')
     # Convert the list of passages into a string, as strings are immutable and manually re-initialising a new string
     # in the loop can be costly to performance.
-    return ''.join([passage for passage in passage_list]).strip()
+    all_text = ''.join([passage for passage in passage_list])
+    if not show_passage_numbers:
+        # Note that this is a naive replacement, but should be OK as long as the original file source was from the
+        # module's pre-supplied YAML resources. Otherwise, using an external file source risks losing superscript
+        # numbers that were not intended as passage numbers.
+        # TODO Consider making this regex common between files?
+        all_text = re.sub('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+\s', '', all_text)
+    return all_text.strip()
 
 
 if __name__ == "__main__":

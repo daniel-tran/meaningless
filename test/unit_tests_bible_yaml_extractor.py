@@ -213,5 +213,152 @@ class UnitTests(unittest.TestCase):
         text = bible_yaml_extractor.get_yaml_passage_range('Barnabas', 2, 3, 2, 4)
         self.assertEqual('', text, 'Passage is incorrect')
 
+    def test_get_yaml_passage_without_passage_numbers(self):
+        text = bible_yaml_extractor.get_yaml_passage('Ecclesiastes', 2, 26, False)
+        self.assertEqual('To the person who pleases him, God gives wisdom, knowledge and happiness, '
+                         'but to the sinner he gives the task of gathering and storing up wealth to hand '
+                         'it over to the one who pleases God. This too is meaningless, a chasing after '
+                         'the wind.', text, 'Passage is incorrect')
+
+    def test_get_yaml_passage_range_without_passage_numbers(self):
+        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9, 18, 10, 1, False)
+        eccl = ['Wisdom is better than weapons of war,',
+                '    but one sinner destroys much good.',
+                'As dead flies give perfume a bad smell,',
+                '    so a little folly outweighs wisdom and honor.'
+                ]
+        self.assertEqual('\n'.join(eccl), text, 'Passage is incorrect')
+
+    def test_get_yaml_passages_without_passage_numbers(self):
+        text = bible_yaml_extractor.get_yaml_passages('Ecclesiastes', 2, 24, 25, False)
+        self.assertEqual('A person can do nothing better than to eat and drink and find satisfaction '
+                         'in their own toil. This too, I see, is from the hand of God, '
+                         'for without him, who can eat or find enjoyment?', text, 'Passage is incorrect')
+
+    def test_get_yaml_chapter_without_passage_numbers(self):
+        text = bible_yaml_extractor.get_yaml_chapter('Ecclesiastes', 11, False)
+        eccl11 = ['Ship your grain across the sea;',
+                  '    after many days you may receive a return.',
+                  'Invest in seven ventures, yes, in eight;',
+                  '    you do not know what disaster may come upon the land. ',
+                  'If clouds are full of water,',
+                  '    they pour rain on the earth.',
+                  'Whether a tree falls to the south or to the north,',
+                  '    in the place where it falls, there it will lie.',
+                  'Whoever watches the wind will not plant;',
+                  '    whoever looks at the clouds will not reap. ',
+                  'As you do not know the path of the wind,',
+                  '    or how the body is formed in a mother\u2019s womb,',
+                  'so you cannot understand the work of God,',
+                  '    the Maker of all things. ',
+                  'Sow your seed in the morning,',
+                  '    and at evening let your hands not be idle,',
+                  'for you do not know which will succeed,',
+                  '    whether this or that,',
+                  '    or whether both will do equally well. ',
+                  'Light is sweet,',
+                  '    and it pleases the eyes to see the sun.',
+                  'However many years anyone may live,',
+                  '    let them enjoy them all.\nBut let them remember the days of darkness,',
+                  '    for there will be many.',
+                  '    Everything to come is meaningless. ',
+                  'You who are young, be happy while you are young,',
+                  '    and let your heart give you joy in the days of your youth.',
+                  'Follow the ways of your heart',
+                  '    and whatever your eyes see,',
+                  'but know that for all these things',
+                  '    God will bring you into judgment.',
+                  'So then, banish anxiety from your heart',
+                  '    and cast off the troubles of your body,',
+                  '    for youth and vigor are meaningless.'
+                  ]
+        self.assertEqual('\n'.join(eccl11), text, 'Passage is incorrect')
+
+    def test_get_yaml_chapters_without_passage_numbers(self):
+        text = bible_yaml_extractor.get_yaml_chapters('Ecclesiastes', 11, 12, False)
+        eccl11_12 = ['Ship your grain across the sea;',
+                     '    after many days you may receive a return.',
+                     'Invest in seven ventures, yes, in eight;',
+                     '    you do not know what disaster may come upon the land. ',
+                     'If clouds are full of water,',
+                     '    they pour rain on the earth.',
+                     'Whether a tree falls to the south or to the north,',
+                     '    in the place where it falls, there it will lie.',
+                     'Whoever watches the wind will not plant;',
+                     '    whoever looks at the clouds will not reap. ',
+                     'As you do not know the path of the wind,',
+                     '    or how the body is formed in a mother\u2019s womb,',
+                     'so you cannot understand the work of God,',
+                     '    the Maker of all things. ',
+                     'Sow your seed in the morning,',
+                     '    and at evening let your hands not be idle,',
+                     'for you do not know which will succeed,',
+                     '    whether this or that,',
+                     '    or whether both will do equally well. ',
+                     'Light is sweet,',
+                     '    and it pleases the eyes to see the sun.',
+                     'However many years anyone may live,',
+                     '    let them enjoy them all.\nBut let them remember the days of darkness,',
+                     '    for there will be many.',
+                     '    Everything to come is meaningless. ',
+                     'You who are young, be happy while you are young,',
+                     '    and let your heart give you joy in the days of your youth.',
+                     'Follow the ways of your heart',
+                     '    and whatever your eyes see,',
+                     'but know that for all these things',
+                     '    God will bring you into judgment.',
+                     'So then, banish anxiety from your heart',
+                     '    and cast off the troubles of your body,',
+                     '    for youth and vigor are meaningless.',
+                     # Chapter 12
+                     'Remember your Creator',
+                     '    in the days of your youth,',
+                     'before the days of trouble come',
+                     '    and the years approach when you will say,',
+                     '    \u201cI find no pleasure in them\u201d\u2014',
+                     'before the sun and the light',
+                     '    and the moon and the stars grow dark,',
+                     '    and the clouds return after the rain;',
+                     'when the keepers of the house tremble,',
+                     '    and the strong men stoop,',
+                     'when the grinders cease because they are few,',
+                     '    and those looking through the windows grow dim;',
+                     'when the doors to the street are closed',
+                     '    and the sound of grinding fades;',
+                     'when people rise up at the sound of birds,',
+                     '    but all their songs grow faint;',
+                     'when people are afraid of heights',
+                     '    and of dangers in the streets;',
+                     'when the almond tree blossoms',
+                     '    and the grasshopper drags itself along',
+                     '    and desire no longer is stirred.',
+                     'Then people go to their eternal home',
+                     '    and mourners go about the streets. ',
+                     'Remember him\u2014before the silver cord is severed,',
+                     '    and the golden bowl is broken;',
+                     'before the pitcher is shattered at the spring,',
+                     '    and the wheel broken at the well,',
+                     'and the dust returns to the ground it came from,',
+                     '    and the spirit returns to God who gave it. ',
+                     '\u201cMeaningless! Meaningless!\u201d says the Teacher.',
+                     '    \u201cEverything is meaningless!\u201d ',
+                     'Not only was the Teacher wise, but he also imparted knowledge to the people. '
+                     'He pondered and searched out and set in order many proverbs. '
+                     'The Teacher searched to find just the right words, and what he wrote was '
+                     'upright and true. ',
+                     'The words of the wise are like goads, their collected sayings like firmly '
+                     'embedded nails\u2014given by one shepherd. '
+                     'Be warned, my son, of anything in addition to them.',
+                     'Of making many books there is no end, and much study wearies the body. ',
+                     'Now all has been heard;',
+                     '    here is the conclusion of the matter:',
+                     'Fear God and keep his commandments,',
+                     '    for this is the duty of all mankind.',
+                     'For God will bring every deed into judgment,',
+                     '    including every hidden thing,',
+                     '    whether it is good or evil.'
+                     ]
+        self.assertEqual('\n'.join(eccl11_12), text, 'Passage is incorrect')
+
 if __name__ == "__main__":
     unittest.main()
