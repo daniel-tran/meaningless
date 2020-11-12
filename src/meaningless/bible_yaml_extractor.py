@@ -104,7 +104,8 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
     :param show_passage_numbers: If True, any present passage numbers are preserved.
     :return: All passages between the two passages (inclusive) as text. Empty string if the passage is invalid.
     """
-
+    # Standardise letter casing to ensure key access errors are not caused by case sensitivity
+    book = book.title()
     translation = 'NIV'
     # Use __file__ to ensure the file is read relative to the module location
     document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
