@@ -76,7 +76,7 @@ class UnitTests(unittest.TestCase):
         psalm_6 = ['\u2076 My soul is downcast within me;',
                    '    therefore I will remember you',
                    'from the land of the Jordan,',
-                   '    the heights of Hermon—from Mount Mizar.'
+                   '    the heights of Hermon\u2014from Mount Mizar.'
                    ]
         # The extended dash is a Unicode character, and should be preserved
         self.assertEqual('\n'.join(psalm_6), text, 'Passage is incorrect')
@@ -143,7 +143,7 @@ class UnitTests(unittest.TestCase):
         text = bible_extractor.get_passage('Jude 1:22 - 23', passage_separator='\n\n', show_passage_numbers=False)
         jude1 = ['Be merciful to those who doubt; ',
                  'save others by snatching them from the fire; to others show mercy, '
-                 'mixed with fear—hating even the clothing stained by corrupted flesh.']
+                 'mixed with fear\u2014hating even the clothing stained by corrupted flesh.']
         self.assertEqual('\n\n'.join(jude1), text, 'Passage is incorrect')
 
     def test_get_empty_passage_without_passage_numbers(self):
@@ -151,6 +151,23 @@ class UnitTests(unittest.TestCase):
         luke17_36 = ''
         # Without the passage number, the resulting passage text is empty even though the passage is "valid"
         self.assertEqual(luke17_36, text, 'Passage is incorrect')
+
+    def test_get_passage_unsupported_translation(self):
+        text = bible_extractor.get_passage('Song of Songs 1:4', translation='mounce')
+        self.assertEqual('', text, 'Passage is incorrect')
+
+    def test_get_passage_nlt(self):
+        text = bible_extractor.get_passage('Ecclesiastes 1:17', translation='NLT')
+        eccl1_17 = '\u00b9\u2077 So I set out to learn everything from wisdom to madness and folly. ' \
+                   'But I learned firsthand that pursuing all this is like chasing the wind.'
+        self.assertEqual(eccl1_17, text, 'Passage is incorrect')
+
+    def test_get_passage_exb(self):
+        text = bible_extractor.get_passage('Ecclesiastes 1:17', translation='EXB')
+        eccl1_17 = '\u00b9\u2077 So I \u00b7decided to find out about wisdom and knowledge and also ' \
+                   '\u00b7about foolish thinking, but this turned out to be like chasing the wind.'
+        # The in-line notes should be removed along with any erroneous spaces
+        self.assertEqual(eccl1_17, text, 'Passage is incorrect')
 
     # -------------- Tests for get_passage_as_list --------------
 
@@ -171,6 +188,13 @@ class UnitTests(unittest.TestCase):
                    '\u201cIs it a time for you yourselves to be living in your paneled houses, '
                    'while this house remains a ruin?\u201d']
         self.assertEqual(haggai1, text, 'Passage is incorrect')
+
+    def test_get_passage_as_list_nlt(self):
+        text = bible_extractor.get_passage_as_list('1 John 1:8 - 9', translation='NLT')
+        john = ['\u2078 If we claim we have no sin, we are only fooling ourselves and not living in the truth. ',
+                '\u2079 But if we confess our sins to him, he is faithful and just to forgive us our sins and '
+                'to cleanse us from all wickedness.']
+        self.assertEqual(john, text, 'Passage is incorrect')
 
 if __name__ == "__main__":
     unittest.main()

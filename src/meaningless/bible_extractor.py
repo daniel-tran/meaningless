@@ -45,7 +45,21 @@ def __superscript_numbers(text, normalise_empty_passage=True):
                            .replace('6', '\u2076').replace('7', '\u2077').replace('8', '\u2078').replace('9', '\u2079')
 
 
-def get_passage(passage_name, passage_separator='', show_passage_numbers=True):
+def __is_unsupported_translation(translation):
+    """
+    A helper function to determine if the provided translation code is supported
+    :param translation: Translation code
+    :return: True = the translation is not supported, False = the translation is supported
+
+    >>> __is_unsupported_translation('msg')
+    True
+    >>> __is_unsupported_translation('NIV')
+    False
+    """
+    return translation.upper() in ['MOUNCE', 'VOICE', 'MSG', 'PHILLIPS']
+
+
+def get_passage(passage_name, passage_separator='', show_passage_numbers=True, translation='NIV'):
     """
     Gets all the text for a particular Bible passage from www.biblegateway.com
     Keep in mind that this logic will likely break when the page structure of said site is changed.
@@ -53,9 +67,16 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True):
     :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
                               Mainly used to separate passages in a more customised way.
     :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
     :return: Bible passage as a string with preserved line breaks
     """
-    translation = 'NIV'
+    # Some translations are very tricky to extract passages from, and currently, so specific extraction logic for these
+    # translations should not be introduced until they need to be supported.
+    translation = translation.upper()
+    if __is_unsupported_translation(translation):
+        print('WARNING: "{0}" is not a supported translation.'.format(translation))
+        return ''
+
     # Use the printer-friendly view since there are fewer page elements to load and process
     source_site_params = urlencode({'version': translation, 'search': passage_name, 'interface': 'print'})
     source_site = 'https://www.biblegateway.com/passage/?{0}'.format(source_site_params)
@@ -63,7 +84,7 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True):
 
     # Don't collect contents from an invalid verse, since they do not exist.
     # A fail-fast approach can be taken by checking for certain indicators of invalidity.
-    if soup.h3 and soup.h3.text == 'No results found.':
+    if not soup.find('div', {'class': 'passage-content'}):
         print('WARNING: "{0}" is not a valid passage.'.format(passage_name))
         return ''
 
@@ -105,28 +126,35 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True):
     # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
     [p.replace_with('\n{0}'.format(p.text)) for p in soup.find_all('p')]
 
-    all_text = soup.find('div', {'class': 'version-{0}'.format(translation)}).text
+    all_text = soup.find('div', {'class': 'passage-content'}).text
 
     # Remove all superscript numbers if the passage numbers should be hidden
     if not show_passage_numbers:
         all_text = re.sub('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+\s', '', all_text)
+    # EXB has in-line notes which are usually enclosed within brackets, and should not be displayed.
+    # If the in-line note is simply decomposed, removing the associated space is much more difficult.
+    # Thus, the in-line note text is removed at the end, when the function is strictly handling the passage text
+    # to eliminate both the in-line note and its space in an easy manner.
+    if translation == 'EXB':
+        all_text = re.sub('\s\[.+?\]', '', all_text)
     # Do any final touch-ups to the passage contents
     return all_text.strip().replace('\xa0', ' ')
 
 
-def get_passage_as_list(passage_name, show_passage_numbers=True):
+def get_passage_as_list(passage_name, show_passage_numbers=True, translation='NIV'):
     """
     Gets all the text for a particular Bible passage from www.biblegateway.com, as a list of strings.
     Unlike get_passage(), the superscript passage numbers are NOT preserved.
     :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
     :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
     :return: Bible passage as a list with preserved line breaks
     """
     # Use a string that is guaranteed to not occur anywhere in the Bible in any translation.
     # This now becomes the splitting string so that superscript passage numbers can be preserved.
     passage_separator = '-_-'
     passage_text = get_passage(passage_name, passage_separator=passage_separator,
-                               show_passage_numbers=show_passage_numbers)
+                               show_passage_numbers=show_passage_numbers, translation=translation)
 
     passage_list = re.split(passage_separator, passage_text)
     # Remove the first empty item
