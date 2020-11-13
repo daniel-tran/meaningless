@@ -103,10 +103,13 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True, t
     #    - Ignore in-line footnotes
     # div with one of the 'footnotes', 'dropdowns', 'crossrefs', 'passage-other-trans' classes
     #    - Ignore the footer area, which is composed of several main tags
+    # span with 'selah' class
+    #    - Ignore explicit Psalm interludes in the translations such as NLT and CEB
     removable_tags = soup.find_all(re.compile('^h1$|^h3$|^h4$')) \
         + soup.find_all('a', {'class': 'full-chap-link'}) \
         + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
-        + soup.find_all('div', {'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')})
+        + soup.find_all('div', {'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
+        + soup.find_all('span', {'class': 'selah'})
     [tag.decompose() for tag in removable_tags]
 
     # <br> tags will naturally be ignored when getting text

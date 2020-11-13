@@ -169,6 +169,14 @@ class UnitTests(unittest.TestCase):
         # The in-line notes should be removed along with any erroneous spaces
         self.assertEqual(eccl1_17, text, 'Passage is incorrect')
 
+    def test_get_passage_nlt_interlude(self):
+        text = bible_extractor.get_passage('Psalm 32:4', translation='NLT')
+        psalm32_4 = ['\u2074 Day and night your hand of discipline was heavy on me.',
+                     '    My strength evaporated like water in the summer heat.']
+        # Explicit interludes should be omitted, and usually show as italicised text in the Psalm.
+        # Implicit interludes are embedded within the passage itself, so not much can be done about it (e.g. YLT)
+        self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
+
     # -------------- Tests for get_passage_as_list --------------
 
     def test_get_passage_as_list(self):
