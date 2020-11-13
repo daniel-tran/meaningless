@@ -39,7 +39,7 @@ def __superscript_numbers(text, normalise_empty_passage=True):
     """
     superscript_text = text
     if normalise_empty_passage:
-        superscript_text = text.replace('[', '').replace(']', '')
+        superscript_text = text.replace('[', '').replace(']', '').replace('(', '').replace(')', '')
     return superscript_text.replace('0', '\u2070').replace('1', '\u00b9').replace('2', '\u00b2') \
                            .replace('3', '\u00b3').replace('4', '\u2074').replace('5', '\u2075') \
                            .replace('6', '\u2076').replace('7', '\u2077').replace('8', '\u2078').replace('9', '\u2079')
@@ -105,11 +105,14 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True, t
     #    - Ignore the footer area, which is composed of several main tags
     # span with 'selah' class
     #    - Ignore explicit Psalm interludes in the translations such as NLT and CEB
+    # p with 'translation-note' class
+    #    - Ignore explicit translation notes in translations such as ESV
     removable_tags = soup.find_all(re.compile('^h1$|^h3$|^h4$')) \
         + soup.find_all('a', {'class': 'full-chap-link'}) \
         + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
         + soup.find_all('div', {'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
-        + soup.find_all('span', {'class': 'selah'})
+        + soup.find_all('span', {'class': 'selah'}) \
+        + soup.find_all('p', {'class': 'translation-note'})
     [tag.decompose() for tag in removable_tags]
 
     # <br> tags will naturally be ignored when getting text

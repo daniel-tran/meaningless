@@ -177,6 +177,13 @@ class UnitTests(unittest.TestCase):
         # Implicit interludes are embedded within the passage itself, so not much can be done about it (e.g. YLT)
         self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
 
+    def test_get_passage_esv_translation_note(self):
+        text = bible_extractor.get_passage('John 7:53', translation='ESV')
+        john7_53 = '\u2075\u00b3 [[They went each to his own house,'
+        # Translation notes can vary between translations in both content and tag representation.
+        # This could be problematic depending on how many form variations are present on the Bible Gateway site.
+        self.assertEqual(john7_53, text, 'Passage is incorrect')
+
     # -------------- Tests for get_passage_as_list --------------
 
     def test_get_passage_as_list(self):
