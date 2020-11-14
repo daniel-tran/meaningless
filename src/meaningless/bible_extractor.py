@@ -125,9 +125,10 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True, t
         for sup in soup.find_all('sup', {'class': 'versenum'})]
     # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
     # spacing is not preserved when collecting the text. Therefore, a space is manually injected
-    # into the right cell's text to stop it from joining the left cell's text.
+    # onto the end of the left cell's text to stop it from joining the right cell's text.
+    # Note: Python "double colon" syntax for lists is used to retrieve items at every N interval including 0.
     # TODO: If a verse with >2 columns is found, this WILL need to be updated to be more dynamic
-    [td.replace_with(' {0}'.format(td.text)) for td in soup.find_all('td', {'class': 'right'})]
+    [td.replace_with('{0} '.format(td.text)) for td in soup.find_all('td')[::2]]
     # Preserve paragraph spacing by manually pre-pending a new line
     # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
     [p.replace_with('\n{0}'.format(p.text)) for p in soup.find_all('p')]
