@@ -105,6 +105,8 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True, t
     #    - Ignore the footer area, which is composed of several main tags
     # span with 'selah' class
     #    - Ignore explicit Psalm interludes in the translations such as NLT and CEB
+    # selah
+    #    - Ignore explicit Psalm interludes in the translations such as HCSB
     # p with 'translation-note' class
     #    - Ignore explicit translation notes in translations such as ESV
     removable_tags = soup.find_all(re.compile('^h1$|^h3$|^h4$')) \
@@ -112,6 +114,7 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True, t
         + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
         + soup.find_all('div', {'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
         + soup.find_all('span', {'class': 'selah'}) \
+        + soup.find_all('selah') \
         + soup.find_all('p', {'class': 'translation-note'})
     [tag.decompose() for tag in removable_tags]
 

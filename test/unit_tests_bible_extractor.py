@@ -184,6 +184,15 @@ class UnitTests(unittest.TestCase):
         # This could be problematic depending on how many form variations are present on the Bible Gateway site.
         self.assertEqual(john7_53, text, 'Passage is incorrect')
 
+    def test_get_passage_hcsb_interlude(self):
+        text = bible_extractor.get_passage('Psalm 32:4', translation='HCSB')
+        psalm32_4 = ['\u2074 For day and night Your hand was heavy on me;',
+                     'my strength was drained',
+                     'as in the summer\u2019s heat.']
+        # Some translations such as HCSB use a dedicated <selah> tag for Psalm interludes, and is to be excluded
+        # as it does not appear to be part of the actual Psalm lyrics.
+        self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
+
     # -------------- Tests for get_passage_as_list --------------
 
     def test_get_passage_as_list(self):
