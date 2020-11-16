@@ -73,14 +73,31 @@ __chapter_count_mappings = {
     'Revelation': 22
 }
 
+# A list of translations that have known omitted passages.
+# Translations missing from this list are either not supported, or handle omitted passages in some way.
+__translations_with_omitted_passages = {
+    'ESV': ['Matthew 12:47', 'Matthew 17:21', 'Matthew 18:11', 'Matthew 23:14',
+            'Mark 7:16', 'Mark 9:44', 'Mark 9:46', 'Mark 15:28', 'Luke 17:36', 'Luke 23:17', 'John 5:4',
+            'Acts 8:37', 'Acts 15:34', 'Acts 24:7', 'Acts 28:29', 'Romans 16:24'],
+    'NRSV': ['Matthew 17:21', 'Matthew 18:11', 'Matthew 23:14', 'Mark 7:16', 'Mark 9:44', 'Mark 9:46', 'Mark 11:26',
+             'Mark 15:28', 'Luke 17:36', 'Luke 23:17', 'John 5:4', 'Acts 15:34', 'Acts 24:7', 'Acts 28:29',
+             'Romans 16:24'],
+    'NLT': ['Matthew 18:11', 'Matthew 23:14', 'Mark 7:16', 'Mark 9:44', 'Mark 9:46', 'Mark 11:26', 'Mark 15:28',
+            'Luke 17:36', 'Luke 23:17', 'John 5:4', 'Acts 8:37', 'Acts 15:34', 'Acts 24:7', 'Acts 28:29',
+            'Romans 16:24'],
+    'NASB': ['Matthew 17:21', 'Matthew 18:11', 'Matthew 23:14', 'Mark 7:16', 'Mark 9:44', 'Mark 9:46', 'Mark 15:28',
+             'John 5:4', 'Acts 8:37', 'Acts 15:34', 'Acts 24:7', 'Acts 28:29', 'Romans 16:24']
+}
 
-def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True):
+
+def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, translation='NIV'):
     """
     Downloads a specific book of the Bible and saves it as a YAML file
     :param book: Name of the book
     :param file_location: Directory containing the downloaded YAML file. Defaults to the current working directory.
                           The full file path will be <file_location>/NIV/<book>.yaml
     :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
     :return: 0 if the download was successful. Non-zero value if an error occurred.
     """
     # Standardise letter casing with minimal impact to the resulting YAML file
@@ -90,7 +107,7 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True):
         print('WARNING: "{0}" is not a valid book'.format(book))
         return 1
 
-    translation = 'NIV'
+    is_translation_with_omitted_passages = translation in __translations_with_omitted_passages.keys()
     chapters = __chapter_count_mappings[book]
     document = {book: {}}
 
@@ -98,12 +115,26 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True):
     for chapter in range(1, chapters + 1):
         # Incrementally extract the book contents on a per-chapter basis to avoid exceeding
         # the text limit that can be returned in a single search on the Bible Gateway site.
-        passage_list = bible_extractor.get_passage_as_list('{0} {1}'.format(book, chapter), show_passage_numbers)
+        passage_list = bible_extractor.get_passage_as_list('{0} {1}'.format(book, chapter), show_passage_numbers,
+                                                           translation)
         document[book][chapter] = {}
         passage_num = 1
         for passage in passage_list:
+            if is_translation_with_omitted_passages:
+                # This logic handles translations that omit passages, and have are not considered as valid verse on
+                # the Bible Gateway site. It works by checking the passage against the list of known omitted
+                # passages for this particular translation, and assigning an empty string if it is omitted.
+                # This is to ensure the YAML passage key matches the actual passage contents, regardless of translation.
+                passage_string = '{0} {1}:{2}'.format(book, chapter, passage_num)
+                if passage_string in __translations_with_omitted_passages[translation]:
+                    document[book][chapter][passage_num] = ''
+                    # Since this passage isn't supposed to exist in the given translation but it is still registered
+                    # in the YAML file, the number is upped twice in this loop iteration - once for the omitted
+                    # passage and once for the passage after the omitted passage (whose contents is accessible in
+                    # this particular iteration)
+                    passage_num += 1
+
             document[book][chapter][passage_num] = passage
-            # TODO In different translations, empty passages are omitted so this is a fairly naive counter
             passage_num += 1
 
     return yaml_file_interface.write('{0}/{1}/{2}.yaml'.format(file_location, translation, book), document)

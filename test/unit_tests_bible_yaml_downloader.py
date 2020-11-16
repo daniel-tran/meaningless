@@ -3,7 +3,7 @@ import sys
 import os
 import filecmp
 sys.path.append('../src/')
-from meaningless import bible_yaml_downloader
+from meaningless import bible_yaml_downloader, yaml_file_interface
 
 
 class UnitTests(unittest.TestCase):
@@ -29,6 +29,19 @@ class UnitTests(unittest.TestCase):
         bible_yaml_downloader.yaml_download('Barnabas', file_location='./tmp/test_yaml_download_invalid_book/')
         # An invalid book should fail fast and not bother with downloading
         self.assertFalse(os.path.exists('./tmp/test_yaml_download_invalid_book/'), 'File should not have downloaded')
+
+    def test_yaml_download_nlt(self):
+        bible_yaml_downloader.yaml_download('Philemon', file_location='./tmp/test_yaml_download_nlt/',
+                                            translation='NLT')
+        self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_nlt/NLT/Philemon.yaml',
+                                    './static/NLT/test_yaml_download_nlt.yaml'),
+                        'Files do not match')
+
+    def test_yaml_download_omitted_passage(self):
+        bible_yaml_downloader.yaml_download('Romans', file_location='./tmp/test_yaml_download_omitted_passage/',
+                                            translation='NLT')
+        text = yaml_file_interface.read('./tmp/test_yaml_download_omitted_passage/NLT/Romans.yaml')['Romans'][16][24]
+        self.assertEqual('', text, 'Files do not match')
 
 if __name__ == "__main__":
     unittest.main()
