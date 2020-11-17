@@ -56,7 +56,9 @@ def __is_unsupported_translation(translation):
     >>> __is_unsupported_translation('NIV')
     False
     """
-    return translation.upper() in ['MOUNCE', 'VOICE', 'MSG', 'PHILLIPS']
+    # These translations are particularly difficult to extract information from due to them using
+    # non-conventional page layouts compared to other translations: 'MOUNCE', 'VOICE', 'MSG', 'PHILLIPS'
+    return translation.upper() not in ['NIV', 'NASB', 'NKJV', 'NRSV', 'ESV', 'WEB', 'NLT']
 
 
 def get_passage(passage_name, passage_separator='', show_passage_numbers=True, translation='NIV'):

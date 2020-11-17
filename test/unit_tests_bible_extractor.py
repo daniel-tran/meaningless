@@ -162,13 +162,6 @@ class UnitTests(unittest.TestCase):
                    'But I learned firsthand that pursuing all this is like chasing the wind.'
         self.assertEqual(eccl1_17, text, 'Passage is incorrect')
 
-    def test_get_passage_exb(self):
-        text = bible_extractor.get_passage('Ecclesiastes 1:17', translation='EXB')
-        eccl1_17 = '\u00b9\u2077 So I \u00b7decided to find out about wisdom and knowledge and also ' \
-                   '\u00b7about foolish thinking, but this turned out to be like chasing the wind.'
-        # The in-line notes should be removed along with any erroneous spaces
-        self.assertEqual(eccl1_17, text, 'Passage is incorrect')
-
     def test_get_passage_nlt_interlude(self):
         text = bible_extractor.get_passage('Psalm 32:4', translation='NLT')
         psalm32_4 = ['\u2074 Day and night your hand of discipline was heavy on me.',
@@ -183,15 +176,6 @@ class UnitTests(unittest.TestCase):
         # Translation notes can vary between translations in both content and tag representation.
         # This could be problematic depending on how many form variations are present on the Bible Gateway site.
         self.assertEqual(john7_53, text, 'Passage is incorrect')
-
-    def test_get_passage_hcsb_interlude(self):
-        text = bible_extractor.get_passage('Psalm 32:4', translation='HCSB')
-        psalm32_4 = ['\u2074 For day and night Your hand was heavy on me;',
-                     'my strength was drained',
-                     'as in the summer\u2019s heat.']
-        # Some translations such as HCSB use a dedicated <selah> tag for Psalm interludes, and is to be excluded
-        # as it does not appear to be part of the actual Psalm lyrics.
-        self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
 
     # -------------- Tests for get_passage_as_list --------------
 
@@ -219,6 +203,24 @@ class UnitTests(unittest.TestCase):
                 '\u2079 But if we confess our sins to him, he is faithful and just to forgive us our sins and '
                 'to cleanse us from all wickedness.']
         self.assertEqual(john, text, 'Passage is incorrect')
+
+    # -------------- Tests which are ignored due to being unsupported translations --------------
+
+    # def test_get_passage_exb(self):
+    #     text = bible_extractor.get_passage('Ecclesiastes 1:17', translation='EXB')
+    #     eccl1_17 = '\u00b9\u2077 So I \u00b7decided to find out about wisdom and knowledge and also ' \
+    #                '\u00b7about foolish thinking, but this turned out to be like chasing the wind.'
+    #     # The in-line notes should be removed along with any erroneous spaces
+    #     self.assertEqual(eccl1_17, text, 'Passage is incorrect')
+
+    # def test_get_passage_hcsb_interlude(self):
+    #     text = bible_extractor.get_passage('Psalm 32:4', translation='HCSB')
+    #     psalm32_4 = ['\u2074 For day and night Your hand was heavy on me;',
+    #                  'my strength was drained',
+    #                  'as in the summer\u2019s heat.']
+    #     # Some translations such as HCSB use a dedicated <selah> tag for Psalm interludes, and is to be excluded
+    #     # as it does not appear to be part of the actual Psalm lyrics.
+    #     self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
 
 if __name__ == "__main__":
     unittest.main()
