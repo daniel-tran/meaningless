@@ -360,5 +360,16 @@ class UnitTests(unittest.TestCase):
                      ]
         self.assertEqual('\n'.join(eccl11_12), text, 'Passage is incorrect')
 
+    def test_get_yaml_passage_nlt(self):
+        text = bible_yaml_extractor.get_yaml_passage('Ecclesiastes', 2, 26, translation='NLT')
+        self.assertEqual('\u00b2\u2076 God gives wisdom, knowledge, and joy to those who please him. But if a '
+                         'sinner becomes wealthy, God takes the wealth away and gives it to those who '
+                         'please him. This, too, is meaningless\u2014like chasing the wind.', text,
+                         'Passage is incorrect')
+
+    def test_get_yaml_passage_invalid_translation(self):
+        text = bible_yaml_extractor.get_yaml_passage('Ecclesiastes', 2, 26, translation='LOL')
+        self.assertEqual('', text, 'Passage is incorrect')
+
 if __name__ == "__main__":
     unittest.main()
