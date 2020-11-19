@@ -1,5 +1,6 @@
 import os
-from meaningless import bible_extractor, yaml_file_interface
+from meaningless import bible_extractor
+from meaningless.utilities import yaml_file_interface
 from ruamel.yaml import YAML
 
 # Storing the value of each book with its total number of chapters.

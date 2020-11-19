@@ -3,7 +3,8 @@ import sys
 import os
 import filecmp
 sys.path.append('../src/')
-from meaningless import bible_yaml_downloader, yaml_file_interface
+from meaningless import bible_yaml_downloader
+from meaningless.utilities import yaml_file_interface
 
 
 class UnitTests(unittest.TestCase):

@@ -2,63 +2,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from urllib.parse import urlencode
 import re
-
-
-def __get_page(url):
-    """
-    A helper function that returns the contents of a web page.
-
-    >>> __get_page('https://www.biblegateway.com')
-    b'<!DOCTYPE html>...'
-    >>> __get_page('https://www.something.com')
-    Traceback (most recent call last):
-    ...
-    urllib.error.URLError: <urlopen error [WinError 10061] No connection could be made because the target \
-machine actively refused it>
-    """
-    page = urlopen(url)
-    content = page.read()
-    page.close()
-    return content
-
-
-def __superscript_numbers(text, normalise_empty_passage=True):
-    """
-    A helper function that converts a string's numeric characters into their superscript Unicode variations
-    :param text: String to process
-    :param normalise_empty_passage: If True, performs additional replacements to normalise other characters that would
-                                    be considered non-standard formatting. Mostly used to handle the case of empty
-                                    passages such as Luke 17:36.
-
-    >>> __superscript_numbers('[0123456789]')
-    '\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079'
-    >>> __superscript_numbers('Antidisestablishmentarianism')
-    'Antidisestablishmentarianism'
-    >>> __superscript_numbers('[7]', False)
-    '[\u2077]'
-    """
-    superscript_text = text
-    if normalise_empty_passage:
-        superscript_text = text.replace('[', '').replace(']', '').replace('(', '').replace(')', '')
-    return superscript_text.replace('0', '\u2070').replace('1', '\u00b9').replace('2', '\u00b2') \
-                           .replace('3', '\u00b3').replace('4', '\u2074').replace('5', '\u2075') \
-                           .replace('6', '\u2076').replace('7', '\u2077').replace('8', '\u2078').replace('9', '\u2079')
-
-
-def __is_unsupported_translation(translation):
-    """
-    A helper function to determine if the provided translation code is supported
-    :param translation: Translation code
-    :return: True = the translation is not supported, False = the translation is supported
-
-    >>> __is_unsupported_translation('msg')
-    True
-    >>> __is_unsupported_translation('NIV')
-    False
-    """
-    # These translations are particularly difficult to extract information from due to them using
-    # non-conventional page layouts compared to other translations: 'MOUNCE', 'VOICE', 'MSG', 'PHILLIPS'
-    return translation.upper() not in ['NIV', 'NASB', 'NKJV', 'NRSV', 'ESV', 'WEB', 'NLT']
+from meaningless.utilities import common
 
 
 def get_online_passage(book, chapter, passage, passage_separator='', show_passage_numbers=True, translation='NIV'):
@@ -186,14 +130,14 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True, t
     # Some translations are very tricky to extract passages from, and currently, so specific extraction logic for these
     # translations should not be introduced until they need to be supported.
     translation = translation.upper()
-    if __is_unsupported_translation(translation):
+    if common.is_unsupported_translation(translation):
         print('WARNING: "{0}" is not a supported translation.'.format(translation))
         return ''
 
     # Use the printer-friendly view since there are fewer page elements to load and process
     source_site_params = urlencode({'version': translation, 'search': passage_name, 'interface': 'print'})
     source_site = 'https://www.biblegateway.com/passage/?{0}'.format(source_site_params)
-    soup = BeautifulSoup(__get_page(source_site), 'html.parser')
+    soup = BeautifulSoup(common.get_page(source_site), 'html.parser')
 
     # Don't collect contents from an invalid verse, since they do not exist.
     # A fail-fast approach can be taken by checking for certain indicators of invalidity.
@@ -237,7 +181,7 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True, t
     [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
     # Preserve superscript verse numbers by using their Unicode counterparts
     # Add in the custom passage separator as well while access to the verse numbers is still available
-    [sup.replace_with('{0}{1}'.format(passage_separator, __superscript_numbers(sup.text)))
+    [sup.replace_with('{0}{1}'.format(passage_separator, common.superscript_numbers(sup.text)))
         for sup in soup.find_all('sup', {'class': 'versenum'})]
     # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
     # spacing is not preserved when collecting the text. Therefore, a space is manually injected
@@ -253,7 +197,7 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True, t
 
     # Remove all superscript numbers if the passage numbers should be hidden
     if not show_passage_numbers:
-        all_text = re.sub('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+\s', '', all_text)
+        all_text = common.remove_superscript_numbers_in_passage(all_text)
     # EXB has in-line notes which are usually enclosed within brackets, and should not be displayed.
     # If the in-line note is simply decomposed, removing the associated space is much more difficult.
     # Thus, the in-line note text is removed at the end, when the function is strictly handling the passage text
