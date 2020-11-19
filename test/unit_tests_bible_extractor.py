@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../src/')
-from meaningless import bible_extractor
+from meaningless import bible_extractor, bible_yaml_extractor
 
 
 class UnitTests(unittest.TestCase):
@@ -203,6 +203,84 @@ class UnitTests(unittest.TestCase):
                 '\u2079 But if we confess our sins to him, he is faithful and just to forgive us our sins and '
                 'to cleanse us from all wickedness.']
         self.assertEqual(john, text, 'Passage is incorrect')
+
+    # -------------- Tests for the alternative interfaces --------------
+    # Given the precondition that directly querying the Bible Gateway site or using the YAML extractor for passage text
+    # has been tested extensively, these tests are only concerned with ensuring both interfaces result with the same
+    # data.
+
+    @staticmethod
+    def get_alternative_interface_options():
+        return [{'translation': 'NIV', 'show_passage_numbers': True, 'passage_separator': ''},
+                {'translation': 'NLT', 'show_passage_numbers': True, 'passage_separator': ''},
+                {'translation': 'NIV', 'show_passage_numbers': False, 'passage_separator': ''},
+                {'translation': 'NIV', 'show_passage_numbers': True, 'passage_separator': '\n'},
+                ]
+
+    def test_get_online_passage(self):
+        options = self.get_alternative_interface_options()
+        for option in options:
+            text1 = bible_extractor.get_passage('Ecclesiastes 1:17', translation=option['translation'],
+                                                show_passage_numbers=option['show_passage_numbers'],
+                                                passage_separator=option['passage_separator'])
+            text2 = bible_extractor.get_online_passage('Ecclesiastes', 1, 17, translation=option['translation'],
+                                                       show_passage_numbers=option['show_passage_numbers'],
+                                                       passage_separator=option['passage_separator'])
+            self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_passages(self):
+        options = self.get_alternative_interface_options()
+        for option in options:
+            text1 = bible_extractor.get_passage('Ezekiel 40:19-20', translation=option['translation'],
+                                                show_passage_numbers=option['show_passage_numbers'],
+                                                passage_separator=option['passage_separator'])
+            text2 = bible_extractor.get_online_passages('Ezekiel', 40, 19, 20, translation=option['translation'],
+                                                        show_passage_numbers=option['show_passage_numbers'],
+                                                        passage_separator=option['passage_separator'])
+            self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_chapter(self):
+        options = self.get_alternative_interface_options()
+        for option in options:
+            text1 = bible_extractor.get_passage('Daniel 5', translation=option['translation'],
+                                                show_passage_numbers=option['show_passage_numbers'],
+                                                passage_separator=option['passage_separator'])
+            text2 = bible_extractor.get_online_chapter('Daniel', 5, translation=option['translation'],
+                                                       show_passage_numbers=option['show_passage_numbers'],
+                                                       passage_separator=option['passage_separator'])
+            self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_chapters(self):
+        options = self.get_alternative_interface_options()
+        for option in options:
+            text1 = bible_yaml_extractor.get_yaml_chapters('Amos', 8, 9, translation=option['translation'],
+                                                           show_passage_numbers=option['show_passage_numbers'])
+            text2 = bible_extractor.get_online_chapters('Amos', 8, 9, translation=option['translation'],
+                                                        show_passage_numbers=option['show_passage_numbers'])
+            # Compare with YAML extracted contents due similarities in passage contents construction
+            self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_passage_range(self):
+        options = self.get_alternative_interface_options()
+        for option in options:
+            text1 = bible_yaml_extractor.get_yaml_passage_range('Amos', 8, 14, 9, 1, translation=option['translation'],
+                                                                show_passage_numbers=option['show_passage_numbers'])
+            text2 = bible_extractor.get_online_passage_range('Amos', 8, 14, 9, 1, translation=option['translation'],
+                                                             show_passage_numbers=option['show_passage_numbers'])
+            # Compare with YAML extracted contents due similarities in passage contents construction
+            self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_passage_range_with_intermediate_chapters(self):
+        text1 = bible_yaml_extractor.get_yaml_passage_range('Daniel', 3, 30, 5, 1)
+        text2 = bible_extractor.get_online_passage_range('Daniel', 3, 30, 5, 1)
+        # Compare with YAML extracted contents due similarities in passage contents construction
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_passage_range_from_same_chapter(self):
+        text1 = bible_yaml_extractor.get_yaml_passages('Ezekiel', 40, 19, 20)
+        # Compare with YAML extracted contents due similarities in passage contents construction
+        text2 = bible_extractor.get_online_passage_range('Ezekiel', 40, 19, 40, 20)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
 
     # -------------- Tests which are ignored due to being unsupported translations --------------
 

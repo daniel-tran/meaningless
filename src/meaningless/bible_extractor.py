@@ -61,6 +61,117 @@ def __is_unsupported_translation(translation):
     return translation.upper() not in ['NIV', 'NASB', 'NKJV', 'NRSV', 'ESV', 'WEB', 'NLT']
 
 
+def get_online_passage(book, chapter, passage, passage_separator='', show_passage_numbers=True, translation='NIV'):
+    """
+    Gets a single passage from the Bible Gateway site
+    :param book: Name of the book
+    :param chapter: Chapter number
+    :param passage: Passage number
+    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
+                              Mainly used to separate passages in a more customised way.
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :return: The passage as text. Empty string if the passage is invalid.
+    """
+    search = '{0} {1}:{2}'.format(book, chapter, passage)
+    return get_passage(search, passage_separator, show_passage_numbers, translation)
+
+
+def get_online_passages(book, chapter, passage_from, passage_to, passage_separator='', show_passage_numbers=True,
+                        translation='NIV'):
+    """
+    Gets a range of passages of the same chapter from the Bible Gateway site
+    :param book: Name of the book
+    :param chapter: Chapter number
+    :param passage_from: First passage number to get
+    :param passage_to: Last passage number to get
+    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
+                              Mainly used to separate passages in a more customised way.
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :return: The passage as text. Empty string if the passage is invalid.
+    """
+    search = '{0} {1}:{2} - {3}'.format(book, chapter, passage_from, passage_to)
+    return get_passage(search, passage_separator, show_passage_numbers, translation)
+
+
+def get_online_chapter(book, chapter, passage_separator='', show_passage_numbers=True, translation='NIV'):
+    """
+    Gets a single chapter from the Bible Gateway site
+    :param book: Name of the book
+    :param chapter: Chapter number
+    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
+                              Mainly used to separate passages in a more customised way.
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :return: The passage as text. Empty string if the passage is invalid.
+    """
+    search = '{0} {1}'.format(book, chapter)
+    return get_passage(search, passage_separator, show_passage_numbers, translation)
+
+
+def get_online_chapters(book, chapter_from, chapter_to, passage_separator='', show_passage_numbers=True,
+                        translation='NIV'):
+    """
+    Gets a range of passages from a specified chapters selection from the Bible Gateway site.
+    This function stays within the passage contents max. limit by making incremental requests
+    for each chapter's contents, and combines it into a single multi-line string.
+    As such, the output is not guaranteed to be the same as invoking get_passage() with the same search string,
+    however the output is going to be similar to contents provided by the YAML extractor.
+    :param book: Name of the book
+    :param chapter_from: First chapter number to get
+    :param chapter_to: Last chapter number to get
+    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
+                              Mainly used to separate passages in a more customised way.
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :return: The passage as text. Empty string if the passage is invalid.
+    """
+    # Retrieve chapters one by one to stay within the max. text limit when requesting for passages.
+    # Add 1 to the end of the range, since the last chapter is also to be included.
+    chapters = [get_online_chapter(book, chapter, passage_separator, show_passage_numbers, translation)
+                for chapter in range(chapter_from, chapter_to + 1)]
+    return '\n'.join(chapters)
+
+
+def get_online_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, passage_separator='',
+                             show_passage_numbers=True, translation='NIV'):
+    """
+    Gets a range of passages from one specific passage to another passage from the Bible Gateway site.
+    This function stays within the passage contents max. limit by making incremental requests
+    for each chapter's contents, and combines it into a single multi-line string.
+    As such, the output is not guaranteed to be the same as invoking get_passage() with the same search string,
+    however the output is going to be similar to contents provided by the YAML extractor.
+    :param book: Name of the book
+    :param chapter_from: First chapter number to get
+    :param passage_from: First passage number to get in the first chapter
+    :param chapter_to: Last chapter number to get
+    :param passage_to: Last passage number to get in the last chapter
+    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
+                              Mainly used to separate passages in a more customised way.
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :return: The passage as text. Empty string if the passage is invalid.
+    """
+    # Defer to a simpler alternative function when sourcing passages from the same chapter
+    if chapter_from == chapter_to:
+        return get_online_passages(book, chapter_from, passage_from, passage_to, passage_separator,
+                                   show_passage_numbers, translation)
+
+    # Get the partial section of the first chapter being requested, omitting some initial passages
+    initial_chapter = get_online_passages(book, chapter_from, passage_from, 9000, passage_separator,
+                                          show_passage_numbers, translation)
+    # Get the partial section of the last chapter being requested, omitting some trailing passages
+    final_chapter = get_online_passages(book, chapter_to, 1, passage_to, passage_separator,
+                                        show_passage_numbers, translation)
+    # Get all the chapters in between the initial and final chapters (exclusive since they have been pre-fetched).
+    # Sandwich those chapters between the first and last pre-fetched chapters to combine all the passage data.
+    chapters = [initial_chapter] + \
+               [get_online_chapter(book, chapter, passage_separator, show_passage_numbers, translation)
+                for chapter in range(chapter_from + 1, chapter_to)] + [final_chapter]
+    return '\n'.join(chapters)
+
+
 def get_passage(passage_name, passage_separator='', show_passage_numbers=True, translation='NIV'):
     """
     Gets all the text for a particular Bible passage from www.biblegateway.com
