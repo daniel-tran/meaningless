@@ -207,28 +207,6 @@ def get_passage(passage_name, passage_separator='', show_passage_numbers=True, t
     # Do any final touch-ups to the passage contents
     return all_text.strip().replace('\xa0', ' ')
 
-
-def get_passage_as_list(passage_name, show_passage_numbers=True, translation='NIV'):
-    """
-    Gets all the text for a particular Bible passage from www.biblegateway.com, as a list of strings.
-    Unlike get_passage(), the superscript passage numbers are NOT preserved.
-    :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
-    :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
-    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-    :return: Bible passage as a list with preserved line breaks
-    """
-    # Use a string that is guaranteed to not occur anywhere in the Bible in any translation.
-    # This now becomes the splitting string so that superscript passage numbers can be preserved.
-    passage_separator = '-_-'
-    passage_text = get_passage(passage_name, passage_separator=passage_separator,
-                               show_passage_numbers=show_passage_numbers, translation=translation)
-
-    passage_list = re.split(passage_separator, passage_text)
-    # Remove the first empty item
-    if len(passage_list[0]) <= 0:
-        passage_list.pop(0)
-    return passage_list
-
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.
     import doctest

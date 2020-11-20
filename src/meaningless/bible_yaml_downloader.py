@@ -1,5 +1,5 @@
 import os
-from meaningless import bible_extractor
+from meaningless import bible_list_extractor
 from meaningless.utilities import yaml_file_interface
 from ruamel.yaml import YAML
 
@@ -116,8 +116,7 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, tr
     for chapter in range(1, chapters + 1):
         # Incrementally extract the book contents on a per-chapter basis to avoid exceeding
         # the text limit that can be returned in a single search on the Bible Gateway site.
-        passage_list = bible_extractor.get_passage_as_list('{0} {1}'.format(book, chapter), show_passage_numbers,
-                                                           translation)
+        passage_list = bible_list_extractor.get_chapter(book, chapter, show_passage_numbers, translation)
         document[book][chapter] = {}
         passage_num = 1
         for passage in passage_list:

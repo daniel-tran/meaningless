@@ -177,33 +177,6 @@ class UnitTests(unittest.TestCase):
         # This could be problematic depending on how many form variations are present on the Bible Gateway site.
         self.assertEqual(john7_53, text, 'Passage is incorrect')
 
-    # -------------- Tests for get_passage_as_list --------------
-
-    def test_get_passage_as_list(self):
-        text = bible_extractor.get_passage_as_list('1 John 1:8 - 9')
-        john = ['\u2078 If we claim to be without sin, we deceive ourselves and the truth is not in us. ',
-                '\u2079 If we confess our sins, he is faithful and just and will forgive us our sins and purify '
-                'us from all unrighteousness.']
-        self.assertEqual(john, text, 'Passage is incorrect')
-
-    def test_get_passage_as_list_empty(self):
-        text = bible_extractor.get_passage_as_list('')
-        self.assertEqual([], text, 'Passage is incorrect')
-
-    def test_get_passage_as_list_without_passage_numbers(self):
-        text = bible_extractor.get_passage_as_list('Haggai 1:3 - 4', show_passage_numbers=False)
-        haggai1 = ['Then the word of the Lord came through the prophet Haggai: ',
-                   '\u201cIs it a time for you yourselves to be living in your paneled houses, '
-                   'while this house remains a ruin?\u201d']
-        self.assertEqual(haggai1, text, 'Passage is incorrect')
-
-    def test_get_passage_as_list_nlt(self):
-        text = bible_extractor.get_passage_as_list('1 John 1:8 - 9', translation='NLT')
-        john = ['\u2078 If we claim we have no sin, we are only fooling ourselves and not living in the truth. ',
-                '\u2079 But if we confess our sins to him, he is faithful and just to forgive us our sins and '
-                'to cleanse us from all wickedness.']
-        self.assertEqual(john, text, 'Passage is incorrect')
-
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site or using the YAML extractor for passage text
     # has been tested extensively, these tests are only concerned with ensuring both interfaces result with the same
