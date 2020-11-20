@@ -44,5 +44,13 @@ class UnitTests(unittest.TestCase):
         text = yaml_file_interface.read('./tmp/test_yaml_download_omitted_passage/NLT/Romans.yaml')['Romans'][16][24]
         self.assertEqual('', text, 'Files do not match')
 
+    def test_yaml_download_with_stripped_whitespaces(self):
+        bible_yaml_downloader.yaml_download('Philemon',
+                                            file_location='./tmp/test_yaml_download_with_stripped_whitespaces/',
+                                            strip_whitespaces=True)
+        self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_with_stripped_whitespaces/NIV/Philemon.yaml',
+                                    './static/NIV/test_yaml_download_with_stripped_whitespaces.yaml'),
+                        'Files do not match')
+
 if __name__ == "__main__":
     unittest.main()

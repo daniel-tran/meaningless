@@ -91,7 +91,8 @@ __translations_with_omitted_passages = {
 }
 
 
-def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, translation='NIV'):
+def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, translation='NIV',
+                  strip_whitespaces=False):
     """
     Downloads a specific book of the Bible and saves it as a YAML file
     :param book: Name of the book
@@ -99,6 +100,7 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, tr
                           The full file path will be <file_location>/NIV/<book>.yaml
     :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
     :return: 0 if the download was successful. Non-zero value if an error occurred.
     """
     # Standardise letter casing with minimal impact to the resulting YAML file
@@ -116,7 +118,8 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, tr
     for chapter in range(1, chapters + 1):
         # Incrementally extract the book contents on a per-chapter basis to avoid exceeding
         # the text limit that can be returned in a single search on the Bible Gateway site.
-        passage_list = bible_list_extractor.get_chapter(book, chapter, show_passage_numbers, translation)
+        passage_list = bible_list_extractor.get_chapter(book, chapter, show_passage_numbers, translation,
+                                                        strip_whitespaces)
         document[book][chapter] = {}
         passage_num = 1
         for passage in passage_list:

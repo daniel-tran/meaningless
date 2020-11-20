@@ -109,5 +109,20 @@ class UnitTests(unittest.TestCase):
                 'us from all unrighteousness.']
         self.assertEqual(john, text, 'Passage is incorrect')
 
+    def test_get_passages_list_with_stripped_whitespace(self):
+        text = bible_list_extractor.get_passages('Ecclesiastes', 11, 6, 7, strip_whitespaces=True)
+        eccl11 = ['\u2076 Sow your seed in the morning,\n'
+                  '    and at evening let your hands not be idle,\n'
+                  'for you do not know which will succeed,\n'
+                  '    whether this or that,\n'
+                  '    or whether both will do equally well.',
+                  '\u2077 Light is sweet,\n'
+                  '    and it pleases the eyes to see the sun.'
+                  ]
+        # These two passages are normally in a poetic format, each ending with a newline.
+        # Toggling the flag parameter should not preserve these newline characters, but the inner newlines are kept.
+        self.assertEqual(eccl11, text, 'Passage is incorrect')
+
+
 if __name__ == "__main__":
     unittest.main()
