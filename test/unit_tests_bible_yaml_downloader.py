@@ -52,5 +52,40 @@ class UnitTests(unittest.TestCase):
                                     './static/NIV/test_yaml_download_with_stripped_whitespaces.yaml'),
                         'Files do not match')
 
+    def test_yaml_download_passage(self):
+        bible_yaml_downloader.yaml_download_passage('Philemon', 1, 1,
+                                                    file_location='./tmp/test_yaml_download_passage/')
+        self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_passage/NIV/Philemon.yaml',
+                                    './static/NIV/test_yaml_download_passage.yaml'),
+                        'Files do not match')
+
+    def test_yaml_download_passages(self):
+        bible_yaml_downloader.yaml_download_passages('Philemon', 1, 1, 3,
+                                                    file_location='./tmp/test_yaml_download_passages/')
+        self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_passages/NIV/Philemon.yaml',
+                                    './static/NIV/test_yaml_download_passages.yaml'),
+                        'Files do not match')
+
+    def test_yaml_download_chapter(self):
+        bible_yaml_downloader.yaml_download_chapter('1 John', 1,
+                                                    file_location='./tmp/test_yaml_download_chapter/')
+        self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_chapter/NIV/1 John.yaml',
+                                    './static/NIV/test_yaml_download_chapter.yaml'),
+                        'Files do not match')
+
+    def test_yaml_download_chapters(self):
+        bible_yaml_downloader.yaml_download_chapters('1 John', 1, 3,
+                                                    file_location='./tmp/test_yaml_download_chapters/')
+        self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_chapters/NIV/1 John.yaml',
+                                    './static/NIV/test_yaml_download_chapters.yaml'),
+                        'Files do not match')
+
+    def test_yaml_download_passage_range(self):
+        bible_yaml_downloader.yaml_download_passage_range('1 John', 1, 3, 1, 5,
+                                                    file_location='./tmp/test_yaml_download_passage_range/')
+        self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_passage_range/NIV/1 John.yaml',
+                                    './static/NIV/test_yaml_download_passage_range.yaml'),
+                        'Files do not match')
+
 if __name__ == "__main__":
     unittest.main()

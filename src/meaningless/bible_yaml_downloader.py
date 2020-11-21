@@ -97,7 +97,104 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, tr
     Downloads a specific book of the Bible and saves it as a YAML file
     :param book: Name of the book
     :param file_location: Directory containing the downloaded YAML file. Defaults to the current working directory.
-                          The full file path will be <file_location>/NIV/<book>.yaml
+                          The full file path will be <file_location>/<translation>/<book>.yaml
+    :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
+    :return: 0 if the download was successful. Non-zero value if an error occurred.
+    """
+    # Check against passing invalid books
+    if book.title() not in __chapter_count_mappings.keys():
+        print('WARNING: "{0}" is not a valid book'.format(book))
+        return 1
+    return yaml_download_passage_range(book, 1, 1, __chapter_count_mappings[book], 9000, file_location,
+                                       show_passage_numbers, translation, strip_whitespaces)
+
+
+def yaml_download_passage(book, chapter, passage, file_location=os.getcwd(), show_passage_numbers=True,
+                          translation='NIV', strip_whitespaces=False):
+    """
+
+    Downloads a single passage as a YAML file
+    :param book: Name of the book
+    :param chapter: Chapter number
+    :param passage: Passage number
+    :param file_location: Directory containing the downloaded YAML file. Defaults to the current working directory.
+                          The full file path will be <file_location>/<translation>/<book>.yaml
+    :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
+    :return: 0 if the download was successful. Non-zero value if an error occurred.
+    """
+    return yaml_download_passage_range(book, chapter, passage, chapter, passage, file_location, show_passage_numbers,
+                                       translation, strip_whitespaces)
+
+
+def yaml_download_passages(book, chapter, passage_from, passage_to, file_location=os.getcwd(),
+                           show_passage_numbers=True, translation='NIV', strip_whitespaces=False):
+    """
+    Downloads a range of passages of the same chapter as a YAML file
+    :param book: Name of the book
+    :param chapter: Chapter number
+    :param passage_from: First passage number to get
+    :param passage_to: Last passage number to get
+    :param file_location: Directory containing the downloaded YAML file. Defaults to the current working directory.
+                          The full file path will be <file_location>/<translation>/<book>.yaml
+    :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
+    :return: 0 if the download was successful. Non-zero value if an error occurred.
+    """
+    return yaml_download_passage_range(book, chapter, passage_from, chapter, passage_to, file_location,
+                                       show_passage_numbers, translation, strip_whitespaces)
+
+
+def yaml_download_chapter(book, chapter, file_location=os.getcwd(), show_passage_numbers=True, translation='NIV',
+                          strip_whitespaces=False):
+    """
+    Downloads a single chapter as a YAML file
+    :param book: Name of the book
+    :param chapter: Chapter number
+    :param file_location: Directory containing the downloaded YAML file. Defaults to the current working directory.
+                          The full file path will be <file_location>/<translation>/<book>.yaml
+    :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
+    :return: 0 if the download was successful. Non-zero value if an error occurred.
+    """
+    return yaml_download_passage_range(book, chapter, 1, chapter, 9000, file_location, show_passage_numbers,
+                                       translation, strip_whitespaces)
+
+
+def yaml_download_chapters(book, chapter_from, chapter_to, file_location=os.getcwd(), show_passage_numbers=True,
+                           translation='NIV', strip_whitespaces=False):
+    """
+    Downloads a range of passages from a specified chapter selection as a YAML file
+    :param book: Name of the book
+    :param chapter_from: First chapter number to get
+    :param chapter_to: Last chapter number to get
+    :param file_location: Directory containing the downloaded YAML file. Defaults to the current working directory.
+                          The full file path will be <file_location>/<translation>/<book>.yaml
+    :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
+    :return: 0 if the download was successful. Non-zero value if an error occurred.
+    """
+    return yaml_download_passage_range(book, chapter_from, 1, chapter_to, 9000, file_location, show_passage_numbers,
+                                       translation, strip_whitespaces)
+
+
+def yaml_download_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, file_location=os.getcwd(),
+                                show_passage_numbers=True, translation='NIV', strip_whitespaces=False):
+    """
+    Downloads a range of passages from one specific passage to another passage as a YAML file
+    :param book: Name of the book
+    :param chapter_from: First chapter number to get
+    :param passage_from: First passage number to get in the first chapter
+    :param chapter_to: Last chapter number to get
+    :param passage_to: Last passage number to get in the last chapter
+    :param file_location: Directory containing the downloaded YAML file. Defaults to the current working directory.
+                          The full file path will be <file_location>/<translation>/<book>.yaml
     :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
     :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
@@ -111,17 +208,25 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, tr
         return 1
 
     is_translation_with_omitted_passages = translation in __translations_with_omitted_passages.keys()
-    chapters = __chapter_count_mappings[book]
     document = {book: {}}
 
-    # Start from chapter 1 and up to chapter N inclusive
-    for chapter in range(1, chapters + 1):
-        # Incrementally extract the book contents on a per-chapter basis to avoid exceeding
-        # the text limit that can be returned in a single search on the Bible Gateway site.
-        passage_list = bible_list_extractor.get_chapter(book, chapter, show_passage_numbers, translation,
-                                                        strip_whitespaces)
-        document[book][chapter] = {}
+    # Range is extended by 1 to include chapter_to in the loop iteration
+    for chapter in range(chapter_from, chapter_to + 1):
+        passage_initial = 1
+        passage_final = 9000
         passage_num = 1
+        # Exclude a certain first half of the initial chapter based on where the passage start should be
+        if chapter == chapter_from:
+            passage_initial = passage_from
+            passage_num = passage_from
+        # Exclude a certain last half of the last chapter based on where the passage end should be
+        if chapter == chapter_to:
+            passage_final = passage_to
+
+        passage_list = bible_list_extractor.get_passages(book, chapter, passage_initial, passage_final,
+                                                         show_passage_numbers, translation, strip_whitespaces)
+        document[book][chapter] = {}
+
         for passage in passage_list:
             if is_translation_with_omitted_passages:
                 # This logic handles translations that omit passages, and have are not considered as valid verse on
