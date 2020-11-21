@@ -79,6 +79,22 @@ def get_yaml_chapters(book, chapter_from, chapter_to, show_passage_numbers=True,
                                   translation)
 
 
+def get_yaml_book(book, show_passage_numbers=True, translation='NIV'):
+    """
+    Gets all chapters for a specific book from the YAML Bible files
+    :param book: Name of the book
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :return: All passages between the specified chapters (inclusive) as text. Empty string if the passage is invalid.
+    """
+    document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
+    # Fail-fast on invalid passages
+    if not document:
+        print('WARNING: "{0}" is not valid'.format(book))
+        return ''
+    return get_yaml_chapters(book, 1, common.get_chapter_count(book, translation), show_passage_numbers, translation)
+
+
 def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, show_passage_numbers=True,
                            translation='NIV'):
     """

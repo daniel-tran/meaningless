@@ -158,6 +158,12 @@ class UnitTests(unittest.TestCase):
                      ]
         self.assertEqual('\n'.join(eccl11_12), text, 'Passage is incorrect')
 
+    def test_get_yaml_book(self):
+        text = bible_yaml_extractor.get_yaml_book('Philemon')
+        with open('./static/NIV/test_get_yaml_book.txt', 'r', encoding='utf-8') as file:
+            phil = file.read()
+        self.assertEqual(phil, text, 'Passage is incorrect')
+
     def test_get_yaml_passage_range_reverse_parameters(self):
         text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 10, 1, 9, 18)
         # Chapter 10 is after chapter 9, so this should not work

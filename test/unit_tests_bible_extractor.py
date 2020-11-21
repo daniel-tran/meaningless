@@ -243,6 +243,16 @@ class UnitTests(unittest.TestCase):
             # Compare with YAML extracted contents due similarities in passage contents construction
             self.assertEqual(text1, text2, 'Passage is incorrect')
 
+    def test_get_online_book(self):
+        options = self.get_alternative_interface_options()
+        for option in options:
+            text1 = bible_yaml_extractor.get_yaml_book('Amos', translation=option['translation'],
+                                                       show_passage_numbers=option['show_passage_numbers'])
+            text2 = bible_extractor.get_online_book('Amos', translation=option['translation'],
+                                                    show_passage_numbers=option['show_passage_numbers'])
+            # Compare with YAML extracted contents due similarities in passage contents construction
+            self.assertEqual(text1, text2, 'Passage is incorrect')
+
     def test_get_online_passage_range_with_intermediate_chapters(self):
         text1 = bible_yaml_extractor.get_yaml_passage_range('Daniel', 3, 30, 5, 1)
         text2 = bible_extractor.get_online_passage_range('Daniel', 3, 30, 5, 1)

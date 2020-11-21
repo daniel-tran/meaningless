@@ -91,6 +91,19 @@ def get_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, 
         get_passages(book, chapter_to, 1, passage_to, show_passage_numbers, translation, strip_whitespaces)
 
 
+def get_book(book, show_passage_numbers=True, translation='NIV', strip_whitespaces=False):
+    """
+    Gets all chapters for a specific book from the web extractor.
+    :param book: Name of the book
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
+    :return: List of passages from the specified book
+    """
+    return get_chapters(book, 1, common.get_chapter_count(book, translation), show_passage_numbers,
+                        translation, strip_whitespaces)
+
+
 def get_passage_as_list(passage_name, show_passage_numbers=True, translation='NIV', strip_whitespaces=False):
     """
     Gets all the text for a particular Bible passage from www.biblegateway.com, as a list of strings.

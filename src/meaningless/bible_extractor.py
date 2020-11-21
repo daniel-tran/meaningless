@@ -116,6 +116,20 @@ def get_online_passage_range(book, chapter_from, passage_from, chapter_to, passa
     return '\n'.join(chapters)
 
 
+def get_online_book(book, passage_separator='', show_passage_numbers=True, translation='NIV'):
+    """
+    Gets all chapters for a specific book from the Bible Gateway site
+    :param book: Name of the book
+    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
+                              Mainly used to separate passages in a more customised way.
+    :param show_passage_numbers: If True, any present passage numbers are preserved.
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :return: The passage as text. Empty string if the passage is invalid.
+    """
+    return get_online_chapters(book, 1, common.get_chapter_count(book, translation), passage_separator,
+                               show_passage_numbers, translation)
+
+
 def get_passage(passage_name, passage_separator='', show_passage_numbers=True, translation='NIV'):
     """
     Gets all the text for a particular Bible passage from www.biblegateway.com

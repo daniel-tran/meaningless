@@ -102,6 +102,14 @@ class UnitTests(unittest.TestCase):
                 ]
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
+    def test_get_book_list(self):
+        text = bible_list_extractor.get_book('Philemon')
+        with open('./static/NIV/test_get_book_list.txt', 'r', encoding='utf-8') as file:
+            phil = file.read()
+        # To avoid having to paste the entire contents of Philemon in the test, this is tested by joining all the
+        # lines of the list into a single string and comparing against a test file
+        self.assertEqual(phil, ''.join(text), 'Passage is incorrect')
+
     def test_get_passage_range_list_from_same_chapter(self):
         text = bible_list_extractor.get_passage_range('1 John', 1, 8, 1, 9)
         john = ['\u2078 If we claim to be without sin, we deceive ourselves and the truth is not in us. ',

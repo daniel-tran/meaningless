@@ -20,8 +20,8 @@ __translations_with_omitted_passages = {
 }
 
 
-def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, translation='NIV',
-                  strip_whitespaces=False):
+def yaml_download_book(book, file_location=os.getcwd(), show_passage_numbers=True, translation='NIV',
+                       strip_whitespaces=False):
     """
     Downloads a specific book of the Bible and saves it as a YAML file
     :param book: Name of the book
