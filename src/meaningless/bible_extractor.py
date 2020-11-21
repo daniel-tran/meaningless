@@ -103,8 +103,8 @@ def get_online_passage_range(book, chapter_from, passage_from, chapter_to, passa
                                    show_passage_numbers, translation)
 
     # Get the partial section of the first chapter being requested, omitting some initial passages
-    initial_chapter = get_online_passages(book, chapter_from, passage_from, 9000, passage_separator,
-                                          show_passage_numbers, translation)
+    initial_chapter = get_online_passages(book, chapter_from, passage_from, common.get_end_of_chapter(),
+                                          passage_separator, show_passage_numbers, translation)
     # Get the partial section of the last chapter being requested, omitting some trailing passages
     final_chapter = get_online_passages(book, chapter_to, 1, passage_to, passage_separator,
                                         show_passage_numbers, translation)

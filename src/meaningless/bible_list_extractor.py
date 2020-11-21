@@ -1,5 +1,6 @@
 import re
 from meaningless import bible_extractor
+from meaningless.utilities import common
 
 
 def get_passage(book, chapter, passage, show_passage_numbers=True, translation='NIV', strip_whitespaces=False):
@@ -84,8 +85,8 @@ def get_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, 
         return get_passages(book, chapter_from, passage_from, passage_to, show_passage_numbers, translation,
                             strip_whitespaces)
     # Sandwich the full chapters between the partial first and last chapters
-    return get_passages(book, chapter_from, passage_from, 9000, show_passage_numbers, translation,
-                        strip_whitespaces) + \
+    return get_passages(book, chapter_from, passage_from, common.get_end_of_chapter(), show_passage_numbers,
+                        translation, strip_whitespaces) + \
         get_chapters(book, chapter_from + 1, chapter_to - 1, show_passage_numbers, translation, strip_whitespaces) + \
         get_passages(book, chapter_to, 1, passage_to, show_passage_numbers, translation, strip_whitespaces)
 

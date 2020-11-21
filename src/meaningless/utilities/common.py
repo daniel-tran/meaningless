@@ -21,6 +21,15 @@ def is_unsupported_translation(translation):
     return translation.upper() not in ['NIV', 'NASB', 'NKJV', 'NRSV', 'ESV', 'WEB', 'NLT']
 
 
+def get_end_of_chapter():
+    """
+    A helper function to define the max. number of passages any chapter could possibly have.
+    This is based on functionality present on Bible Gateway where a very large number is capped to the chapter's end.
+    :return: A static number
+    """
+    return 9000
+
+
 def get_page(url):
     """
     A helper function that returns the contents of a web page.

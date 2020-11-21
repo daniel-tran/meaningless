@@ -1,6 +1,6 @@
 import os
 from meaningless import bible_list_extractor
-from meaningless.utilities import yaml_file_interface
+from meaningless.utilities import yaml_file_interface, common
 from ruamel.yaml import YAML
 
 # Storing the value of each book with its total number of chapters.
@@ -107,8 +107,8 @@ def yaml_download(book, file_location=os.getcwd(), show_passage_numbers=True, tr
     if book.title() not in __chapter_count_mappings.keys():
         print('WARNING: "{0}" is not a valid book'.format(book))
         return 1
-    return yaml_download_passage_range(book, 1, 1, __chapter_count_mappings[book], 9000, file_location,
-                                       show_passage_numbers, translation, strip_whitespaces)
+    return yaml_download_passage_range(book, 1, 1, __chapter_count_mappings[book], common.get_end_of_chapter(),
+                                       file_location, show_passage_numbers, translation, strip_whitespaces)
 
 
 def yaml_download_passage(book, chapter, passage, file_location=os.getcwd(), show_passage_numbers=True,
@@ -162,8 +162,8 @@ def yaml_download_chapter(book, chapter, file_location=os.getcwd(), show_passage
     :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
     :return: 0 if the download was successful. Non-zero value if an error occurred.
     """
-    return yaml_download_passage_range(book, chapter, 1, chapter, 9000, file_location, show_passage_numbers,
-                                       translation, strip_whitespaces)
+    return yaml_download_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter(),
+                                       file_location, show_passage_numbers, translation, strip_whitespaces)
 
 
 def yaml_download_chapters(book, chapter_from, chapter_to, file_location=os.getcwd(), show_passage_numbers=True,
@@ -180,8 +180,8 @@ def yaml_download_chapters(book, chapter_from, chapter_to, file_location=os.getc
     :param strip_whitespaces: If True, passages do not retain leading and trailing whitespaces and newline characters.
     :return: 0 if the download was successful. Non-zero value if an error occurred.
     """
-    return yaml_download_passage_range(book, chapter_from, 1, chapter_to, 9000, file_location, show_passage_numbers,
-                                       translation, strip_whitespaces)
+    return yaml_download_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter(),
+                                       file_location, show_passage_numbers, translation, strip_whitespaces)
 
 
 def yaml_download_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, file_location=os.getcwd(),
@@ -213,7 +213,7 @@ def yaml_download_passage_range(book, chapter_from, passage_from, chapter_to, pa
     # Range is extended by 1 to include chapter_to in the loop iteration
     for chapter in range(chapter_from, chapter_to + 1):
         passage_initial = 1
-        passage_final = 9000
+        passage_final = common.get_end_of_chapter()
         passage_num = 1
         # Exclude a certain first half of the initial chapter based on where the passage start should be
         if chapter == chapter_from:
