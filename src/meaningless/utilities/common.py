@@ -196,6 +196,22 @@ def get_capped_integer(number, min_value=1, max_value=100):
     return min(max(number, min_value), max_value)
 
 
+def get_empty_data(output_as_list=False):
+    """
+    A helper function to standardise empty data for the extraction methods
+    :param output_as_list: If True, returns an empty list instead of an empty string
+    :return: '' or []
+
+    >>> get_empty_data()
+    ''
+    >>> get_empty_data(True)
+    []
+    """
+    if output_as_list:
+        return []
+    return ''
+
+
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.
     import doctest

@@ -47,7 +47,7 @@ class UnitTests(unittest.TestCase):
     def test_yaml_download_with_stripped_whitespaces(self):
         bible_yaml_downloader.yaml_download_book('Philemon',
                                                  file_location='./tmp/test_yaml_download_with_stripped_whitespaces/',
-                                                 strip_whitespaces=True)
+                                                 strip_excess_whitespace=True)
         self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_with_stripped_whitespaces/NIV/Philemon.yaml',
                                     './static/NIV/test_yaml_download_with_stripped_whitespaces.yaml'),
                         'Files do not match')
@@ -61,7 +61,7 @@ class UnitTests(unittest.TestCase):
 
     def test_yaml_download_passages(self):
         bible_yaml_downloader.yaml_download_passages('Philemon', 1, 1, 3,
-                                                    file_location='./tmp/test_yaml_download_passages/')
+                                                     file_location='./tmp/test_yaml_download_passages/')
         self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_passages/NIV/Philemon.yaml',
                                     './static/NIV/test_yaml_download_passages.yaml'),
                         'Files do not match')
@@ -75,14 +75,14 @@ class UnitTests(unittest.TestCase):
 
     def test_yaml_download_chapters(self):
         bible_yaml_downloader.yaml_download_chapters('1 John', 1, 3,
-                                                    file_location='./tmp/test_yaml_download_chapters/')
+                                                     file_location='./tmp/test_yaml_download_chapters/')
         self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_chapters/NIV/1 John.yaml',
                                     './static/NIV/test_yaml_download_chapters.yaml'),
                         'Files do not match')
 
     def test_yaml_download_passage_range(self):
         bible_yaml_downloader.yaml_download_passage_range('1 John', 1, 3, 1, 5,
-                                                    file_location='./tmp/test_yaml_download_passage_range/')
+                                                          file_location='./tmp/test_yaml_download_passage_range/')
         self.assertTrue(filecmp.cmp('./tmp/test_yaml_download_passage_range/NIV/1 John.yaml',
                                     './static/NIV/test_yaml_download_passage_range.yaml'),
                         'Files do not match')

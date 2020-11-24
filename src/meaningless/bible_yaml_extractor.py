@@ -13,7 +13,8 @@ def __get_module_directory():
     return os.path.dirname(__file__)
 
 
-def get_yaml_passage(book, chapter, passage, show_passage_numbers=True, translation='NIV'):
+def get_yaml_passage(book, chapter, passage, show_passage_numbers=True, translation='NIV',
+                     output_as_list=False, strip_excess_whitespace_from_list=False):
     """
     Gets a single passage from the YAML Bible files
     :param book: Name of the book
@@ -21,12 +22,17 @@ def get_yaml_passage(book, chapter, passage, show_passage_numbers=True, translat
     :param passage: Passage number
     :param show_passage_numbers: If True, any present passage numbers are preserved.
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param output_as_list: When True, returns the passage data as a list of strings.
+    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
+                                              whitespace characters are removed for each string element in the list.
     :return: The passage as text. Empty string if the passage is invalid.
     """
-    return get_yaml_passage_range(book, chapter, passage, chapter, passage, show_passage_numbers, translation)
+    return get_yaml_passage_range(book, chapter, passage, chapter, passage, show_passage_numbers, translation,
+                                  output_as_list, strip_excess_whitespace_from_list)
 
 
-def get_yaml_passages(book, chapter, passage_from, passage_to, show_passage_numbers=True, translation='NIV'):
+def get_yaml_passages(book, chapter, passage_from, passage_to, show_passage_numbers=True, translation='NIV',
+                      output_as_list=False, strip_excess_whitespace_from_list=False):
     """
     Gets a range of passages of the same chapter from the YAML Bible files
     :param book: Name of the book
@@ -35,31 +41,40 @@ def get_yaml_passages(book, chapter, passage_from, passage_to, show_passage_numb
     :param passage_to: Last passage number to get
     :param show_passage_numbers: If True, any present passage numbers are preserved.
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param output_as_list: When True, returns the passage data as a list of strings.
+    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
+                                              whitespace characters are removed for each string element in the list.
     :return: The passages between the specified passages (inclusive) as text. Empty string if the passage is invalid.
     """
     return get_yaml_passage_range(book, chapter, passage_from, chapter, passage_to, show_passage_numbers,
-                                  translation)
+                                  translation, output_as_list, strip_excess_whitespace_from_list)
 
 
-def get_yaml_chapter(book, chapter, show_passage_numbers=True, translation='NIV'):
+def get_yaml_chapter(book, chapter, show_passage_numbers=True, translation='NIV',
+                     output_as_list=False, strip_excess_whitespace_from_list=False):
     """
     Gets a single chapter from the YAML Bible files
     :param book: Name of the book
     :param chapter: Chapter number
     :param show_passage_numbers: If True, any present passage numbers are preserved.
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param output_as_list: When True, returns the passage data as a list of strings.
+    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
+                                              whitespace characters are removed for each string element in the list.
     :return: All passages in the chapter as text. Empty string if the passage is invalid.
     """
     document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
     # Fail-fast on invalid passages
     if not document:
         print('WARNING: "{0} {1}" is not valid'.format(book, chapter))
-        return ''
+        return common.get_empty_data(output_as_list)
     chapter_length = len(document[book][chapter].keys())
-    return get_yaml_passage_range(book, chapter, 1, chapter, chapter_length, show_passage_numbers, translation)
+    return get_yaml_passage_range(book, chapter, 1, chapter, chapter_length, show_passage_numbers, translation,
+                                  output_as_list, strip_excess_whitespace_from_list)
 
 
-def get_yaml_chapters(book, chapter_from, chapter_to, show_passage_numbers=True, translation='NIV'):
+def get_yaml_chapters(book, chapter_from, chapter_to, show_passage_numbers=True, translation='NIV',
+                      output_as_list=False, strip_excess_whitespace_from_list=False):
     """
     Gets a range of passages from a specified chapters selection from the YAML Bible files
     :param book: Name of the book
@@ -67,36 +82,44 @@ def get_yaml_chapters(book, chapter_from, chapter_to, show_passage_numbers=True,
     :param chapter_to: Last chapter number to get
     :param show_passage_numbers: If True, any present passage numbers are preserved.
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param output_as_list: When True, returns the passage data as a list of strings.
+    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
+                                              whitespace characters are removed for each string element in the list.
     :return: All passages between the specified chapters (inclusive) as text. Empty string if the passage is invalid.
     """
     document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
     # Fail-fast on invalid passages
     if not document:
         print('WARNING: "{0} {1} - {2}" is not valid'.format(book, chapter_from, chapter_to))
-        return ''
+        return common.get_empty_data(output_as_list)
     chapter_to_length = len(document[book][chapter_to].keys())
     return get_yaml_passage_range(book, chapter_from, 1, chapter_to, chapter_to_length, show_passage_numbers,
-                                  translation)
+                                  translation, output_as_list, strip_excess_whitespace_from_list)
 
 
-def get_yaml_book(book, show_passage_numbers=True, translation='NIV'):
+def get_yaml_book(book, show_passage_numbers=True, translation='NIV',
+                  output_as_list=False, strip_excess_whitespace_from_list=False):
     """
     Gets all chapters for a specific book from the YAML Bible files
     :param book: Name of the book
     :param show_passage_numbers: If True, any present passage numbers are preserved.
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param output_as_list: When True, returns the passage data as a list of strings.
+    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
+                                              whitespace characters are removed for each string element in the list.
     :return: All passages between the specified chapters (inclusive) as text. Empty string if the passage is invalid.
     """
     document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(__get_module_directory(), translation, book))
     # Fail-fast on invalid passages
     if not document:
         print('WARNING: "{0}" is not valid'.format(book))
-        return ''
-    return get_yaml_chapters(book, 1, common.get_chapter_count(book, translation), show_passage_numbers, translation)
+        return common.get_empty_data(output_as_list)
+    return get_yaml_chapters(book, 1, common.get_chapter_count(book, translation), show_passage_numbers, translation,
+                             output_as_list, strip_excess_whitespace_from_list)
 
 
 def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, show_passage_numbers=True,
-                           translation='NIV'):
+                           translation='NIV', output_as_list=False, strip_excess_whitespace_from_list=False):
     """
     Gets a range of passages from one specific passage to another passage from the YAML Bible files
     :param book: Name of the book
@@ -106,6 +129,9 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
     :param passage_to: Last passage number to get in the last chapter
     :param show_passage_numbers: If True, any present passage numbers are preserved.
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :param output_as_list: When True, returns the passage data as a list of strings.
+    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
+                                              whitespace characters are removed for each string element in the list.
     :return: All passages between the two passages (inclusive) as text. Empty string if the passage is invalid.
     """
     # Standardise letter casing to ensure key access errors are not caused by case sensitivity
@@ -117,7 +143,7 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
     if not document:
         print('WARNING: "{0} {1}:{2} - {3}:{4}" is not valid'.format(book, chapter_from, passage_from, chapter_to,
                                                                      passage_to))
-        return ''
+        return common.get_empty_data(output_as_list)
     # Apply a boundary to the chapters to prevent invalid keys being accessed
     chapter_from = common.get_capped_integer(chapter_from, max_value=len(document[book].keys()))
     chapter_to = common.get_capped_integer(chapter_to, max_value=len(document[book].keys()))
@@ -136,16 +162,23 @@ def get_yaml_passage_range(book, chapter_from, passage_from, chapter_to, passage
             passage_final = common.get_capped_integer(passage_to, max_value=passage_final)
         # Extend the range by 1 since the last passage is also included in the iteration
         [passage_list.append(document[book][chapter][passage]) for passage in range(passage_initial, passage_final + 1)]
-        # Start each chapter on a new line
-        passage_list.append('\n')
-    # Convert the list of passages into a string, as strings are immutable and manually re-initialising a new string
-    # in the loop can be costly to performance.
-    all_text = ''.join([passage for passage in passage_list])
+        # Start each chapter on a new line when outputting as a string
+        if not output_as_list:
+            passage_list.append('\n')
+
     if not show_passage_numbers:
         # Note that this is a naive replacement, but should be OK as long as the original file source was from the
         # module's pre-supplied YAML resources. Otherwise, using an external file source risks losing superscript
         # numbers that were not intended as passage numbers.
-        all_text = common.remove_superscript_numbers_in_passage(all_text)
+        passage_list = [common.remove_superscript_numbers_in_passage(passage) for passage in passage_list]
+    if output_as_list:
+        if strip_excess_whitespace_from_list:
+            return [passage.strip() for passage in passage_list]
+        return passage_list
+    # Convert the list of passages into a string, as strings are immutable and manually re-initialising a new string
+    # in the loop can be costly to performance.
+    all_text = ''.join([passage for passage in passage_list])
+
     return all_text.strip()
 
 
