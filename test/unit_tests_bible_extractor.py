@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../src/')
-from meaningless import bible_extractor, bible_yaml_extractor
+from meaningless import bible_extractor
 
 
 class UnitTests(unittest.TestCase):
@@ -178,9 +178,8 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(john7_53, text, 'Passage is incorrect')
 
     # -------------- Tests for the alternative interfaces --------------
-    # Given the precondition that directly querying the Bible Gateway site or using the YAML extractor for passage text
-    # has been tested extensively, these tests are only concerned with ensuring both interfaces result with the same
-    # data.
+    # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
+    # these tests are only concerned with ensuring method consistency with the same data.
 
     @staticmethod
     def get_alternative_interface_options():
@@ -226,42 +225,48 @@ class UnitTests(unittest.TestCase):
     def test_get_online_chapters(self):
         options = self.get_alternative_interface_options()
         for option in options:
-            text1 = bible_yaml_extractor.get_yaml_chapters('Amos', 8, 9, translation=option['translation'],
-                                                           show_passage_numbers=option['show_passage_numbers'])
+            text1 = bible_extractor.get_online_chapter('Amos', 8, translation=option['translation'],
+                                                       show_passage_numbers=option['show_passage_numbers']) + '\n' + \
+                    bible_extractor.get_online_chapter('Amos', 9, translation=option['translation'],
+                                                       show_passage_numbers=option['show_passage_numbers'])
             text2 = bible_extractor.get_online_chapters('Amos', 8, 9, translation=option['translation'],
                                                         show_passage_numbers=option['show_passage_numbers'])
-            # Compare with YAML extracted contents due similarities in passage contents construction
+            # Chapters interface should be the same as requesting the individual chapters with newline separators
             self.assertEqual(text1, text2, 'Passage is incorrect')
 
     def test_get_online_passage_range(self):
         options = self.get_alternative_interface_options()
         for option in options:
-            text1 = bible_yaml_extractor.get_yaml_passage_range('Amos', 8, 14, 9, 1, translation=option['translation'],
-                                                                show_passage_numbers=option['show_passage_numbers'])
+            text1 = bible_extractor.get_online_passage('Amos', 8, 14, translation=option['translation'],
+                                                       show_passage_numbers=option['show_passage_numbers']) + '\n' + \
+                    bible_extractor.get_online_passage('Amos', 9, 1, translation=option['translation'],
+                                                       show_passage_numbers=option['show_passage_numbers'])
             text2 = bible_extractor.get_online_passage_range('Amos', 8, 14, 9, 1, translation=option['translation'],
                                                              show_passage_numbers=option['show_passage_numbers'])
-            # Compare with YAML extracted contents due similarities in passage contents construction
+            # A passage range should be the same as putting all the passage together with newline separators
             self.assertEqual(text1, text2, 'Passage is incorrect')
 
     def test_get_online_book(self):
         options = self.get_alternative_interface_options()
         for option in options:
-            text1 = bible_yaml_extractor.get_yaml_book('Amos', translation=option['translation'],
-                                                       show_passage_numbers=option['show_passage_numbers'])
-            text2 = bible_extractor.get_online_book('Amos', translation=option['translation'],
+            text1 = bible_extractor.get_online_chapters('2 Thessalonians', 1, 3, translation=option['translation'],
+                                                        show_passage_numbers=option['show_passage_numbers'])
+            text2 = bible_extractor.get_online_book('2 Thessalonians', translation=option['translation'],
                                                     show_passage_numbers=option['show_passage_numbers'])
-            # Compare with YAML extracted contents due similarities in passage contents construction
+            # A book should be the same ass getting all the chapters in a given book
             self.assertEqual(text1, text2, 'Passage is incorrect')
 
     def test_get_online_passage_range_with_intermediate_chapters(self):
-        text1 = bible_yaml_extractor.get_yaml_passage_range('Daniel', 3, 30, 5, 1)
+        text1 = bible_extractor.get_online_passage('Daniel', 3, 30) + '\n' + \
+                bible_extractor.get_online_chapter('Daniel', 4) + '\n' + \
+                bible_extractor.get_online_passage('Daniel', 5, 1)
         text2 = bible_extractor.get_online_passage_range('Daniel', 3, 30, 5, 1)
-        # Compare with YAML extracted contents due similarities in passage contents construction
+        # A passage range with intermediate chapters should be the same as manually putting all the passages together
         self.assertEqual(text1, text2, 'Passage is incorrect')
 
     def test_get_online_passage_range_from_same_chapter(self):
-        text1 = bible_yaml_extractor.get_yaml_passages('Ezekiel', 40, 19, 20)
-        # Compare with YAML extracted contents due similarities in passage contents construction
+        text1 = bible_extractor.get_online_passages('Ezekiel', 40, 19, 20)
+        # A passage range in the same chapter should be the same as calling the passages extraction method
         text2 = bible_extractor.get_online_passage_range('Ezekiel', 40, 19, 40, 20)
         self.assertEqual(text1, text2, 'Passage is incorrect')
 
