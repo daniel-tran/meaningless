@@ -146,15 +146,20 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(john, text, 'Passage is incorrect')
 
     def test_get_yaml_chapter_list(self):
-        text = bible_yaml_extractor.get_yaml_chapter('Ecclesiastes', 11, output_as_list=True)
-        eccl = bible_extractor.get_online_chapter('Ecclesiastes', 11, output_as_list=True)
+        text = bible_yaml_extractor.get_yaml_chapter('Ecclesiastes', 11, output_as_list=True,
+                                                     show_passage_numbers=False)
+        eccl = bible_extractor.get_online_chapter('Ecclesiastes', 11, output_as_list=True, show_passage_numbers=False)
         # Results should be identical between the web and YAML extractor
+        # Ignoring passage numbers, as the web extractor omits this for the first passage of each chapter
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
     def test_get_yaml_chapters_list(self):
-        text = bible_yaml_extractor.get_yaml_chapters('Ecclesiastes', 11, 12, output_as_list=True)
-        eccl = bible_extractor.get_online_chapters('Ecclesiastes', 11, 12, output_as_list=True)
+        text = bible_yaml_extractor.get_yaml_chapters('Ecclesiastes', 11, 12, output_as_list=True,
+                                                      show_passage_numbers=False)
+        eccl = bible_extractor.get_online_chapters('Ecclesiastes', 11, 12, output_as_list=True,
+                                                   show_passage_numbers=False)
         # Results should be identical between the web and YAML extractor
+        # Ignoring passage numbers, as the web extractor omits this for the first passage of each chapter
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
     def test_get_yaml_book_list(self):
@@ -167,7 +172,7 @@ class UnitTests(unittest.TestCase):
         text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9, 18, 10, 1, output_as_list=True)
         eccl = ['\u00b9\u2078 Wisdom is better than weapons of war,\n'
                 '    but one sinner destroys much good.',
-                'As dead flies give perfume a bad smell,\n'
+                '\u00b9 As dead flies give perfume a bad smell,\n'
                 '    so a little folly outweighs wisdom and honor.\n'
                 ]
         self.assertEqual(eccl, text, 'Passage is incorrect')
@@ -175,7 +180,7 @@ class UnitTests(unittest.TestCase):
     def test_get_yaml_passage_range_list_with_stripped_whitespace(self):
         text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 10, 1, 10, 2, output_as_list=True,
                                                            strip_excess_whitespace_from_list=True)
-        eccl = ['As dead flies give perfume a bad smell,\n'
+        eccl = ['\u00b9 As dead flies give perfume a bad smell,\n'
                 '    so a little folly outweighs wisdom and honor.',
                 '\u00b2 The heart of the wise inclines to the right,\n'
                 '    but the heart of the fool to the left.'

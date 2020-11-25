@@ -25,7 +25,7 @@ class UnitTests(unittest.TestCase):
 
     def test_get_yaml_chapter(self):
         text = bible_yaml_extractor.get_yaml_chapter('Ecclesiastes', 11)
-        eccl11 = ['Ship your grain across the sea;',
+        eccl11 = ['\u00b9 Ship your grain across the sea;',
                   '    after many days you may receive a return.',
                   '\u00b2 Invest in seven ventures, yes, in eight;',
                   '    you do not know what disaster may come upon the land. ',
@@ -66,7 +66,7 @@ class UnitTests(unittest.TestCase):
         text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9, 18, 10, 1)
         eccl = ['\u00b9\u2078 Wisdom is better than weapons of war,',
                 '    but one sinner destroys much good.',
-                'As dead flies give perfume a bad smell,',
+                '\u00b9 As dead flies give perfume a bad smell,',
                 '    so a little folly outweighs wisdom and honor.'
                 ]
         # This passage selection is on a chapter boundary, which means Ecclesiastes 9:18 has the trailing line character
@@ -74,7 +74,7 @@ class UnitTests(unittest.TestCase):
 
     def test_get_yaml_chapters(self):
         text = bible_yaml_extractor.get_yaml_chapters('Ecclesiastes', 11, 12)
-        eccl11_12 = ['Ship your grain across the sea;',
+        eccl11_12 = ['\u00b9 Ship your grain across the sea;',
                      '    after many days you may receive a return.',
                      '\u00b2 Invest in seven ventures, yes, in eight;',
                      '    you do not know what disaster may come upon the land. ',
@@ -109,7 +109,7 @@ class UnitTests(unittest.TestCase):
                      '    and cast off the troubles of your body,',
                      '    for youth and vigor are meaningless.',
                      # Chapter 12
-                     'Remember your Creator',
+                     '\u00b9 Remember your Creator',
                      '    in the days of your youth,',
                      'before the days of trouble come',
                      '    and the years approach when you will say,',
@@ -174,7 +174,7 @@ class UnitTests(unittest.TestCase):
 
     def test_get_yaml_passage_range_negative_numbers(self):
         text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 1, -1, 1, 1)
-        eccl = 'The words of the Teacher, son of David, king in Jerusalem:'
+        eccl = '\u00b9 The words of the Teacher, son of David, king in Jerusalem:'
         # This should apply value normalisation logic to ensure that negative values don't break the execution flow
         self.assertEqual(eccl, text, 'Passage is incorrect')
         text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', -1, 1, 1, 1)
@@ -183,7 +183,7 @@ class UnitTests(unittest.TestCase):
 
     def test_get_yaml_passage_range_excessive_numbers(self):
         text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9000, 1, 9000, 2)
-        sample1 = ['Remember your Creator',
+        sample1 = ['\u00b9 Remember your Creator',
                    '    in the days of your youth,',
                    'before the days of trouble come',
                    '    and the years approach when you will say,',

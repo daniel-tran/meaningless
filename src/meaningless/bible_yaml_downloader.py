@@ -173,6 +173,13 @@ def yaml_download_passage_range(book, chapter_from, passage_from, chapter_to, pa
                     # this particular iteration)
                     passage_num += 1
 
+            # First passage of the chapter may not always have a verse number.
+            # Unclear if this is a formatting issue on the Bible Gateway site, but it is added for consistency.
+            # This is not done on the web extractor due to the difficulty of selecting the first passage in an
+            # arbitrary range.
+            if passage_num == 1 and show_passage_numbers and not passage.startswith('\u00b9 '):
+                passage = '\u00b9 {0}'.format(passage)
+
             document[book][chapter][passage_num] = passage
             passage_num += 1
 
