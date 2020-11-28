@@ -98,5 +98,14 @@ class UnitTests(unittest.TestCase):
                                     './static/NIV/test_yaml_download_passage_range.yaml'),
                         'Files do not match')
 
+    def test_yaml_download_with_misc_info(self):
+        download_path = './tmp/test_yaml_download_with_misc_info'
+        bible = YAMLDownloader(file_location=download_path, include_misc_info=True)
+        bible.download_book('Philemon')
+        document = yaml_file_interface.read('{0}/NIV/Philemon.yaml'.format(download_path))
+        # For some reason, the misc. info is always placed after the passage contents in these tests?
+        self.assertEqual('English', document['Info']['Language'], 'Language info is not correct')
+        self.assertEqual('NIV', document['Info']['Translation'], 'Translation info is not correct')
+
 if __name__ == "__main__":
     unittest.main()

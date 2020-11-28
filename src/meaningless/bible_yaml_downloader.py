@@ -21,18 +21,20 @@ class YAMLDownloader:
     }
 
     def __init__(self, translation='NIV', show_passage_numbers=True, file_location=os.getcwd(),
-                 strip_excess_whitespace=False):
+                 strip_excess_whitespace=False, include_misc_info=False):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :param show_passage_numbers: If True, any present passage numbers are preserved.
         :param file_location: Directory containing the downloaded YAML file. Defaults to the current working directory.
         :param strip_excess_whitespace: If True, passages don't retain leading & trailing whitespaces as well as
                                         newline characters.
+        :param include_misc_info: If True, additional information is included in the YAML file, such as the translation.
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
         self.file_location = file_location
         self.strip_excess_whitespace = strip_excess_whitespace
+        self.include_misc_info = include_misc_info
 
     def download_passage(self, book, chapter, passage):
         """
@@ -101,10 +103,20 @@ class YAMLDownloader:
             return 1
 
         is_translation_with_omitted_passages = self.translation in self.__translations_with_omitted_passages.keys()
-        document = {book: {}}
         online_bible = WebExtractor(translation=self.translation, show_passage_numbers=self.show_passage_numbers,
                                     output_as_list=True, passage_separator='',
                                     strip_excess_whitespace_from_list=self.strip_excess_whitespace)
+
+        # Set up the base document with the root-level keys
+        # While the order of insertion matters, there are some books such as Philemon where the misc. info is placed
+        # after the passage contents even though the logic adds the misc. info first. The cause is currently unknown.
+        document = {}
+        if self.include_misc_info:
+            document['Info'] = {
+                'Language': common.get_translation_language(self.translation),
+                'Translation': self.translation
+            }
+        document[book] = {}
 
         # Range is extended by 1 to include chapter_to in the loop iteration
         for chapter in range(chapter_from, chapter_to + 1):

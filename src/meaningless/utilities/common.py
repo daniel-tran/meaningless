@@ -212,6 +212,24 @@ def get_empty_data(output_as_list=False):
     return ''
 
 
+def get_translation_language(translation):
+    """
+    A helper function to provide the language used in a given Bible translation
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :return: Language used as a string. Empty string if the translation is not supported.
+
+    >>> get_translation_language('NIV')
+    'English'
+    >>> get_translation_language('mounce')
+    ''
+    """
+    translation = translation.title()
+    if is_unsupported_translation(translation):
+        return ''
+    # TODO Currently, only English translations are supported. This could change in the future with other translations.
+    return 'English'
+
+
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.
     import doctest
