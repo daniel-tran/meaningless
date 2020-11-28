@@ -5,278 +5,215 @@ import re
 from meaningless.utilities import common
 
 
-def get_online_passage(book, chapter, passage, passage_separator='', show_passage_numbers=True, translation='NIV',
-                       output_as_list=False, strip_excess_whitespace_from_list=False):
-    """
-    Gets a single passage from the Bible Gateway site
-    :param book: Name of the book
-    :param chapter: Chapter number
-    :param passage: Passage number
-    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
-                              Mainly used to separate passages in a more customised way.
-    :param show_passage_numbers: If True, any present passage numbers are preserved.
-    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-    :param output_as_list: When True, returns the passage data as a list of strings.
-    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
-                                              whitespace characters are removed for each string element in the list.
-    :return: The passage as text. Empty string if the passage is invalid.
-    """
-    search = '{0} {1}:{2}'.format(book, chapter, passage)
-    return get_passage(search, passage_separator, show_passage_numbers, translation,
-                       output_as_list, strip_excess_whitespace_from_list)
+class WebExtractor:
 
+    def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
+                 strip_excess_whitespace_from_list=False, passage_separator=''):
+        """
+        :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+        :param show_passage_numbers: If True, any present passage numbers are preserved.
+        :param output_as_list: When True, returns the passage data as a list of strings.
+        :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
+                                                  whitespace characters are removed for each string element in the list.
+        :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
+        """
+        self.translation = translation
+        self.show_passage_numbers = show_passage_numbers
+        self.output_as_list = output_as_list
+        self.strip_excess_whitespace_from_list = strip_excess_whitespace_from_list
+        self.passage_separator = passage_separator
 
-def get_online_passages(book, chapter, passage_from, passage_to, passage_separator='', show_passage_numbers=True,
-                        translation='NIV', output_as_list=False, strip_excess_whitespace_from_list=False):
-    """
-    Gets a range of passages of the same chapter from the Bible Gateway site
-    :param book: Name of the book
-    :param chapter: Chapter number
-    :param passage_from: First passage number to get
-    :param passage_to: Last passage number to get
-    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
-                              Mainly used to separate passages in a more customised way.
-    :param show_passage_numbers: If True, any present passage numbers are preserved.
-    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-    :param output_as_list: When True, returns the passage data as a list of strings.
-    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
-                                              whitespace characters are removed for each string element in the list.
-    :return: The passage as text. Empty string if the passage is invalid.
-    """
-    search = '{0} {1}:{2} - {3}'.format(book, chapter, passage_from, passage_to)
-    return get_passage(search, passage_separator, show_passage_numbers, translation,
-                       output_as_list, strip_excess_whitespace_from_list)
+    def get_passage(self, book, chapter, passage):
+        """
+        Gets a single passage from the Bible Gateway site
+        :param book: Name of the book
+        :param chapter: Chapter number
+        :param passage: Passage number
+        :return: The specified passage. Empty string/list if the passage is invalid.
+        """
+        return self.search('{0} {1}:{2}'.format(book, chapter, passage))
 
+    def get_passages(self, book, chapter, passage_from, passage_to):
+        """
+        Gets a range of passages of the same chapter from the Bible Gateway site
+        :param book: Name of the book
+        :param chapter: Chapter number
+        :param passage_from: First passage number to get
+        :param passage_to: Last passage number to get
+        :return: The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
+        """
+        return self.search('{0} {1}:{2} - {3}'.format(book, chapter, passage_from, passage_to))
 
-def get_online_chapter(book, chapter, passage_separator='', show_passage_numbers=True, translation='NIV',
-                       output_as_list=False, strip_excess_whitespace_from_list=False):
-    """
-    Gets a single chapter from the Bible Gateway site
-    :param book: Name of the book
-    :param chapter: Chapter number
-    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
-                              Mainly used to separate passages in a more customised way.
-    :param show_passage_numbers: If True, any present passage numbers are preserved.
-    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-    :param output_as_list: When True, returns the passage data as a list of strings.
-    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
-                                              whitespace characters are removed for each string element in the list.
-    :return: The passage as text. Empty string if the passage is invalid.
-    """
-    search = '{0} {1}'.format(book, chapter)
-    return get_passage(search, passage_separator, show_passage_numbers, translation,
-                       output_as_list, strip_excess_whitespace_from_list)
+    def get_chapter(self, book, chapter):
+        """
+        Gets a single chapter from the Bible Gateway site
+        :param book: Name of the book
+        :param chapter: Chapter number
+        :return: All passages in the chapter. Empty string/list if the passage is invalid.
+        """
+        return self.search('{0} {1}'.format(book, chapter))
 
+    def get_chapters(self, book, chapter_from, chapter_to):
+        """
+        Gets a range of passages from a specified chapters selection from the Bible Gateway site
+        :param book: Name of the book
+        :param chapter_from: First chapter number to get
+        :param chapter_to: Last chapter number to get
+        :return: All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.
+        """
+        # Retrieve chapters one by one to stay within the max. text limit when requesting for passages.
+        # Add 1 to the end of the range, since the last chapter is also to be included.
+        chapters = [self.get_chapter(book, chapter) for chapter in range(chapter_from, chapter_to + 1)]
+        if self.output_as_list:
+            # Flattens the data structure from a list of lists to a normal list
+            return [chapter for chapter_list in chapters for chapter in chapter_list]
+        return '\n'.join(chapters)
 
-def get_online_chapters(book, chapter_from, chapter_to, passage_separator='', show_passage_numbers=True,
-                        translation='NIV', output_as_list=False, strip_excess_whitespace_from_list=False):
-    """
-    Gets a range of passages from a specified chapters selection from the Bible Gateway site.
-    This function stays within the passage contents max. limit by making incremental requests
-    for each chapter's contents, and combines it into a single multi-line string.
-    As such, the output is not guaranteed to be the same as invoking get_passage() with the same search string,
-    however the output is going to be similar to contents provided by the YAML extractor.
-    :param book: Name of the book
-    :param chapter_from: First chapter number to get
-    :param chapter_to: Last chapter number to get
-    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
-                              Mainly used to separate passages in a more customised way.
-    :param show_passage_numbers: If True, any present passage numbers are preserved.
-    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-    :param output_as_list: When True, returns the passage data as a list of strings.
-    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
-                                              whitespace characters are removed for each string element in the list.
-    :return: The passage as text. Empty string if the passage is invalid.
-    """
-    # Retrieve chapters one by one to stay within the max. text limit when requesting for passages.
-    # Add 1 to the end of the range, since the last chapter is also to be included.
-    chapters = [get_online_chapter(book, chapter, passage_separator, show_passage_numbers, translation,
-                                   output_as_list, strip_excess_whitespace_from_list)
-                for chapter in range(chapter_from, chapter_to + 1)]
-    if output_as_list:
-        # Flattens the data structure from a list of lists to a normal list
-        return [chapter for chapter_list in chapters for chapter in chapter_list]
-    return '\n'.join(chapters)
+    def get_book(self, book):
+        """
+        Gets all chapters for a specific book from the Bible Gateway site
+        :param book: Name of the book
+        :return: All passages in the specified book. Empty string/list if the passage is invalid.
+        """
+        return self.get_chapters(book, 1, common.get_chapter_count(book, self.translation))
 
+    def get_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to):
+        """
+        Gets a range of passages from one specific passage to another passage from the Bible Gateway site
+        :param book: Name of the book
+        :param chapter_from: First chapter number to get
+        :param passage_from: First passage number to get in the first chapter
+        :param chapter_to: Last chapter number to get
+        :param passage_to: Last passage number to get in the last chapter
+        :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
+        """
+        # Defer to a simpler alternative function when sourcing passages from the same chapter
+        if chapter_from == chapter_to:
+            return self.get_passages(book, chapter_from, passage_from, passage_to)
 
-def get_online_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, passage_separator='',
-                             show_passage_numbers=True, translation='NIV',
-                             output_as_list=False, strip_excess_whitespace_from_list=False):
-    """
-    Gets a range of passages from one specific passage to another passage from the Bible Gateway site.
-    This function stays within the passage contents max. limit by making incremental requests
-    for each chapter's contents, and combines it into a single multi-line string.
-    As such, the output is not guaranteed to be the same as invoking get_passage() with the same search string,
-    however the output is going to be similar to contents provided by the YAML extractor.
-    :param book: Name of the book
-    :param chapter_from: First chapter number to get
-    :param passage_from: First passage number to get in the first chapter
-    :param chapter_to: Last chapter number to get
-    :param passage_to: Last passage number to get in the last chapter
-    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
-                              Mainly used to separate passages in a more customised way.
-    :param show_passage_numbers: If True, any present passage numbers are preserved.
-    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-    :param output_as_list: When True, returns the passage data as a list of strings.
-    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
-                                              whitespace characters are removed for each string element in the list.
-    :return: The passage as text. Empty string if the passage is invalid.
-    """
-    # Defer to a simpler alternative function when sourcing passages from the same chapter
-    if chapter_from == chapter_to:
-        return get_online_passages(book, chapter_from, passage_from, passage_to, passage_separator,
-                                   show_passage_numbers, translation, output_as_list, strip_excess_whitespace_from_list)
+        # Get the partial section of the first chapter being requested, omitting some initial passages
+        initial_chapter = self.get_passages(book, chapter_from, passage_from, common.get_end_of_chapter())
+        # Get the partial section of the last chapter being requested, omitting some trailing passages
+        final_chapter = self.get_passages(book, chapter_to, 1, passage_to)
+        # Get all the chapters in between the initial and final chapters (exclusive since they have been pre-fetched).
+        # Sandwich those chapters between the first and last pre-fetched chapters to combine all the passage data.
+        chapters = [initial_chapter] + \
+                   [self.get_chapter(book, chapter)
+                    for chapter in range(chapter_from + 1, chapter_to)] + [final_chapter]
+        if self.output_as_list:
+            # Flattens the data structure from a list of lists to a normal list
+            return [chapter for chapter_list in chapters for chapter in chapter_list]
+        return '\n'.join(chapters)
 
-    # Get the partial section of the first chapter being requested, omitting some initial passages
-    initial_chapter = get_online_passages(book, chapter_from, passage_from, common.get_end_of_chapter(),
-                                          passage_separator, show_passage_numbers, translation,
-                                          output_as_list, strip_excess_whitespace_from_list)
-    # Get the partial section of the last chapter being requested, omitting some trailing passages
-    final_chapter = get_online_passages(book, chapter_to, 1, passage_to, passage_separator,
-                                        show_passage_numbers, translation,
-                                        output_as_list, strip_excess_whitespace_from_list)
-    # Get all the chapters in between the initial and final chapters (exclusive since they have been pre-fetched).
-    # Sandwich those chapters between the first and last pre-fetched chapters to combine all the passage data.
-    chapters = [initial_chapter] + \
-               [get_online_chapter(book, chapter, passage_separator, show_passage_numbers, translation,
-                                   output_as_list, strip_excess_whitespace_from_list)
-                for chapter in range(chapter_from + 1, chapter_to)] + [final_chapter]
-    if output_as_list:
-        # Flattens the data structure from a list of lists to a normal list
-        return [chapter for chapter_list in chapters for chapter in chapter_list]
-    return '\n'.join(chapters)
+    def search(self, passage_name):
+        """
+        Retrieves a specific passage or set of passages directly from the Bible Gateway site
+        :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
+        :return: Bible passage with preserved line breaks
+        """
+        # Some translations are very tricky to extract passages from, and currently, so specific extraction logic
+        # for these translations should not be introduced until they need to be supported.
+        translation = self.translation.upper()
+        if common.is_unsupported_translation(translation):
+            print('WARNING: "{0}" is not a supported translation.'.format(self.translation))
+            return common.get_empty_data(self.output_as_list)
 
+        # Use the printer-friendly view since there are fewer page elements to load and process
+        source_site_params = urlencode({'version': self.translation, 'search': passage_name, 'interface': 'print'})
+        source_site = 'https://www.biblegateway.com/passage/?{0}'.format(source_site_params)
+        soup = BeautifulSoup(common.get_page(source_site), 'html.parser')
 
-def get_online_book(book, passage_separator='', show_passage_numbers=True, translation='NIV',
-                    output_as_list=False, strip_excess_whitespace_from_list=False):
-    """
-    Gets all chapters for a specific book from the Bible Gateway site
-    :param book: Name of the book
-    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
-                              Mainly used to separate passages in a more customised way.
-    :param show_passage_numbers: If True, any present passage numbers are preserved.
-    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-    :param output_as_list: When True, returns the passage data as a list of strings.
-    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
-                                              whitespace characters are removed for each string element in the list.
-    :return: The passage as text. Empty string if the passage is invalid.
-    """
-    return get_online_chapters(book, 1, common.get_chapter_count(book, translation), passage_separator,
-                               show_passage_numbers, translation, output_as_list, strip_excess_whitespace_from_list)
+        # Don't collect contents from an invalid verse, since they do not exist.
+        # A fail-fast approach can be taken by checking for certain indicators of invalidity.
+        if not soup.find('div', {'class': 'passage-content'}):
+            print('WARNING: "{0}" is not a valid passage.'.format(passage_name))
+            return common.get_empty_data(self.output_as_list)
 
+        # To get a list, the passage separator is given an actual practical use as an indicator of where to split
+        # the string to create list elements.
+        temp_passage_separator = self.passage_separator
+        if self.output_as_list:
+            self.passage_separator = '-_-'
 
-def get_passage(passage_name, passage_separator='', show_passage_numbers=True, translation='NIV',
-                output_as_list=False, strip_excess_whitespace_from_list=False):
-    """
-    Gets all the text for a particular Bible passage from the Bible Gateway site
-    Keep in mind that this logic will likely break when the page structure of said site is changed.
-    :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
-    :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
-                              Mainly used to separate passages in a more customised way.
-    :param show_passage_numbers: If True, passage numbers are provided at the start of each passage's text.
-    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-    :param output_as_list: When True, returns the passage data as a list of strings.
-    :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
-                                              whitespace characters are removed for each string element in the list.
-    :return: Bible passage as a string with preserved line breaks
-    """
-    # Some translations are very tricky to extract passages from, and currently, so specific extraction logic for these
-    # translations should not be introduced until they need to be supported.
-    translation = translation.upper()
-    if common.is_unsupported_translation(translation):
-        print('WARNING: "{0}" is not a supported translation.'.format(translation))
-        return common.get_empty_data(output_as_list)
+        # Compile the list of tags to remove from the parsed web page, corresponding to the following elements:
+        # h1
+        #    - Ignore passage display
+        # h3
+        #    - Ignore section headings
+        # h4
+        #    - Ignore subsection headings, such as those in Ezekiel 40
+        # a with 'full-chap-link' class
+        #    - Ignore the "Read Full Chapter" text, which is carefully embedded within the passage
+        # sup with 'crossreference' class
+        #    - Ignore cross references
+        # sup with 'footnote' class
+        #    - Ignore in-line footnotes
+        # div with one of the 'footnotes', 'dropdowns', 'crossrefs', 'passage-other-trans' classes
+        #    - Ignore the footer area, which is composed of several main tags
+        # span with 'selah' class
+        #    - Ignore explicit Psalm interludes in the translations such as NLT and CEB
+        # selah
+        #    - Ignore explicit Psalm interludes in the translations such as HCSB
+        # p with 'translation-note' class
+        #    - Ignore explicit translation notes in translations such as ESV
+        removable_tags = soup.find_all(re.compile('^h1$|^h3$|^h4$')) \
+            + soup.find_all('a', {'class': 'full-chap-link'}) \
+            + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
+            + soup.find_all('div', {
+                            'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
+            + soup.find_all('span', {'class': 'selah'}) \
+            + soup.find_all('selah') \
+            + soup.find_all('p', {'class': 'translation-note'})
+        [tag.decompose() for tag in removable_tags]
 
-    # Use the printer-friendly view since there are fewer page elements to load and process
-    source_site_params = urlencode({'version': translation, 'search': passage_name, 'interface': 'print'})
-    source_site = 'https://www.biblegateway.com/passage/?{0}'.format(source_site_params)
-    soup = BeautifulSoup(common.get_page(source_site), 'html.parser')
+        # <br> tags will naturally be ignored when getting text
+        [br.replace_with('\n') for br in soup.find_all('br')]
+        # Convert chapter numbers into new lines
+        [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
+        # Preserve superscript verse numbers by using their Unicode counterparts
+        # Add in the custom passage separator as well while access to the verse numbers is still available
+        [sup.replace_with('{0}{1}'.format(self.passage_separator, common.superscript_numbers(sup.text)))
+         for sup in soup.find_all('sup', {'class': 'versenum'})]
+        # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
+        # spacing is not preserved when collecting the text. Therefore, a space is manually injected
+        # onto the end of the left cell's text to stop it from joining the right cell's text.
+        # Note: Python "double colon" syntax for lists is used to retrieve items at every N interval including 0.
+        # TODO: If a verse with >2 columns is found, this WILL need to be updated to be more dynamic
+        [td.replace_with('{0} '.format(td.text)) for td in soup.find_all('td')[::2]]
+        # Preserve paragraph spacing by manually pre-pending a new line
+        # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
+        [p.replace_with('\n{0}'.format(p.text)) for p in soup.find_all('p')]
 
-    # Don't collect contents from an invalid verse, since they do not exist.
-    # A fail-fast approach can be taken by checking for certain indicators of invalidity.
-    if not soup.find('div', {'class': 'passage-content'}):
-        print('WARNING: "{0}" is not a valid passage.'.format(passage_name))
-        return common.get_empty_data(output_as_list)
+        # Convert non-breaking spaces to normal spaces when retrieving the raw passage contents
+        all_text = soup.find('div', {'class': 'passage-content'}).text.replace('\xa0', ' ')
 
-    # To get a list, the passage separator is given an actual practical use as an indicator of where to split the string
-    # to create list elements.
-    if output_as_list:
-        passage_separator = '-_-'
+        # Remove all superscript numbers if the passage numbers should be hidden
+        if not self.show_passage_numbers:
+            all_text = common.remove_superscript_numbers_in_passage(all_text)
+        # EXB has in-line notes which are usually enclosed within brackets, and should not be displayed.
+        # If the in-line note is simply decomposed, removing the associated space is much more difficult.
+        # Thus, the in-line note text is removed at the end, when the function is strictly handling the passage text
+        # to eliminate both the in-line note and its space in an easy manner.
+        if translation == 'EXB':
+            all_text = re.sub('\s\[.+?\]', '', all_text)
+        if not self.output_as_list:
+            # Restore the original passage separator to hide the special list-splitting pattern from end users
+            self.passage_separator = temp_passage_separator
+            # Do any final touch-ups to the passage contents before outputting the string
+            return all_text.strip()
 
-    # Compile the list of tags to remove from the parsed web page, corresponding to the following elements:
-    # h1
-    #    - Ignore passage display
-    # h3
-    #    - Ignore section headings
-    # h4
-    #    - Ignore subsection headings, such as those in Ezekiel 40
-    # a with 'full-chap-link' class
-    #    - Ignore the "Read Full Chapter" text, which is carefully embedded within the passage
-    # sup with 'crossreference' class
-    #    - Ignore cross references
-    # sup with 'footnote' class
-    #    - Ignore in-line footnotes
-    # div with one of the 'footnotes', 'dropdowns', 'crossrefs', 'passage-other-trans' classes
-    #    - Ignore the footer area, which is composed of several main tags
-    # span with 'selah' class
-    #    - Ignore explicit Psalm interludes in the translations such as NLT and CEB
-    # selah
-    #    - Ignore explicit Psalm interludes in the translations such as HCSB
-    # p with 'translation-note' class
-    #    - Ignore explicit translation notes in translations such as ESV
-    removable_tags = soup.find_all(re.compile('^h1$|^h3$|^h4$')) \
-        + soup.find_all('a', {'class': 'full-chap-link'}) \
-        + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
-        + soup.find_all('div', {'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
-        + soup.find_all('span', {'class': 'selah'}) \
-        + soup.find_all('selah') \
-        + soup.find_all('p', {'class': 'translation-note'})
-    [tag.decompose() for tag in removable_tags]
-
-    # <br> tags will naturally be ignored when getting text
-    [br.replace_with('\n') for br in soup.find_all('br')]
-    # Convert chapter numbers into new lines
-    [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
-    # Preserve superscript verse numbers by using their Unicode counterparts
-    # Add in the custom passage separator as well while access to the verse numbers is still available
-    [sup.replace_with('{0}{1}'.format(passage_separator, common.superscript_numbers(sup.text)))
-        for sup in soup.find_all('sup', {'class': 'versenum'})]
-    # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
-    # spacing is not preserved when collecting the text. Therefore, a space is manually injected
-    # onto the end of the left cell's text to stop it from joining the right cell's text.
-    # Note: Python "double colon" syntax for lists is used to retrieve items at every N interval including 0.
-    # TODO: If a verse with >2 columns is found, this WILL need to be updated to be more dynamic
-    [td.replace_with('{0} '.format(td.text)) for td in soup.find_all('td')[::2]]
-    # Preserve paragraph spacing by manually pre-pending a new line
-    # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
-    [p.replace_with('\n{0}'.format(p.text)) for p in soup.find_all('p')]
-
-    # Convert non-breaking spaces to normal spaces when retrieving the raw passage contents
-    all_text = soup.find('div', {'class': 'passage-content'}).text.replace('\xa0', ' ')
-
-    # Remove all superscript numbers if the passage numbers should be hidden
-    if not show_passage_numbers:
-        all_text = common.remove_superscript_numbers_in_passage(all_text)
-    # EXB has in-line notes which are usually enclosed within brackets, and should not be displayed.
-    # If the in-line note is simply decomposed, removing the associated space is much more difficult.
-    # Thus, the in-line note text is removed at the end, when the function is strictly handling the passage text
-    # to eliminate both the in-line note and its space in an easy manner.
-    if translation == 'EXB':
-        all_text = re.sub('\s\[.+?\]', '', all_text)
-    if not output_as_list:
-        # Do any final touch-ups to the passage contents before outputting the string
-        return all_text.strip()
-
-    # At this point, the expectation is that the return value is a list of passages
-    passage_list = re.split(passage_separator, all_text.strip())
-    # Remove the first empty item, even if just composed of whitespace characters
-    if len(passage_list[0]) <= 0 or passage_list[0].isspace():
-        passage_list.pop(0)
-    # Since this is the end of the method, the logic may as well return the list comprehension result
-    # rather than spend the extra effort to modify the existing passage list and then return the result.
-    if strip_excess_whitespace_from_list:
-        return [passage.strip() for passage in passage_list]
-    return passage_list
+        # At this point, the expectation is that the return value is a list of passages
+        passage_list = re.split(self.passage_separator, all_text.strip())
+        # Remove the first empty item, even if just composed of whitespace characters
+        if len(passage_list[0]) <= 0 or passage_list[0].isspace():
+            passage_list.pop(0)
+        # Restore the original passage separator to hide the special list-splitting pattern from end users
+        self.passage_separator = temp_passage_separator
+        # Since this is the end of the method, the logic may as well return the list comprehension result
+        # rather than spend the extra effort to modify the existing passage list and then return the result.
+        if self.strip_excess_whitespace_from_list:
+            return [passage.strip() for passage in passage_list]
+        return passage_list
 
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.

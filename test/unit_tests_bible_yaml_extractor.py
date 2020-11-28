@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 sys.path.append('../src/')
-from meaningless import bible_yaml_extractor
+from meaningless.bible_yaml_extractor import YAMLExtractor
 
 
 class UnitTests(unittest.TestCase):
@@ -11,20 +11,23 @@ class UnitTests(unittest.TestCase):
     #       All other methods will simply be interpreted as test helper functions.
 
     def test_get_yaml_passage(self):
-        text = bible_yaml_extractor.get_yaml_passage('Ecclesiastes', 2, 26)
+        bible = YAMLExtractor()
+        text = bible.get_passage('Ecclesiastes', 2, 26)
         self.assertEqual('\u00b2\u2076 To the person who pleases him, God gives wisdom, knowledge and happiness, '
                          'but to the sinner he gives the task of gathering and storing up wealth to hand '
                          'it over to the one who pleases God. This too is meaningless, a chasing after '
                          'the wind.', text, 'Passage is incorrect')
 
     def test_get_yaml_passages(self):
-        text = bible_yaml_extractor.get_yaml_passages('Ecclesiastes', 2, 24, 25)
+        bible = YAMLExtractor()
+        text = bible.get_passages('Ecclesiastes', 2, 24, 25)
         self.assertEqual('\u00b2\u2074 A person can do nothing better than to eat and drink and find satisfaction '
                          'in their own toil. This too, I see, is from the hand of God, '
                          '\u00b2\u2075 for without him, who can eat or find enjoyment?', text, 'Passage is incorrect')
 
     def test_get_yaml_chapter(self):
-        text = bible_yaml_extractor.get_yaml_chapter('Ecclesiastes', 11)
+        bible = YAMLExtractor()
+        text = bible.get_chapter('Ecclesiastes', 11)
         eccl11 = ['\u00b9 Ship your grain across the sea;',
                   '    after many days you may receive a return.',
                   '\u00b2 Invest in seven ventures, yes, in eight;',
@@ -63,7 +66,8 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl11), text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range(self):
-        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9, 18, 10, 1)
+        bible = YAMLExtractor()
+        text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
         eccl = ['\u00b9\u2078 Wisdom is better than weapons of war,',
                 '    but one sinner destroys much good.',
                 '\u00b9 As dead flies give perfume a bad smell,',
@@ -73,7 +77,8 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl), text, 'Passage is incorrect')
 
     def test_get_yaml_chapters(self):
-        text = bible_yaml_extractor.get_yaml_chapters('Ecclesiastes', 11, 12)
+        bible = YAMLExtractor()
+        text = bible.get_chapters('Ecclesiastes', 11, 12)
         eccl11_12 = ['\u00b9 Ship your grain across the sea;',
                      '    after many days you may receive a return.',
                      '\u00b2 Invest in seven ventures, yes, in eight;',
@@ -159,30 +164,34 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl11_12), text, 'Passage is incorrect')
 
     def test_get_yaml_book(self):
-        text = bible_yaml_extractor.get_yaml_book('Philemon')
+        bible = YAMLExtractor()
+        text = bible.get_book('Philemon')
         with open('./static/NIV/test_get_yaml_book.txt', 'r', encoding='utf-8') as file:
             phil = file.read()
         self.assertEqual(phil, text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_reverse_parameters(self):
-        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 10, 1, 9, 18)
+        bible = YAMLExtractor()
+        text = bible.get_passage_range('Ecclesiastes', 10, 1, 9, 18)
         # Chapter 10 is after chapter 9, so this should not work
         self.assertEqual('', text, 'Passage is incorrect')
-        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9, 2, 9, 1)
+        text = bible.get_passage_range('Ecclesiastes', 9, 2, 9, 1)
         # Verse 2 is after verse 1, so this should not work either
         self.assertEqual('', text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_negative_numbers(self):
-        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 1, -1, 1, 1)
+        bible = YAMLExtractor()
+        text = bible.get_passage_range('Ecclesiastes', 1, -1, 1, 1)
         eccl = '\u00b9 The words of the Teacher, son of David, king in Jerusalem:'
         # This should apply value normalisation logic to ensure that negative values don't break the execution flow
         self.assertEqual(eccl, text, 'Passage is incorrect')
-        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', -1, 1, 1, 1)
+        text = bible.get_passage_range('Ecclesiastes', -1, 1, 1, 1)
         # Same normalisation should also apply for negative chapter numbers as well
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_excessive_numbers(self):
-        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9000, 1, 9000, 2)
+        bible = YAMLExtractor()
+        text = bible.get_passage_range('Ecclesiastes', 9000, 1, 9000, 2)
         sample1 = ['\u00b9 Remember your Creator',
                    '    in the days of your youth,',
                    'before the days of trouble come',
@@ -193,41 +202,48 @@ class UnitTests(unittest.TestCase):
                    '    and the clouds return after the rain;']
         # Excessive chapters should just default to the last chapter of the book
         self.assertEqual('\n'.join(sample1), text, 'Passage is incorrect')
-        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 1, 9000, 1, 9001)
+        text = bible.get_passage_range('Ecclesiastes', 1, 9000, 1, 9001)
         sample2 = ['\u00b9\u2078 For with much wisdom comes much sorrow;',
                    '    the more knowledge, the more grief.']
         # Excessive passages should just default to the last passage of the given chapter
         self.assertEqual('\n'.join(sample2), text, 'Passage is incorrect')
 
     def test_get_yaml_passage_invalid(self):
-        text = bible_yaml_extractor.get_yaml_passage('Barnabas', 2, 26)
+        bible = YAMLExtractor()
+        text = bible.get_passage('Barnabas', 2, 26)
         self.assertEqual('', text, 'Passage is incorrect')
 
     def test_get_yaml_passages_invalid(self):
-        text = bible_yaml_extractor.get_yaml_passages('Barnabas', 2, 26, 27)
+        bible = YAMLExtractor()
+        text = bible.get_passages('Barnabas', 2, 26, 27)
         self.assertEqual('', text, 'Passage is incorrect')
 
     def test_get_yaml_chapter_invalid(self):
-        text = bible_yaml_extractor.get_yaml_chapter('Barnabas', 2)
+        bible = YAMLExtractor()
+        text = bible.get_chapter('Barnabas', 2)
         self.assertEqual('', text, 'Passage is incorrect')
 
     def test_get_yaml_chapters_invalid(self):
-        text = bible_yaml_extractor.get_yaml_chapters('Barnabas', 2, 3)
+        bible = YAMLExtractor()
+        text = bible.get_chapters('Barnabas', 2, 3)
         self.assertEqual('', text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_invalid(self):
-        text = bible_yaml_extractor.get_yaml_passage_range('Barnabas', 2, 3, 2, 4)
+        bible = YAMLExtractor()
+        text = bible.get_passage_range('Barnabas', 2, 3, 2, 4)
         self.assertEqual('', text, 'Passage is incorrect')
 
     def test_get_yaml_passage_without_passage_numbers(self):
-        text = bible_yaml_extractor.get_yaml_passage('Ecclesiastes', 2, 26, False)
+        bible = YAMLExtractor(show_passage_numbers=False)
+        text = bible.get_passage('Ecclesiastes', 2, 26)
         self.assertEqual('To the person who pleases him, God gives wisdom, knowledge and happiness, '
                          'but to the sinner he gives the task of gathering and storing up wealth to hand '
                          'it over to the one who pleases God. This too is meaningless, a chasing after '
                          'the wind.', text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_without_passage_numbers(self):
-        text = bible_yaml_extractor.get_yaml_passage_range('Ecclesiastes', 9, 18, 10, 1, False)
+        bible = YAMLExtractor(show_passage_numbers=False)
+        text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
         eccl = ['Wisdom is better than weapons of war,',
                 '    but one sinner destroys much good.',
                 'As dead flies give perfume a bad smell,',
@@ -236,13 +252,15 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl), text, 'Passage is incorrect')
 
     def test_get_yaml_passages_without_passage_numbers(self):
-        text = bible_yaml_extractor.get_yaml_passages('Ecclesiastes', 2, 24, 25, False)
+        bible = YAMLExtractor(show_passage_numbers=False)
+        text = bible.get_passages('Ecclesiastes', 2, 24, 25)
         self.assertEqual('A person can do nothing better than to eat and drink and find satisfaction '
                          'in their own toil. This too, I see, is from the hand of God, '
                          'for without him, who can eat or find enjoyment?', text, 'Passage is incorrect')
 
     def test_get_yaml_chapter_without_passage_numbers(self):
-        text = bible_yaml_extractor.get_yaml_chapter('Ecclesiastes', 11, False)
+        bible = YAMLExtractor(show_passage_numbers=False)
+        text = bible.get_chapter('Ecclesiastes', 11)
         eccl11 = ['Ship your grain across the sea;',
                   '    after many days you may receive a return.',
                   'Invest in seven ventures, yes, in eight;',
@@ -281,7 +299,8 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl11), text, 'Passage is incorrect')
 
     def test_get_yaml_chapters_without_passage_numbers(self):
-        text = bible_yaml_extractor.get_yaml_chapters('Ecclesiastes', 11, 12, False)
+        bible = YAMLExtractor(show_passage_numbers=False)
+        text = bible.get_chapters('Ecclesiastes', 11, 12)
         eccl11_12 = ['Ship your grain across the sea;',
                      '    after many days you may receive a return.',
                      'Invest in seven ventures, yes, in eight;',
@@ -367,14 +386,16 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl11_12), text, 'Passage is incorrect')
 
     def test_get_yaml_passage_nlt(self):
-        text = bible_yaml_extractor.get_yaml_passage('Ecclesiastes', 2, 26, translation='NLT')
+        bible = YAMLExtractor(translation='NLT')
+        text = bible.get_passage('Ecclesiastes', 2, 26)
         self.assertEqual('\u00b2\u2076 God gives wisdom, knowledge, and joy to those who please him. But if a '
                          'sinner becomes wealthy, God takes the wealth away and gives it to those who '
                          'please him. This, too, is meaningless\u2014like chasing the wind.', text,
                          'Passage is incorrect')
 
     def test_get_yaml_passage_invalid_translation(self):
-        text = bible_yaml_extractor.get_yaml_passage('Ecclesiastes', 2, 26, translation='LOL')
+        bible = YAMLExtractor(translation='LOL')
+        text = bible.get_passage('Ecclesiastes', 2, 26)
         self.assertEqual('', text, 'Passage is incorrect')
 
 if __name__ == "__main__":
