@@ -7,13 +7,13 @@ import re
 
 class YAMLExtractor:
 
-    @staticmethod
-    def __get_module_directory():
+    def get_local_yaml_file_path(self, book):
         """
-        A helper function to retrieve the directory of the module & ensure YAML files can be read without path changes
-        :return: The directory to the folder that contains this Python source file
+        A local helper function to retrieve the file path to a locally sourced YAML file
+        :param book: Name of the book
+        :return: The file path to the YAML file
         """
-        return os.path.dirname(__file__)
+        return os.path.join(os.path.dirname(__file__), 'translations', self.translation, '{0}.yaml'.format(book))
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
                  strip_excess_whitespace_from_list=False):
@@ -57,8 +57,7 @@ class YAMLExtractor:
         :param chapter: Chapter number
         :return: All passages in the chapter. Empty string/list if the passage is invalid.
         """
-        document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(self.__get_module_directory(),
-                                                                      self.translation, book))
+        document = yaml_file_interface.read(self.get_local_yaml_file_path(book))
         # Fail-fast on invalid passages
         if not document:
             print('WARNING: "{0} {1}" is not valid'.format(book, chapter))
@@ -74,8 +73,7 @@ class YAMLExtractor:
         :param chapter_to: Last chapter number to get
         :return: All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.
         """
-        document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(self.__get_module_directory(),
-                                                                      self.translation, book))
+        document = yaml_file_interface.read(self.get_local_yaml_file_path(book))
         # Fail-fast on invalid passages
         if not document:
             print('WARNING: "{0} {1} - {2}" is not valid'.format(book, chapter_from, chapter_to))
@@ -103,9 +101,7 @@ class YAMLExtractor:
         """
         # Standardise letter casing to ensure key access errors are not caused by case sensitivity
         book = book.title()
-        # Use __file__ to ensure the file is read relative to the module location
-        document = yaml_file_interface.read('{0}/{1}/{2}.yaml'.format(self.__get_module_directory(),
-                                                                      self.translation, book))
+        document = yaml_file_interface.read(self.get_local_yaml_file_path(book))
         passage_list = []
         # Fail-fast on invalid passages
         if not document:
