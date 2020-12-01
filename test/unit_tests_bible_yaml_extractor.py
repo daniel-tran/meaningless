@@ -398,5 +398,34 @@ class UnitTests(unittest.TestCase):
         text = bible.get_passage('Ecclesiastes', 2, 26)
         self.assertEqual('', text, 'Passage is incorrect')
 
+    def test_get_yaml_passages_with_passage_separator(self):
+        bible = YAMLExtractor(passage_separator='\n\n')
+        text = bible.get_passages('Ecclesiastes', 2, 24, 25)
+        eccl = ['\u00b2\u2074 A person can do nothing better than to eat and drink and find satisfaction '
+                'in their own toil. This too, I see, is from the hand of God, ',
+                '\u00b2\u2075 for without him, who can eat or find enjoyment?'
+                ]
+        # 1 new line character for the chapter boundary + 2 new lines for the passage separator
+        self.assertEqual('\n\n'.join(eccl), text, 'Passage is incorrect')
+
+    def test_get_yaml_passage_range_with_passage_separator_on_chapter_boundary(self):
+        bible = YAMLExtractor(passage_separator='\n\n')
+        text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
+        eccl = ['\u00b9\u2078 Wisdom is better than weapons of war,\n'
+                '    but one sinner destroys much good.',
+                '\u00b9 As dead flies give perfume a bad smell,\n'
+                '    so a little folly outweighs wisdom and honor.'
+                ]
+        # Normally, the each chapter has a newline character auto appended on the end. With a passage separator,
+        # this would be considered not necessary anymore, as the passage separator is used instead.
+        self.assertEqual('\n\n'.join(eccl), text, 'Passage is incorrect')
+
+    def test_get_yaml_passage_range_with_passage_separator_and_output_as_list(self):
+        bible = YAMLExtractor(passage_separator='\n\n', output_as_list=True)
+        text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
+        # Neither passage should have any trace of the passage separator, since the output is a list
+        self.assertTrue((text[0].find('\n\n') < 0) and (text[1].find('\n\n') < 0),
+                        'Passage separator should not have been found')
+
 if __name__ == "__main__":
     unittest.main()

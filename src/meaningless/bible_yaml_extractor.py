@@ -16,18 +16,21 @@ class YAMLExtractor:
         return os.path.join(os.path.dirname(__file__), 'translations', self.translation, '{0}.yaml'.format(book))
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
-                 strip_excess_whitespace_from_list=False):
+                 strip_excess_whitespace_from_list=False, passage_separator=''):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :param show_passage_numbers: If True, any present passage numbers are preserved.
         :param output_as_list: When True, returns the passage data as a list of strings.
         :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
                                                   whitespace characters are removed for each string element in the list.
+        :param passage_separator: When output_as_list is False, an optional string added to the front of a passage
+                                  (placed before the passage number). Defaults to the empty string.
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
         self.output_as_list = output_as_list
         self.strip_excess_whitespace_from_list = strip_excess_whitespace_from_list
+        self.passage_separator = passage_separator
 
     def get_passage(self, book, chapter, passage):
         """
@@ -127,8 +130,9 @@ class YAMLExtractor:
             # Extend the range by 1 since the last passage is also included in the iteration
             [passage_list.append(document[book][chapter][passage]) for passage in
              range(passage_initial, passage_final + 1)]
-            # Start each chapter on a new line when outputting as a string
-            if not self.output_as_list:
+            # Start each chapter on a new line when outputting as a string. Use the passage separator if it is set, to
+            # ensure uniform passage separation regardless of chapter boundaries.
+            if not self.output_as_list and len(self.passage_separator) <= 0:
                 passage_list.append('\n')
 
         if not self.show_passage_numbers:
@@ -142,7 +146,7 @@ class YAMLExtractor:
             return passage_list
         # Convert the list of passages into a string, as strings are immutable and manually re-initialising a new string
         # in the loop can be costly to performance.
-        all_text = ''.join([passage for passage in passage_list])
+        all_text = self.passage_separator.join([passage for passage in passage_list])
 
         return all_text.strip()
 
