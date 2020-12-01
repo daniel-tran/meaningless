@@ -128,8 +128,9 @@ class YAMLDownloader:
                                     strip_excess_whitespace_from_list=self.strip_excess_whitespace)
 
         # Set up the base document with the root-level keys
-        # While the order of insertion matters, there are some books such as Philemon where the misc. info is placed
-        # after the passage contents even though the logic adds the misc. info first. The cause is currently unknown.
+        # Upon downloading a YAML file, the top-level keys might be ordered differently to when they were inserted.
+        # This is likely due to Python not sorting dictionary keys internally, but could be due to something else.
+        # This does not affect the information contained in the downloaded YAML file, but could affect file comparisons.
         document = {}
         if self.include_misc_info:
             document['Info'] = {
