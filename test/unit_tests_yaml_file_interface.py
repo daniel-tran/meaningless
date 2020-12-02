@@ -57,7 +57,7 @@ class UnitTests(unittest.TestCase):
     def test_write_empty_path(self):
         document = {'Disco': 7}
         rc = yaml_file_interface.write('', document)
-        self.assertEqual(rc, 2, 'File should not have been written')
+        self.assertEqual(rc, 0, 'File should not have been written')
 
     def test_read_empty_file(self):
         document = yaml_file_interface.read('./static/test_read_empty_file.yaml')

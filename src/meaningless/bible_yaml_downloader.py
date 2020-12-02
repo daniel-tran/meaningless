@@ -46,7 +46,7 @@ class YAMLDownloader:
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
-        :return: 0 if the download was successful. Non-zero value if an error occurred.
+        :return: 1 if the download was successful. 0 if an error occurred.
         """
         return self.download_passage_range(book, chapter, passage, chapter, passage, file_path)
 
@@ -60,7 +60,7 @@ class YAMLDownloader:
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
-        :return: 0 if the download was successful. Non-zero value if an error occurred.
+        :return: 1 if the download was successful. 0 if an error occurred.
         """
         return self.download_passage_range(book, chapter, passage_from, chapter, passage_to, file_path)
 
@@ -72,7 +72,7 @@ class YAMLDownloader:
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
-        :return: 0 if the download was successful. Non-zero value if an error occurred.
+        :return: 1 if the download was successful. 0 if an error occurred.
         """
         return self.download_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter(), file_path)
 
@@ -85,7 +85,7 @@ class YAMLDownloader:
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
-        :return: 0 if the download was successful. Non-zero value if an error occurred.
+        :return: 1 if the download was successful. 0 if an error occurred.
         """
         return self.download_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter(), file_path)
 
@@ -96,7 +96,7 @@ class YAMLDownloader:
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
-        :return: 0 if the download was successful. Non-zero value if an error occurred.
+        :return: 1 if the download was successful. 0 if an error occurred.
         """
         return self.download_passage_range(book, 1, 1, common.get_chapter_count(book, self.translation),
                                            common.get_end_of_chapter(), file_path)
@@ -112,7 +112,7 @@ class YAMLDownloader:
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
-        :return: 0 if the download was successful. Non-zero value if an error occurred.
+        :return: 1 if the download was successful. 0 if an error occurred.
         """
         # Standardise letter casing with minimal impact to the resulting YAML file
         book_name = book.title()
