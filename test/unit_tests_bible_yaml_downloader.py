@@ -121,5 +121,34 @@ class UnitTests(unittest.TestCase):
         self.assertTrue(filecmp.cmp('{0}/1 John.yaml'.format(bible.default_directory), custom_path),
                         'Files do not match')
 
+    def test_yaml_download_with_excessive_values(self):
+        download_path = './tmp/test_yaml_download_with_excessive_values/NIV'
+        static_path = './static/NIV/test_yaml_download_with_excessive_values'
+        branching_paths = [
+            '{0}/Chapter-1'.format(download_path),
+            '{0}/Chapter1000'.format(download_path),
+            '{0}/Chapter5'.format(download_path),
+        ]
+        bible = YAMLDownloader(default_directory=branching_paths[0])
+        # This should obtain the first passage of the first chapter
+        bible.download_passage_range('1 John', -1, -1, -1, -1)
+        self.assertTrue(filecmp.cmp('{0}/1 John.yaml'.format(bible.default_directory),
+                                    '{0}/Chapter-1/1 John.yaml'.format(static_path)),
+                        'Files do not match')
+        # This does NOT get the last passage of the last chapter, but is instead deemed invalid.
+        # This is consistent with how the Bible Gateway site handles when the starting passage is too high.
+        bible.default_directory = branching_paths[1]
+        bible.download_passage_range('1 John', 1000, 1000, 1000, 1000)
+        self.assertTrue(filecmp.cmp('{0}/1 John.yaml'.format(bible.default_directory),
+                                    '{0}/Chapter1000/1 John.yaml'.format(static_path)),
+                        'Files do not match')
+        # Gets the last chapter of the book.
+        # This is valid because the starting passage is a correct number from the chapter.
+        bible.default_directory = branching_paths[2]
+        bible.download_passage_range('1 John', 1000, 1, 1000, 1000)
+        self.assertTrue(filecmp.cmp('{0}/1 John.yaml'.format(bible.default_directory),
+                                    '{0}/Chapter5/1 John.yaml'.format(static_path)),
+                        'Files do not match')
+
 if __name__ == "__main__":
     unittest.main()

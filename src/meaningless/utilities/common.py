@@ -45,7 +45,7 @@ def get_chapter_count(book, translation='NIV'):
     0
     """
     # Standardise letter casing to help find the key easier
-    book = book.title()
+    book_name = book.title()
     # This is the default mapping of books to their chapter counts
     chapter_count_mappings = {
         'Genesis': 50,
@@ -117,9 +117,9 @@ def get_chapter_count(book, translation='NIV'):
     }
     # TODO Additional logic can be added here that changes chapter_count_mappings based on a given translation
 
-    if book not in chapter_count_mappings.keys() or is_unsupported_translation(translation):
+    if book_name not in chapter_count_mappings.keys() or is_unsupported_translation(translation):
         return 0
-    return chapter_count_mappings[book]
+    return chapter_count_mappings[book_name]
 
 
 def get_page(url):

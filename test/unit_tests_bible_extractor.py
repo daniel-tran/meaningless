@@ -298,6 +298,64 @@ class UnitTests(unittest.TestCase):
         text2 = bible.get_passage_range('Ezekiel', 40, 19, 40, 20)
         self.assertEqual(text1, text2, 'Passage is incorrect')
 
+    def test_get_online_passage_with_excessive_values(self):
+        bible = WebExtractor()
+        text1 = bible.search('Ecclesiastes 1:1')
+        text2 = bible.get_passage('Ecclesiastes', -1, -1)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+        # Starting passage is not valid
+        text1 = ''
+        text2 = bible.get_passage('Ecclesiastes', 1000, 1000)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_passages_with_excessive_values(self):
+        bible = WebExtractor()
+        text1 = bible.search('Ecclesiastes 1:1')
+        text2 = bible.get_passages('Ecclesiastes', -1, -1, -1)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+        # Starting passage is not valid
+        text1 = ''
+        text2 = bible.get_passages('Ecclesiastes', 1000, 1000, 1000)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+        # Starting passage is valid again
+        text1 = bible.search('Ecclesiastes 12')
+        text2 = bible.get_passages('Ecclesiastes', 1000, 1, 1000)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_chapter_with_excessive_values(self):
+        bible = WebExtractor()
+        text1 = bible.search('Ecclesiastes 1')
+        text2 = bible.get_chapter('Ecclesiastes', -1)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+        # This should scale down to the last chapter number of the book
+        text1 = bible.search('Ecclesiastes 12')
+        text2 = bible.get_chapter('Ecclesiastes', 1000)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_chapters_with_excessive_values(self):
+        bible = WebExtractor()
+        text1 = bible.search('Ecclesiastes 1')
+        text2 = bible.get_chapters('Ecclesiastes', -1, -1)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+        # This should scale down to the last chapter number of the book
+        text1 = bible.search('Ecclesiastes 12')
+        text2 = bible.get_chapters('Ecclesiastes', 1000, 1000)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_online_passage_range_with_excessive_values(self):
+        bible = WebExtractor()
+        text1 = bible.search('Ecclesiastes 1:1')
+        text2 = bible.get_passage_range('Ecclesiastes', -1, -1, -1, -1)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+        # Starting passage is not valid
+        text1 = ''
+        text2 = bible.get_passage_range('Ecclesiastes', 1000, 1000, 1000, 1000)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+        # Starting passage is valid again
+        text1 = bible.search('Ecclesiastes 12')
+        text2 = bible.get_passage_range('Ecclesiastes', 1000, -1, 1000, 1000)
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
     # -------------- Tests which are ignored due to being unsupported translations --------------
 
     # def test_get_passage_exb(self):

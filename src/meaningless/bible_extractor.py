@@ -31,7 +31,11 @@ class WebExtractor:
         :param passage: Passage number
         :return: The specified passage. Empty string/list if the passage is invalid.
         """
-        return self.search('{0} {1}:{2}'.format(book, chapter, passage))
+        # Capping the chapter and passage information, as this gets included in site search string and can cause
+        # the web request to stagger if this manages to be long enough.
+        capped_chapter = common.get_capped_integer(chapter, max_value=common.get_chapter_count(book, self.translation))
+        capped_passage = common.get_capped_integer(passage)
+        return self.search('{0} {1}:{2}'.format(book, capped_chapter, capped_passage))
 
     def get_passages(self, book, chapter, passage_from, passage_to):
         """
@@ -42,7 +46,12 @@ class WebExtractor:
         :param passage_to: Last passage number to get
         :return: The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
         """
-        return self.search('{0} {1}:{2} - {3}'.format(book, chapter, passage_from, passage_to))
+        # Capping the chapter and passage information, as this gets included in site search string and can cause
+        # the web request to stagger if this manages to be long enough.
+        capped_chapter = common.get_capped_integer(chapter, max_value=common.get_chapter_count(book, self.translation))
+        capped_passage_from = common.get_capped_integer(passage_from)
+        capped_passage_to = common.get_capped_integer(passage_to)
+        return self.search('{0} {1}:{2} - {3}'.format(book, capped_chapter, capped_passage_from, capped_passage_to))
 
     def get_chapter(self, book, chapter):
         """
@@ -51,7 +60,10 @@ class WebExtractor:
         :param chapter: Chapter number
         :return: All passages in the chapter. Empty string/list if the passage is invalid.
         """
-        return self.search('{0} {1}'.format(book, chapter))
+        # Capping the chapter information, as this gets included in site search string and can cause
+        # the web request to stagger if this manages to be long enough.
+        capped_chapter = common.get_capped_integer(chapter, max_value=common.get_chapter_count(book, self.translation))
+        return self.search('{0} {1}'.format(book, capped_chapter))
 
     def get_chapters(self, book, chapter_from, chapter_to):
         """
@@ -61,9 +73,15 @@ class WebExtractor:
         :param chapter_to: Last chapter number to get
         :return: All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.
         """
+        # Capping the chapter information, as this gets included in site search string and can cause
+        # the web request to stagger if this manages to be long enough.
+        capped_chapter_from = common.get_capped_integer(chapter_from,
+                                                        max_value=common.get_chapter_count(book, self.translation))
+        capped_chapter_to = common.get_capped_integer(chapter_to,
+                                                      max_value=common.get_chapter_count(book, self.translation))
         # Retrieve chapters one by one to stay within the max. text limit when requesting for passages.
         # Add 1 to the end of the range, since the last chapter is also to be included.
-        chapters = [self.get_chapter(book, chapter) for chapter in range(chapter_from, chapter_to + 1)]
+        chapters = [self.get_chapter(book, chapter) for chapter in range(capped_chapter_from, capped_chapter_to + 1)]
         if self.output_as_list:
             # Flattens the data structure from a list of lists to a normal list
             return [chapter for chapter_list in chapters for chapter in chapter_list]
@@ -87,19 +105,27 @@ class WebExtractor:
         :param passage_to: Last passage number to get in the last chapter
         :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
         """
+        # Capping the chapter and passage information, as this gets included in site search string and can cause
+        # the web request to stagger if this manages to be long enough.
+        capped_chapter_from = common.get_capped_integer(chapter_from,
+                                                        max_value=common.get_chapter_count(book, self.translation))
+        capped_passage_from = common.get_capped_integer(passage_from)
+        capped_chapter_to = common.get_capped_integer(chapter_to,
+                                                      max_value=common.get_chapter_count(book, self.translation))
+        capped_passage_to = common.get_capped_integer(passage_to)
         # Defer to a simpler alternative function when sourcing passages from the same chapter
-        if chapter_from == chapter_to:
-            return self.get_passages(book, chapter_from, passage_from, passage_to)
+        if capped_chapter_from == capped_chapter_to:
+            return self.get_passages(book, capped_chapter_from, capped_passage_from, capped_passage_to)
 
         # Get the partial section of the first chapter being requested, omitting some initial passages
-        initial_chapter = self.get_passages(book, chapter_from, passage_from, common.get_end_of_chapter())
+        initial_chapter = self.get_passages(book, capped_chapter_from, capped_passage_from, common.get_end_of_chapter())
         # Get the partial section of the last chapter being requested, omitting some trailing passages
-        final_chapter = self.get_passages(book, chapter_to, 1, passage_to)
+        final_chapter = self.get_passages(book, capped_chapter_to, 1, capped_passage_to)
         # Get all the chapters in between the initial and final chapters (exclusive since they have been pre-fetched).
         # Sandwich those chapters between the first and last pre-fetched chapters to combine all the passage data.
         chapters = [initial_chapter] + \
                    [self.get_chapter(book, chapter)
-                    for chapter in range(chapter_from + 1, chapter_to)] + [final_chapter]
+                    for chapter in range(capped_chapter_from + 1, capped_chapter_to)] + [final_chapter]
         if self.output_as_list:
             # Flattens the data structure from a list of lists to a normal list
             return [chapter for chapter_list in chapters for chapter in chapter_list]

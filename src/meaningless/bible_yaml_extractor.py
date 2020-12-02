@@ -60,13 +60,7 @@ class YAMLExtractor:
         :param chapter: Chapter number
         :return: All passages in the chapter. Empty string/list if the passage is invalid.
         """
-        document = yaml_file_interface.read(self.get_local_yaml_file_path(book))
-        # Fail-fast on invalid passages
-        if not document:
-            print('WARNING: "{0} {1}" is not valid'.format(book, chapter))
-            return common.get_empty_data(self.output_as_list)
-        chapter_length = len(document[book][chapter].keys())
-        return self.get_passage_range(book, chapter, 1, chapter, chapter_length)
+        return self.get_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter())
 
     def get_chapters(self, book, chapter_from, chapter_to):
         """
@@ -76,13 +70,7 @@ class YAMLExtractor:
         :param chapter_to: Last chapter number to get
         :return: All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.
         """
-        document = yaml_file_interface.read(self.get_local_yaml_file_path(book))
-        # Fail-fast on invalid passages
-        if not document:
-            print('WARNING: "{0} {1} - {2}" is not valid'.format(book, chapter_from, chapter_to))
-            return common.get_empty_data(self.output_as_list)
-        chapter_to_length = len(document[book][chapter_to].keys())
-        return self.get_passage_range(book, chapter_from, 1, chapter_to, chapter_to_length)
+        return self.get_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter())
 
     def get_book(self, book):
         """
@@ -103,32 +91,32 @@ class YAMLExtractor:
         :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
         """
         # Standardise letter casing to ensure key access errors are not caused by case sensitivity
-        book = book.title()
-        document = yaml_file_interface.read(self.get_local_yaml_file_path(book))
+        book_name = book.title()
+        document = yaml_file_interface.read(self.get_local_yaml_file_path(book_name))
         passage_list = []
         # Fail-fast on invalid passages
         if not document:
-            print('WARNING: "{0} {1}:{2} - {3}:{4}" is not valid'.format(book, chapter_from, passage_from, chapter_to,
-                                                                         passage_to))
+            print('WARNING: "{0}" is not a valid book, or "{1}" is an unsupported translation'.format(book_name,
+                                                                                                      self.translation))
             return common.get_empty_data(self.output_as_list)
         # Apply a boundary to the chapters to prevent invalid keys being accessed
-        chapter_from = common.get_capped_integer(chapter_from, max_value=len(document[book].keys()))
-        chapter_to = common.get_capped_integer(chapter_to, max_value=len(document[book].keys()))
+        capped_chapter_from = common.get_capped_integer(chapter_from, max_value=len(document[book_name].keys()))
+        capped_chapter_to = common.get_capped_integer(chapter_to, max_value=len(document[book_name].keys()))
         # Extend the range by 1 since chapter_to is also included in the iteration
-        for chapter in range(chapter_from, chapter_to + 1):
+        for chapter in range(capped_chapter_from, capped_chapter_to + 1):
             # Determine the range of passages to extract from the chapter
             passage_initial = 1
-            passage_final = len(document[book][chapter].keys())
-            if chapter == chapter_from:
+            passage_final = len(document[book_name][chapter].keys())
+            if chapter == capped_chapter_from:
                 # For the first chapter, an initial set of passages can be ignored (undercuts the passage selection)
                 # Apply a boundary to the passage to prevent invalid keys being accessed
                 passage_initial = common.get_capped_integer(passage_from, max_value=passage_final)
-            if chapter == chapter_to:
+            if chapter == capped_chapter_to:
                 # For the last chapter, a trailing set of passages can be ignored (exceeds the passage selection)
                 # Apply a boundary to the passage to prevent invalid keys being accessed
                 passage_final = common.get_capped_integer(passage_to, max_value=passage_final)
             # Extend the range by 1 since the last passage is also included in the iteration
-            [passage_list.append(document[book][chapter][passage]) for passage in
+            [passage_list.append(document[book_name][chapter][passage]) for passage in
              range(passage_initial, passage_final + 1)]
             # Start each chapter on a new line when outputting as a string. Use the passage separator if it is set, to
             # ensure uniform passage separation regardless of chapter boundaries.

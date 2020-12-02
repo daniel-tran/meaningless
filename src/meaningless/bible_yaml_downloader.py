@@ -115,12 +115,19 @@ class YAMLDownloader:
         :return: 0 if the download was successful. Non-zero value if an error occurred.
         """
         # Standardise letter casing with minimal impact to the resulting YAML file
-        book = book.title()
+        book_name = book.title()
 
-        if common.get_chapter_count(book, self.translation) <= 0:
-            print('WARNING: "{0}" is not a valid book, or "{1}" is an unsupported translation'.format(book,
+        if common.get_chapter_count(book_name, self.translation) <= 0:
+            print('WARNING: "{0}" is not a valid book, or "{1}" is an unsupported translation'.format(book_name,
                                                                                                       self.translation))
             return 1
+        # Cap passage components to ensure input validity and minimise web requests by avoiding invalid chapters
+        capped_chapter_from = common.get_capped_integer(chapter_from,
+                                                        max_value=common.get_chapter_count(book_name, self.translation))
+        capped_passage_from = common.get_capped_integer(passage_from)
+        capped_chapter_to = common.get_capped_integer(chapter_to,
+                                                      max_value=common.get_chapter_count(book_name, self.translation))
+        capped_passage_to = common.get_capped_integer(passage_to)
 
         is_translation_with_omitted_passages = self.translation in self.__translations_with_omitted_passages.keys()
         online_bible = WebExtractor(translation=self.translation, show_passage_numbers=self.show_passage_numbers,
@@ -137,23 +144,23 @@ class YAMLDownloader:
                 'Language': common.get_translation_language(self.translation),
                 'Translation': self.translation
             }
-        document[book] = {}
+        document[book_name] = {}
 
         # Range is extended by 1 to include chapter_to in the loop iteration
-        for chapter in range(chapter_from, chapter_to + 1):
+        for chapter in range(capped_chapter_from, capped_chapter_to + 1):
             passage_initial = 1
             passage_final = common.get_end_of_chapter()
             passage_num = 1
             # Exclude a certain first half of the initial chapter based on where the passage start should be
-            if chapter == chapter_from:
-                passage_initial = passage_from
-                passage_num = passage_from
+            if chapter == capped_chapter_from:
+                passage_initial = capped_passage_from
+                passage_num = capped_passage_from
             # Exclude a certain last half of the last chapter based on where the passage end should be
-            if chapter == chapter_to:
-                passage_final = passage_to
+            if chapter == capped_chapter_to:
+                passage_final = capped_passage_to
 
-            passage_list = online_bible.get_passages(book, chapter, passage_initial, passage_final)
-            document[book][chapter] = {}
+            passage_list = online_bible.get_passages(book_name, chapter, passage_initial, passage_final)
+            document[book_name][chapter] = {}
 
             for passage in passage_list:
                 if is_translation_with_omitted_passages:
@@ -162,9 +169,9 @@ class YAMLDownloader:
                     # passages for this particular translation, and assigning an empty string if it is omitted.
                     # This is to ensure the YAML passage key matches the actual passage contents,
                     # regardless of translation.
-                    passage_string = '{0} {1}:{2}'.format(book, chapter, passage_num)
+                    passage_string = '{0} {1}:{2}'.format(book_name, chapter, passage_num)
                     if passage_string in self.__translations_with_omitted_passages[self.translation]:
-                        document[book][chapter][passage_num] = ''
+                        document[book_name][chapter][passage_num] = ''
                         # Since this passage isn't supposed to exist in the given translation but it is still registered
                         # in the YAML file, the number is upped twice in this loop iteration - once for the omitted
                         # passage and once for the passage after the omitted passage (whose contents is accessible in
@@ -178,11 +185,11 @@ class YAMLDownloader:
                 if passage_num == 1 and self.show_passage_numbers and not passage.startswith('\u00b9 '):
                     passage = '\u00b9 {0}'.format(passage)
 
-                document[book][chapter][passage_num] = passage
+                document[book_name][chapter][passage_num] = passage
                 passage_num += 1
 
         if len(file_path) <= 0:
-            file_location = os.path.join(self.default_directory, '{0}.yaml'.format(book))
+            file_location = os.path.join(self.default_directory, '{0}.yaml'.format(book_name))
         else:
             file_location = file_path
         return yaml_file_interface.write(file_location, document)
