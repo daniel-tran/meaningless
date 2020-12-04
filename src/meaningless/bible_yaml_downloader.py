@@ -1,5 +1,5 @@
 import os
-from meaningless.bible_extractor import WebExtractor
+from meaningless.bible_web_extractor import WebExtractor
 from meaningless.utilities import yaml_file_interface, common
 from meaningless.utilities.exceptions import UnsupportedTranslationError, InvalidPassageError
 from ruamel.yaml import YAML

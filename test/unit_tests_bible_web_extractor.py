@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../src/')
-from meaningless.bible_extractor import WebExtractor
+from meaningless.bible_web_extractor import WebExtractor
 from meaningless.utilities.exceptions import InvalidSearchError, UnsupportedTranslationError
 
 
