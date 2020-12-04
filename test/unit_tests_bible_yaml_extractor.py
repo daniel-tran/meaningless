@@ -3,7 +3,7 @@ import sys
 import os
 sys.path.append('../src/')
 from meaningless.bible_yaml_extractor import YAMLExtractor
-from meaningless.utilities.exceptions import UnsupportedTranslationError, InvalidPassageError
+from meaningless.utilities.exceptions import UnsupportedTranslationError
 
 
 class UnitTests(unittest.TestCase):
@@ -211,23 +211,23 @@ class UnitTests(unittest.TestCase):
 
     def test_get_yaml_passage_invalid(self):
         bible = YAMLExtractor()
-        self.assertRaises(InvalidPassageError, bible.get_passage, 'Barnabas', 2, 26)
+        self.assertRaises(FileNotFoundError, bible.get_passage, 'Barnabas', 2, 26)
 
     def test_get_yaml_passages_invalid(self):
         bible = YAMLExtractor()
-        self.assertRaises(InvalidPassageError, bible.get_passages, 'Barnabas', 2, 26, 27)
+        self.assertRaises(FileNotFoundError, bible.get_passages, 'Barnabas', 2, 26, 27)
 
     def test_get_yaml_chapter_invalid(self):
         bible = YAMLExtractor()
-        self.assertRaises(InvalidPassageError, bible.get_chapter, 'Barnabas', 2)
+        self.assertRaises(FileNotFoundError, bible.get_chapter, 'Barnabas', 2)
 
     def test_get_yaml_chapters_invalid(self):
         bible = YAMLExtractor()
-        self.assertRaises(InvalidPassageError, bible.get_chapters, 'Barnabas', 2, 3)
+        self.assertRaises(FileNotFoundError, bible.get_chapters, 'Barnabas', 2, 3)
 
     def test_get_yaml_passage_range_invalid(self):
         bible = YAMLExtractor()
-        self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Barnabas', 2, 3, 2, 4)
+        self.assertRaises(FileNotFoundError, bible.get_passage_range, 'Barnabas', 2, 3, 2, 4)
 
     def test_get_yaml_passage_without_passage_numbers(self):
         bible = YAMLExtractor(show_passage_numbers=False)

@@ -2,6 +2,7 @@ import unittest
 import sys
 import os
 import filecmp
+from ruamel.yaml.parser import ParserError
 sys.path.append('../src/')
 from meaningless.utilities import yaml_file_interface
 
@@ -23,8 +24,7 @@ class UnitTests(unittest.TestCase):
         self.assertTrue(filecmp.cmp('./tmp/test_write.yaml', './static/test_write.yaml'), 'Files do not match')
 
     def test_read_nonexistent_file(self):
-        document = yaml_file_interface.read('./static/test_read_nonexistent_file.yaml')
-        self.assertEqual(document, None, 'Non-existent file was not handled correctly')
+        self.assertRaises(FileNotFoundError, yaml_file_interface.read, './static/test_read_nonexistent_file.yaml')
 
     def test_write_overwrite(self):
         document = {'Disco': {1: 'Beatdown', 2: 'Elysium'}}
@@ -34,30 +34,28 @@ class UnitTests(unittest.TestCase):
         yaml_file_interface.write('./tmp/test_write_overwrite.yaml', document)
         self.assertEqual(document['Disco'][3], 'Fever', 'Third entry is incorrect')
 
-    def test_write_invalid_contents(self):
+    def test_write_string_contents(self):
         document = 'Ugh'
-        yaml_file_interface.write('./tmp/test_write_invalid_contents.yaml', document)
-        self.assertFalse(os.path.exists('./tmp/test_write_invalid_contents.yaml'), 'File should not have been written')
+        yaml_path = './tmp/test_write_string_contents.yaml'
+        yaml_file_interface.write(yaml_path, document)
+        # Despite not being a dictionary, this writes valid YAML to the file - the result being a single YAML key
+        self.assertTrue(filecmp.cmp(yaml_path, './static/test_write_string_contents.yaml'), 'Files do not match')
 
     def test_read_path_exceeds_windows_limit(self):
         filename = 'G' * 255
-        document = yaml_file_interface.read('./static/{0}.yaml'.format(filename))
-        self.assertEqual(document, None, 'Non-existent file was not handled correctly')
+        self.assertRaises(FileNotFoundError, yaml_file_interface.read, './static/{0}.yaml'.format(filename))
 
     def test_write_path_exceeds_windows_limit(self):
         document = {'Disco': 7}
         filename = 'G' * 255
-        yaml_file_interface.write('./tmp/{0}.yaml'.format(filename), document)
-        self.assertFalse(os.path.exists('./tmp/{0}.yaml'.format(filename)), 'File should not have been written')
+        self.assertRaises(FileNotFoundError, yaml_file_interface.write, './tmp/{0}.yaml'.format(filename), document)
 
     def test_read_empty_path(self):
-        document = yaml_file_interface.read('')
-        self.assertEqual(document, None, 'Non-existent file was not handled correctly')
+        self.assertRaises(FileNotFoundError, yaml_file_interface.read, '')
 
     def test_write_empty_path(self):
         document = {'Disco': 7}
-        rc = yaml_file_interface.write('', document)
-        self.assertEqual(rc, 0, 'File should not have been written')
+        self.assertRaises(FileNotFoundError, yaml_file_interface.write, '', document)
 
     def test_read_empty_file(self):
         document = yaml_file_interface.read('./static/test_read_empty_file.yaml')
@@ -65,12 +63,12 @@ class UnitTests(unittest.TestCase):
 
     def test_write_empty_file(self):
         document = {}
-        yaml_file_interface.write('./tmp/test_write_empty_file.yaml', document)
-        self.assertFalse(os.path.exists('./tmp/test_write_empty_file.yaml'), 'File should not have been written')
+        yaml_path = './tmp/test_write_empty_file.yaml'
+        yaml_file_interface.write(yaml_path, document)
+        self.assertTrue(filecmp.cmp(yaml_path, './static/test_write_empty_file.yaml'), 'Files do not match')
 
     def test_read_invalid_formatted_file(self):
-        document = yaml_file_interface.read('./static/test_read_invalid_formatted_file.yaml')
-        self.assertEqual(document, None, 'File was not handled correctly')
+        self.assertRaises(ParserError, yaml_file_interface.read, './static/test_read_invalid_formatted_file.yaml')
 
 if __name__ == "__main__":
     unittest.main()
