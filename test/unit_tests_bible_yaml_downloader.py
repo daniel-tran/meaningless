@@ -147,5 +147,15 @@ class UnitTests(unittest.TestCase):
                                     '{0}/Chapter5/1 John.yaml'.format(static_path)),
                         'Files do not match')
 
+    def test_yaml_download_lowercase_translation(self):
+        download_path = './tmp/test_yaml_download_lowercase_translation/NLT'
+        bible = YAMLDownloader(default_directory=download_path, translation='NLT')
+        bible.download_book('Philemon')
+        bible.translation = 'nlt'
+        lowercase_file_path = '{0}/Philemon-lowercase.yaml'.format(download_path)
+        bible.download_book('Philemon', file_path=lowercase_file_path)
+        self.assertTrue(filecmp.cmp('{0}/Philemon.yaml'.format(download_path), lowercase_file_path),
+                        'Files do not match')
+
 if __name__ == "__main__":
     unittest.main()

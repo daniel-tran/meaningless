@@ -115,23 +115,24 @@ class YAMLDownloader:
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
         :return: 1 if the download was successful. 0 if an error occurred.
         """
-        if common.is_unsupported_translation(self.translation):
-            raise UnsupportedTranslationError(self.translation)
+        translation = self.translation.upper()
+        if common.is_unsupported_translation(translation):
+            raise UnsupportedTranslationError(translation)
         # Standardise letter casing with minimal impact to the resulting YAML file
         book_name = book.title()
 
-        if common.get_chapter_count(book_name, self.translation) <= 0:
-            raise InvalidPassageError(book, chapter_from, passage_from, chapter_to, passage_to, self.translation)
+        if common.get_chapter_count(book_name, translation) <= 0:
+            raise InvalidPassageError(book_name, chapter_from, passage_from, chapter_to, passage_to, translation)
         # Cap passage components to ensure input validity and minimise web requests by avoiding invalid chapters
         capped_chapter_from = common.get_capped_integer(chapter_from,
-                                                        max_value=common.get_chapter_count(book_name, self.translation))
+                                                        max_value=common.get_chapter_count(book_name, translation))
         capped_passage_from = common.get_capped_integer(passage_from)
         capped_chapter_to = common.get_capped_integer(chapter_to,
-                                                      max_value=common.get_chapter_count(book_name, self.translation))
+                                                      max_value=common.get_chapter_count(book_name, translation))
         capped_passage_to = common.get_capped_integer(passage_to)
 
-        is_translation_with_omitted_passages = self.translation in self.__translations_with_omitted_passages.keys()
-        online_bible = WebExtractor(translation=self.translation, show_passage_numbers=self.show_passage_numbers,
+        is_translation_with_omitted_passages = translation in self.__translations_with_omitted_passages.keys()
+        online_bible = WebExtractor(translation=translation, show_passage_numbers=self.show_passage_numbers,
                                     output_as_list=True, passage_separator='',
                                     strip_excess_whitespace_from_list=self.strip_excess_whitespace)
 
@@ -142,8 +143,8 @@ class YAMLDownloader:
         document = {}
         if self.include_misc_info:
             document['Info'] = {
-                'Language': common.get_translation_language(self.translation),
-                'Translation': self.translation
+                'Language': common.get_translation_language(translation),
+                'Translation': translation
             }
         document[book_name] = {}
 
@@ -171,7 +172,7 @@ class YAMLDownloader:
                     # This is to ensure the YAML passage key matches the actual passage contents,
                     # regardless of translation.
                     passage_string = '{0} {1}:{2}'.format(book_name, chapter, passage_num)
-                    if passage_string in self.__translations_with_omitted_passages[self.translation]:
+                    if passage_string in self.__translations_with_omitted_passages[translation]:
                         document[book_name][chapter][passage_num] = ''
                         # Since this passage isn't supposed to exist in the given translation but it is still registered
                         # in the YAML file, the number is upped twice in this loop iteration - once for the omitted

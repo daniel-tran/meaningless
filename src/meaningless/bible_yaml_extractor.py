@@ -14,7 +14,8 @@ class YAMLExtractor:
         :param book: Name of the book
         :return: The file path to the YAML file
         """
-        return os.path.join(os.path.dirname(__file__), 'translations', self.translation, '{0}.yaml'.format(book))
+        return os.path.join(os.path.dirname(__file__), 'translations', self.translation.upper(),
+                            '{0}.yaml'.format(book))
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
                  strip_excess_whitespace_from_list=False, passage_separator=''):
@@ -91,15 +92,16 @@ class YAMLExtractor:
         :param passage_to: Last passage number to get in the last chapter
         :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
         """
-        if common.is_unsupported_translation(self.translation):
-            raise UnsupportedTranslationError(self.translation)
+        translation = self.translation.upper()
+        if common.is_unsupported_translation(translation):
+            raise UnsupportedTranslationError(translation)
         # Standardise letter casing to ensure key access errors are not caused by case sensitivity
         book_name = book.title()
         document = yaml_file_interface.read(self.get_local_yaml_file_path(book_name))
         passage_list = []
         # Fail-fast on invalid passages
         if not document:
-            raise InvalidPassageError(book, chapter_from, passage_from, chapter_to, passage_to, self.translation)
+            raise InvalidPassageError(book_name, chapter_from, passage_from, chapter_to, passage_to, translation)
         # Apply a boundary to the chapters to prevent invalid keys being accessed
         capped_chapter_from = common.get_capped_integer(chapter_from, max_value=len(document[book_name].keys()))
         capped_chapter_to = common.get_capped_integer(chapter_to, max_value=len(document[book_name].keys()))

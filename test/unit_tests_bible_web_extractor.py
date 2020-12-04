@@ -196,6 +196,15 @@ class UnitTests(unittest.TestCase):
         # This could be problematic depending on how many form variations are present on the Bible Gateway site.
         self.assertEqual(john7_53, text, 'Passage is incorrect')
 
+    def test_get_passage_lowercase_translation(self):
+        bible = WebExtractor(translation='NLT')
+        passage = 'Ecclesiastes 1:17'
+        text1 = bible.search(passage)
+        bible.translation = 'nlt'
+        text2 = bible.search(passage)
+        # Translations should be case insensitive under the hood
+        self.assertEqual(text1, text2, 'Passages do not match')
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.

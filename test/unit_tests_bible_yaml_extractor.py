@@ -422,5 +422,13 @@ class UnitTests(unittest.TestCase):
         self.assertTrue((text[0].find('\n\n') < 0) and (text[1].find('\n\n') < 0),
                         'Passage separator should not have been found')
 
+    def test_get_yaml_passage_lowercase_translation(self):
+        bible = YAMLExtractor(translation='NLT')
+        text1 = bible.get_passage('Ecclesiastes', 2, 26)
+        bible.translation = 'nlt'
+        text2 = bible.get_passage('Ecclesiastes', 2, 26)
+        # Translations should be case insensitive under the hood
+        self.assertEqual(text1, text2, 'Passages do not match')
+
 if __name__ == "__main__":
     unittest.main()
