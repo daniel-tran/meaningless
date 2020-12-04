@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 import filecmp
-sys.path.append('../src/')
+sys.path.append('../')
 from meaningless.bible_yaml_extractor import YAMLExtractor
 from meaningless.bible_web_extractor import WebExtractor
 from meaningless.utilities.exceptions import InvalidSearchError

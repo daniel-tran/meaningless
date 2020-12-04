@@ -3,7 +3,7 @@ import sys
 import os
 import filecmp
 from ruamel.yaml.parser import ParserError
-sys.path.append('../src/')
+sys.path.append('../')
 from meaningless.utilities import yaml_file_interface
 
 

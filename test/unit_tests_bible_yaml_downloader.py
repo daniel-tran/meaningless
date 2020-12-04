@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 import filecmp
-sys.path.append('../src/')
+sys.path.append('../')
 from meaningless.bible_yaml_downloader import YAMLDownloader
 from meaningless.utilities import yaml_file_interface
 from meaningless.utilities.exceptions import InvalidSearchError, InvalidPassageError

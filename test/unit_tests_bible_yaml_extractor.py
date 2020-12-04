@@ -1,7 +1,7 @@
 import unittest
 import sys
 import os
-sys.path.append('../src/')
+sys.path.append('../')
 from meaningless.bible_yaml_extractor import YAMLExtractor
 from meaningless.utilities.exceptions import UnsupportedTranslationError
 
