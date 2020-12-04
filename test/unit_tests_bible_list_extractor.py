@@ -5,6 +5,7 @@ import filecmp
 sys.path.append('../src/')
 from meaningless.bible_yaml_extractor import YAMLExtractor
 from meaningless.bible_extractor import WebExtractor
+from meaningless.utilities.exceptions import InvalidSearchError
 
 
 class UnitTests(unittest.TestCase):
@@ -22,8 +23,7 @@ class UnitTests(unittest.TestCase):
 
     def test_get_passage_list_from_string_empty(self):
         bible = WebExtractor(output_as_list=True)
-        text = bible.search('')
-        self.assertEqual([], text, 'Passage is incorrect')
+        self.assertRaises(InvalidSearchError, bible.search, '')
 
     def test_get_passage_list_from_string_without_passage_numbers(self):
         bible = WebExtractor(output_as_list=True, show_passage_numbers=False)

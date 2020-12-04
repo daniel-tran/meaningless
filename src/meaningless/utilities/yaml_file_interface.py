@@ -40,7 +40,7 @@ def read(data_file):
     """
     A helper function to read a YAML data file
     :param data_file: Path the data file to read
-    :return: Contents of the file as an object. Returns None if the file is empty or a file read error occurred.
+    :return: Contents of the file as an object. Returns None if the file is empty or the YAML file is badly formatted.
     """
     # Easier to proactively detect non-existent YAML file than to rely on reactive exception handling
     # Unlike the write() function, absolute file paths are not required here

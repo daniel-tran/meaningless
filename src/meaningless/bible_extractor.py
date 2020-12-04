@@ -3,6 +3,7 @@ from urllib.request import urlopen
 from urllib.parse import urlencode
 import re
 from meaningless.utilities import common
+from meaningless.utilities.exceptions import InvalidSearchError, UnsupportedTranslationError
 
 
 class WebExtractor:
@@ -141,8 +142,7 @@ class WebExtractor:
         # for these translations should not be introduced until they need to be supported.
         translation = self.translation.upper()
         if common.is_unsupported_translation(translation):
-            print('WARNING: "{0}" is not a supported translation.'.format(self.translation))
-            return common.get_empty_data(self.output_as_list)
+            raise UnsupportedTranslationError(translation)
 
         # Use the printer-friendly view since there are fewer page elements to load and process
         source_site_params = urlencode({'version': self.translation, 'search': passage_name, 'interface': 'print'})
@@ -152,8 +152,7 @@ class WebExtractor:
         # Don't collect contents from an invalid verse, since they do not exist.
         # A fail-fast approach can be taken by checking for certain indicators of invalidity.
         if not soup.find('div', {'class': 'passage-content'}):
-            print('WARNING: "{0}" is not a valid passage.'.format(passage_name))
-            return common.get_empty_data(self.output_as_list)
+            raise InvalidSearchError(passage_name, self.translation)
 
         # To get a list, the passage separator is given an actual practical use as an indicator of where to split
         # the string to create list elements.

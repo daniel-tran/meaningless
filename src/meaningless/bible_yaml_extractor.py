@@ -2,6 +2,7 @@ import os
 from ruamel.yaml import YAML
 from ruamel.yaml.parser import ParserError
 from meaningless.utilities import yaml_file_interface, common
+from meaningless.utilities.exceptions import UnsupportedTranslationError, InvalidPassageError
 import re
 
 
@@ -90,15 +91,15 @@ class YAMLExtractor:
         :param passage_to: Last passage number to get in the last chapter
         :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
         """
+        if common.is_unsupported_translation(self.translation):
+            raise UnsupportedTranslationError(self.translation)
         # Standardise letter casing to ensure key access errors are not caused by case sensitivity
         book_name = book.title()
         document = yaml_file_interface.read(self.get_local_yaml_file_path(book_name))
         passage_list = []
         # Fail-fast on invalid passages
         if not document:
-            print('WARNING: "{0}" is not a valid book, or "{1}" is an unsupported translation'.format(book_name,
-                                                                                                      self.translation))
-            return common.get_empty_data(self.output_as_list)
+            raise InvalidPassageError(book, chapter_from, passage_from, chapter_to, passage_to, self.translation)
         # Apply a boundary to the chapters to prevent invalid keys being accessed
         capped_chapter_from = common.get_capped_integer(chapter_from, max_value=len(document[book_name].keys()))
         capped_chapter_to = common.get_capped_integer(chapter_to, max_value=len(document[book_name].keys()))

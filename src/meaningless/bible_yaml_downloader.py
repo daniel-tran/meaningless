@@ -1,6 +1,7 @@
 import os
 from meaningless.bible_extractor import WebExtractor
 from meaningless.utilities import yaml_file_interface, common
+from meaningless.utilities.exceptions import UnsupportedTranslationError, InvalidPassageError
 from ruamel.yaml import YAML
 
 
@@ -114,13 +115,13 @@ class YAMLDownloader:
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
         :return: 1 if the download was successful. 0 if an error occurred.
         """
+        if common.is_unsupported_translation(self.translation):
+            raise UnsupportedTranslationError(self.translation)
         # Standardise letter casing with minimal impact to the resulting YAML file
         book_name = book.title()
 
         if common.get_chapter_count(book_name, self.translation) <= 0:
-            print('WARNING: "{0}" is not a valid book, or "{1}" is an unsupported translation'.format(book_name,
-                                                                                                      self.translation))
-            return 1
+            raise InvalidPassageError(book, chapter_from, passage_from, chapter_to, passage_to, self.translation)
         # Cap passage components to ensure input validity and minimise web requests by avoiding invalid chapters
         capped_chapter_from = common.get_capped_integer(chapter_from,
                                                         max_value=common.get_chapter_count(book_name, self.translation))

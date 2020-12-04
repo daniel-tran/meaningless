@@ -2,6 +2,7 @@ import unittest
 import sys
 sys.path.append('../src/')
 from meaningless.bible_extractor import WebExtractor
+from meaningless.utilities.exceptions import InvalidSearchError, UnsupportedTranslationError
 
 
 class UnitTests(unittest.TestCase):
@@ -18,13 +19,11 @@ class UnitTests(unittest.TestCase):
 
     def test_get_passage_empty(self):
         bible = WebExtractor()
-        text = bible.search('')
-        self.assertEqual('', text, 'Empty passage should result in an empty string')
+        self.assertRaises(InvalidSearchError, bible.search, '')
 
     def test_get_passage_invalid(self):
         bible = WebExtractor()
-        text = bible.search('Barnabas 7')
-        self.assertEqual('', text, 'Invalid passage should result in an empty string')
+        self.assertRaises(InvalidSearchError, bible.search, 'Barnabas 7')
 
     def test_get_passage_in_table_form(self):
         bible = WebExtractor()
@@ -171,8 +170,7 @@ class UnitTests(unittest.TestCase):
 
     def test_get_passage_unsupported_translation(self):
         bible = WebExtractor(translation='mounce')
-        text = bible.search('Song of Songs 1:4')
-        self.assertEqual('', text, 'Passage is incorrect')
+        self.assertRaises(UnsupportedTranslationError, bible.search, 'Song of Songs 1:4')
 
     def test_get_passage_nlt(self):
         bible = WebExtractor(translation='NLT')
@@ -304,9 +302,7 @@ class UnitTests(unittest.TestCase):
         text2 = bible.get_passage('Ecclesiastes', -1, -1)
         self.assertEqual(text1, text2, 'Passage is incorrect')
         # Starting passage is not valid
-        text1 = ''
-        text2 = bible.get_passage('Ecclesiastes', 1000, 1000)
-        self.assertEqual(text1, text2, 'Passage is incorrect')
+        self.assertRaises(InvalidSearchError, bible.get_passage, 'Ecclesiastes', 1000, 1000)
 
     def test_get_online_passages_with_excessive_values(self):
         bible = WebExtractor()
@@ -314,9 +310,7 @@ class UnitTests(unittest.TestCase):
         text2 = bible.get_passages('Ecclesiastes', -1, -1, -1)
         self.assertEqual(text1, text2, 'Passage is incorrect')
         # Starting passage is not valid
-        text1 = ''
-        text2 = bible.get_passages('Ecclesiastes', 1000, 1000, 1000)
-        self.assertEqual(text1, text2, 'Passage is incorrect')
+        self.assertRaises(InvalidSearchError, bible.get_passages, 'Ecclesiastes', 1000, 1000, 1000)
         # Starting passage is valid again
         text1 = bible.search('Ecclesiastes 12')
         text2 = bible.get_passages('Ecclesiastes', 1000, 1, 1000)
@@ -348,9 +342,7 @@ class UnitTests(unittest.TestCase):
         text2 = bible.get_passage_range('Ecclesiastes', -1, -1, -1, -1)
         self.assertEqual(text1, text2, 'Passage is incorrect')
         # Starting passage is not valid
-        text1 = ''
-        text2 = bible.get_passage_range('Ecclesiastes', 1000, 1000, 1000, 1000)
-        self.assertEqual(text1, text2, 'Passage is incorrect')
+        self.assertRaises(InvalidSearchError, bible.get_passage_range, 'Ecclesiastes', 1000, 1000, 1000, 1000)
         # Starting passage is valid again
         text1 = bible.search('Ecclesiastes 12')
         text2 = bible.get_passage_range('Ecclesiastes', 1000, -1, 1000, 1000)

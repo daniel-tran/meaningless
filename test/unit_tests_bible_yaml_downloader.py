@@ -5,6 +5,7 @@ import filecmp
 sys.path.append('../src/')
 from meaningless.bible_yaml_downloader import YAMLDownloader
 from meaningless.utilities import yaml_file_interface
+from meaningless.utilities.exceptions import InvalidSearchError, InvalidPassageError
 
 
 class UnitTests(unittest.TestCase):
@@ -31,9 +32,8 @@ class UnitTests(unittest.TestCase):
     def test_yaml_download_invalid_book(self):
         download_path = './tmp/test_yaml_download_invalid_book/NIV'
         bible = YAMLDownloader(default_directory=download_path)
-        bible.download_book('Barnabas')
         # An invalid book should fail fast and not bother with downloading
-        self.assertFalse(os.path.exists(download_path), 'File should not have downloaded')
+        self.assertRaises(InvalidPassageError, bible.download_book, 'Barnabas')
 
     def test_yaml_download_nlt(self):
         download_path = './tmp/test_yaml_download_nlt/NLT'
@@ -138,10 +138,7 @@ class UnitTests(unittest.TestCase):
         # This does NOT get the last passage of the last chapter, but is instead deemed invalid.
         # This is consistent with how the Bible Gateway site handles when the starting passage is too high.
         bible.default_directory = branching_paths[1]
-        bible.download_passage_range('1 John', 1000, 1000, 1000, 1000)
-        self.assertTrue(filecmp.cmp('{0}/1 John.yaml'.format(bible.default_directory),
-                                    '{0}/Chapter1000/1 John.yaml'.format(static_path)),
-                        'Files do not match')
+        self.assertRaises(InvalidSearchError, bible.download_passage_range, '1 John', 1000, 1000, 1000, 1000)
         # Gets the last chapter of the book.
         # This is valid because the starting passage is a correct number from the chapter.
         bible.default_directory = branching_paths[2]
