@@ -1,8 +1,7 @@
 import unittest
 import sys
 sys.path.append('../')
-from meaningless.bible_web_extractor import WebExtractor
-from meaningless.utilities.exceptions import InvalidSearchError, UnsupportedTranslationError
+from meaningless import WebExtractor, InvalidSearchError, UnsupportedTranslationError
 
 
 class UnitTests(unittest.TestCase):

@@ -4,7 +4,7 @@ import os
 import filecmp
 from ruamel.yaml.parser import ParserError
 sys.path.append('../')
-from meaningless.utilities import yaml_file_interface
+from meaningless import yaml_file_interface
 
 
 class UnitTests(unittest.TestCase):
@@ -40,6 +40,13 @@ class UnitTests(unittest.TestCase):
         yaml_file_interface.write(yaml_path, document)
         # Despite not being a dictionary, this writes valid YAML to the file - the result being a single YAML key
         self.assertTrue(filecmp.cmp(yaml_path, './static/test_write_string_contents.yaml'), 'Files do not match')
+
+    def test_write_list_contents(self):
+        document = ['Disco', 'Fever']
+        yaml_path = './tmp/test_write_list_contents.yaml'
+        yaml_file_interface.write(yaml_path, document)
+        # A list should just translate to a linear series of YAML keys
+        self.assertTrue(filecmp.cmp(yaml_path, './static/test_write_list_contents.yaml'), 'Files do not match')
 
     def test_read_path_exceeds_windows_limit(self):
         filename = 'G' * 255

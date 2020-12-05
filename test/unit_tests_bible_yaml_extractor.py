@@ -2,8 +2,7 @@ import unittest
 import sys
 import os
 sys.path.append('../')
-from meaningless.bible_yaml_extractor import YAMLExtractor
-from meaningless.utilities.exceptions import UnsupportedTranslationError
+from meaningless import YAMLExtractor, UnsupportedTranslationError
 
 
 class UnitTests(unittest.TestCase):
