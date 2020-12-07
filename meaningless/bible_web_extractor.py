@@ -210,7 +210,10 @@ class WebExtractor:
         [p.replace_with('\n{0}'.format(p.text)) for p in soup.find_all('p')]
 
         # Convert non-breaking spaces to normal spaces when retrieving the raw passage contents
-        all_text = soup.find('div', {'class': 'passage-content'}).text.replace('\xa0', ' ')
+        raw_passage_text = soup.find('div', {'class': 'passage-content'}).text.replace('\xa0', ' ')
+        # To account for spaces between tags that end up blending into the passage contents, this regex replacement is
+        # specifically used to remove that additional spacing, since it is part of the actual page layout.
+        all_text = re.sub('([^ ])  ([^ ])', r'\1 \2', raw_passage_text)
 
         # Remove all superscript numbers if the passage numbers should be hidden
         if not self.show_passage_numbers:

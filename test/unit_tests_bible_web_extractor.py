@@ -131,7 +131,7 @@ class UnitTests(unittest.TestCase):
     def test_get_empty_passage_midway(self):
         bible = WebExtractor()
         text = bible.search('Luke 23:16 - 18')
-        luke17 = ['\u00b9\u2076 Therefore, I will punish him and then release him.\u201d \u00b9\u2077  ',
+        luke17 = ['\u00b9\u2076 Therefore, I will punish him and then release him.\u201d \u00b9\u2077 ',
                   '\u00b9\u2078 But the whole crowd shouted, \u201cAway with this man! Release Barabbas to us!\u201d'
                   ]
         # An empty passage in the middle of two other passages preserves its spaces
@@ -210,6 +210,16 @@ class UnitTests(unittest.TestCase):
         john5_8 = '\u2078 Jesus said to him, \u201cGet up, pick up your pallet and walk.\u201d'
         # An asterisk is normally present within this passage using this translation, but it should be omitted.
         self.assertEqual(john5_8, text, 'Passage is incorrect')
+
+    def test_get_passage_nrsv_double_spaces(self):
+        bible = WebExtractor(translation='NRSV')
+        text = bible.search('Matthew 1:2 - 3')
+        matt = ['\u00b2 Abraham was the father of Isaac, and Isaac the father of Jacob,'
+                'and Jacob the father of Judah and his brothers, ',
+                '\u00b3 and Judah the father of Perez and Zerah by Tamar, and Perez the father of Hezron, '
+                'and Hezron the father of Aram,']
+        # Trailing double space at the end of verse 2 should just shorten to a single space
+        self.assertEqual('\n'.join(matt), text, 'Passage is incorrect')
 
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
