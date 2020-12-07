@@ -204,6 +204,13 @@ class UnitTests(unittest.TestCase):
         # Translations should be case insensitive under the hood
         self.assertEqual(text1, text2, 'Passages do not match')
 
+    def test_get_passage_nasb_asterisk(self):
+        bible = WebExtractor(translation='NASB')
+        text = bible.search('John 5:8')
+        john5_8 = '\u2078 Jesus said to him, \u201cGet up, pick up your pallet and walk.\u201d'
+        # An asterisk is normally present within this passage using this translation, but it should be omitted.
+        self.assertEqual(john5_8, text, 'Passage is incorrect')
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.
