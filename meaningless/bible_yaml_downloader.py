@@ -34,7 +34,7 @@ class YAMLDownloader:
     }
 
     def __init__(self, translation='NIV', show_passage_numbers=True, default_directory=os.getcwd(),
-                 strip_excess_whitespace=False, include_misc_info=False):
+                 strip_excess_whitespace=False):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :param show_passage_numbers: If True, any present passage numbers are preserved.
@@ -42,13 +42,11 @@ class YAMLDownloader:
                                   Defaults to the current working directory.
         :param strip_excess_whitespace: If True, passages don't retain leading & trailing whitespaces as well as
                                         newline characters.
-        :param include_misc_info: If True, additional information is included in the YAML file, such as the translation.
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
         self.default_directory = default_directory
         self.strip_excess_whitespace = strip_excess_whitespace
-        self.include_misc_info = include_misc_info
 
     def download_passage(self, book, chapter, passage, file_path=''):
         """
@@ -152,13 +150,13 @@ class YAMLDownloader:
         # Upon downloading a YAML file, the top-level keys might be ordered differently to when they were inserted.
         # This is likely due to Python not sorting dictionary keys internally, but could be due to something else.
         # This does not affect the information contained in the downloaded YAML file, but could affect file comparisons.
-        document = {}
-        if self.include_misc_info:
-            document['Info'] = {
+        document = {
+            'Info': {
                 'Language': common.get_translation_language(translation),
                 'Translation': translation
-            }
-        document[book_name] = {}
+            },
+            book_name: {}
+        }
 
         # Range is extended by 1 to include chapter_to in the loop iteration
         for chapter in range(capped_chapter_from, capped_chapter_to + 1):

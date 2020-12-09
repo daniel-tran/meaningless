@@ -54,3 +54,17 @@ class InvalidSearchError(BaseError):
             search, translation))
         self.search_string = search
         self.translation = translation
+
+
+class TranslationMismatchError(BaseError):
+    def __init__(self, extractor_translation, file_translation):
+        """
+        An exception thrown when using the YAML Extractor to read a YAML file, and both use different translations
+        :param extractor_translation: Translation code used by the YAML Extractor. For example, 'NIV', 'ESV', 'NLT'
+        :param file_translation: Translation code used in the YAML file. For example, 'NIV', 'ESV', 'NLT'
+        """
+        super(TranslationMismatchError, self).__init__('The YAML Extractor is using the {0} translation, '
+                                                       'but attempted to read a file in the {1} translation'.format(
+                                                         extractor_translation, file_translation))
+        self.extractor_translation = extractor_translation
+        self.file_translation = file_translation

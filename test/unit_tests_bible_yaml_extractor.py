@@ -10,8 +10,12 @@ class UnitTests(unittest.TestCase):
     # Note: Tests will only be run if they are prefixed with test_ in their method name.
     #       All other methods will simply be interpreted as test helper functions.
 
+    @staticmethod
+    def test_directory(translation='NIV'):
+        return './static/unit_tests_bible_yaml_extractor/{0}'.format(translation)
+
     def test_get_yaml_passage(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         text = bible.get_passage('Ecclesiastes', 2, 26)
         self.assertEqual('\u00b2\u2076 To the person who pleases him, God gives wisdom, knowledge and happiness, '
                          'but to the sinner he gives the task of gathering and storing up wealth to hand '
@@ -19,14 +23,14 @@ class UnitTests(unittest.TestCase):
                          'the wind.', text, 'Passage is incorrect')
 
     def test_get_yaml_passages(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         text = bible.get_passages('Ecclesiastes', 2, 24, 25)
         self.assertEqual('\u00b2\u2074 A person can do nothing better than to eat and drink and find satisfaction '
                          'in their own toil. This too, I see, is from the hand of God, '
                          '\u00b2\u2075 for without him, who can eat or find enjoyment?', text, 'Passage is incorrect')
 
     def test_get_yaml_chapter(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         text = bible.get_chapter('Ecclesiastes', 11)
         eccl11 = ['\u00b9 Ship your grain across the sea;',
                   '    after many days you may receive a return.',
@@ -66,7 +70,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl11), text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
         eccl = ['\u00b9\u2078 Wisdom is better than weapons of war,',
                 '    but one sinner destroys much good.',
@@ -77,7 +81,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl), text, 'Passage is incorrect')
 
     def test_get_yaml_chapters(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         text = bible.get_chapters('Ecclesiastes', 11, 12)
         eccl11_12 = ['\u00b9 Ship your grain across the sea;',
                      '    after many days you may receive a return.',
@@ -164,14 +168,14 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl11_12), text, 'Passage is incorrect')
 
     def test_get_yaml_book(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         text = bible.get_book('Philemon')
         with open('./static/NIV/test_get_yaml_book.txt', 'r', encoding='utf-8') as file:
             phil = file.read()
         self.assertEqual(phil, text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_reverse_parameters(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         text = bible.get_passage_range('Ecclesiastes', 10, 1, 9, 18)
         # Chapter 10 is after chapter 9, so this should not work
         self.assertEqual('', text, 'Passage is incorrect')
@@ -180,7 +184,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('', text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_negative_numbers(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         text = bible.get_passage_range('Ecclesiastes', 1, -1, 1, 1)
         eccl = '\u00b9 The words of the Teacher, son of David, king in Jerusalem:'
         # This should apply value normalisation logic to ensure that negative values don't break the execution flow
@@ -190,7 +194,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_excessive_numbers(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         text = bible.get_passage_range('Ecclesiastes', 9000, 1, 9000, 2)
         sample1 = ['\u00b9 Remember your Creator',
                    '    in the days of your youth,',
@@ -209,27 +213,27 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(sample2), text, 'Passage is incorrect')
 
     def test_get_yaml_passage_invalid(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         self.assertRaises(FileNotFoundError, bible.get_passage, 'Barnabas', 2, 26)
 
     def test_get_yaml_passages_invalid(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         self.assertRaises(FileNotFoundError, bible.get_passages, 'Barnabas', 2, 26, 27)
 
     def test_get_yaml_chapter_invalid(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         self.assertRaises(FileNotFoundError, bible.get_chapter, 'Barnabas', 2)
 
     def test_get_yaml_chapters_invalid(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         self.assertRaises(FileNotFoundError, bible.get_chapters, 'Barnabas', 2, 3)
 
     def test_get_yaml_passage_range_invalid(self):
-        bible = YAMLExtractor()
+        bible = YAMLExtractor(default_directory=self.test_directory())
         self.assertRaises(FileNotFoundError, bible.get_passage_range, 'Barnabas', 2, 3, 2, 4)
 
     def test_get_yaml_passage_without_passage_numbers(self):
-        bible = YAMLExtractor(show_passage_numbers=False)
+        bible = YAMLExtractor(show_passage_numbers=False, default_directory=self.test_directory())
         text = bible.get_passage('Ecclesiastes', 2, 26)
         self.assertEqual('To the person who pleases him, God gives wisdom, knowledge and happiness, '
                          'but to the sinner he gives the task of gathering and storing up wealth to hand '
@@ -237,7 +241,7 @@ class UnitTests(unittest.TestCase):
                          'the wind.', text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_without_passage_numbers(self):
-        bible = YAMLExtractor(show_passage_numbers=False)
+        bible = YAMLExtractor(show_passage_numbers=False, default_directory=self.test_directory())
         text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
         eccl = ['Wisdom is better than weapons of war,',
                 '    but one sinner destroys much good.',
@@ -247,14 +251,14 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl), text, 'Passage is incorrect')
 
     def test_get_yaml_passages_without_passage_numbers(self):
-        bible = YAMLExtractor(show_passage_numbers=False)
+        bible = YAMLExtractor(show_passage_numbers=False, default_directory=self.test_directory())
         text = bible.get_passages('Ecclesiastes', 2, 24, 25)
         self.assertEqual('A person can do nothing better than to eat and drink and find satisfaction '
                          'in their own toil. This too, I see, is from the hand of God, '
                          'for without him, who can eat or find enjoyment?', text, 'Passage is incorrect')
 
     def test_get_yaml_chapter_without_passage_numbers(self):
-        bible = YAMLExtractor(show_passage_numbers=False)
+        bible = YAMLExtractor(show_passage_numbers=False, default_directory=self.test_directory())
         text = bible.get_chapter('Ecclesiastes', 11)
         eccl11 = ['Ship your grain across the sea;',
                   '    after many days you may receive a return.',
@@ -294,7 +298,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl11), text, 'Passage is incorrect')
 
     def test_get_yaml_chapters_without_passage_numbers(self):
-        bible = YAMLExtractor(show_passage_numbers=False)
+        bible = YAMLExtractor(show_passage_numbers=False, default_directory=self.test_directory())
         text = bible.get_chapters('Ecclesiastes', 11, 12)
         eccl11_12 = ['Ship your grain across the sea;',
                      '    after many days you may receive a return.',
@@ -381,7 +385,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n'.join(eccl11_12), text, 'Passage is incorrect')
 
     def test_get_yaml_passage_nlt(self):
-        bible = YAMLExtractor(translation='NLT')
+        bible = YAMLExtractor(translation='NLT', default_directory=self.test_directory('NLT'))
         text = bible.get_passage('Ecclesiastes', 2, 26)
         self.assertEqual('\u00b2\u2076 God gives wisdom, knowledge, and joy to those who please him. But if a '
                          'sinner becomes wealthy, God takes the wealth away and gives it to those who '
@@ -389,11 +393,11 @@ class UnitTests(unittest.TestCase):
                          'Passage is incorrect')
 
     def test_get_yaml_passage_invalid_translation(self):
-        bible = YAMLExtractor(translation='LOL')
+        bible = YAMLExtractor(translation='LOL', default_directory=self.test_directory())
         self.assertRaises(UnsupportedTranslationError, bible.get_passage, 'Ecclesiastes', 2, 26)
 
     def test_get_yaml_passages_with_passage_separator(self):
-        bible = YAMLExtractor(passage_separator='\n\n')
+        bible = YAMLExtractor(passage_separator='\n\n', default_directory=self.test_directory())
         text = bible.get_passages('Ecclesiastes', 2, 24, 25)
         eccl = ['\u00b2\u2074 A person can do nothing better than to eat and drink and find satisfaction '
                 'in their own toil. This too, I see, is from the hand of God, ',
@@ -403,7 +407,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n\n'.join(eccl), text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_with_passage_separator_on_chapter_boundary(self):
-        bible = YAMLExtractor(passage_separator='\n\n')
+        bible = YAMLExtractor(passage_separator='\n\n', default_directory=self.test_directory())
         text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
         eccl = ['\u00b9\u2078 Wisdom is better than weapons of war,\n'
                 '    but one sinner destroys much good.',
@@ -415,17 +419,27 @@ class UnitTests(unittest.TestCase):
         self.assertEqual('\n\n'.join(eccl), text, 'Passage is incorrect')
 
     def test_get_yaml_passage_range_with_passage_separator_and_output_as_list(self):
-        bible = YAMLExtractor(passage_separator='\n\n', output_as_list=True)
+        bible = YAMLExtractor(passage_separator='\n\n', output_as_list=True, default_directory=self.test_directory())
         text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
         # Neither passage should have any trace of the passage separator, since the output is a list
         self.assertTrue((text[0].find('\n\n') < 0) and (text[1].find('\n\n') < 0),
                         'Passage separator should not have been found')
 
     def test_get_yaml_passage_lowercase_translation(self):
-        bible = YAMLExtractor(translation='NLT')
+        bible = YAMLExtractor(translation='NLT', default_directory=self.test_directory('NLT'))
         text1 = bible.get_passage('Ecclesiastes', 2, 26)
         bible.translation = 'nlt'
         text2 = bible.get_passage('Ecclesiastes', 2, 26)
+        # Translations should be case insensitive under the hood
+        self.assertEqual(text1, text2, 'Passages do not match')
+
+    def test_get_yaml_passage_range_with_file_path_param(self):
+        bible = YAMLExtractor(default_directory=self.test_directory())
+        text1 = bible.get_passage('Ecclesiastes', 2, 26)
+        # File path parameter should overwrite the default directory, regardless of what it was set to
+        bible.default_directory = '../'
+        yaml_file = '{0}/{1}'.format(self.test_directory(), 'Ecclesiastes.yaml')
+        text2 = bible.get_passage('Ecclesiastes', 2, 26, yaml_file)
         # Translations should be case insensitive under the hood
         self.assertEqual(text1, text2, 'Passages do not match')
 
