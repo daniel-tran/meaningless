@@ -180,14 +180,17 @@ class WebExtractor:
         #    - Ignore explicit Psalm interludes in the translations such as HCSB
         # p with 'translation-note' class
         #    - Ignore explicit translation notes in translations such as ESV
+        # crossref
+        #    - Ignore in-line references in translations such as WEB
         removable_tags = soup.find_all(re.compile('^h1$|^h3$|^h4$')) \
-            + soup.find_all('a', {'class': 'full-chap-link'}) \
+            + soup.find_all('a', {'class': re.compile('^full-chap-link$|^bibleref$')}) \
             + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
             + soup.find_all('div', {
                             'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
             + soup.find_all('span', {'class': 'selah'}) \
             + soup.find_all('selah') \
-            + soup.find_all('p', {'class': 'translation-note'})
+            + soup.find_all('p', {'class': 'translation-note'}) \
+            + soup.find_all('crossref')
         [tag.decompose() for tag in removable_tags]
 
         # <br> tags will naturally be ignored when getting text
@@ -212,7 +215,7 @@ class WebExtractor:
         raw_passage_text = soup.find('div', {'class': 'passage-content'}).text.replace('\xa0', ' ')
         # To account for spaces between tags that end up blending into the passage contents, this regex replacement is
         # specifically used to remove that additional spacing, since it is part of the actual page layout.
-        all_text = re.sub('([^ ])  ([^ ])', r'\1 \2', raw_passage_text)
+        all_text = re.sub('([^ ]) {2,3}([^ ])', r'\1 \2', raw_passage_text)
 
         # Remove all superscript numbers if the passage numbers should be hidden
         if not self.show_passage_numbers:

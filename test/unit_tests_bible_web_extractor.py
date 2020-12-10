@@ -221,6 +221,21 @@ class UnitTests(unittest.TestCase):
         # Trailing double space at the end of verse 2 should just shorten to a single space
         self.assertEqual(matt, text, 'Passage is incorrect')
 
+    def test_get_passage_web_inline_reference(self):
+        bible = WebExtractor(translation='WEB')
+        text = bible.search('Mark 9:44')
+        mark9_44 = '\u2074\u2074 \u2018where their worm doesn\u2019t die, and the fire is not quenched.\u2019'
+        # This passage has an in-line reference which is actually an anchor tag
+        self.assertEqual(mark9_44, text, 'Passage is incorrect')
+
+    def test_get_passage_web_multiple_inline_references(self):
+        bible = WebExtractor(translation='WEB')
+        text = bible.search('Mark 13:25')
+        mark13_25 = '\u00b2\u2075 the stars will be falling from the sky, ' \
+                    'and the powers that are in the heavens will be shaken.'
+        # Multiple in-line references are separated by a semi-solon, which should also be omitted
+        self.assertEqual(mark13_25, text, 'Passage is incorrect')
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.
