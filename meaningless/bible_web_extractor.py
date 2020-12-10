@@ -176,6 +176,8 @@ class WebExtractor:
         #    - Ignore the footer area, which is composed of several main tags
         # span with 'selah' class
         #    - Ignore explicit Psalm interludes in the translations such as NLT and CEB
+        # i with 'selah' class
+        #    - Ignore explicit Psalm interludes in the translations such as NKJV
         # selah
         #    - Ignore explicit Psalm interludes in the translations such as HCSB
         # p with 'translation-note' class
@@ -188,6 +190,7 @@ class WebExtractor:
             + soup.find_all('div', {
                             'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
             + soup.find_all('span', {'class': 'selah'}) \
+            + soup.find_all('i', {'class': 'selah'}) \
             + soup.find_all('selah') \
             + soup.find_all('p', {'class': 'translation-note'}) \
             + soup.find_all('crossref')

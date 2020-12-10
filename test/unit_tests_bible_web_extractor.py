@@ -236,6 +236,14 @@ class UnitTests(unittest.TestCase):
         # Multiple in-line references are separated by a semi-solon, which should also be omitted
         self.assertEqual(mark13_25, text, 'Passage is incorrect')
 
+    def test_get_passage_nkjv_interlude(self):
+        bible = WebExtractor(translation='NKJV')
+        text = bible.search('Psalm 32:4')
+        psalm32_4 = ['\u2074 For day and night Your hand was heavy upon me;',
+                     'My vitality was turned into the drought of summer.']
+        # Explicit interludes should be omitted, and usually show as italicised text in the Psalm.
+        self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.
