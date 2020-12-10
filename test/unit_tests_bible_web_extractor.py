@@ -182,7 +182,7 @@ class UnitTests(unittest.TestCase):
         bible = WebExtractor(translation='NLT')
         text = bible.search('Psalm 32:4')
         psalm32_4 = ['\u2074 Day and night your hand of discipline was heavy on me.',
-                     '    My strength evaporated like water in the summer heat.']
+                     '    My strength evaporated like water in the summer heat. Interlude']
         # Explicit interludes should be omitted, and usually show as italicised text in the Psalm.
         # Implicit interludes are embedded within the passage itself, so not much can be done about it (e.g. YLT)
         self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
@@ -240,7 +240,7 @@ class UnitTests(unittest.TestCase):
         bible = WebExtractor(translation='NKJV')
         text = bible.search('Psalm 32:4')
         psalm32_4 = ['\u2074 For day and night Your hand was heavy upon me;',
-                     'My vitality was turned into the drought of summer.']
+                     'My vitality was turned into the drought of summer. Selah']
         # Explicit interludes should be omitted, and usually show as italicised text in the Psalm.
         self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
 

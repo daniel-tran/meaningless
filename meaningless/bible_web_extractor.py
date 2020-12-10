@@ -174,12 +174,6 @@ class WebExtractor:
         #    - Ignore in-line footnotes
         # div with one of the 'footnotes', 'dropdowns', 'crossrefs', 'passage-other-trans' classes
         #    - Ignore the footer area, which is composed of several main tags
-        # span with 'selah' class
-        #    - Ignore explicit Psalm interludes in the translations such as NLT and CEB
-        # i with 'selah' class
-        #    - Ignore explicit Psalm interludes in the translations such as NKJV
-        # selah
-        #    - Ignore explicit Psalm interludes in the translations such as HCSB
         # p with 'translation-note' class
         #    - Ignore explicit translation notes in translations such as ESV
         # crossref
@@ -189,13 +183,25 @@ class WebExtractor:
             + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
             + soup.find_all('div', {
                             'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
-            + soup.find_all('span', {'class': 'selah'}) \
-            + soup.find_all('i', {'class': 'selah'}) \
-            + soup.find_all('selah') \
             + soup.find_all('p', {'class': 'translation-note'}) \
             + soup.find_all('crossref')
         [tag.decompose() for tag in removable_tags]
 
+        # Compile a list of ways Psalm interludes can be found. These are to be preserved, as it would be the
+        # translation team's decision to omit these from the passage, as opposed to a code-level design decision.
+        # span with 'selah' class
+        #    - Explicit Psalm interludes in the translations such as NLT and CEB
+        # i with 'selah' class
+        #    - Explicit Psalm interludes in the translations such as NKJV
+        # selah
+        #    - Explicit Psalm interludes in the translations such as HCSB
+        interludes = soup.find_all('span', {'class': 'selah'}) \
+            + soup.find_all('i', {'class': 'selah'}) \
+            + soup.find_all('selah')
+        # Psalm interludes may or may not have a leading space, depending on the translation.
+        # In any case, always add one in so that the interlude doesn't meld into the passage contents.
+        # To account for double spaces, this relies on a regex replacement later on to convert down to a single space.
+        [interlude.replace_with(' {0}'.format(interlude.text)) for interlude in interludes]
         # <br> tags will naturally be ignored when getting text
         [br.replace_with('\n') for br in soup.find_all('br')]
         # Convert chapter numbers into new lines
