@@ -43,9 +43,16 @@ def get_chapter_count(book, translation='NIV'):
     0
     >>> get_chapter_count('Ecclesiastes', translation='msg')
     0
+    >>> get_chapter_count('Song of Solomon')
+    8
     """
     # Standardise letter casing to help find the key easier
     book_name = book.title()
+
+    # Song Of Songs has an alternate name
+    if book_name == "Song Of Solomon":
+        book_name = "Song Of Songs"
+
     # This is the default mapping of books to their chapter counts
     chapter_count_mappings = {
         'Genesis': 50,
