@@ -73,19 +73,7 @@ class WebExtractor:
         :param chapter_to: Last chapter number to get
         :return: All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.
         """
-        # Capping the chapter information, as this gets included in site search string and can cause
-        # the web request to stagger if this manages to be long enough.
-        capped_chapter_from = common.get_capped_integer(chapter_from,
-                                                        max_value=common.get_chapter_count(book, self.translation))
-        capped_chapter_to = common.get_capped_integer(chapter_to,
-                                                      max_value=common.get_chapter_count(book, self.translation))
-        # Retrieve chapters one by one to stay within the max. text limit when requesting for passages.
-        # Add 1 to the end of the range, since the last chapter is also to be included.
-        chapters = [self.get_chapter(book, chapter) for chapter in range(capped_chapter_from, capped_chapter_to + 1)]
-        if self.output_as_list:
-            # Flattens the data structure from a list of lists to a normal list
-            return [chapter for chapter_list in chapters for chapter in chapter_list]
-        return '\n'.join(chapters)
+        return self.get_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter())
 
     def get_book(self, book):
         """
@@ -93,7 +81,8 @@ class WebExtractor:
         :param book: Name of the book
         :return: All passages in the specified book. Empty string/list if the passage is invalid.
         """
-        return self.get_chapters(book, 1, common.get_chapter_count(book, self.translation))
+        return self.get_passage_range(book, 1, 1, common.get_chapter_count(book, self.translation),
+                                      common.get_end_of_chapter())
 
     def get_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to):
         """
