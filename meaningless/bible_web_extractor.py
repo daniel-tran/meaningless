@@ -261,8 +261,3 @@ class WebExtractor:
         if self.strip_excess_whitespace_from_list:
             return [passage.strip() for passage in passage_list]
         return passage_list
-
-if __name__ == "__main__":
-    # Run this section when run as a standalone script. Don't run this part when being imported.
-    import doctest
-    doctest.testmod(verbose=True, optionflags=doctest.ELLIPSIS)

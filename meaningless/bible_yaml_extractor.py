@@ -170,8 +170,3 @@ class YAMLExtractor:
         all_text = self.passage_separator.join([passage for passage in passage_list])
 
         return all_text.strip()
-
-if __name__ == "__main__":
-    # Run this section when run as a standalone script. Don't run this part when being imported.
-    import doctest
-    doctest.testmod(verbose=True, optionflags=doctest.ELLIPSIS)

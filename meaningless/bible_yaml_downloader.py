@@ -205,7 +205,3 @@ class YAMLDownloader:
         else:
             file_location = file_path
         return yaml_file_interface.write(file_location, document)
-
-if __name__ == "__main__":
-    # Run this section when run as a standalone script. Don't run this part when being imported.
-    print('Oink')
