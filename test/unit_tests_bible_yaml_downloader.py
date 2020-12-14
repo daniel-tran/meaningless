@@ -98,7 +98,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(downloaded_yaml['1 John'], static_yaml['1 John'], 'Passage contents do not match')
 
     def test_yaml_download_chapters(self):
-        download_path = './tmp/test_yaml_download_chapter/'
+        download_path = './tmp/test_yaml_download_chapters/'
         bible = YAMLDownloader(default_directory=download_path, translation=self.get_test_translation())
         bible.download_chapters('1 John', 1, 3)
         downloaded_yaml = yaml_file_interface.read('{0}/1 John.yaml'.format(download_path))
