@@ -140,7 +140,7 @@ class WebExtractor:
         # Don't collect contents from an invalid verse, since they do not exist.
         # A fail-fast approach can be taken by checking for certain indicators of invalidity.
         if not soup.find('div', {'class': 'passage-content'}):
-            raise InvalidSearchError(passage_name, self.translation)
+            raise InvalidSearchError(source_site)
 
         # To get a list, the passage separator is given an actual practical use as an indicator of where to split
         # the string to create list elements.

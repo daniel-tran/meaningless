@@ -2,6 +2,7 @@ import unittest
 import sys
 import os
 import filecmp
+from timeit import default_timer
 sys.path.append('../')
 from meaningless import YAMLDownloader, yaml_file_interface, InvalidSearchError, InvalidPassageError
 
@@ -173,6 +174,29 @@ class UnitTests(unittest.TestCase):
         bible.download_book('Philemon', file_path=lowercase_file_path)
         self.assertTrue(filecmp.cmp('{0}/Philemon.yaml'.format(download_path), lowercase_file_path),
                         'Files do not match')
+
+    def test_yaml_download_single_process_benchmark(self):
+        download_path = './tmp/test_yaml_download_single_process_benchmark'
+        multi_processed_yaml = '{0}/multi_processed.yaml'.format(download_path)
+        single_processed_yaml = '{0}/single_processed.yaml'.format(download_path)
+        bible = YAMLDownloader(default_directory=download_path, enable_multiprocessing=True)
+
+        start = default_timer()
+        bible.download_book('Acts', file_path=multi_processed_yaml)
+        end = default_timer()
+        multi_processed_time = end - start
+
+        bible.enable_multiprocessing = False
+        start = default_timer()
+        bible.download_book('Acts', file_path=single_processed_yaml)
+        end = default_timer()
+        single_processed_time = end - start
+        print('Multi-processed download took {0} seconds\n'
+              'Single-processed download took {1} seconds'.format(multi_processed_time, single_processed_time))
+
+        self.assertTrue(filecmp.cmp(multi_processed_yaml, single_processed_yaml), 'Files do not match')
+        self.assertTrue(multi_processed_time <= single_processed_time,
+                        'Multi-processed download should have been faster')
 
 if __name__ == "__main__":
     unittest.main()

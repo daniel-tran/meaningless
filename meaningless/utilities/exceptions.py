@@ -44,16 +44,13 @@ class InvalidPassageError(BaseError):
 
 
 class InvalidSearchError(BaseError):
-    def __init__(self, search, translation):
+    def __init__(self, url):
         """
         An exception thrown when searching for an invalid passage on the Bible Gateway site
-        :param search:  Search string used on the Bible Gateway site
-        :param translation: Translation code. For example, 'NIV', 'ESV', 'NLT'
+        :param url: The URL which contains the invalid search results
         """
-        super(InvalidSearchError, self).__init__('{0} returned no search results using the {1} translation'.format(
-            search, translation))
-        self.search_string = search
-        self.translation = translation
+        super(InvalidSearchError, self).__init__('Failed to retrieve search results from {0}'.format(url))
+        self.url = url
 
 
 class TranslationMismatchError(BaseError):
