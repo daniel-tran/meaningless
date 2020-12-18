@@ -1,13 +1,11 @@
 import os
-from ruamel.yaml import YAML
-from ruamel.yaml.parser import ParserError
 from meaningless.utilities import yaml_file_interface, common
 from meaningless.utilities.exceptions import UnsupportedTranslationError, InvalidPassageError, TranslationMismatchError
 
 
 class YAMLExtractor:
 
-    def get_local_yaml_file_path(self, book, custom_file_path):
+    def __get_local_yaml_file_path(self, book, custom_file_path):
         """
         A local helper function to retrieve the file path to a locally sourced YAML file
         :param book: Name of the book
@@ -17,8 +15,6 @@ class YAMLExtractor:
         if len(custom_file_path) > 0:
             return custom_file_path
         return os.path.join(self.default_directory, '{0}.yaml'.format(book))
-        # return os.path.join(os.path.dirname(__file__), 'translations', self.translation.upper(),
-        #                    '{0}.yaml'.format(book))
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
                  strip_excess_whitespace_from_list=False, passage_separator='', default_directory=os.getcwd()):
@@ -121,7 +117,7 @@ class YAMLExtractor:
             raise UnsupportedTranslationError(translation)
         # Standardise letter casing to ensure key access errors are not caused by case sensitivity
         book_name = book.title()
-        document = yaml_file_interface.read(self.get_local_yaml_file_path(book_name, file_path))
+        document = yaml_file_interface.read(self.__get_local_yaml_file_path(book_name, file_path))
         passage_list = []
         # Fail-fast on invalid passages
         if not document:

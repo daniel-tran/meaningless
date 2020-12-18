@@ -1,6 +1,5 @@
 import unittest
 import sys
-import os
 import filecmp
 from timeit import default_timer
 sys.path.append('../')

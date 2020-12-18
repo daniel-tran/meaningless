@@ -2,8 +2,7 @@ import os
 import multiprocessing
 from meaningless.bible_web_extractor import WebExtractor
 from meaningless.utilities import yaml_file_interface, common
-from meaningless.utilities.exceptions import UnsupportedTranslationError, InvalidPassageError, InvalidSearchError
-from ruamel.yaml import YAML
+from meaningless.utilities.exceptions import UnsupportedTranslationError, InvalidPassageError
 
 
 class YAMLDownloader:

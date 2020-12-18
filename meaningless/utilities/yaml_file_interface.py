@@ -1,6 +1,5 @@
 import os
 from ruamel.yaml import YAML
-from ruamel.yaml.parser import ParserError
 
 # This is a collection of common methods used for interacting with YAML files.
 

@@ -1,6 +1,5 @@
 import unittest
 import sys
-import os
 sys.path.append('../')
 from meaningless import YAMLExtractor, UnsupportedTranslationError
 

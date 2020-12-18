@@ -1,6 +1,5 @@
 import unittest
 import sys
-import os
 import filecmp
 from ruamel.yaml.parser import ParserError
 sys.path.append('../')

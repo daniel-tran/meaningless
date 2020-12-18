@@ -1,5 +1,4 @@
 from urllib.request import urlopen
-from urllib.parse import urlencode
 import re
 
 # This is a collection of helper methods used across the various modules.
@@ -132,6 +131,8 @@ def get_chapter_count(book, translation='NIV'):
 def get_page(url):
     """
     A helper function that returns the contents of a web page.
+    :param url: Page URL to obtain
+    :return: Page contents. Raises an error if the web page could not be loaded for any reason.
 
     >>> get_page('https://www.biblegateway.com')
     b'<!DOCTYPE html>...'
