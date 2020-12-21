@@ -161,7 +161,11 @@ class YAMLDownloader:
             book_name: {}
         }
 
-        process_pool = multiprocessing.Pool()
+        # Don't initialise the thread pool unless the extractor has been set to use multiprocessing.
+        # This logic could be already running in a daemon process, and initialising the pool will cause an error.
+        process_pool = None
+        if self.enable_multiprocessing:
+            process_pool = multiprocessing.Pool()
         process_results = []
 
         # Range is extended by 1 to include chapter_to in the loop iteration
@@ -189,12 +193,11 @@ class YAMLDownloader:
                 document[book_name][chapter] = self._get_passages_dict(online_bible, book_name, chapter,
                                                                        passage_initial, passage_final)
 
-        # Close the pool manually, as the garbage collector might not dispose of this automatically
-        process_pool.close()
-        # Explicitly wait for the processes to finish up in case some processes have heavy workloads
-        process_pool.join()
-
         if self.enable_multiprocessing:
+            # Close the pool manually, as the garbage collector might not dispose of this automatically
+            process_pool.close()
+            # Explicitly wait for the processes to finish up in case some processes have heavy workloads
+            process_pool.join()
             # When multiprocessing, all process results should be retrieved as a batch operation to minimise
             # the total time cost associated with the "get" method for each result.
             document[book_name] = {chapter: process_results.pop(0).get() for chapter in chapter_range}
