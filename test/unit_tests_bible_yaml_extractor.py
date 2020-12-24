@@ -11,10 +11,22 @@ class UnitTests(unittest.TestCase):
 
     @staticmethod
     def get_test_translation():
+        """
+        A helper function to define the standardised translation for this set of tests.
+        :return: Translation code
+        :rtype: str
+        """
         return 'WEB'
 
     @staticmethod
     def get_test_directory(translation='WEB'):
+        """
+        A helper function to determine the working directory for this set of unit tests
+        :param translation: Translation code for the tests. For example, 'NIV', 'ESV', 'NLT'
+        :type translation: str
+        :return: Directory path containing readable files
+        :rtype: str
+        """
         return './static/unit_tests_bible_yaml_extractor/{0}'.format(translation)
 
     def test_get_yaml_passage(self):

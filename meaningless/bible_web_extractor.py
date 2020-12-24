@@ -11,11 +11,18 @@ class WebExtractor:
                  strip_excess_whitespace_from_list=False, passage_separator=''):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-        :param show_passage_numbers: If True, any present passage numbers are preserved.
-        :param output_as_list: When True, returns the passage data as a list of strings.
+        :type translation: str
+        :param show_passage_numbers: If True, any present passage numbers are preserved. Defaults to True.
+        :type show_passage_numbers: bool
+        :param output_as_list: When True, returns the passage data as a list of strings. Defaults to False.
+        :type output_as_list: bool
         :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
                                                   whitespace characters are removed for each string element in the list.
+                                                  Defaults to False.
+        :type strip_excess_whitespace_from_list: bool
         :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
+                                  Defaults to the empty string.
+        :type passage_separator: str
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
@@ -27,9 +34,13 @@ class WebExtractor:
         """
         Gets a single passage from the Bible Gateway site
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :param passage: Passage number
+        :type passage: int
         :return: The specified passage. Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         # Capping the chapter and passage information, as this gets included in site search string and can cause
         # the web request to stagger if this manages to be long enough.
@@ -41,10 +52,15 @@ class WebExtractor:
         """
         Gets a range of passages of the same chapter from the Bible Gateway site
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :param passage_from: First passage number to get
+        :type passage_from: int
         :param passage_to: Last passage number to get
+        :type passage_to: int
         :return: The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         # Capping the chapter and passage information, as this gets included in site search string and can cause
         # the web request to stagger if this manages to be long enough.
@@ -57,8 +73,11 @@ class WebExtractor:
         """
         Gets a single chapter from the Bible Gateway site
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :return: All passages in the chapter. Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         # Capping the chapter information, as this gets included in site search string and can cause
         # the web request to stagger if this manages to be long enough.
@@ -69,9 +88,13 @@ class WebExtractor:
         """
         Gets a range of passages from a specified chapters selection from the Bible Gateway site
         :param book: Name of the book
+        :type book: str
         :param chapter_from: First chapter number to get
+        :type chapter_from: int
         :param chapter_to: Last chapter number to get
+        :type chapter_to: int
         :return: All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.
+        :rtype: str (list if output_as_list is True)
         """
         return self.get_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter())
 
@@ -79,7 +102,9 @@ class WebExtractor:
         """
         Gets all chapters for a specific book from the Bible Gateway site
         :param book: Name of the book
+        :type book: str
         :return: All passages in the specified book. Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         return self.get_passage_range(book, 1, 1, common.get_chapter_count(book, self.translation),
                                       common.get_end_of_chapter())
@@ -88,11 +113,17 @@ class WebExtractor:
         """
         Gets a range of passages from one specific passage to another passage from the Bible Gateway site
         :param book: Name of the book
+        :type book: str
         :param chapter_from: First chapter number to get
+        :type chapter_from: int
         :param passage_from: First passage number to get in the first chapter
+        :type passage_from: int
         :param chapter_to: Last chapter number to get
+        :type chapter_to: int
         :param passage_to: Last passage number to get in the last chapter
+        :type passage_to: int
         :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         # Capping the chapter and passage information, as this gets included in site search string and can cause
         # the web request to stagger if this manages to be long enough.
@@ -124,7 +155,9 @@ class WebExtractor:
         """
         Retrieves a specific passage or set of passages directly from the Bible Gateway site
         :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
+        :type passage_name: str
         :return: Bible passage with preserved line breaks
+        :rtype: str (list if self.output_as_list is True)
         """
         # Some translations are very tricky to extract passages from, and currently, so specific extraction logic
         # for these translations should not be introduced until they need to be supported.

@@ -11,6 +11,13 @@ class UnitTests(unittest.TestCase):
     #       All other methods will simply be interpreted as test helper functions.
 
     def check_baseline_passages(self, translation, expected_passage_results):
+        """
+        Checks that a translation can return the correct results for a basic set of passages
+        :param translation: Translation code for the tests. For example, 'NIV', 'ESV', 'NLT'
+        :type translation: str
+        :param expected_passage_results: List of strings correlating to each of the tested passages
+        :type expected_passage_results: list
+        """
         bible = WebExtractor(translation=translation)
         actual_passage_results = [
             bible.search('Revelation 21:25'),
@@ -27,6 +34,13 @@ class UnitTests(unittest.TestCase):
             expected_passage_index += 1
 
     def check_omitted_passages(self, translation, expected_passage_results):
+        """
+        Checks that a translation can return the correct results for all known passages which can be omitted
+        :param translation: Translation code for the tests. For example, 'NIV', 'ESV', 'NLT'
+        :type translation: str
+        :param expected_passage_results: List of strings correlating to each of the tested passages
+        :type expected_passage_results: list
+        """
         download_path = './tmp/check_omitted_passages/{0}'.format(translation)
         # Downloading the books with a process map is somewhat faster than using multiple daemon processes to
         # acquire each book sequentially.

@@ -9,14 +9,21 @@ class YAMLExtractor:
                  strip_excess_whitespace_from_list=False, passage_separator='', default_directory=os.getcwd()):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-        :param show_passage_numbers: If True, any present passage numbers are preserved.
-        :param output_as_list: When True, returns the passage data as a list of strings.
+        :type translation: str
+        :param show_passage_numbers: If True, any present passage numbers are preserved. Defaults to True.
+        :type show_passage_numbers: bool
+        :param output_as_list: When True, returns the passage data as a list of strings. Defaults to False.
+        :type output_as_list: bool
         :param strip_excess_whitespace_from_list: When True and output_as_list is also True, leading and trailing
                                                   whitespace characters are removed for each string element in the list.
+                                                  Defaults to False.
+        :type strip_excess_whitespace_from_list: bool
         :param passage_separator: When output_as_list is False, an optional string added to the front of a passage
                                   (placed before the passage number). Defaults to the empty string.
+        :type passage_separator: str
         :param default_directory: Directory containing the YAML file to read from.
                                   Defaults to the current working directory.
+        :type default_directory: str
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
@@ -29,12 +36,17 @@ class YAMLExtractor:
         """
         Gets a single passage from the YAML Bible files
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :param passage: Passage number
+        :type passage: str
         :param file_path: When specified, reads the YAML file from this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: The specified passage. Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         return self.get_passage_range(book, chapter, passage, chapter, passage, file_path)
 
@@ -42,13 +54,19 @@ class YAMLExtractor:
         """
         Gets a range of passages of the same chapter from the YAML Bible files
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :param passage_from: First passage number to get
+        :type passage_from: int
         :param passage_to: Last passage number to get
+        :type passage_to: int
         :param file_path: When specified, reads the YAML file from this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         return self.get_passage_range(book, chapter, passage_from, chapter, passage_to, file_path)
 
@@ -56,11 +74,15 @@ class YAMLExtractor:
         """
         Gets a single chapter from the YAML Bible files
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :param file_path: When specified, reads the YAML file from this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: All passages in the chapter. Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         return self.get_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter(), file_path)
 
@@ -68,12 +90,17 @@ class YAMLExtractor:
         """
         Gets a range of passages from a specified chapters selection from the YAML Bible files
         :param book: Name of the book
+        :type book: str
         :param chapter_from: First chapter number to get
+        :type chapter_from: int
         :param chapter_to: Last chapter number to get
+        :type chapter_to: int
         :param file_path: When specified, reads the YAML file from this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         return self.get_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter(), file_path)
 
@@ -81,10 +108,13 @@ class YAMLExtractor:
         """
         Gets all chapters for a specific book from the YAML Bible files
         :param book: Name of the book
+        :type book: str
         :param file_path: When specified, reads the YAML file from this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: All passages in the specified book. Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         return self.get_chapters(book, 1, common.get_chapter_count(book, self.translation), file_path)
 
@@ -92,14 +122,21 @@ class YAMLExtractor:
         """
         Gets a range of passages from one specific passage to another passage from the YAML Bible files
         :param book: Name of the book
+        :type book: str
         :param chapter_from: First chapter number to get
+        :type chapter_from: int
         :param passage_from: First passage number to get in the first chapter
+        :type passage_from: int
         :param chapter_to: Last chapter number to get
+        :type chapter_to: int
         :param passage_to: Last passage number to get in the last chapter
+        :type passage_to: int
         :param file_path: When specified, reads the YAML file from this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
+        :rtype: str (list if self.output_as_list is True)
         """
         translation = self.translation.upper()
         if common.is_unsupported_translation(translation):

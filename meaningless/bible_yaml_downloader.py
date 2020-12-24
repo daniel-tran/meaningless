@@ -37,14 +37,19 @@ class YAMLDownloader:
                  strip_excess_whitespace=False, enable_multiprocessing=True):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
-        :param show_passage_numbers: If True, any present passage numbers are preserved.
+        :type translation: str
+        :param show_passage_numbers: If True, any present passage numbers are preserved. Defaults to True.
+        :type show_passage_numbers: bool
         :param default_directory: Directory containing the downloaded YAML file.
                                   Defaults to the current working directory.
+        :type default_directory: str
         :param strip_excess_whitespace: If True, passages don't retain leading & trailing whitespaces as well as
                                         newline characters. Defaults to False.
+        :type strip_excess_whitespace: bool
         :param enable_multiprocessing: If True, downloads are performed using multiple daemon processes, resulting in
                                        lower download times by splitting computations among multiple CPU cores.
                                        Defaults to True.
+        :type enable_multiprocessing: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
@@ -56,12 +61,17 @@ class YAMLDownloader:
         """
         Downloads a single passage as a YAML file
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :param passage: Passage number
+        :type passage: int
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
+        :rtype: int
         """
         return self.download_passage_range(book, chapter, passage, chapter, passage, file_path)
 
@@ -69,13 +79,19 @@ class YAMLDownloader:
         """
         Downloads a range of passages of the same chapter as a YAML file
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :param passage_from: First passage number to get
+        :type passage_from: int
         :param passage_to: Last passage number to get
+        :type passage_to: int
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
+        :rtype: int
         """
         return self.download_passage_range(book, chapter, passage_from, chapter, passage_to, file_path)
 
@@ -83,11 +99,15 @@ class YAMLDownloader:
         """
         Downloads a single chapter as a YAML file
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
+        :rtype: int
         """
         return self.download_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter(), file_path)
 
@@ -95,12 +115,17 @@ class YAMLDownloader:
         """
         Downloads a range of passages from a specified chapter selection as a YAML file
         :param book: Name of the book
+        :type book: str
         :param chapter_from: First chapter number to get
+        :type chapter_from: int
         :param chapter_to: Last chapter number to get
+        :type chapter_to: int
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
+        :rtype: int
         """
         return self.download_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter(), file_path)
 
@@ -108,10 +133,13 @@ class YAMLDownloader:
         """
         Downloads a specific book of the Bible and saves it as a YAML file
         :param book: Name of the book
+        :type book: str
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
+        :rtype: int
         """
         return self.download_passage_range(book, 1, 1, common.get_chapter_count(book, self.translation),
                                            common.get_end_of_chapter(), file_path)
@@ -120,14 +148,21 @@ class YAMLDownloader:
         """
         Downloads a range of passages from one specific passage to another passage as a YAML file
         :param book: Name of the book
+        :type book: str
         :param chapter_from: First chapter number to get
+        :type chapter_from: int
         :param passage_from: First passage number to get in the first chapter
+        :type passage_from: int
         :param chapter_to: Last chapter number to get
+        :type chapter_to: int
         :param passage_to: Last passage number to get in the last chapter
+        :type passage_to: int
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name, and ends in .yaml
+        :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
+        :rtype: int
         """
         translation = self.translation.upper()
         if common.is_unsupported_translation(translation):
@@ -214,6 +249,7 @@ class YAMLDownloader:
         A helper function that gets run an exception is received when downloading passages.
         This is not a top-level global function, as it is intended to be solely used within this class.
         :param exception: Exception object that is re-raised after this method completes.
+        :type exception: object
         """
         # Clear the arguments to prevent "stacking" of exception error messages.
         # An empty tuple means the user has to search elsewhere in the stack trace to fine the point of failure.
@@ -225,11 +261,17 @@ class YAMLDownloader:
         Not to be exposed as a usable method, as this function mostly exists so that passage retrieval can be done
         in a multi-processed way. Pre-pending the method name with double underscores causes referencing issues.
         :param online_bible: Instance of WebExtractor to use to download the passages
+        :type online_bible: WebExtractor
         :param book: Name of the book
+        :type book: str
         :param chapter: Chapter number
+        :type chapter: int
         :param passage_from: First passage number to get
+        :type passage_from: int
         :param passage_to: Last passage number to get
+        :type passage_to: int
         :return: Dictionary of passages, keyed on passage number
+        :rtype: dict
         """
         online_bible.output_as_list = True
         passage_list = online_bible.get_passages(book, chapter, passage_from, passage_to)
