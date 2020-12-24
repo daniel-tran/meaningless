@@ -9,7 +9,8 @@ from meaningless.bible_web_extractor import WebExtractor
 from meaningless.utilities.exceptions import (
     UnsupportedTranslationError,
     InvalidPassageError,
-    InvalidSearchError
+    InvalidSearchError,
+    TranslationMismatchError
 )
 # Include the file interface, mainly as an out-of-the-box mechanism for reading downloaded YAML files
 # as well as writing YAML output using the information obtained from the extractors.
