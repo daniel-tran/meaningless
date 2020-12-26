@@ -6,6 +6,9 @@ from meaningless.utilities.exceptions import UnsupportedTranslationError, Invali
 
 
 class YAMLDownloader:
+    """
+    An downloader object that stores Bible passages into a local YAML file
+    """
 
     __translations_with_omitted_passages = {
         'ESV': ['Matthew 12:47', 'Matthew 17:21', 'Matthew 18:11', 'Matthew 23:14',
@@ -60,6 +63,7 @@ class YAMLDownloader:
     def download_passage(self, book, chapter, passage, file_path=''):
         """
         Downloads a single passage as a YAML file
+
         :param book: Name of the book
         :type book: str
         :param chapter: Chapter number
@@ -78,6 +82,7 @@ class YAMLDownloader:
     def download_passages(self, book, chapter, passage_from, passage_to, file_path=''):
         """
         Downloads a range of passages of the same chapter as a YAML file
+
         :param book: Name of the book
         :type book: str
         :param chapter: Chapter number
@@ -98,6 +103,7 @@ class YAMLDownloader:
     def download_chapter(self, book, chapter, file_path=''):
         """
         Downloads a single chapter as a YAML file
+
         :param book: Name of the book
         :type book: str
         :param chapter: Chapter number
@@ -114,6 +120,7 @@ class YAMLDownloader:
     def download_chapters(self, book, chapter_from, chapter_to, file_path=''):
         """
         Downloads a range of passages from a specified chapter selection as a YAML file
+
         :param book: Name of the book
         :type book: str
         :param chapter_from: First chapter number to get
@@ -132,6 +139,7 @@ class YAMLDownloader:
     def download_book(self, book, file_path=''):
         """
         Downloads a specific book of the Bible and saves it as a YAML file
+
         :param book: Name of the book
         :type book: str
         :param file_path: When specified, saves the YAML file to this location with a custom filename and extension.
@@ -147,6 +155,7 @@ class YAMLDownloader:
     def download_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to, file_path=''):
         """
         Downloads a range of passages from one specific passage to another passage as a YAML file
+
         :param book: Name of the book
         :type book: str
         :param chapter_from: First chapter number to get
@@ -248,6 +257,7 @@ class YAMLDownloader:
         """
         A helper function that gets run an exception is received when downloading passages.
         This is not a top-level global function, as it is intended to be solely used within this class.
+
         :param exception: Exception object that is re-raised after this method completes.
         :type exception: object
         """
@@ -260,6 +270,7 @@ class YAMLDownloader:
         A helper function that obtains a range of passages and organises them as a dictionary for YAML output.
         Not to be exposed as a usable method, as this function mostly exists so that passage retrieval can be done
         in a multi-processed way. Pre-pending the method name with double underscores causes referencing issues.
+
         :param online_bible: Instance of WebExtractor to use to download the passages
         :type online_bible: WebExtractor
         :param book: Name of the book

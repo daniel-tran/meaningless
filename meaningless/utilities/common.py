@@ -7,9 +7,11 @@ import re
 def is_unsupported_translation(translation):
     """
     A helper function to determine if the provided translation code is supported
+
     :param translation: Translation code
     :type translation: str
     :return: True = the translation is not supported, False = the translation is supported
+    :rtype: bool
 
     >>> is_unsupported_translation('msg')
     True
@@ -25,7 +27,9 @@ def get_end_of_chapter():
     """
     A helper function to define the max. number of passages any chapter could possibly have.
     This is based on functionality present on Bible Gateway where a very large number is capped to the chapter's end.
+
     :return: A static number
+    :rtype: int
     """
     return 9000
 
@@ -33,11 +37,13 @@ def get_end_of_chapter():
 def get_chapter_count(book, translation='NIV'):
     """
     A helper function to return the number of chapter in a given book for a particular translation.
+
     :param book: Name of the book
     :type book: str
     :param translation: Translation code for the particular book. For example, 'NIV', 'ESV', 'NLT'
     :type translation: str
     :return: Number of chapters in the book. 0 usually means an invalid book or unsupported translation.
+    :rtype: int
 
     >>> get_chapter_count('Ecclesiastes')
     12
@@ -137,6 +143,7 @@ def get_page(url):
     :param url: Page URL to obtain
     :type url: str
     :return: Page contents. Raises an error if the web page could not be loaded for any reason.
+    :rtype: object
 
     >>> get_page('https://www.biblegateway.com')
     b'<!DOCTYPE html>...'
@@ -161,6 +168,7 @@ def superscript_numbers(text, normalise_empty_passage=True):
                                     be considered non-standard formatting. Mostly used to handle the case of empty
                                     passages such as Luke 17:36.
     :type normalise_empty_passage: bool
+    :rtype: str
 
     >>> superscript_numbers('[0123456789]')
     '\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079'
@@ -184,6 +192,7 @@ def remove_superscript_numbers_in_passage(text):
     :param text: String to process
     :type text: str
     :return: String with the superscript numbers that have a trailing space removed
+    :rtype: str
 
     >>> remove_superscript_numbers_in_passage('\u2070 \u00b9 \u00b2 \u00b3 \u2074 \u2075 \u2076 \u2077 \u2078 \u2079 ')
     ''
@@ -203,6 +212,7 @@ def get_capped_integer(number, min_value=1, max_value=100):
     :param max_value: Highest possible value assigned when number is larger than this
     :type max_value: int
     :return: Integer that adheres to min_value <= number <= max_value
+    :rtype: int
 
     >>> get_capped_integer(42)
     42
@@ -220,6 +230,7 @@ def get_empty_data(output_as_list=False):
     :param output_as_list: If True, returns an empty list instead of an empty string
     :type output_as_list: bool
     :return: '' or []
+    :rtype: str or list
 
     >>> get_empty_data()
     ''
@@ -237,6 +248,7 @@ def get_translation_language(translation):
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
     :type translation: str
     :return: Language used as a string. Empty string if the translation is not supported.
+    :rtype: str
 
     >>> get_translation_language('NIV')
     'English'

@@ -7,11 +7,13 @@ from ruamel.yaml import YAML
 def write(data_file, document):
     """
     A helper function to write to a YAML data file. Note that Unix line endings (LF) are used.
+
     :param data_file: Path to the data file to write to
     :type data_file: str
     :param document: In-memory YAML structure, usually a dictionary
     :type document: dict
     :return: Returns 1 on success. Raises an exception when a write problem occurs.
+    :rtype: int
     """
     # Mode can be left as the default value, but don't throw an error when the folder already exists
     os.makedirs(os.path.dirname(data_file), exist_ok=True)
@@ -24,9 +26,11 @@ def write(data_file, document):
 def read(data_file):
     """
     A helper function to read a YAML data file
+
     :param data_file: Path the data file to read
     :type data_file: str
     :return: Contents of the file as an object. Raises an exception when a read problem occurs.
+    :rtype: dict
     """
     # Use UTF-8 encoding to be able to read Unicode characters
     with open(data_file, 'r', encoding='utf-8') as file:

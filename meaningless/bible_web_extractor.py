@@ -6,6 +6,9 @@ from meaningless.utilities.exceptions import InvalidSearchError, UnsupportedTran
 
 
 class WebExtractor:
+    """
+    An extractor object that retrieves Bible passages from the Bible Gateway site
+    """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
                  strip_excess_whitespace_from_list=False, passage_separator=''):
@@ -33,6 +36,7 @@ class WebExtractor:
     def get_passage(self, book, chapter, passage):
         """
         Gets a single passage from the Bible Gateway site
+
         :param book: Name of the book
         :type book: str
         :param chapter: Chapter number
@@ -51,6 +55,7 @@ class WebExtractor:
     def get_passages(self, book, chapter, passage_from, passage_to):
         """
         Gets a range of passages of the same chapter from the Bible Gateway site
+
         :param book: Name of the book
         :type book: str
         :param chapter: Chapter number
@@ -72,6 +77,7 @@ class WebExtractor:
     def get_chapter(self, book, chapter):
         """
         Gets a single chapter from the Bible Gateway site
+
         :param book: Name of the book
         :type book: str
         :param chapter: Chapter number
@@ -87,6 +93,7 @@ class WebExtractor:
     def get_chapters(self, book, chapter_from, chapter_to):
         """
         Gets a range of passages from a specified chapters selection from the Bible Gateway site
+
         :param book: Name of the book
         :type book: str
         :param chapter_from: First chapter number to get
@@ -101,6 +108,7 @@ class WebExtractor:
     def get_book(self, book):
         """
         Gets all chapters for a specific book from the Bible Gateway site
+
         :param book: Name of the book
         :type book: str
         :return: All passages in the specified book. Empty string/list if the passage is invalid.
@@ -112,6 +120,7 @@ class WebExtractor:
     def get_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to):
         """
         Gets a range of passages from one specific passage to another passage from the Bible Gateway site
+
         :param book: Name of the book
         :type book: str
         :param chapter_from: First chapter number to get
@@ -154,6 +163,7 @@ class WebExtractor:
     def search(self, passage_name):
         """
         Retrieves a specific passage or set of passages directly from the Bible Gateway site
+
         :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
         :type passage_name: str
         :return: Bible passage with preserved line breaks

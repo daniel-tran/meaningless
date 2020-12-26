@@ -6,9 +6,12 @@ class BaseError(Exception):
 
 
 class UnsupportedTranslationError(BaseError):
+    """
+    An exception thrown when handling translations that are not currently supported
+    """
+
     def __init__(self, translation):
         """
-        An exception thrown when handling translations that are not currently supported
         :param translation: Translation code. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
         """
@@ -17,9 +20,12 @@ class UnsupportedTranslationError(BaseError):
 
 
 class InvalidPassageError(BaseError):
+    """
+    An exception thrown when processing a non-existent passage (or passage range)
+    """
+
     def __init__(self, book, chapter_from, passage_from, chapter_to, passage_to, translation):
         """
-        An exception thrown when processing a non-existent passage (or passage range)
         :param book: Name of the book
         :type book: str
         :param chapter_from: First chapter number to get
@@ -51,9 +57,12 @@ class InvalidPassageError(BaseError):
 
 
 class InvalidSearchError(BaseError):
+    """
+    An exception thrown when searching for an invalid passage on the Bible Gateway site
+    """
+
     def __init__(self, url):
         """
-        An exception thrown when searching for an invalid passage on the Bible Gateway site
         :param url: The URL which contains the invalid search results
         :type url: str
         """
@@ -62,9 +71,12 @@ class InvalidSearchError(BaseError):
 
 
 class TranslationMismatchError(BaseError):
+    """
+    An exception thrown when using the YAML Extractor to read a YAML file, and both use different translations
+    """
+
     def __init__(self, extractor_translation, file_translation):
         """
-        An exception thrown when using the YAML Extractor to read a YAML file, and both use different translations
         :param extractor_translation: Translation code used by the YAML Extractor. For example, 'NIV', 'ESV', 'NLT'
         :type extractor_translation: str
         :param file_translation: Translation code used in the YAML file. For example, 'NIV', 'ESV', 'NLT'
