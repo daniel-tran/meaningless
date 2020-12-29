@@ -161,6 +161,15 @@ class UnitTests(unittest.TestCase):
         # Toggling the flag parameter should not preserve these newline characters, but the inner newlines are kept.
         self.assertEqual(eccl11, text, 'Passage is incorrect')
 
+    def test_get_chapter_list_with_ascii_punctuation(self):
+        bible = WebExtractor(output_as_list=True, translation=self.get_test_translation(), use_ascii_punctuation=True)
+        text = bible.get_chapter('Ecclesiastes', 2)
+        static_file = '{0}/test_get_chapter_list_with_ascii_punctuation.txt'.format(self.get_test_directory())
+        with open(static_file, 'r', encoding='utf-8') as file:
+            eccl = file.read()
+        # This chapter doesn't have Unicode single quotes, but should have the other translated characters
+        self.assertEqual(eccl, ''.join(text), 'Passage is incorrect')
+
     def test_get_yaml_passage_list(self):
         bible = YAMLExtractor(output_as_list=True, default_directory=self.get_test_directory(),
                               translation=self.get_test_translation())
@@ -227,6 +236,17 @@ class UnitTests(unittest.TestCase):
                 '\u00b2 A wise man\u2019s heart is at his right hand,\n'
                 'but a fool\u2019s heart at his left.'
                 ]
+        self.assertEqual(eccl, text, 'Passage is incorrect')
+
+    def test_get_yaml_book_list_with_ascii_punctuation(self):
+        online_bible = WebExtractor(output_as_list=True, translation=self.get_test_translation(),
+                                    show_passage_numbers=False, use_ascii_punctuation=True)
+        yaml_bible = YAMLExtractor(output_as_list=True, default_directory=self.get_test_directory(),
+                                   translation=self.get_test_translation(), show_passage_numbers=False,
+                                   use_ascii_punctuation=True)
+        text = yaml_bible.get_book('Ecclesiastes')
+        eccl = online_bible.get_book('Ecclesiastes')
+        # Results should be identical between the web and YAML extractor
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
 if __name__ == "__main__":

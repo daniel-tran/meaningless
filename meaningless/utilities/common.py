@@ -262,6 +262,27 @@ def get_translation_language(translation):
     return 'English'
 
 
+def unicode_to_ascii_punctuation(text):
+    """
+    A helper function to convert certain punctuation characters from Unicode to ASCII
+
+    :param text: String to process
+    :type text: str
+    :return: String with ASCII punctuation where relevant
+    :rtype: str
+
+    >>> unicode_to_ascii_punctuation('\u2018GG\u2019')
+    "'GG'"
+    >>> unicode_to_ascii_punctuation('\u201cG\u2014G\u201d')
+    '"G-G"'
+    >>> unicode_to_ascii_punctuation('GG')
+    'GG'
+    >>> unicode_to_ascii_punctuation('\u2070')
+    '\u2070'
+    """
+    punctuation_map = text.maketrans('\u201c\u2018\u2014\u2019\u201d', '"\'-\'"')
+    return text.translate(punctuation_map)
+
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.
     import doctest

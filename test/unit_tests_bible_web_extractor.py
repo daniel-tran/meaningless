@@ -244,6 +244,21 @@ class UnitTests(unittest.TestCase):
         # Explicit interludes should be omitted, and usually show as italicised text in the Psalm.
         self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
 
+    def test_get_passage_with_ascii_punctuation(self):
+        bible = WebExtractor(use_ascii_punctuation=True)
+        text = bible.search('Leviticus 15:12')
+        lev15_12 = '\u00b9\u00b2 "\'A clay pot that the man touches must be broken,' \
+                   ' and any wooden article is to be rinsed with water.'
+        self.assertEqual(lev15_12, text, 'Passage is incorrect')
+
+    def test_get_passage_with_ascii_punctuation_with_unicode_passage_separator(self):
+        bible = WebExtractor(use_ascii_punctuation=True, passage_separator='\u201c\u2018\u2014\u2019\u201d ')
+        text = bible.search('Leviticus 15:12')
+        # Passage separators are also affected by ASCII punctuation conversion
+        lev15_12 = '"\'-\'" \u00b9\u00b2 "\'A clay pot that the man touches must be broken,' \
+                   ' and any wooden article is to be rinsed with water.'
+        self.assertEqual(lev15_12, text, 'Passage is incorrect')
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.

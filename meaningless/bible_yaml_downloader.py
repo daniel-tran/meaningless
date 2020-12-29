@@ -37,7 +37,7 @@ class YAMLDownloader:
     }
 
     def __init__(self, translation='NIV', show_passage_numbers=True, default_directory=os.getcwd(),
-                 strip_excess_whitespace=False, enable_multiprocessing=True):
+                 strip_excess_whitespace=False, enable_multiprocessing=True, use_ascii_punctuation=False):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
@@ -53,12 +53,16 @@ class YAMLDownloader:
                                        lower download times by splitting computations among multiple CPU cores.
                                        Defaults to True.
         :type enable_multiprocessing: bool
+        :param use_ascii_punctuation: When True, converts all Unicode punctuation characters into their ASCII
+                                      counterparts. Defaults to False.
+        :type use_ascii_punctuation: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
         self.default_directory = default_directory
         self.strip_excess_whitespace = strip_excess_whitespace
         self.enable_multiprocessing = enable_multiprocessing
+        self.use_ascii_punctuation = use_ascii_punctuation
 
     def download_passage(self, book, chapter, passage, file_path=''):
         """
@@ -191,7 +195,8 @@ class YAMLDownloader:
 
         online_bible = WebExtractor(translation=translation, show_passage_numbers=self.show_passage_numbers,
                                     output_as_list=True, passage_separator='',
-                                    strip_excess_whitespace_from_list=self.strip_excess_whitespace)
+                                    strip_excess_whitespace_from_list=self.strip_excess_whitespace,
+                                    use_ascii_punctuation=self.use_ascii_punctuation)
 
         # Set up the base document with the root-level keys
         # Upon downloading a YAML file, the top-level keys might be ordered differently to when they were inserted.

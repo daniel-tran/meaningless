@@ -9,7 +9,8 @@ class YAMLExtractor:
     """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
-                 strip_excess_whitespace_from_list=False, passage_separator='', default_directory=os.getcwd()):
+                 strip_excess_whitespace_from_list=False, passage_separator='', default_directory=os.getcwd(),
+                 use_ascii_punctuation=False):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
@@ -27,6 +28,9 @@ class YAMLExtractor:
         :param default_directory: Directory containing the YAML file to read from.
                                   Defaults to the current working directory.
         :type default_directory: str
+        :param use_ascii_punctuation: When True, converts all Unicode punctuation characters into their ASCII
+                                      counterparts. This also applies to passage separators. Defaults to False.
+        :type use_ascii_punctuation: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
@@ -34,6 +38,7 @@ class YAMLExtractor:
         self.strip_excess_whitespace_from_list = strip_excess_whitespace_from_list
         self.passage_separator = passage_separator
         self.default_directory = default_directory
+        self.use_ascii_punctuation = use_ascii_punctuation
 
     def get_passage(self, book, chapter, passage, file_path=''):
         """
@@ -167,6 +172,13 @@ class YAMLExtractor:
         file_translation = document['Info']['Translation']
         if translation != file_translation:
             raise TranslationMismatchError(self.translation, file_translation)
+
+        # Apply ASCII punctuation to the passage separator as well, as it's the only text not from the YAML file
+        if self.use_ascii_punctuation:
+            passage_separator = common.unicode_to_ascii_punctuation(self.passage_separator)
+        else:
+            passage_separator = self.passage_separator
+
         # Apply a boundary to the chapters to prevent invalid keys being accessed
         capped_chapter_from = common.get_capped_integer(chapter_from, max_value=len(document[book_name].keys()))
         capped_chapter_to = common.get_capped_integer(chapter_to, max_value=len(document[book_name].keys()))
@@ -188,9 +200,11 @@ class YAMLExtractor:
              range(passage_initial, passage_final + 1)]
             # Start each chapter on a new line when outputting as a string. Use the passage separator if it is set, to
             # ensure uniform passage separation regardless of chapter boundaries.
-            if not self.output_as_list and len(self.passage_separator) <= 0:
+            if not self.output_as_list and len(passage_separator) <= 0:
                 passage_list.append('\n')
 
+        if self.use_ascii_punctuation:
+            passage_list = [common.unicode_to_ascii_punctuation(passage) for passage in passage_list]
         if not self.show_passage_numbers:
             # Note that this is a naive replacement, but should be OK as long as the original file source was from the
             # module's pre-supplied YAML resources. Otherwise, using an external file source risks losing superscript
@@ -202,6 +216,6 @@ class YAMLExtractor:
             return passage_list
         # Convert the list of passages into a string, as strings are immutable and manually re-initialising a new string
         # in the loop can be costly to performance.
-        all_text = self.passage_separator.join([passage for passage in passage_list])
+        all_text = passage_separator.join([passage for passage in passage_list])
 
         return all_text.strip()

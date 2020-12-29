@@ -243,5 +243,33 @@ class UnitTests(unittest.TestCase):
         # Translations should be case insensitive under the hood
         self.assertEqual(text1, text2, 'Passages do not match')
 
+    def test_get_yaml_passage_with_ascii_punctuation(self):
+        bible = YAMLExtractor(default_directory=self.get_test_directory(), translation=self.get_test_translation(),
+                              use_ascii_punctuation=True)
+        text = bible.get_passage('Ecclesiastes', 1, 2)
+        eccl = '\u00b2 "Vanity of vanities," says the Preacher; "Vanity of vanities, all is vanity."'
+        self.assertEqual(eccl, text, 'Passages do not match')
+
+    def test_get_yaml_passage_with_ascii_punctuation_with_passage_separator(self):
+        bible = YAMLExtractor(default_directory=self.get_test_directory(), translation=self.get_test_translation(),
+                              use_ascii_punctuation=True, passage_separator='\u201c\u2018\u2014\u2019\u201d ')
+        text = bible.get_passages('Ecclesiastes', 1, 2, 3)
+        eccl = ['\u00b2 "Vanity of vanities," says the Preacher; "Vanity of vanities, all is vanity." ',
+                '\u00b3 What does man gain from all his labor in which he labors under the sun?']
+        # Passage separators are also affected by ASCII punctuation conversion
+        self.assertEqual('"\'-\'" '.join(eccl), text, 'Passages do not match')
+
+    def test_get_yaml_book_ascii_punctuation_count(self):
+        bible = YAMLExtractor(default_directory=self.get_test_directory(), translation=self.get_test_translation(),
+                              use_ascii_punctuation=False)
+        text1 = bible.get_book('Ecclesiastes')
+        bible.use_ascii_punctuation = True
+        text2 = bible.get_book('Ecclesiastes')
+
+        # Check that the punctuation conversion is a 1:1 translation
+        self.assertEqual(text1.count('\u201c') + text1.count('\u201d'), text2.count('"'), 'Double quotes are unequal')
+        self.assertEqual(text1.count('\u2018') + text1.count('\u2019'), text2.count("'"), 'Single quotes are unequal')
+        self.assertEqual(text1.count('\u2014'), text2.count('-'), 'Dashes are unequal')
+
 if __name__ == "__main__":
     unittest.main()

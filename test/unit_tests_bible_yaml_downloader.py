@@ -209,5 +209,15 @@ class UnitTests(unittest.TestCase):
         self.assertTrue(multi_processed_time <= single_processed_time,
                         'Multi-processed download should have been faster')
 
+    def test_yaml_download_with_ascii_punctuation(self):
+        download_path = './tmp/test_yaml_download_with_ascii_punctuation'
+        static_file_path = '{0}/test_yaml_download_with_ascii_punctuation.yaml'.format(self.get_test_directory())
+        bible = YAMLDownloader(default_directory=download_path, translation=self.get_test_translation(),
+                               use_ascii_punctuation=True)
+        bible.download_book('Ecclesiastes')
+        downloaded_yaml = yaml_file_interface.read('{0}/Ecclesiastes.yaml'.format(download_path))
+        static_yaml = yaml_file_interface.read(static_file_path)
+        self.assertEqual(downloaded_yaml['Ecclesiastes'], static_yaml['Ecclesiastes'], 'Passage contents do not match')
+
 if __name__ == "__main__":
     unittest.main()

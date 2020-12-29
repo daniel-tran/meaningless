@@ -11,7 +11,7 @@ class WebExtractor:
     """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
-                 strip_excess_whitespace_from_list=False, passage_separator=''):
+                 strip_excess_whitespace_from_list=False, passage_separator='', use_ascii_punctuation=False):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
@@ -26,12 +26,16 @@ class WebExtractor:
         :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
                                   Defaults to the empty string.
         :type passage_separator: str
+        :param use_ascii_punctuation: When True, converts all Unicode punctuation characters into their ASCII
+                                      counterparts. This also applies to passage separators. Defaults to False.
+        :type use_ascii_punctuation: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
         self.output_as_list = output_as_list
         self.strip_excess_whitespace_from_list = strip_excess_whitespace_from_list
         self.passage_separator = passage_separator
+        self.use_ascii_punctuation = use_ascii_punctuation
 
     def get_passage(self, book, chapter, passage):
         """
@@ -261,6 +265,9 @@ class WebExtractor:
         # Remove all superscript numbers if the passage numbers should be hidden
         if not self.show_passage_numbers:
             all_text = common.remove_superscript_numbers_in_passage(all_text)
+        # Perform ASCII punctuation conversion after hiding superscript numbers to process a slightly shorter string
+        if self.use_ascii_punctuation:
+            all_text = common.unicode_to_ascii_punctuation(all_text)
         # EXB has in-line notes which are usually enclosed within brackets, and should not be displayed.
         # If the in-line note is simply decomposed, removing the associated space is much more difficult.
         # Thus, the in-line note text is removed at the end, when the function is strictly handling the passage text
