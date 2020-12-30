@@ -140,6 +140,7 @@ def get_chapter_count(book, translation='NIV'):
 def get_page(url):
     """
     A helper function that returns the contents of a web page.
+
     :param url: Page URL to obtain
     :type url: str
     :return: Page contents. Raises an error if the web page could not be loaded for any reason.
@@ -162,6 +163,7 @@ machine actively refused it>
 def superscript_numbers(text, normalise_empty_passage=True):
     """
     A helper function that converts a string's numeric characters into their superscript Unicode variations
+
     :param text: String to process
     :type text: str
     :param normalise_empty_passage: If True, performs additional replacements to normalise other characters that would
@@ -189,6 +191,7 @@ def remove_superscript_numbers_in_passage(text):
     """
     A helper function that removes all superscript numbers with a trailing space from a given string.
     Mainly used to hide passage numbers in a given block of text.
+
     :param text: String to process
     :type text: str
     :return: String with the superscript numbers that have a trailing space removed
@@ -205,6 +208,7 @@ def remove_superscript_numbers_in_passage(text):
 def get_capped_integer(number, min_value=1, max_value=100):
     """
     A helper function to limit an integer between an upper and lower bound
+
     :param number: Number to keep limited
     :type number: int
     :param min_value: Lowest possible value assigned when number is lower than this
@@ -224,27 +228,10 @@ def get_capped_integer(number, min_value=1, max_value=100):
     return min(max(number, min_value), max_value)
 
 
-def get_empty_data(output_as_list=False):
-    """
-    A helper function to standardise empty data for the extraction methods
-    :param output_as_list: If True, returns an empty list instead of an empty string
-    :type output_as_list: bool
-    :return: '' or []
-    :rtype: str or list
-
-    >>> get_empty_data()
-    ''
-    >>> get_empty_data(True)
-    []
-    """
-    if output_as_list:
-        return []
-    return ''
-
-
 def get_translation_language(translation):
     """
     A helper function to provide the language used in a given Bible translation
+
     :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
     :type translation: str
     :return: Language used as a string. Empty string if the translation is not supported.
