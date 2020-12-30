@@ -265,6 +265,11 @@ class WebExtractor:
         # Remove all superscript numbers if the passage numbers should be hidden
         if not self.show_passage_numbers:
             all_text = common.remove_superscript_numbers_in_passage(all_text)
+        # Since the passage separator is prepended on all passages, the first occurrence is to be removed
+        # as the separator is only needed between passages.
+        # Perform a one-off whitespace strip on the text and separator to account for excess spaces in the separator.
+        if len(self.passage_separator) > 0 and all_text.strip().startswith(self.passage_separator.strip()):
+            all_text = all_text.replace(self.passage_separator, '', 1)
         # Perform ASCII punctuation conversion after hiding superscript numbers to process a slightly shorter string
         if self.use_ascii_punctuation:
             all_text = common.unicode_to_ascii_punctuation(all_text)
@@ -290,9 +295,6 @@ class WebExtractor:
 
         # At this point, the expectation is that the return value is a list of passages
         passage_list = re.split(self.passage_separator, all_text.strip())
-        # Remove the first empty item, even if just composed of whitespace characters
-        if len(passage_list[0]) <= 0 or passage_list[0].isspace():
-            passage_list.pop(0)
         # Restore the original passage separator to hide the special list-splitting pattern from end users
         self.passage_separator = temp_passage_separator
         # Since this is the end of the method, the logic may as well return the list comprehension result
