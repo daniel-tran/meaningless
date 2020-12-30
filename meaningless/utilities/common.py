@@ -160,16 +160,15 @@ machine actively refused it>
     return content
 
 
-def superscript_numbers(text, normalise_empty_passage=True):
+def superscript_numbers(text, remove_brackets=True):
     """
     A helper function that converts a string's numeric characters into their superscript Unicode variations
 
     :param text: String to process
     :type text: str
-    :param normalise_empty_passage: If True, performs additional replacements to normalise other characters that would
-                                    be considered non-standard formatting. Mostly used to handle the case of empty
-                                    passages such as Luke 17:36.
-    :type normalise_empty_passage: bool
+    :param remove_brackets: If True, removes bracket characters that would be considered non-standard formatting.
+                            Mostly used to handle the case of empty passages such as Luke 17:36. Defaults to True.
+    :type remove_brackets: bool
     :rtype: str
 
     >>> superscript_numbers('[0123456789]')
@@ -180,11 +179,13 @@ def superscript_numbers(text, normalise_empty_passage=True):
     '[\u2077]'
     """
     superscript_text = text
-    if normalise_empty_passage:
-        superscript_text = text.replace('[', '').replace(']', '').replace('(', '').replace(')', '')
-    return superscript_text.replace('0', '\u2070').replace('1', '\u00b9').replace('2', '\u00b2') \
-                           .replace('3', '\u00b3').replace('4', '\u2074').replace('5', '\u2075') \
-                           .replace('6', '\u2076').replace('7', '\u2077').replace('8', '\u2078').replace('9', '\u2079')
+    if remove_brackets:
+        # The strip method can't be relied on here, as the string itself can be space padded at times.
+        # Using sequential replacements should be OK, unless there are more characters to handle.
+        superscript_text = superscript_text.replace('[', '').replace(']', '').replace('(', '').replace(')', '')
+    superscript_translation_table = superscript_text.maketrans('0123456789', '\u2070\u00b9\u00b2\u00b3\u2074\u2075'
+                                                                             '\u2076\u2077\u2078\u2079')
+    return superscript_text.translate(superscript_translation_table)
 
 
 def remove_superscript_numbers_in_passage(text):
