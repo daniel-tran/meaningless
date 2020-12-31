@@ -193,38 +193,6 @@ class UnitTests(unittest.TestCase):
         bible = YAMLExtractor(translation='LOL', default_directory=self.get_test_directory())
         self.assertRaises(UnsupportedTranslationError, bible.get_passage, 'Ecclesiastes', 2, 26)
 
-    def test_get_yaml_passages_with_passage_separator(self):
-        bible = YAMLExtractor(passage_separator='\n\n', default_directory=self.get_test_directory(),
-                              translation=self.get_test_translation())
-        text = bible.get_passages('Ecclesiastes', 2, 24, 25)
-        eccl = ['\u00b2\u2074 There is nothing better for a man than that he should eat and drink, and '
-                'make his soul enjoy good in his labor. This also I saw, that it is from the '
-                'hand of God. ',
-                '\u00b2\u2075 For who can eat, or who can have enjoyment, more than I?'
-                ]
-        # 1 new line character for the chapter boundary + 2 new lines for the passage separator
-        self.assertEqual('\n\n'.join(eccl), text, 'Passage is incorrect')
-
-    def test_get_yaml_passage_range_with_passage_separator_on_chapter_boundary(self):
-        bible = YAMLExtractor(passage_separator='\n\n', default_directory=self.get_test_directory(),
-                              translation=self.get_test_translation())
-        text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
-        eccl = ['\u00b9\u2078 Wisdom is better than weapons of war; but one sinner destroys much good.',
-                '\u00b9 Dead flies cause the oil of the perfumer to produce an evil odor;\n'
-                '    so does a little folly outweigh wisdom and honor.'
-                ]
-        # Normally, the each chapter has a newline character auto appended on the end. With a passage separator,
-        # this would be considered not necessary anymore, as the passage separator is used instead.
-        self.assertEqual('\n\n'.join(eccl), text, 'Passage is incorrect')
-
-    def test_get_yaml_passage_range_with_passage_separator_and_output_as_list(self):
-        bible = YAMLExtractor(passage_separator='\n\n', output_as_list=True, default_directory=self.get_test_directory(),
-                              translation=self.get_test_translation())
-        text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
-        # Neither passage should have any trace of the passage separator, since the output is a list
-        self.assertTrue((text[0].find('\n\n') < 0) and (text[1].find('\n\n') < 0),
-                        'Passage separator should not have been found')
-
     def test_get_yaml_passage_lowercase_translation(self):
         bible = YAMLExtractor(translation='KJV', default_directory=self.get_test_directory('KJV'))
         text1 = bible.get_passage('Ecclesiastes', 2, 26)
@@ -249,15 +217,6 @@ class UnitTests(unittest.TestCase):
         text = bible.get_passage('Ecclesiastes', 1, 2)
         eccl = '\u00b2 "Vanity of vanities," says the Preacher; "Vanity of vanities, all is vanity."'
         self.assertEqual(eccl, text, 'Passages do not match')
-
-    def test_get_yaml_passage_with_ascii_punctuation_with_passage_separator(self):
-        bible = YAMLExtractor(default_directory=self.get_test_directory(), translation=self.get_test_translation(),
-                              use_ascii_punctuation=True, passage_separator='\u201c\u2018\u2014\u2019\u201d ')
-        text = bible.get_passages('Ecclesiastes', 1, 2, 3)
-        eccl = ['\u00b2 "Vanity of vanities," says the Preacher; "Vanity of vanities, all is vanity." ',
-                '\u00b3 What does man gain from all his labor in which he labors under the sun?']
-        # Passage separators are also affected by ASCII punctuation conversion
-        self.assertEqual('"\'-\'" '.join(eccl), text, 'Passages do not match')
 
     def test_get_yaml_book_ascii_punctuation_count(self):
         bible = YAMLExtractor(default_directory=self.get_test_directory(), translation=self.get_test_translation(),

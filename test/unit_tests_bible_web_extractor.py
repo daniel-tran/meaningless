@@ -137,47 +137,11 @@ class UnitTests(unittest.TestCase):
         # An empty passage in the middle of two other passages preserves its spaces
         self.assertEqual('\n'.join(luke17), text, 'Passage is incorrect')
 
-    def test_get_passage_with_passage_separator(self):
-        bible = WebExtractor(passage_separator='\n\n')
-        text = bible.search('3 John 1:3 - 4')
-        john = ['\u00b3 It gave me great joy when some believers came and testified about your faithfulness to the '
-                'truth, telling how you continue to walk in it. ',
-                '\u2074 I have no greater joy than to hear that my children are walking in the truth.']
-        # These two passages continue on the same line, but the separator should force them onto new lines
-        self.assertEqual('\n\n'.join(john), text, 'Passage is incorrect')
-
-    def test_get_passage_with_ignored_passage_separator(self):
-        # Use non-whitespace characters to ensure that .strip() doesn't remove the separator
-        bible = WebExtractor(passage_separator='---')
-        text = bible.search('3 John 1:4')
-        john = '\u2074 I have no greater joy than to hear that my children are walking in the truth.'
-        # Extracting only one passage does not require the passage separator
-        self.assertEqual(john, text, 'Passage is incorrect')
-
-    def test_get_passage_with_passage_separator_with_spaces(self):
-        bible = WebExtractor(passage_separator=' - - - ')
-        text = bible.search('3 John 1:3 - 4')
-        john = ['\u00b3 It gave me great joy when some believers came and testified about your faithfulness to the '
-                'truth, telling how you continue to walk in it.',
-                '\u2074 I have no greater joy than to hear that my children are walking in the truth.']
-        # Even with excess spaces, the extractor should be smart enough to omit the leading passage separator.
-        # Here, the passage separator + the trailing space of passage 3 creates a double space, which is converted
-        # into a single space.
-        self.assertEqual(bible.passage_separator.join(john), text, 'Passage is incorrect')
-
     def test_get_passage_without_passage_numbers(self):
         bible = WebExtractor(show_passage_numbers=False)
         text = bible.search('2 John 1:2')
         john = 'because of the truth, which lives in us and will be with us forever:'
         self.assertEqual(john, text, 'Passage is incorrect')
-
-    def test_get_passage_with_passage_separator_without_passage_numbers(self):
-        bible = WebExtractor(passage_separator='\n\n', show_passage_numbers=False)
-        text = bible.search('Jude 1:22 - 23')
-        jude1 = ['Be merciful to those who doubt; ',
-                 'save others by snatching them from the fire; to others show mercy, '
-                 'mixed with fear\u2014hating even the clothing stained by corrupted flesh.']
-        self.assertEqual('\n\n'.join(jude1), text, 'Passage is incorrect')
 
     def test_get_empty_passage_without_passage_numbers(self):
         bible = WebExtractor(show_passage_numbers=False)
@@ -270,24 +234,16 @@ class UnitTests(unittest.TestCase):
                    ' and any wooden article is to be rinsed with water.'
         self.assertEqual(lev15_12, text, 'Passage is incorrect')
 
-    def test_get_passage_with_ascii_punctuation_with_unicode_passage_separator(self):
-        bible = WebExtractor(use_ascii_punctuation=True, passage_separator='\u201c\u2018\u2014\u2019\u201d ')
-        text = bible.search('3 John 1:3 - 4')
-        john = ['\u00b3 It gave me great joy when some believers came and testified about your faithfulness to the '
-                'truth, telling how you continue to walk in it. ',
-                '\u2074 I have no greater joy than to hear that my children are walking in the truth.']
-        self.assertEqual('"\'-\'" '.join(john), text, 'Passage is incorrect')
-
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.
 
     @staticmethod
     def get_alternative_interface_options():
-        return [{'translation': 'NIV', 'show_passage_numbers': True, 'passage_separator': ''},
-                {'translation': 'NLT', 'show_passage_numbers': True, 'passage_separator': ''},
-                {'translation': 'NIV', 'show_passage_numbers': False, 'passage_separator': ''},
-                {'translation': 'NIV', 'show_passage_numbers': True, 'passage_separator': '\n'},
+        return [{'translation': 'NIV', 'show_passage_numbers': True},
+                {'translation': 'NLT', 'show_passage_numbers': True},
+                {'translation': 'NIV', 'show_passage_numbers': False},
+                {'translation': 'NIV', 'show_passage_numbers': True},
                 ]
 
     def test_get_online_passage(self):
@@ -296,7 +252,6 @@ class UnitTests(unittest.TestCase):
         for option in options:
             bible.translation = option['translation']
             bible.show_passage_numbers = option['show_passage_numbers']
-            bible.passage_separator = option['passage_separator']
 
             text1 = bible.search('Ecclesiastes 1:17')
             text2 = bible.get_passage('Ecclesiastes', 1, 17)
@@ -308,7 +263,6 @@ class UnitTests(unittest.TestCase):
         for option in options:
             bible.translation = option['translation']
             bible.show_passage_numbers = option['show_passage_numbers']
-            bible.passage_separator = option['passage_separator']
 
             text1 = bible.search('Ezekiel 40:19-20')
             text2 = bible.get_passages('Ezekiel', 40, 19, 20)
@@ -320,7 +274,6 @@ class UnitTests(unittest.TestCase):
         for option in options:
             bible.translation = option['translation']
             bible.show_passage_numbers = option['show_passage_numbers']
-            bible.passage_separator = option['passage_separator']
 
             text1 = bible.search('Daniel 5')
             text2 = bible.get_chapter('Daniel', 5)

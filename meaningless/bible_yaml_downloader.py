@@ -194,8 +194,7 @@ class YAMLDownloader:
         capped_passage_to = common.get_capped_integer(passage_to)
 
         online_bible = WebExtractor(translation=translation, show_passage_numbers=self.show_passage_numbers,
-                                    output_as_list=True, passage_separator='',
-                                    strip_excess_whitespace_from_list=self.strip_excess_whitespace,
+                                    output_as_list=True, strip_excess_whitespace_from_list=self.strip_excess_whitespace,
                                     use_ascii_punctuation=self.use_ascii_punctuation)
 
         # Set up the base document with the root-level keys

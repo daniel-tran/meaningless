@@ -11,7 +11,7 @@ class WebExtractor:
     """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
-                 strip_excess_whitespace_from_list=False, passage_separator='', use_ascii_punctuation=False):
+                 strip_excess_whitespace_from_list=False, use_ascii_punctuation=False):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
@@ -23,9 +23,6 @@ class WebExtractor:
                                                   whitespace characters are removed for each string element in the list.
                                                   Defaults to False.
         :type strip_excess_whitespace_from_list: bool
-        :param passage_separator: An optional string added to the front of a passage (placed before the passage number).
-                                  Defaults to the empty string.
-        :type passage_separator: str
         :param use_ascii_punctuation: When True, converts all Unicode punctuation characters into their ASCII
                                       counterparts. This also applies to passage separators. Defaults to False.
         :type use_ascii_punctuation: bool
@@ -34,7 +31,6 @@ class WebExtractor:
         self.show_passage_numbers = show_passage_numbers
         self.output_as_list = output_as_list
         self.strip_excess_whitespace_from_list = strip_excess_whitespace_from_list
-        self.passage_separator = passage_separator
         self.use_ascii_punctuation = use_ascii_punctuation
 
     def get_passage(self, book, chapter, passage):
@@ -191,9 +187,10 @@ class WebExtractor:
 
         # To get a list, the passage separator is given an actual practical use as an indicator of where to split
         # the string to create list elements.
-        temp_passage_separator = self.passage_separator
         if self.output_as_list:
-            self.passage_separator = '-_-'
+            passage_separator = '-_-'
+        else:
+            passage_separator = ''
 
         # Compile the list of tags to remove from the parsed web page, corresponding to the following elements:
         # h1
@@ -244,7 +241,7 @@ class WebExtractor:
         [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
         # Preserve superscript verse numbers by using their Unicode counterparts
         # Add in the custom passage separator as well while access to the verse numbers is still available
-        [sup.replace_with('{0}{1}'.format(self.passage_separator, common.superscript_numbers(sup.text)))
+        [sup.replace_with('{0}{1}'.format(passage_separator, common.superscript_numbers(sup.text)))
          for sup in soup.find_all('sup', {'class': 'versenum'})]
         # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
         # spacing is not preserved when collecting the text. Therefore, a space is manually injected
@@ -267,9 +264,7 @@ class WebExtractor:
             all_text = common.remove_superscript_numbers_in_passage(all_text)
         # Since the passage separator is prepended on all passages, the first occurrence is to be removed
         # as the separator is only needed between passages.
-        # Perform a one-off whitespace strip on the text and separator to account for excess spaces in the separator.
-        if len(self.passage_separator) > 0 and all_text.strip().startswith(self.passage_separator.strip()):
-            all_text = all_text.replace(self.passage_separator, '', 1)
+
         # Perform ASCII punctuation conversion after hiding superscript numbers to process a slightly shorter string
         if self.use_ascii_punctuation:
             all_text = common.unicode_to_ascii_punctuation(all_text)
@@ -288,15 +283,17 @@ class WebExtractor:
             all_text = all_text.replace('*', '')
 
         if not self.output_as_list:
-            # Restore the original passage separator to hide the special list-splitting pattern from end users
-            self.passage_separator = temp_passage_separator
             # Do any final touch-ups to the passage contents before outputting the string
             return all_text.strip()
 
-        # At this point, the expectation is that the return value is a list of passages
-        passage_list = re.split(self.passage_separator, all_text.strip())
-        # Restore the original passage separator to hide the special list-splitting pattern from end users
-        self.passage_separator = temp_passage_separator
+        # At this point, the expectation is that the return value is a list of passages.
+        # Since the passage separator is placed before the passage number, it can cause an empty first item upon
+        # splitting if the first passage has a passage number.
+        # Remove the first passage separator in such scenarios to prevent this from happening.
+        # Also perform a one-off strip to ensure the first passage separator is correctly identified.
+        if all_text.strip().startswith(passage_separator):
+            all_text = all_text.replace(passage_separator, '', 1)
+        passage_list = re.split(passage_separator, all_text.strip())
         # Since this is the end of the method, the logic may as well return the list comprehension result
         # rather than spend the extra effort to modify the existing passage list and then return the result.
         if self.strip_excess_whitespace_from_list:
