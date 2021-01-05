@@ -170,6 +170,33 @@ class UnitTests(unittest.TestCase):
         # This chapter doesn't have Unicode single quotes, but should have the other translated characters
         self.assertEqual(eccl, ''.join(text), 'Passage is incorrect')
 
+    def test_get_multiple_passage_list_from_string(self):
+        bible = WebExtractor(output_as_list=True)
+        text = bible.search_multiple(['1 John 1:8 - 9', 'Haggai 1:3'])
+        passages = ['\u2078 If we claim to be without sin, we deceive ourselves and the truth is not in us. ',
+                    '\u2079 If we confess our sins, he is faithful and just and will forgive us our sins and purify '
+                    'us from all unrighteousness.\n',
+                    '\u00b3 Then the word of the Lord came through the prophet Haggai:'
+                    ]
+        # The last passage of the first set ends with a newline character to denote separation from the other passage
+        self.assertEqual(passages, text, 'Passage is incorrect')
+
+    def test_get_multiple_passage_list_from_string_single(self):
+        bible = WebExtractor(output_as_list=True)
+        text1 = bible.search('1 John 1:8 - 9')
+        text2 = bible.search_multiple(['1 John 1:8 - 9'])
+        # Searching multiple passages with a one-item list should be the same as invoking the search method
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_multiple_passage_list_from_string_one_invalid_passage(self):
+        bible = WebExtractor(output_as_list=True)
+        text1 = bible.search('Haggai 1:3')
+        text2 = bible.search_multiple(['Barnabas 7', 'Haggai 1:3'])
+        # An invalid passage would just be ignored
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    # -------------- Tests with the YAML Extractor --------------
+
     def test_get_yaml_passage_list(self):
         bible = YAMLExtractor(output_as_list=True, default_directory=self.get_test_directory(),
                               translation=self.get_test_translation())

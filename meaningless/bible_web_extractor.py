@@ -160,9 +160,22 @@ class WebExtractor:
             return [chapter for chapter_list in chapters for chapter in chapter_list]
         return '\n'.join(chapters)
 
+    def search_multiple(self, passage_names):
+        """
+        Retrieves a set of passages directly from the Bible Gateway site. Passages can be from different books.
+        Note that the output is subject to the Bible Gateway implicit passage limit when sending the web request.
+
+        :param passage_names: List of Bible passages that are valid when used on www.biblegateway.com
+        :type passage_names: list
+        :return: Bible passages with newline separators for each set of passages
+        :rtype: str (list if self.output_as_list is True)
+        """
+        return self.search(';'.join(passage_names))
+
     def search(self, passage_name):
         """
-        Retrieves a specific passage or set of passages directly from the Bible Gateway site
+        Retrieves a specific passage directly from the Bible Gateway site.
+        Note that the output is subject to the Bible Gateway implicit passage limit when sending the web request.
 
         :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
         :type passage_name: str
@@ -253,8 +266,11 @@ class WebExtractor:
         # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
         [p.replace_with('\n{0}'.format(p.text)) for p in soup.find_all('p')]
 
-        # Convert non-breaking spaces to normal spaces when retrieving the raw passage contents
-        raw_passage_text = soup.find('div', {'class': 'passage-content'}).text.replace('\xa0', ' ')
+        # Combine the text contents of all passage sections on the page.
+        # Convert non-breaking spaces to normal spaces when retrieving the raw passage contents.
+        # Also strip excess whitespaces to prevent a whitespace build-up when combining multiple passages.
+        raw_passage_text = '\n'.join([tag.text.replace('\xa0', ' ').strip() for tag in
+                                      soup.find_all('div', {'class': 'passage-content'})])
         # To account for spaces between tags that end up blending into the passage contents, this regex replacement is
         # specifically used to remove that additional spacing, since it is part of the actual page layout.
         all_text = re.sub('([^ ]) {2,3}([^ ])', r'\1 \2', raw_passage_text)

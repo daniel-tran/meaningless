@@ -190,7 +190,7 @@ def superscript_numbers(text, remove_brackets=True):
 
 def remove_superscript_numbers_in_passage(text):
     """
-    A helper function that removes all superscript numbers with a trailing space from a given string.
+    A helper function that removes all superscript numbers with optional trailing space from a given string.
     Mainly used to hide passage numbers in a given block of text.
 
     :param text: String to process
@@ -201,9 +201,9 @@ def remove_superscript_numbers_in_passage(text):
     >>> remove_superscript_numbers_in_passage('\u2070 \u00b9 \u00b2 \u00b3 \u2074 \u2075 \u2076 \u2077 \u2078 \u2079 ')
     ''
     >>> remove_superscript_numbers_in_passage('E=mc\u00b2')
-    'E=mc\u00b2'
+    'E=mc'
     """
-    return re.sub('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+\s', '', text)
+    return re.sub('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+\s{0,1}', '', text)
 
 
 def get_capped_integer(number, min_value=1, max_value=100):

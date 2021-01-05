@@ -383,6 +383,50 @@ class UnitTests(unittest.TestCase):
         text2 = bible.get_passage_range('Ecclesiastes', 1000, -1, 1000, 1000)
         self.assertEqual(text1, text2, 'Passage is incorrect')
 
+    # -------------- Tests for multiple passage searching --------------
+
+    def test_search_multiple(self):
+        bible = WebExtractor()
+        text1 = bible.search('Ecclesiastes 1:17') + '\n' + bible.search('Philemon 1:1')
+        text2 = bible.search_multiple(['Ecclesiastes 1:17', 'Philemon 1:1'])
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_search_multiple_single_passage(self):
+        bible = WebExtractor()
+        text1 = bible.search('Ecclesiastes 1:17')
+        text2 = bible.search_multiple(['Ecclesiastes 1:17'])
+        # Searching multiple passages with a one-item list should be the same as invoking the search method
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_search_multiple_empty(self):
+        bible = WebExtractor()
+        self.assertRaises(InvalidSearchError, bible.search_multiple, [])
+
+    def test_search_multiple_duplicate_entries(self):
+        bible = WebExtractor()
+        expected_passage = bible.search('Ecclesiastes 1:17')
+        text1 = '\n'.join([expected_passage, expected_passage])
+        text2 = bible.search_multiple(['Ecclesiastes 1:17', 'Ecclesiastes 1:17'])
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_search_multiple_single_invalid_passage(self):
+        bible = WebExtractor()
+        text1 = bible.search('Ecclesiastes 1:17')
+        text2 = bible.search_multiple(['Ecclesiastes 1:17', 'Barnabas 7'])
+        # An invalid passage in a multiple passage search is ignored
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_search_multiple_all_invalid_passages(self):
+        bible = WebExtractor()
+        self.assertRaises(InvalidSearchError, bible.search_multiple, ['Barnabas 7', 'Barnabas 8'])
+
+    def test_search_multiple_manual_delimiter(self):
+        bible = WebExtractor()
+        text1 = '\n'.join([bible.search('Ecclesiastes 1:17'), bible.search('Philemon 1:1')])
+        text2 = bible.search_multiple(['Ecclesiastes 1:17;Philemon 1:1', ''])
+        # While unconventional, this still resolves to a valid search URL
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
     # -------------- Tests which are ignored due to being unsupported translations --------------
 
     # def test_get_passage_exb(self):
