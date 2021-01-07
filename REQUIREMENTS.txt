@@ -1,0 +1,4 @@
+# To build the documentation, uncomment the following lines or install them manually:
+# Sphinx==3.4.1
+beautifulsoup4>=4.5.3
+ruamel.yaml>=0.16.10
