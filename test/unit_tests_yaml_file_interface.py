@@ -11,8 +11,11 @@ class UnitTests(unittest.TestCase):
     # Note: Tests will only be run if they are prefixed with test_ in their method name.
     #       All other methods will simply be interpreted as test helper functions.
 
+    def get_static_file(self, filename):
+        return './static/unit_tests_yaml_file_interface/{0}'.format(filename)
+
     def test_read(self):
-        document = yaml_file_interface.read('./static/test_read.yaml')
+        document = yaml_file_interface.read(self.get_static_file('test_read.yaml'))
         self.assertEqual(list(document.keys()), ['Disco'], 'Main keys are incorrect')
         self.assertEqual(document['Disco'][1], 'Beatdown', 'First entry is incorrect')
         self.assertEqual(document['Disco'][2], 'Elysium', 'Second entry is incorrect')
@@ -20,10 +23,12 @@ class UnitTests(unittest.TestCase):
     def test_write(self):
         document = {'Disco': {1: 'Beatdown', 2: 'Elysium'}}
         yaml_file_interface.write('./tmp/test_write.yaml', document)
-        self.assertTrue(filecmp.cmp('./tmp/test_write.yaml', './static/test_write.yaml'), 'Files do not match')
+        self.assertTrue(filecmp.cmp('./tmp/test_write.yaml',
+                                    self.get_static_file('test_write.yaml')), 'Files do not match')
 
     def test_read_nonexistent_file(self):
-        self.assertRaises(FileNotFoundError, yaml_file_interface.read, './static/test_read_nonexistent_file.yaml')
+        self.assertRaises(FileNotFoundError, yaml_file_interface.read,
+                          self.get_static_file('test_read_nonexistent_file.yaml'))
 
     def test_write_overwrite(self):
         document = {'Disco': {1: 'Beatdown', 2: 'Elysium'}}
@@ -38,18 +43,21 @@ class UnitTests(unittest.TestCase):
         yaml_path = './tmp/test_write_string_contents.yaml'
         yaml_file_interface.write(yaml_path, document)
         # Despite not being a dictionary, this writes valid YAML to the file - the result being a single YAML key
-        self.assertTrue(filecmp.cmp(yaml_path, './static/test_write_string_contents.yaml'), 'Files do not match')
+        self.assertTrue(filecmp.cmp(yaml_path, self.get_static_file('test_write_string_contents.yaml')),
+                        'Files do not match')
 
     def test_write_list_contents(self):
         document = ['Disco', 'Fever']
         yaml_path = './tmp/test_write_list_contents.yaml'
         yaml_file_interface.write(yaml_path, document)
         # A list should just translate to a linear series of YAML keys
-        self.assertTrue(filecmp.cmp(yaml_path, './static/test_write_list_contents.yaml'), 'Files do not match')
+        self.assertTrue(filecmp.cmp(yaml_path, self.get_static_file('test_write_list_contents.yaml')),
+                        'Files do not match')
 
     def test_read_path_exceeds_windows_limit(self):
         filename = 'G' * 255
-        self.assertRaises(FileNotFoundError, yaml_file_interface.read, './static/{0}.yaml'.format(filename))
+        self.assertRaises(FileNotFoundError, yaml_file_interface.read,
+                          self.get_static_file('{0}.yaml'.format(filename)))
 
     def test_write_path_exceeds_windows_limit(self):
         document = {'Disco': 7}
@@ -64,17 +72,19 @@ class UnitTests(unittest.TestCase):
         self.assertRaises(FileNotFoundError, yaml_file_interface.write, '', document)
 
     def test_read_empty_file(self):
-        document = yaml_file_interface.read('./static/test_read_empty_file.yaml')
+        document = yaml_file_interface.read(self.get_static_file('test_read_empty_file.yaml'))
         self.assertEqual(document, None, 'Empty file was not handled correctly')
 
     def test_write_empty_file(self):
         document = {}
         yaml_path = './tmp/test_write_empty_file.yaml'
         yaml_file_interface.write(yaml_path, document)
-        self.assertTrue(filecmp.cmp(yaml_path, './static/test_write_empty_file.yaml'), 'Files do not match')
+        self.assertTrue(filecmp.cmp(yaml_path, self.get_static_file('test_write_empty_file.yaml')),
+                        'Files do not match')
 
     def test_read_invalid_formatted_file(self):
-        self.assertRaises(ParserError, yaml_file_interface.read, './static/test_read_invalid_formatted_file.yaml')
+        self.assertRaises(ParserError, yaml_file_interface.read,
+                          self.get_static_file('test_read_invalid_formatted_file.yaml'))
 
 if __name__ == "__main__":
     unittest.main()
