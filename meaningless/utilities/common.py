@@ -53,13 +53,18 @@ def get_chapter_count(book, translation='NIV'):
     0
     >>> get_chapter_count('Song of Solomon')
     8
+    >>> get_chapter_count('Psalms')
+    150
     """
     # Standardise letter casing to help find the key easier
     book_name = book.title()
 
-    # Song Of Songs has an alternate name
-    if book_name == "Song Of Solomon":
-        book_name = "Song Of Songs"
+    if book_name == 'Song Of Solomon':
+        # Song Of Songs has an alternate name
+        book_name = 'Song Of Songs'
+    elif book_name == 'Psalms':
+        # Psalm and its plural variation are basically the same book, but prefer the singular variant
+        book_name = 'Psalm'
 
     # This is the default mapping of books to their chapter counts
     chapter_count_mappings = {
