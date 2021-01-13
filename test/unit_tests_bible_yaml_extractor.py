@@ -230,5 +230,14 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(text1.count('\u2018') + text1.count('\u2019'), text2.count("'"), 'Single quotes are unequal')
         self.assertEqual(text1.count('\u2014'), text2.count('-'), 'Dashes are unequal')
 
+    def test_get_yaml_passage_buffered_first_passage(self):
+        bible = YAMLExtractor(translation=self.get_test_translation())
+        eccl = '\u00b2 \u201cVanity of vanities,\u201d says the Preacher; ' \
+               '\u201cVanity of vanities, all is vanity.\u201d'
+        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'test_get_yaml_passage_buffered_first_passage.yaml')
+        text = bible.get_passage('Ecclesiastes', 1, 2, file_path=custom_file)
+        # Custom file only contains one chapter and one passage, but doesn't start on the first passage
+        self.assertEqual(text, eccl, 'Passages do not match')
+
 if __name__ == "__main__":
     unittest.main()

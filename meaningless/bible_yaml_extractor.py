@@ -176,7 +176,8 @@ class YAMLExtractor:
         for chapter in range(capped_chapter_from, capped_chapter_to + 1):
             # Determine the range of passages to extract from the chapter
             passage_initial = 1
-            passage_final = len(document[book_name][chapter].keys())
+            # Use the last key of the chapter section, as it's not guaranteed that the number of passages == last key
+            passage_final = list(document[book_name][chapter].keys())[-1]
             if chapter == capped_chapter_from:
                 # For the first chapter, an initial set of passages can be ignored (undercuts the passage selection)
                 # Apply a boundary to the passage to prevent invalid keys being accessed
