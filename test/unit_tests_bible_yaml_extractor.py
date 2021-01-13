@@ -239,5 +239,14 @@ class UnitTests(unittest.TestCase):
         # Custom file only contains one chapter and one passage, but doesn't start on the first passage
         self.assertEqual(text, eccl, 'Passages do not match')
 
+    def test_get_yaml_passage_buffered_first_chapter(self):
+        bible = YAMLExtractor(translation=self.get_test_translation())
+        eccl = '\u00b2 I said of laughter, \u201cIt is foolishness;\u201d and of mirth, ' \
+               '\u201cWhat does it accomplish?\u201d'
+        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'test_get_yaml_passage_buffered_first_chapter.yaml')
+        text = bible.get_passage('Ecclesiastes', 2, 2, file_path=custom_file)
+        # Custom file only contains one chapter and one passage, but doesn't start on the first passage or chapter
+        self.assertEqual(text, eccl, 'Passages do not match')
+
 if __name__ == "__main__":
     unittest.main()
