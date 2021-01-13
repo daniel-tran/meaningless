@@ -70,6 +70,7 @@ passage = bible.get_passage('Ecclesiastes', 1, 2)
 print(passage)
 ```
 Output:
+
 Assuming the YAML downloader has already generated a YAML file in the current directory called `Ecclesiastes.yaml` which contains the book of Ecclesiastes in YAML format:
 ```
 ² “Meaningless! Meaningless!”
@@ -90,6 +91,7 @@ bible['Info']['Customised?'] = True
 yaml_file_interface.write('./Ecclesiastes.yaml', bible)
 ```
 Output:
+
 Running the above code would produce a file called `Ecclesiastes.yaml` in the current working directory with the following contents:
 ```python
 Ecclesiastes:
@@ -125,12 +127,12 @@ Or you can also send an email to [dantran.au@gmail.com](mailto:dantran.au@gmail.
 
 ## What's the process for supporting new translations?
 
-1. Add a new test case to `unit_tests_bible_translations.py` for the new translation. This is used to validate end-to-end correctness.
-2. Make appropriate modifications to the Web Extractor to account for translation-specific components, such as double spaces and in-line translation notes.
-2.a. Add unit tests for the Web Extractor to test these specific changes.
-2.b. Run all the Web Extractor unit tests to ensure stable behaviour with said changes.
-3. Add appropriate modifications to the YAML Downloader to specify any omitted passages that are present in the new translation.
-3.a. Update the relevant test case in `unit_tests_bible_translations.py` to check for correct handling of omitted passages.
+- Add a new test case to `unit_tests_bible_translations.py` for the new translation. This is used to validate end-to-end correctness.
+- Make appropriate modifications to the Web Extractor to account for translation-specific components, such as double spaces and in-line translation notes.
+  - Add unit tests for the Web Extractor to test these specific changes.
+  - Run all the Web Extractor unit tests to ensure stable behaviour with said changes.
+- Add appropriate modifications to the YAML Downloader to specify any omitted passages that are present in the new translation.
+  - Update the relevant test case in `unit_tests_bible_translations.py` to check for correct handling of omitted passages.
 
 ## If multiple translations are supported, why aren't there more unit tests for these?
 
