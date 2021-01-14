@@ -27,9 +27,10 @@ The Web Extractor is used to obtain passage information directly from [Bible Gat
 ```python
 from meaningless import WebExtractor
 
-bible = WebExtractor()
-passage = bible.get_passage('Ecclesiastes', 1, 2)
-print(passage)
+if __name__ == '__main__':
+    bible = WebExtractor()
+    passage = bible.get_passage('Ecclesiastes', 1, 2)
+    print(passage)
 ```
 Output:
 ```
@@ -44,8 +45,9 @@ The YAML Downloader is which formats passages obtained from the Bible Gateway we
 ```python
 from meaningless import YAMLDownloader
 
-downloader = YAMLDownloader()
-downloader.download_passage('Ecclesiastes', 1, 2)
+if __name__ == '__main__':
+    downloader = YAMLDownloader()
+    downloader.download_passage('Ecclesiastes', 1, 2)
 ```
 Output:
 
@@ -65,9 +67,10 @@ The YAML Extractor uses the generated files from the YAML Downloader to find pas
 ```python
 from meaningless import YAMLExtractor
 
-bible = YAMLExtractor()
-passage = bible.get_passage('Ecclesiastes', 1, 2)
-print(passage)
+if __name__ == '__main__':
+    bible = YAMLExtractor()
+    passage = bible.get_passage('Ecclesiastes', 1, 2)
+    print(passage)
 ```
 Output:
 
@@ -84,11 +87,12 @@ The YAML File Interface is a set of helper methods used to read and write YAML f
 ```python
 from meaningless import YAMLDownloader, yaml_file_interface
 
-downloader = YAMLDownloader()
-downloader.download_passage('Ecclesiastes', 1, 2)
-bible = yaml_file_interface.read('./Ecclesiastes.yaml')
-bible['Info']['Customised?'] = True
-yaml_file_interface.write('./Ecclesiastes.yaml', bible)
+if __name__ == '__main__':
+    downloader = YAMLDownloader()
+    downloader.download_passage('Ecclesiastes', 1, 2)
+    bible = yaml_file_interface.read('./Ecclesiastes.yaml')
+    bible['Info']['Customised?'] = True
+    yaml_file_interface.write('./Ecclesiastes.yaml', bible)
 ```
 Output:
 
