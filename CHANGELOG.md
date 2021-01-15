@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.0.1
+## 0.1.0
 
 - Initial release!
 - Added Web Extractor, YAML Extractor and YAML Downloader

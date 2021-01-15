@@ -1,3 +1,9 @@
 __pycache__/
 test/tmp/
 docs/build/
+
+# Ignore generated files and folders from setup.py
+*.pyc
+*.egg-info/
+build/
+dist/
