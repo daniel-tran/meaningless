@@ -18,7 +18,7 @@ class UnitTests(unittest.TestCase):
         :param expected_passage_results: List of strings correlating to each of the tested passages
         :type expected_passage_results: list
         """
-        if translation != 'YLT':
+        if translation != 'NET':
             return
         bible = WebExtractor(translation=translation)
         actual_passage_results = [
@@ -43,7 +43,7 @@ class UnitTests(unittest.TestCase):
         :param expected_passage_results: List of strings correlating to each of the tested passages
         :type expected_passage_results: list
         """
-        if translation != 'YLT':
+        if translation != 'NET':
             return
         download_path = './tmp/check_omitted_passages/{0}'.format(translation)
         # Downloading the books with a process map is somewhat faster than using multiple daemon processes to
@@ -850,6 +850,79 @@ class UnitTests(unittest.TestCase):
             ],
             'Romans': [
                 '\u00b2\u2074 the grace of our Lord Jesus Christ [be] with you all. Amen.'
+            ],
+        }
+        self.check_baseline_passages(translation, baseline_passages)
+        self.check_omitted_passages(translation, omitted_passages)
+
+    def test_translation_net(self):
+        translation = 'NET'
+        baseline_passages = [
+            '\u00b2\u2075 Its gates will never be closed during the day (and there will be no night there).',
+
+            'This is the record of the genealogy of Jesus Christ, the son of David, the son of Abraham. \n'
+            '\u00b2 Abraham was the father of Isaac, Isaac the father of Jacob, '
+            'Jacob the father of Judah and his brothers, '
+            '\u00b3 Judah the father of Perez and Zerah (by Tamar), Perez the father of Hezron, '
+            'Hezron the father of Ram,',
+
+            '\u2074\u2070 the descendants of Immer: 1,052; \n'
+            '\u2074\u00b9 the descendants of Pashhur: 1,247; \n'
+            '\u2074\u00b2 the descendants of Harim: 1,017.',
+
+            '\u2074 For day and night you tormented me;\n'
+            'you tried to destroy me in the intense heat of summer. (Selah)',
+
+            '\u2075\u00b3 [[ And each one departed to his own house.'
+        ]
+        omitted_passages = {
+            'Matthew': [
+                '\u00b3\u2074 But the Pharisees said, \u201cBy the ruler of demons he casts out demons!\u201d',
+                '\u2074\u2077 Someone told him, \u201cLook, your mother and your brothers are standing outside '
+                'wanting to speak to you.\u201d',
+                '',
+                '',
+                '\u2074\u2074 The one who falls on this stone will be broken to pieces, and the one on whom it falls '
+                'will be crushed.\u201d',
+                '',
+            ],
+            'Mark': [
+                '',
+                '',
+                '',
+                '',
+                '',
+                '\u2079 [[Early on the first day of the week, after he arose, he appeared first to Mary Magdalene, '
+                'from whom he had driven out seven demons.',
+                '\u00b2\u2070 They went out and proclaimed everywhere, while the Lord worked with them and confirmed '
+                'the word through the accompanying signs.]]'
+            ],
+            'Luke': [
+                '',
+                '\u00b2\u2070 And in the same way he took the cup after they had eaten, saying, '
+                '\u201cThis cup that is poured out for you is the new covenant in my blood.',
+                '\u2074\u00b3 [Then an angel from heaven appeared to him and strengthened him.',
+                '\u2074\u2074 And in his anguish he prayed more earnestly, and his sweat was like '
+                'drops of blood falling to the ground.]',
+                '',
+                '\u00b9\u00b2 But Peter got up and ran to the tomb. He bent down and saw only the strips of linen '
+                'cloth; then he went home, wondering what had happened.',
+                '\u2074\u2070 When he had said this, he showed them his hands and his feet.'
+            ],
+            'John': [
+                '',
+                '\u2075\u00b3 [[ And each one departed to his own house.',
+                '\u00b9\u00b9 She replied, \u201cNo one, Lord.\u201d And Jesus said, '
+                '\u201cI do not condemn you either. Go, and from now on do not sin any more.\u201d]]',
+            ],
+            'Acts': [
+                '',
+                '',
+                '\u2077',
+                ''
+            ],
+            'Romans': [
+                ''
             ],
         }
         self.check_baseline_passages(translation, baseline_passages)
