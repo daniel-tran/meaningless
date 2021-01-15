@@ -924,5 +924,87 @@ class UnitTests(unittest.TestCase):
         self.check_baseline_passages(translation, baseline_passages)
         self.check_omitted_passages(translation, omitted_passages)
 
+    def test_translation_nlv(self):
+        translation = 'NLV'
+        baseline_passages = [
+            '\u00b2\u2075 The gates are open all day. They will never be shut. There will be no night there.',
+
+            'These are the families through which Jesus Christ came. He came through David and Abraham. '
+            '\u00b2 Abraham was the father of Isaac. Isaac was the father of Jacob. '
+            'Jacob was the father of Judah and his brothers. '
+            '\u00b3 Judah was the father of Perez and Zerah. Their mother was Tamar. Perez was the father of Hezron. '
+            'Hezron was the father of Aram.',
+
+            '\u2074\u2070 1,052 sons of Immer, '
+            '\u2074\u00b9 1,247 sons of Pashhur, '
+            '\u2074\u00b2 1,017 sons of Harim.',
+
+            '\u2074 For day and night Your hand was heavy upon me. My strength was dried up as in the hot summer.',
+
+            '\u2075\u00b3 Then everyone went home.'
+        ]
+        omitted_passages = {
+            'Matthew': [
+                '\u00b3\u2074 But the proud religious law-keepers said, '
+                '\u201cHe puts out demons by the help of the leader of the demons.\u201d',
+                '\u2074\u2077 Someone said to Him, \u201cYour mother and brothers are outside and '
+                'want to talk to you.\u201d',
+                '\u00b2\u00b9 But this kind of demon does not go out but by prayer and by going without food so '
+                'you can pray better.\u201d',
+                '\u00b9\u00b9 \u201cFor the Son of Man has come to save that which was lost.',
+                '\u2074\u2074 Whoever falls on this Stone will be broken. And on the one it falls, '
+                'it will make him like dust.\u201d',
+                '\u00b9\u2074 It is bad for you, teachers of the Law and proud religious law-keepers, you who pretend '
+                'to be someone you are not! (You take houses from poor women whose husbands have died. Then you try to '
+                'cover it up by making long prayers. You will be punished all the more because of this.)',
+            ],
+            'Mark': [
+                '\u00b9\u2076 You have ears, then listen!\u201d',
+                '\u2074\u2074 There is where their worm never dies and the fire cannot be put out.',
+                '\u2074\u2076 There is where their worm never dies and the fire cannot be put out.',
+                '\u00b2\u2076 If you do not forgive them their sins, your Father in heaven will not forgive your '
+                'sins.\u201d',
+                '\u00b2\u2078 It happened as the Holy Writings said it would happen, '
+                '\u201cThey thought of Him as One Who broke the Law.\u201d',
+                '\u2079 (It was early on the first day of the week when Jesus was raised from the dead. '
+                'Mary Magdalene saw Him first. He had put seven demons out of her.',
+                '\u00b2\u2070 The followers went from there and preached everywhere. The Lord worked with them. '
+                'The Lord showed that the Word of God was true by the special works they had power to do.)'
+            ],
+            'Luke': [
+                '\u00b3\u2076 Two men will be working in a field. One will be taken. The other will be left.\u201d',
+                '\u00b2\u2070 In the same way, after they had finished the bread, He took the cup. He said, '
+                '\u201cThis cup is My blood of the New Way of Worship which is given for you.',
+                '\u2074\u00b3 An angel from heaven came and gave Him strength.',
+                '\u2074\u2074 His heart was much troubled and He prayed all the more. '
+                'Water ran from His face like blood and fell to the ground.',
+                '\u00b9\u2077 Every year at the time of the special supper, Pilate would let one person who was in '
+                'prison go free.',
+                '\u00b9\u00b2 But Peter got up and ran to the grave. He got down to look in and saw only the linen '
+                'clothes. Then he went away, surprised about what had happened.',
+                '\u2074\u2070 When Jesus had said this, He showed them His hands and feet.'
+            ],
+            'John': [
+                '\u2074 (An angel of the Lord came at certain times and made the water move. '
+                'All of them were waiting for it to move. Whoever got in the water first after it was moving was '
+                'healed of whatever sickness he had.)',
+                '\u2075\u00b3 Then everyone went home.',
+                '\u00b9\u00b9 She said, \u201cNo one, Sir.\u201d Jesus said to her, '
+                '\u201cNeither do I say you are guilty. Go on your way and do not sin again.\u201d)',
+            ],
+            'Acts': [
+                '\u00b3\u2077 (Philip said, \u201cIf you believe with all your heart, you may.\u201d '
+                'The man said, \u201cI believe that Jesus Christ is the Son of God.\u201d)',
+                '\u00b3\u2074 But Silas thought he should stay there.',
+                '\u2077 But Lysias, the captain, came and took him out of our hands.',
+                '\u00b2\u2079 After he had said these things, the Jews went away and argued with each other.'
+            ],
+            'Romans': [
+                '\u00b2\u2074 May you have loving-favor from our Lord Jesus Christ. Let it be so.'
+            ],
+        }
+        self.check_baseline_passages(translation, baseline_passages)
+        self.check_omitted_passages(translation, omitted_passages)
+
 if __name__ == "__main__":
     unittest.main()

@@ -290,13 +290,13 @@ class WebExtractor:
         # to eliminate both the in-line note and its space in an easy manner.
         if translation == 'EXB':
             all_text = re.sub('\s\[.+?\]', '', all_text)
-        elif translation == 'NASB':
-            # NASB includes asterisks on certain verbs in the New Testament. This is an in-line marker that the verb
-            # has been translated from present-tense Greek to past-tense English for better flow in modern usage.
-            # As it is not actually part of the passage text itself, this is expected to be ignored.
-            # Also note that this is a naive replacement - fortunately, asterisks do not seem to be used as a proper
-            # text character anywhere in the NASB Bible.
-            all_text = all_text.replace('*', '')
+        # Some translations include asterisks on certain words in the New Testament. This usually indicates an in-line
+        # marker that the word has been translated from present-tense Greek to past-tense English for better flow
+        # in modern usage, though not all translations provide consistent footnotes on what the asterisk implies.
+        # As it is not actually part of the passage text itself, this is expected to be ignored.
+        # Also note that this is a naive replacement - fortunately, asterisks do not seem to be used as a proper
+        # text character anywhere in the currently supported Bible translations.
+        all_text = all_text.replace('*', '')
 
         if not self.output_as_list:
             # Do any final touch-ups to the passage contents before outputting the string
