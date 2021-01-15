@@ -18,7 +18,7 @@ class UnitTests(unittest.TestCase):
         :param expected_passage_results: List of strings correlating to each of the tested passages
         :type expected_passage_results: list
         """
-        if translation != 'ASV':
+        if translation != 'YLT':
             return
         bible = WebExtractor(translation=translation)
         actual_passage_results = [
@@ -43,7 +43,7 @@ class UnitTests(unittest.TestCase):
         :param expected_passage_results: List of strings correlating to each of the tested passages
         :type expected_passage_results: list
         """
-        if translation != 'ASV':
+        if translation != 'YLT':
             return
         download_path = './tmp/check_omitted_passages/{0}'.format(translation)
         # Downloading the books with a process map is somewhat faster than using multiple daemon processes to
@@ -771,6 +771,85 @@ class UnitTests(unittest.TestCase):
             ],
             'Romans': [
                 ''
+            ],
+        }
+        self.check_baseline_passages(translation, baseline_passages)
+        self.check_omitted_passages(translation, omitted_passages)
+
+    def test_translation_ylt(self):
+        translation = 'YLT'
+        baseline_passages = [
+            '\u00b2\u2075 and its gates shall not at all be shut by day, for night shall not be there;',
+
+            'A roll of the birth of Jesus Christ, son of David, son of Abraham. \n'
+            '\u00b2 Abraham begat Isaac, and Isaac begat Jacob, and Jacob begat Judah and his brethren, \n'
+            '\u00b3 and Judah begat Pharez and Zarah of Tamar, and Pharez begat Hezron, and Hezron begat Ram,',
+
+            '\u2074\u2070 sons of Immer: a thousand fifty and two; \n'
+            '\u2074\u00b9 sons of Pashur: a thousand two hundred forty and seven; \n'
+            '\u2074\u00b2 sons of Harim: a thousand and seventeen.',
+
+            '\u2074 When by day and by night Thy hand is heavy upon me, '
+            'My moisture hath been changed Into the droughts of summer. Selah.',
+
+            '\u2075\u00b3 and each one went on to his house, but Jesus went on to the mount of the Olives.'
+        ]
+        omitted_passages = {
+            'Matthew': [
+                "\u00b3\u2074 but the Pharisees said, `By the ruler of the demons he doth cast out the demons.'",
+                "\u2074\u2077 and one said to him, `Lo, thy mother and thy brethren do stand without, "
+                "seeking to speak to thee.'",
+                "\u00b2\u00b9 and this kind doth not go forth except in prayer and fasting.'",
+                '\u00b9\u00b9 for the Son of Man did come to save the lost.',
+                "\u2074\u2074 and he who is falling on this stone shall be broken, "
+                "and on whomsoever it may fall it will crush him to pieces.'",
+                '\u00b9\u2074 `Wo to you, Scribes and Pharisees, hypocrites! because ye eat up the houses of '
+                'the widows, and for a pretence make long prayers, because of this ye shall receive more '
+                'abundant judgment.',
+            ],
+            'Mark': [
+                "\u00b9\u2076 If any hath ears to hear -- let him hear.'",
+                '\u2074\u2074 where there worm is not dying, and the fire is not being quenched.',
+                '\u2074\u2076 where there worm is not dying, and the fire is not being quenched.',
+                "\u00b2\u2076 and, if ye do not forgive, neither will your Father who is in the heavens "
+                "forgive your trespasses.'",
+                "\u00b2\u2078 and the Writing was fulfilled that is saying, `And with lawless ones he was numbered.'",
+                '\u2079 And he, having risen in the morning of the first of the sabbaths, did appear first to '
+                'Mary the Magdalene, out of whom he had cast seven demons;',
+                '\u00b2\u2070 and they, having gone forth, did preach everywhere, the Lord working with [them], and '
+                'confirming the word, through the signs following. Amen.'
+            ],
+            'Luke': [
+                "\u00b3\u2076 two men shall be in the field, the one shall be taken, and the other left.'",
+                '\u00b2\u2070 In like manner, also, the cup after the supping, saying, `This cup [is] the new covenant '
+                'in my blood, that for you is being poured forth.',
+                '\u2074\u00b3 And there appeared to him a messenger from heaven strengthening him;',
+                '\u2074\u2074 and having been in agony, he was more earnestly praying, and his sweat became, '
+                'as it were, great drops of blood falling upon the ground.',
+                '\u00b9\u2077 for it was necessary for him to release to them one at every feast,',
+                '\u00b9\u00b2 And Peter having risen, did run to the tomb, and having stooped down he seeth the linen '
+                'clothes lying alone, and he went away to his own home, wondering at that which was come to pass.',
+                '\u2074\u2070 And having said this, he shewed to them the hands and the feet,'
+            ],
+            'John': [
+                '\u2074 for a messenger at a set time was going down in the pool, and was troubling the water, '
+                'the first then having gone in after the troubling of the water, became whole of whatever sickness '
+                'he was held.',
+                '\u2075\u00b3 and each one went on to his house, but Jesus went on to the mount of the Olives.',
+                "\u00b9\u00b9 and she said, `No one, Sir;' and Jesus said to her, `Neither do I pass sentence on thee; "
+                "be going on, and no more sin.'",
+            ],
+            'Acts': [
+                "\u00b3\u2077 [And Philip said, `If thou dost believe out of all the heart, it is lawful;' "
+                "and he answering said, `I believe Jesus Christ to be the Son of God;']",
+                '\u00b3\u2074 and it seemed good to Silas to remain there still.',
+                '\u2077 and Lysias the chief captain having come near, with much violence, out of our hands did '
+                'take away,',
+                '\u00b2\u2079 and he having said these things, the Jews went away, having much disputation among '
+                'themselves;'
+            ],
+            'Romans': [
+                '\u00b2\u2074 the grace of our Lord Jesus Christ [be] with you all. Amen.'
             ],
         }
         self.check_baseline_passages(translation, baseline_passages)
