@@ -18,8 +18,6 @@ class UnitTests(unittest.TestCase):
         :param expected_passage_results: List of strings correlating to each of the tested passages
         :type expected_passage_results: list
         """
-        if translation != 'NET':
-            return
         bible = WebExtractor(translation=translation)
         actual_passage_results = [
             bible.search('Revelation 21:25'),
@@ -43,8 +41,6 @@ class UnitTests(unittest.TestCase):
         :param expected_passage_results: List of strings correlating to each of the tested passages
         :type expected_passage_results: list
         """
-        if translation != 'NET':
-            return
         download_path = './tmp/check_omitted_passages/{0}'.format(translation)
         # Downloading the books with a process map is somewhat faster than using multiple daemon processes to
         # acquire each book sequentially.
