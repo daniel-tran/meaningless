@@ -18,6 +18,8 @@ class UnitTests(unittest.TestCase):
         :param expected_passage_results: List of strings correlating to each of the tested passages
         :type expected_passage_results: list
         """
+        if translation != 'ASV':
+            return
         bible = WebExtractor(translation=translation)
         actual_passage_results = [
             bible.search('Revelation 21:25'),
@@ -41,6 +43,8 @@ class UnitTests(unittest.TestCase):
         :param expected_passage_results: List of strings correlating to each of the tested passages
         :type expected_passage_results: list
         """
+        if translation != 'ASV':
+            return
         download_path = './tmp/check_omitted_passages/{0}'.format(translation)
         # Downloading the books with a process map is somewhat faster than using multiple daemon processes to
         # acquire each book sequentially.
@@ -696,6 +700,77 @@ class UnitTests(unittest.TestCase):
             ],
             'Romans': [
                 '\u00b2\u2074 The grace of our Lord Jesus Christ be with you all. Amen.'
+            ],
+        }
+        self.check_baseline_passages(translation, baseline_passages)
+        self.check_omitted_passages(translation, omitted_passages)
+
+    def test_translation_asv(self):
+        translation = 'ASV'
+        baseline_passages = [
+            '\u00b2\u2075 And the gates thereof shall in no wise be shut by day (for there shall be no night there):',
+
+            'The book of the generation of Jesus Christ, the son of David, the son of Abraham. \n'
+            '\u00b2 Abraham begat Isaac; and Isaac begat Jacob; and Jacob begat Judah and his brethren; '
+            '\u00b3 and Judah begat Perez and Zerah of Tamar; and Perez begat Hezron; and Hezron begat Ram;',
+
+            '\u2074\u2070 The children of Immer, a thousand fifty and two. '
+            '\u2074\u00b9 The children of Pashhur, a thousand two hundred forty and seven. '
+            '\u2074\u00b2 The children of Harim, a thousand and seventeen.',
+
+            '\u2074 For day and night thy hand was heavy upon me:\n'
+            'My moisture was changed as with the drought of summer. Selah',
+
+            '\u2075\u00b3 [And they went every man unto his own house:'
+        ]
+        omitted_passages = {
+            'Matthew': [
+                '\u00b3\u2074 But the Pharisees said, By the prince of the demons casteth he out demons.',
+                '\u2074\u2077 And one said unto him, Behold, thy mother and thy brethren stand without, '
+                'seeking to speak to thee.',
+                '',
+                '',
+                '\u2074\u2074 And he that falleth on this stone shall be broken to pieces: '
+                'but on whomsoever it shall fall, it will scatter him as dust.',
+                '',
+            ],
+            'Mark': [
+                '',
+                '',
+                '',
+                '',
+                '',
+                '\u2079 Now when he was risen early on the first day of the week, he appeared first to Mary Magdalene, '
+                'from whom he had cast out seven demons.',
+                '\u00b2\u2070 And they went forth, and preached everywhere, the Lord working with them, and '
+                'confirming the word by the signs that followed. Amen.'
+            ],
+            'Luke': [
+                '',
+                '\u00b2\u2070 And the cup in like manner after supper, saying, '
+                'This cup is the new covenant in my blood, even that which is poured out for you.',
+                '\u2074\u00b3 And there appeared unto him an angel from heaven, strengthening him.',
+                '\u2074\u2074 And being in an agony he prayed more earnestly; '
+                'and his sweat became as it were great drops of blood falling down upon the ground.',
+                '',
+                '\u00b9\u00b2 But Peter arose, and ran unto the tomb; and stooping and looking in, he seeth the linen '
+                'cloths by themselves; and he departed to his home, wondering at that which was come to pass.',
+                '\u2074\u2070 And when he had said this, he showed them his hands and his feet.'
+            ],
+            'John': [
+                '',
+                '\u2075\u00b3 [And they went every man unto his own house:',
+                '\u00b9\u00b9 And she said, No man, Lord. And Jesus said, Neither do I condemn thee: go thy way; '
+                'from henceforth sin no more.]',
+            ],
+            'Acts': [
+                '',
+                '',
+                '',
+                '',
+            ],
+            'Romans': [
+                ''
             ],
         }
         self.check_baseline_passages(translation, baseline_passages)
