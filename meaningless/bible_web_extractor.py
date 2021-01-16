@@ -269,8 +269,13 @@ class WebExtractor:
         # Combine the text contents of all passage sections on the page.
         # Convert non-breaking spaces to normal spaces when retrieving the raw passage contents.
         # Also strip excess whitespaces to prevent a whitespace build-up when combining multiple passages.
+        #
+        # Double square brackets are removed here, as they are mostly just indicators that the passages is only kept
+        # due to convention with earlier translations. This replacement is done here, as it can sometimes have a
+        # trailing space which can cause double spacing, which needs to be normalised.
         raw_passage_text = '\n'.join([tag.text.replace('\xa0', ' ').strip() for tag in
-                                      soup.find_all('div', {'class': 'passage-content'})])
+                                      soup.find_all('div', {'class': 'passage-content'})]) \
+            .replace('[[', '').replace(']]', '')
         # To account for spaces between tags that end up blending into the passage contents, this regex replacement is
         # specifically used to remove that additional spacing, since it is part of the actual page layout.
         all_text = re.sub('([^ ]) {2,3}([^ ])', r'\1 \2', raw_passage_text)

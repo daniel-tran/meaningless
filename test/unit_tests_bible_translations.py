@@ -190,7 +190,7 @@ class UnitTests(unittest.TestCase):
             '\u2074 For day and night Your hand was heavy upon me;\n'
             'My vitality failed as with the dry heat of summer. Selah',
 
-            '\u2075\u00b3 [[And everyone went to his home.'
+            '\u2075\u00b3 And everyone went to his home.'
         ]
         omitted_passages = {
             'Matthew': [
@@ -211,13 +211,13 @@ class UnitTests(unittest.TestCase):
                 '\u00b2\u2076 [But if you do not forgive, neither will your Father who is in heaven forgive your '
                 'offenses.\u201d]',
                 '',
-                '\u2079 [[Now after He had risen early on the first day of the week, He first appeared to Mary '
+                '\u2079 Now after He had risen early on the first day of the week, He first appeared to Mary '
                 'Magdalene, from whom He had cast out seven demons.',
                 '\u00b2\u2070 And they went out and preached everywhere, while the Lord worked with them, and '
-                'confirmed the word by the signs that followed.]]\n'
-                '[[And they promptly reported all these instructions to Peter and his companions. '
+                'confirmed the word by the signs that followed.\n'
+                'And they promptly reported all these instructions to Peter and his companions. '
                 'And after that, Jesus Himself also sent out through them from east to west the sacred and '
-                'imperishable proclamation of eternal salvation.]]'
+                'imperishable proclamation of eternal salvation.'
             ],
             'Luke': [
                 '\u00b3\u2076 [Two men will be in the field; one will be taken and the other will be left.\u201d]',
@@ -233,9 +233,9 @@ class UnitTests(unittest.TestCase):
             ],
             'John': [
                 '',
-                '\u2075\u00b3 [[And everyone went to his home.',
+                '\u2075\u00b3 And everyone went to his home.',
                 '\u00b9\u00b9 She said, \u201cNo one, Lord.\u201d And Jesus said, '
-                '\u201cI do not condemn you, either. Go. From now on do not sin any longer.\u201d]]',
+                '\u201cI do not condemn you, either. Go. From now on do not sin any longer.\u201d',
             ],
             'Acts': [
                 '',
@@ -345,7 +345,7 @@ class UnitTests(unittest.TestCase):
             '\u2074 For day and night your hand was heavy upon me;\n'
             '    my strength was dried up as by the heat of summer. Selah',
 
-            '[[\u2075\u00b3 Then each of them went home,'
+            '\u2075\u00b3 Then each of them went home,'
         ]
         omitted_passages = {
             'Matthew': [
@@ -364,10 +364,10 @@ class UnitTests(unittest.TestCase):
                 '',
                 '',
                 '',
-                '\u2079 [[Now after he rose early on the first day of the week, he appeared first to Mary Magdalene, '
+                '\u2079 Now after he rose early on the first day of the week, he appeared first to Mary Magdalene, '
                 'from whom he had cast out seven demons.',
                 '\u00b2\u2070 And they went out and proclaimed the good news everywhere, while the Lord worked with '
-                'them and confirmed the message by the signs that accompanied it.]]'
+                'them and confirmed the message by the signs that accompanied it.'
             ],
             'Luke': [
                 '',
@@ -375,7 +375,7 @@ class UnitTests(unittest.TestCase):
                 '\u201cThis cup that is poured out for you is the new covenant in my blood.',
                 '\u2074\u00b3 Then an angel from heaven appeared to him and gave him strength.',
                 '\u2074\u2074 In his anguish he prayed more earnestly, and his sweat became like '
-                'great drops of blood falling down on the ground.]]',
+                'great drops of blood falling down on the ground.',
                 '',
                 '\u00b9\u00b2 But Peter got up and ran to the tomb; stooping and looking in, he saw the linen cloths '
                 'by themselves; then he went home, amazed at what had happened.',
@@ -385,7 +385,7 @@ class UnitTests(unittest.TestCase):
                 '',
                 '\u2075\u00b3 Then each of them went home,',
                 '\u00b9\u00b9 She said, \u201cNo one, sir.\u201d And Jesus said, '
-                '\u201cNeither do I condemn you. Go your way, and from now on do not sin again.\u201d]]',
+                '\u201cNeither do I condemn you. Go your way, and from now on do not sin again.\u201d',
             ],
             'Acts': [
                 '',
@@ -417,7 +417,7 @@ class UnitTests(unittest.TestCase):
             '\u2074 For day and night your hand was heavy upon me;\n'
             '    my strength was dried up as by the heat of summer. Selah',
 
-            '\u2075\u00b3 [[They went each to his own house,'
+            '\u2075\u00b3 They went each to his own house,'
         ]
         omitted_passages = {
             'Matthew': [
@@ -435,10 +435,10 @@ class UnitTests(unittest.TestCase):
                 '',
                 '',
                 '',
-                '\u2079 [[Now when he rose early on the first day of the week, he appeared first to Mary Magdalene, '
+                '\u2079 Now when he rose early on the first day of the week, he appeared first to Mary Magdalene, '
                 'from whom he had cast out seven demons.',
                 '\u00b2\u2070 And they went out and preached everywhere, while the Lord worked with them and '
-                'confirmed the message by accompanying signs.]]'
+                'confirmed the message by accompanying signs.'
             ],
             'Luke': [
                 '',
@@ -454,9 +454,9 @@ class UnitTests(unittest.TestCase):
             ],
             'John': [
                 '',
-                '\u2075\u00b3 [[They went each to his own house,',
+                '\u2075\u00b3 They went each to his own house,',
                 '\u00b9\u00b9 She said, \u201cNo one, Lord.\u201d And Jesus said, '
-                '\u201cNeither do I condemn you; go, and from now on sin no more.\u201d]]',
+                '\u201cNeither do I condemn you; go, and from now on sin no more.\u201d',
             ],
             'Acts': [
                 '',
@@ -869,7 +869,7 @@ class UnitTests(unittest.TestCase):
             '\u2074 For day and night you tormented me;\n'
             'you tried to destroy me in the intense heat of summer. (Selah)',
 
-            '\u2075\u00b3 [[ And each one departed to his own house.'
+            '\u2075\u00b3 And each one departed to his own house.'
         ]
         omitted_passages = {
             'Matthew': [
@@ -888,10 +888,10 @@ class UnitTests(unittest.TestCase):
                 '',
                 '',
                 '',
-                '\u2079 [[Early on the first day of the week, after he arose, he appeared first to Mary Magdalene, '
+                '\u2079 Early on the first day of the week, after he arose, he appeared first to Mary Magdalene, '
                 'from whom he had driven out seven demons.',
                 '\u00b2\u2070 They went out and proclaimed everywhere, while the Lord worked with them and confirmed '
-                'the word through the accompanying signs.]]'
+                'the word through the accompanying signs.'
             ],
             'Luke': [
                 '',
@@ -907,9 +907,9 @@ class UnitTests(unittest.TestCase):
             ],
             'John': [
                 '',
-                '\u2075\u00b3 [[ And each one departed to his own house.',
+                '\u2075\u00b3 And each one departed to his own house.',
                 '\u00b9\u00b9 She replied, \u201cNo one, Lord.\u201d And Jesus said, '
-                '\u201cI do not condemn you either. Go, and from now on do not sin any more.\u201d]]',
+                '\u201cI do not condemn you either. Go, and from now on do not sin any more.\u201d',
             ],
             'Acts': [
                 '',
