@@ -7,7 +7,15 @@ from meaningless.utilities.exceptions import InvalidSearchError, UnsupportedTran
 
 class WebExtractor:
     """
-    An extractor object that retrieves Bible passages from the Bible Gateway site
+    An extractor object that retrieves Bible passages from the Bible Gateway site.
+
+    This does NOT extend from the BaseExtractor class, as it would expose certain attributes that don't make sense for
+    the Web Extractor but can still be interacted with (e.g. default directory, file extension, etc.)
+    This extractor is also designed in such a way that the passage, passages and chapter retrieval functions call the
+    search method directly, which in turn have the other retrieval functions rely on these. This is partly to reduce
+    nested function call overhead, but also attempts to reduce the number of outgoing web requests where possible.
+    The BaseExtractor doesn't really need to be concerned about this, as it is presumably operating on a local file,
+    and so the underlying implementation can be slightly more naive without a drastic performance hit.
     """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
