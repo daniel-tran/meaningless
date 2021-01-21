@@ -1,7 +1,8 @@
 import unittest
 import sys
 sys.path.append('../')
-from meaningless import YAMLExtractor, WebExtractor, InvalidSearchError
+from meaningless import yaml_file_interface, WebExtractor, InvalidSearchError
+from meaningless.bible_base_extractor import BaseExtractor
 
 
 class UnitTests(unittest.TestCase):
@@ -28,6 +29,15 @@ class UnitTests(unittest.TestCase):
         :rtype: str
         """
         return './static/unit_tests_bible_list_extractor/{0}'.format(translation)
+
+    @staticmethod
+    def get_test_file_extension():
+        """
+        A helper function to consolidate the file extension used for the extractor
+        :return: File extension with the leading dot
+        :rtype: str
+        """
+        return '.yaml'
 
     def test_get_passage_list_from_string(self):
         bible = WebExtractor(output_as_list=True)
@@ -195,17 +205,22 @@ class UnitTests(unittest.TestCase):
         # An invalid passage would just be ignored
         self.assertEqual(text1, text2, 'Passage is incorrect')
 
-    # -------------- Tests with the YAML Extractor --------------
+    # -------------- Tests with the Base Extractor --------------
+    # By extension, this should also cover any classes that build off the Base Extractor
 
-    def test_get_yaml_passage_list(self):
-        bible = YAMLExtractor(output_as_list=True, default_directory=self.get_test_directory(),
+    def test_get_base_passage_list(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              output_as_list=True, default_directory=self.get_test_directory(),
                               translation=self.get_test_translation())
         text = bible.get_passage('1 John', 1, 8)
         john = ['\u2078 If we say that we have no sin, we deceive ourselves, and the truth is not in us. ']
         self.assertEqual(john, text, 'Passage is incorrect')
 
-    def test_get_yaml_passages_list(self):
-        bible = YAMLExtractor(output_as_list=True, default_directory=self.get_test_directory(),
+    def test_get_base_passages_list(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              output_as_list=True, default_directory=self.get_test_directory(),
                               translation=self.get_test_translation())
         text = bible.get_passages('1 John', 1, 8, 9)
         john = ['\u2078 If we say that we have no sin, we deceive ourselves, and the truth is not in us. ',
@@ -213,51 +228,61 @@ class UnitTests(unittest.TestCase):
                 'and to cleanse us from all unrighteousness. ']
         self.assertEqual(john, text, 'Passage is incorrect')
 
-    def test_get_yaml_chapter_list(self):
+    def test_get_base_chapter_list(self):
         online_bible = WebExtractor(output_as_list=True, show_passage_numbers=False,
                                     translation=self.get_test_translation())
-        yaml_bible = YAMLExtractor(output_as_list=True, show_passage_numbers=False,
-                                   default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        text = yaml_bible.get_chapter('Ecclesiastes', 11)
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              output_as_list=True, show_passage_numbers=False,
+                              default_directory=self.get_test_directory(), translation=self.get_test_translation())
+        text = bible.get_chapter('Ecclesiastes', 11)
         eccl = online_bible.get_chapter('Ecclesiastes', 11)
-        # Results should be identical between the web and YAML extractor
+        # Results should be identical between the web and base extractor
         # Ignoring passage numbers, as the web extractor omits this for the first passage of each chapter
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
-    def test_get_yaml_chapters_list(self):
+    def test_get_base_chapters_list(self):
         online_bible = WebExtractor(output_as_list=True, show_passage_numbers=False,
                                     translation=self.get_test_translation())
-        yaml_bible = YAMLExtractor(output_as_list=True, show_passage_numbers=False,
-                                   default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        text = yaml_bible.get_chapters('Ecclesiastes', 11, 12)
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              output_as_list=True, show_passage_numbers=False,
+                              default_directory=self.get_test_directory(), translation=self.get_test_translation())
+        text = bible.get_chapters('Ecclesiastes', 11, 12)
         eccl = online_bible.get_chapters('Ecclesiastes', 11, 12)
-        # Results should be identical between the web and YAML extractor
+        # Results should be identical between the web and base extractor
         # Ignoring passage numbers, as the web extractor omits this for the first passage of each chapter
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
-    def test_get_yaml_book_list(self):
+    def test_get_base_book_list(self):
         online_bible = WebExtractor(output_as_list=True, translation=self.get_test_translation())
-        yaml_bible = YAMLExtractor(output_as_list=True, default_directory=self.get_test_directory(),
-                                   translation=self.get_test_translation())
-        text = yaml_bible.get_book('Philemon')
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              output_as_list=True, default_directory=self.get_test_directory(),
+                              translation=self.get_test_translation())
+        text = bible.get_book('Philemon')
         eccl = online_bible.get_book('Philemon')
-        # Results should be identical between the web and YAML extractor
+        # Results should be identical between the web and base extractor
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
-    def test_get_yaml_passage_range_list(self):
-        yaml_bible = YAMLExtractor(output_as_list=True, default_directory=self.get_test_directory(),
-                                   translation=self.get_test_translation())
-        text = yaml_bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
+    def test_get_base_passage_range_list(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              output_as_list=True, default_directory=self.get_test_directory(),
+                              translation=self.get_test_translation())
+        text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
         eccl = ['\u00b9\u2078 Wisdom is better than weapons of war; but one sinner destroys much good.',
                 '\u00b9 Dead flies cause the oil of the perfumer to produce an evil odor;\n'
                 '    so does a little folly outweigh wisdom and honor.\n'
                 ]
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
-    def test_get_yaml_passage_range_list_with_stripped_whitespace(self):
-        yaml_bible = YAMLExtractor(output_as_list=True, strip_excess_whitespace_from_list=True,
-                                   default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        text = yaml_bible.get_passage_range('Ecclesiastes', 10, 1, 10, 2)
+    def test_get_base_passage_range_list_with_stripped_whitespace(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              output_as_list=True, strip_excess_whitespace_from_list=True,
+                              default_directory=self.get_test_directory(), translation=self.get_test_translation())
+        text = bible.get_passage_range('Ecclesiastes', 10, 1, 10, 2)
         eccl = ['\u00b9 Dead flies cause the oil of the perfumer to produce an evil odor;\n'
                 '    so does a little folly outweigh wisdom and honor.',
                 '\u00b2 A wise man\u2019s heart is at his right hand,\n'
@@ -265,15 +290,17 @@ class UnitTests(unittest.TestCase):
                 ]
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
-    def test_get_yaml_book_list_with_ascii_punctuation(self):
+    def test_get_base_book_list_with_ascii_punctuation(self):
         online_bible = WebExtractor(output_as_list=True, translation=self.get_test_translation(),
                                     show_passage_numbers=False, use_ascii_punctuation=True)
-        yaml_bible = YAMLExtractor(output_as_list=True, default_directory=self.get_test_directory(),
-                                   translation=self.get_test_translation(), show_passage_numbers=False,
-                                   use_ascii_punctuation=True)
-        text = yaml_bible.get_book('Ecclesiastes')
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              output_as_list=True, default_directory=self.get_test_directory(),
+                              translation=self.get_test_translation(), show_passage_numbers=False,
+                              use_ascii_punctuation=True)
+        text = bible.get_book('Ecclesiastes')
         eccl = online_bible.get_book('Ecclesiastes')
-        # Results should be identical between the web and YAML extractor
+        # Results should be identical between the web and base extractor
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
 if __name__ == "__main__":
