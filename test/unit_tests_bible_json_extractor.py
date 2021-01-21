@@ -18,7 +18,7 @@ class UnitTests(unittest.TestCase):
                          'Module of reading function is incorrect')
         self.assertEqual(bible.file_reading_function.__name__, json_file_interface.read.__name__,
                          'Name of reading function is incorrect')
-        self.assertTrue(bible.use_string_keys, 'Extractor is not reading keys as strings')
+        self.assertTrue(bible.read_key_as_string, 'Extractor is not reading keys as strings')
 
 if __name__ == "__main__":
     unittest.main()

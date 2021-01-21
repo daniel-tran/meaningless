@@ -11,4 +11,4 @@ class JSONExtractor(BaseExtractor):
                  use_ascii_punctuation=False):
         super().__init__(json_file_interface.read, translation, show_passage_numbers, output_as_list,
                      strip_excess_whitespace_from_list, default_directory, use_ascii_punctuation,
-                     file_extension='.json', use_string_keys=True)
+                     file_extension='.json', read_key_as_string=True)

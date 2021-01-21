@@ -10,7 +10,7 @@ class BaseExtractor:
 
     def __init__(self, file_reading_function, translation='NIV', show_passage_numbers=True, output_as_list=False,
                  strip_excess_whitespace_from_list=False, default_directory=os.getcwd(),
-                 use_ascii_punctuation=False, file_extension='', use_string_keys=False):
+                 use_ascii_punctuation=False, file_extension='', read_key_as_string=False):
         """
         :param file_reading_function: Function definition used to specify how to read a given file.
                                       The function should only take 1 argument, which states the file path to read.
@@ -33,9 +33,9 @@ class BaseExtractor:
         :type use_ascii_punctuation: bool
         :param file_extension: File extension used when reading from a default file when file_path is not provided.
         :type file_extension: str
-        :param use_string_keys: If True, specifies that all keys in the extracted file will be strings.
+        :param read_key_as_string: If True, specifies that all keys in the extracted file will be strings.
                Defaults to False.
-        :type use_string_keys: bool
+        :type read_key_as_string: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
@@ -45,7 +45,7 @@ class BaseExtractor:
         self.use_ascii_punctuation = use_ascii_punctuation
         self.file_extension = file_extension
         self.file_reading_function = file_reading_function
-        self.use_string_keys = use_string_keys
+        self.read_key_as_string = read_key_as_string
 
     def get_passage(self, book, chapter, passage, file_path=''):
         """
@@ -240,6 +240,6 @@ class BaseExtractor:
         :return: Type-casted dictionary key
         :rtype: int or str
         """
-        if self.use_string_keys:
+        if self.read_key_as_string:
             return str(key)
         return int(key)
