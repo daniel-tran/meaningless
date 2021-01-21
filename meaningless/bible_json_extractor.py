@@ -4,7 +4,7 @@ from meaningless.utilities import json_file_interface
 
 class JSONExtractor(BaseExtractor):
     """
-    An base extractor object that retrieves Bible passages from a file
+    An base extractor object that retrieves Bible passages from a JSON file
     """
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
                  strip_excess_whitespace_from_list=False, default_directory=os.getcwd(),
