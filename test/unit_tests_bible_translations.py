@@ -1085,5 +1085,83 @@ class UnitTests(unittest.TestCase):
         self.check_baseline_passages(translation, baseline_passages)
         self.check_omitted_passages(translation, omitted_passages)
 
+    def test_translation_akjv(self):
+        translation = 'AKJV'
+        baseline_passages = [
+            '\u00b2\u2075 And the gates of it shall not be shut at all by day: for there shall be no night there.',
+
+            'The book of the generation of Jesus Christ, the son of David, the son of Abraham. '
+            '\u00b2 Abraham begat Isaac; and Isaac begat Jacob; and Jacob begat Judas and his brethren; '
+            '\u00b3 and Judas begat Phares and Zara of Thamar; and Phares begat Esrom; and Esrom begat Aram;',
+
+            '\u2074\u2070 The children of Immer, a thousand fifty and two. '
+            '\u2074\u00b9 The children of Pashur, a thousand two hundred forty and seven. '
+            '\u2074\u00b2 The children of Harim, a thousand and seventeen.',
+
+            '\u2074 For day and night thy hand was heavy upon me:\n'
+            'my moisture is turned into the drought of summer. Selah.',
+
+            '\u2075\u00b3 And every man went unto his own house.'
+        ]
+        omitted_passages = {
+            'Matthew': [
+                '\u00b3\u2074 But the Pharisees said, He casteth out devils through the prince of the devils.',
+                '\u2074\u2077 Then one said unto him, Behold, thy mother and thy brethren stand without, '
+                'desiring to speak with thee.',
+                '\u00b2\u00b9 Howbeit this kind goeth not out but by prayer and fasting.',
+                '\u00b9\u00b9 For the Son of man is come to save that which was lost.',
+                '\u2074\u2074 And whosoever shall fall on this stone shall be broken: but on whomsoever it shall fall, '
+                'it will grind him to powder.',
+                '\u00b9\u2074 Woe unto you, scribes and Pharisees, hypocrites! for ye devour widows\u2019 houses, and '
+                'for a pretence make long prayer: therefore ye shall receive the greater damnation.',
+            ],
+            'Mark': [
+                '\u00b9\u2076 If any man have ears to hear, let him hear.',
+                '\u2074\u2074 where their worm dieth not, and the fire is not quenched.',
+                '\u2074\u2076 where their worm dieth not, and the fire is not quenched.',
+                '\u00b2\u2076 But if ye do not forgive, neither will your Father which is in heaven forgive your '
+                'trespasses.',
+                '\u00b2\u2078 And the scripture was fulfilled, which saith, And he was numbered with the '
+                'transgressors.',
+                '\u2079 Now when Jesus was risen early the first day of the week, he appeared first to Mary Magdalene, '
+                'out of whom he had cast seven devils.',
+                '\u00b2\u2070 And they went forth, and preached every where, the Lord working with them, and '
+                'confirming the word with signs following. Amen.'
+            ],
+            'Luke': [
+                '\u00b3\u2076 Two men shall be in the field; the one shall be taken, and the other left.',
+                '\u00b2\u2070 Likewise also the cup after supper, saying, '
+                'This cup is the new testament in my blood, which is shed for you.',
+                '\u2074\u00b3 And there appeared an angel unto him from heaven, strengthening him.',
+                '\u2074\u2074 And being in an agony he prayed more earnestly: and his sweat was as it were '
+                'great drops of blood falling down to the ground.',
+                '\u00b9\u2077 (For of necessity he must release one unto them at the feast.)',
+                '\u00b9\u00b2 Then arose Peter, and ran unto the sepulchre; and stooping down, he beheld the linen '
+                'clothes laid by themselves, and departed, wondering in himself at that which was come to pass.',
+                '\u2074\u2070 And when he had thus spoken, he shewed them his hands and his feet.'
+            ],
+            'John': [
+                '\u2074 For an angel went down at a certain season into the pool, and troubled the water: whosoever '
+                'then first after the troubling of the water stepped in was made whole of whatsoever disease he had.',
+                '\u2075\u00b3 And every man went unto his own house.',
+                '\u00b9\u00b9 She said, No man, Lord. And Jesus said unto her, '
+                'Neither do I condemn thee: go, and sin no more.',
+            ],
+            'Acts': [
+                '\u00b3\u2077 And Philip said, If thou believest with all thine heart, thou mayest. And he answered '
+                'and said, I believe that Jesus Christ is the Son of God.',
+                '\u00b3\u2074 Notwithstanding it pleased Silas to abide there still.',
+                '\u2077 But the chief captain Lysias came upon us, and with great violence took him away out of our '
+                'hands,',
+                '\u00b2\u2079 And when he had said these words, the Jews departed, and had great reasoning among '
+                'themselves.'
+            ],
+            'Romans': [
+                '\u00b2\u2074 The grace of our Lord Jesus Christ be with you all. Amen.'
+            ],
+        }
+        self.check_baseline_passages(translation, baseline_passages)
+        self.check_omitted_passages(translation, omitted_passages)
+
 if __name__ == "__main__":
     unittest.main()
