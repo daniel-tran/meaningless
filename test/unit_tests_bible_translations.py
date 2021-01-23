@@ -1163,5 +1163,87 @@ class UnitTests(unittest.TestCase):
         self.check_baseline_passages(translation, baseline_passages)
         self.check_omitted_passages(translation, omitted_passages)
 
+    def test_translation_mev(self):
+        translation = 'MEV'
+        baseline_passages = [
+            '\u00b2\u2075 Its gates shall never be shut by day, for there shall be no night there.',
+
+            'The book of the genealogy of Jesus Christ, the Son of David, the son of Abraham: \n'
+            '\u00b2 Abraham was the father of Isaac,\n'
+            'Isaac the father of Jacob,\n'
+            'and Jacob the father of Judah and his brothers. \n'
+            '\u00b3 Judah was the father of Perez and Zerah by Tamar,\n'
+            'Perez the father of Hezron,\n'
+            'and Hezron the father of Ram.',
+
+            '\u2074\u2070 the sons of Immer, one thousand and fifty-two; \n'
+            '\u2074\u00b9 the sons of Pashhur, one thousand two hundred and forty-seven; \n'
+            '\u2074\u00b2 the sons of Harim, one thousand and seventeen.',
+
+            '\u2074 For day and night\n'
+            '    Your hand was heavy on me;\n'
+            'my strength was changed\n'
+            '    into the drought of summer. Selah',
+
+            '\u2075\u00b3 Then everyone went to his own house.'
+        ]
+        omitted_passages = {
+            'Matthew': [
+                '\u00b3\u2074 But the Pharisees said, \u201cHe casts out demons through the ruler of the demons.\u201d',
+                '\u2074\u2077 Then one said to Him, \u201cLook, Your mother and Your brothers are standing '
+                'outside asking to speak with You.\u201d',
+                '\u00b2\u00b9 But this kind does not go out except by prayer and fasting.\u201d',
+                '\u00b9\u00b9 For the Son of Man has come to save that which was lost.',
+                '\u2074\u2074 Whoever falls on this stone will be broken to pieces. But on whomever it falls, '
+                'it will crush him.\u201d',
+                '\u00b9\u2074 Woe to you, scribes and Pharisees, hypocrites! You devour widows\u2019 houses and for '
+                'pretense make long prayers. Therefore you will receive the greater condemnation.',
+            ],
+            'Mark': [
+                '\u00b9\u2076 If anyone has ears to hear, let him hear.\u201d',
+                '\u2074\u2074 where\n\u2018their worm does not die,\n    and the fire is not quenched.\u2019',
+                '\u2074\u2076 where\n\u2018their worm does not die,\n    and the fire is not quenched.\u2019',
+                '\u00b2\u2076 But if you do not forgive, neither will your Father who is in heaven forgive your '
+                'sins.\u201d',
+                '\u00b2\u2078 And the Scripture was fulfilled, which says, \u201cHe was numbered with the '
+                'lawless ones.\u201d',
+                '\u2079 Now when Jesus rose early on the first day of the week, He appeared first to Mary Magdalene, '
+                'out of whom He had cast seven demons.',
+                '\u00b2\u2070 Then they went forth and preached everywhere, the Lord working with them and confirming '
+                'the word through the accompanying signs. Amen.'
+            ],
+            'Luke': [
+                '\u00b3\u2076 Two men will be in the field; the one will be taken and the other will be left.\u201d',
+                '\u00b2\u2070 In like manner, He took the cup after supper, saying, '
+                '\u201cThis cup is the new covenant in My blood which is shed for you.',
+                '\u2074\u00b3 An angel from heaven appeared to Him, strengthening Him.',
+                '\u2074\u2074 And being in anguish, He prayed more earnestly. And His sweat became like great drops '
+                'of blood falling down to the ground.',
+                '\u00b9\u2077 For he was obligated to release one man to them at the feast.',
+                '\u00b9\u00b2 But Peter rose and ran to the tomb. Stooping down, he saw the linen clothes lying by '
+                'themselves. He departed, wondering in himself what had happened.',
+                '\u2074\u2070 When He said this, He showed them His hands and His feet.'
+            ],
+            'John': [
+                '\u2074 For an angel went down at a certain time into the pool and stirred up the water. '
+                'After the stirring of the water, whoever stepped in first was healed of whatever disease he had.',
+                '\u2075\u00b3 Then everyone went to his own house.',
+                '\u00b9\u00b9 She said, \u201cNo one, Lord.\u201d\n'
+                'Jesus said to her, \u201cNeither do I condemn you. Go and sin no more.\u201d',
+            ],
+            'Acts': [
+                '\u00b3\u2077 Philip said, \u201cIf you believe with all your heart, you may.\u201d He answered, '
+                '\u201cI believe that Jesus Christ is the Son of God.\u201d',
+                '\u00b3\u2074 But it seemed good to Silas to remain there.',
+                '\u2077 But the commander, Lysias, came to us and forcefully took him out of our hands,',
+                '\u00b2\u2079 When he had said these words, the Jews departed and disputed greatly among themselves.'
+            ],
+            'Romans': [
+                '\u00b2\u2074 The grace of our Lord Jesus Christ be with you all. Amen.'
+            ],
+        }
+        self.check_baseline_passages(translation, baseline_passages)
+        self.check_omitted_passages(translation, omitted_passages)
+
 if __name__ == "__main__":
     unittest.main()
