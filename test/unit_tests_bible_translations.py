@@ -1245,5 +1245,78 @@ class UnitTests(unittest.TestCase):
         self.check_baseline_passages(translation, baseline_passages)
         self.check_omitted_passages(translation, omitted_passages)
 
+    def test_translation_leb(self):
+        translation = 'LEB'
+        baseline_passages = [
+            '\u00b2\u2075 And its gates will never be shut by day (for there will be no night there),',
+
+            'The book of the genealogy of Jesus Christ, the son of David, the son of Abraham. \n'
+            '\u00b2 Abraham became the father of Isaac, and Isaac became the father of Jacob, '
+            'and Jacob became the father of Judah and his brothers, '
+            '\u00b3 and Judah became the father of Perez and Zerah by Tamar, and Perez became the father of Hezron, '
+            'and Hezron became the father of Aram,',
+
+            '\u2074\u2070 The descendants of Immer, one thousand and fifty-two. '
+            '\u2074\u00b9 The descendants of Pashhur, one thousand two hundred and forty-seven. '
+            '\u2074\u00b2 The descendants of Harim, one thousand and seventeen.',
+
+            '\u2074 For day and night your hand was heavy upon me.\n'
+            'My vigor was changed into the dry heat of summer. Selah',
+
+            '\u2075\u00b3 And each one went to his own house.'
+        ]
+        omitted_passages = {
+            'Matthew': [
+                '\u00b3\u2074 But the Pharisees were saying, \u201cBy the ruler of demons he expels the demons!\u201d',
+                '\u2074\u2077 And someone told him, \u201cBehold, your mother and your brothers are standing there '
+                'outside desiring to speak to you.\u201d',
+                '',
+                '',
+                '\u2074\u2074 And the one who falls on this stone will be broken to pieces, '
+                'and the one on whom it falls\u2014it will crush him!\u201d',
+                '',
+            ],
+            'Mark': [
+                '',
+                '',
+                '',
+                '',
+                '',
+                '\u2079 Now early on the first day of the week, after he rose, he appeared first to Mary Magdalene, '
+                'from whom he had expelled seven demons.',
+                '\u00b2\u2070 And they went out and proclaimed everywhere, while the Lord was working together with '
+                'them and confirming the message through the accompanying signs.'
+            ],
+            'Luke': [
+                '',
+                '\u00b2\u2070 And in the same way the cup after they had eaten, saying, '
+                '\u201cThis cup is the new covenant in my blood which is poured out for you.',
+                '\u2074\u00b3 And an angel from heaven appeared to him, strengthening him.',
+                '\u2074\u2074 And being in anguish, he began praying more fervently and his sweat became like '
+                'drops of blood falling down to the ground.',
+                '',
+                '\u00b9\u00b2 But Peter got up and ran to the tomb, and bending over to look, he saw only the strips '
+                'of linen cloth, and he went away to his home wondering what had happened.',
+                '\u2074\u2070 And when he had said this, he showed them his hands and his feet.'
+            ],
+            'John': [
+                '',
+                '\u2075\u00b3 And each one went to his own house.',
+                '\u00b9\u00b9 And she said, \u201cNo one, Lord.\u201d So Jesus said, '
+                '\u201cNeither do I condemn you. Go, and sin no more.\u201d',
+            ],
+            'Acts': [
+                '',
+                '',
+                '',
+                ''
+            ],
+            'Romans': [
+                '\u00b2\u2074 The grace of our Lord Jesus Christ be with all of you. Amen.'
+            ],
+        }
+        self.check_baseline_passages(translation, baseline_passages)
+        self.check_omitted_passages(translation, omitted_passages)
+
 if __name__ == "__main__":
     unittest.main()
