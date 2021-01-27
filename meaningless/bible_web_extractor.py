@@ -9,13 +9,9 @@ class WebExtractor:
     """
     An extractor object that retrieves Bible passages from the Bible Gateway site.
 
-    This does NOT extend from the BaseExtractor class, as it would expose certain attributes that don't make sense for
-    the Web Extractor but can still be interacted with (e.g. default directory, file extension, etc.)
-    This extractor is also designed in such a way that the passage, passages and chapter retrieval functions call the
-    search method directly, which in turn have the other retrieval functions rely on these. This is partly to reduce
-    nested function call overhead, but also attempts to reduce the number of outgoing web requests where possible.
-    The BaseExtractor doesn't really need to be concerned about this, as it is presumably operating on a local file,
-    and so the underlying implementation can be slightly more naive without a drastic performance hit.
+    This does NOT extend from the BaseExtractor class, as it would expose certain attributes and function parameters
+    that don't make sense for the Web Extractor and should not be interacted with (e.g. default directory, file path,
+    file extension, etc.).
     """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
@@ -54,11 +50,7 @@ class WebExtractor:
         :return: The specified passage. Empty string/list if the passage is invalid.
         :rtype: str (list if self.output_as_list is True)
         """
-        # Capping the chapter and passage information, as this gets included in site search string and can cause
-        # the web request to stagger if this manages to be long enough.
-        capped_chapter = common.get_capped_integer(chapter, max_value=common.get_chapter_count(book, self.translation))
-        capped_passage = common.get_capped_integer(passage)
-        return self.search('{0} {1}:{2}'.format(book, capped_chapter, capped_passage))
+        return self.get_passage_range(book, chapter, passage, chapter, passage)
 
     def get_passages(self, book, chapter, passage_from, passage_to):
         """
@@ -75,12 +67,7 @@ class WebExtractor:
         :return: The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
         :rtype: str (list if self.output_as_list is True)
         """
-        # Capping the chapter and passage information, as this gets included in site search string and can cause
-        # the web request to stagger if this manages to be long enough.
-        capped_chapter = common.get_capped_integer(chapter, max_value=common.get_chapter_count(book, self.translation))
-        capped_passage_from = common.get_capped_integer(passage_from)
-        capped_passage_to = common.get_capped_integer(passage_to)
-        return self.search('{0} {1}:{2} - {3}'.format(book, capped_chapter, capped_passage_from, capped_passage_to))
+        return self.get_passage_range(book, chapter, passage_from, chapter, passage_to)
 
     def get_chapter(self, book, chapter):
         """
@@ -93,10 +80,7 @@ class WebExtractor:
         :return: All passages in the chapter. Empty string/list if the passage is invalid.
         :rtype: str (list if self.output_as_list is True)
         """
-        # Capping the chapter information, as this gets included in site search string and can cause
-        # the web request to stagger if this manages to be long enough.
-        capped_chapter = common.get_capped_integer(chapter, max_value=common.get_chapter_count(book, self.translation))
-        return self.search('{0} {1}'.format(book, capped_chapter))
+        return self.get_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter())
 
     def get_chapters(self, book, chapter_from, chapter_to):
         """
@@ -150,9 +134,10 @@ class WebExtractor:
         capped_chapter_to = common.get_capped_integer(chapter_to,
                                                       max_value=common.get_chapter_count(book, self.translation))
         capped_passage_to = common.get_capped_integer(passage_to)
-        # Defer to a simpler alternative function when sourcing passages from the same chapter
+        # Defer to a direct search invocation when sourcing passages from the same chapter
         if capped_chapter_from == capped_chapter_to:
-            return self.get_passages(book, capped_chapter_from, capped_passage_from, capped_passage_to)
+            return self.search('{0} {1}:{2} - {3}'.format(book, capped_chapter_from, capped_passage_from,
+                                                          capped_passage_to))
 
         # Get the partial section of the first chapter being requested, omitting some initial passages
         initial_chapter = self.get_passages(book, capped_chapter_from, capped_passage_from, common.get_end_of_chapter())
