@@ -56,7 +56,7 @@ class BaseExtractor:
         :param chapter: Chapter number
         :type chapter: int
         :param passage: Passage number
-        :type passage: str
+        :type passage: int
         :param file_path: When specified, reads the file from this location with a custom filename and extension.
                           Using this parameter will take priority over the default_directory class property.
                           Defaults to the default_directory path with the book as the file name with a default
