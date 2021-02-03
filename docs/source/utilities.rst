@@ -16,3 +16,11 @@ YAML File Interface
    :members:
    :undoc-members:
    :show-inheritance:
+
+JSON File Interface
+-------------------------------------------
+
+.. automodule:: meaningless.utilities.json_file_interface
+   :members:
+   :undoc-members:
+   :show-inheritance:
