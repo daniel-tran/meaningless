@@ -13,7 +13,7 @@ Having said that, I do acknowledge the existence of other Python libraries built
 4. https://pypi.org/project/guibible/
     - A library that obtains Bible passages using a GUI client. It retrieves Bible passages from https://labs.bible.org, which means only the NET translation is supported.
 5. https://github.com/scrollmapper/bible_databases
-    - A collection of public domain Bibles in different storage formats. It can be useful if you don't want to interact with YAML files.
+    - A collection of public domain Bibles in different storage formats. It can be useful if you need to load the entire Bible at once.
 6. https://github.com/aaronjohnsabu1999/mBAB
     - An end-to-end project for obtaining Bible passages as a web application with its own dedicated backend database that stores Bible passages.
 
