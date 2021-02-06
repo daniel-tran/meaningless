@@ -11,12 +11,17 @@
 
 # Architecture
 The following diagram represents the logical dependencies of each library component, and how changes in one component can propagate to others:
-```mermaid
-graph TD
-A(Web Extractor) --> B(YAML Downloader*)
-A(Web Extractor) --> C(JSON Downloader*)
-B -- YAML files only need to be downloaded once --> D(YAML Extractor*)
-C -- JSON files only need to be downloaded once --> E(JSON Extractor*)
+```
+                                        Web Extractor
+                                              |
+                                  -------------------------
+                                  |                       |
+                          YAML Downloader*         JSON Downloader*
+                                  |                       |
+                    [YAML files only need to     [JSON files only need to
+                       be downloaded once]          be downloaded once]
+                                  |                       |
+                         YAML Extractor*           JSON Extractor*
 ```
 
 \* indicates that the component is a subclass of a base implementation, such as the Base Extractor or Base Downloader.
