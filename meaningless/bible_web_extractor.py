@@ -7,7 +7,11 @@ from meaningless.utilities.exceptions import InvalidSearchError, UnsupportedTran
 
 class WebExtractor:
     """
-    An extractor object that retrieves Bible passages from the Bible Gateway site
+    An extractor object that retrieves Bible passages from the Bible Gateway site.
+
+    This does NOT extend from the BaseExtractor class, as it would expose certain attributes and function parameters
+    that don't make sense for the Web Extractor and should not be interacted with (e.g. default directory, file path,
+    file extension, etc.).
     """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
@@ -46,11 +50,7 @@ class WebExtractor:
         :return: The specified passage. Empty string/list if the passage is invalid.
         :rtype: str (list if self.output_as_list is True)
         """
-        # Capping the chapter and passage information, as this gets included in site search string and can cause
-        # the web request to stagger if this manages to be long enough.
-        capped_chapter = common.get_capped_integer(chapter, max_value=common.get_chapter_count(book, self.translation))
-        capped_passage = common.get_capped_integer(passage)
-        return self.search('{0} {1}:{2}'.format(book, capped_chapter, capped_passage))
+        return self.get_passage_range(book, chapter, passage, chapter, passage)
 
     def get_passages(self, book, chapter, passage_from, passage_to):
         """
@@ -67,12 +67,7 @@ class WebExtractor:
         :return: The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
         :rtype: str (list if self.output_as_list is True)
         """
-        # Capping the chapter and passage information, as this gets included in site search string and can cause
-        # the web request to stagger if this manages to be long enough.
-        capped_chapter = common.get_capped_integer(chapter, max_value=common.get_chapter_count(book, self.translation))
-        capped_passage_from = common.get_capped_integer(passage_from)
-        capped_passage_to = common.get_capped_integer(passage_to)
-        return self.search('{0} {1}:{2} - {3}'.format(book, capped_chapter, capped_passage_from, capped_passage_to))
+        return self.get_passage_range(book, chapter, passage_from, chapter, passage_to)
 
     def get_chapter(self, book, chapter):
         """
@@ -85,10 +80,7 @@ class WebExtractor:
         :return: All passages in the chapter. Empty string/list if the passage is invalid.
         :rtype: str (list if self.output_as_list is True)
         """
-        # Capping the chapter information, as this gets included in site search string and can cause
-        # the web request to stagger if this manages to be long enough.
-        capped_chapter = common.get_capped_integer(chapter, max_value=common.get_chapter_count(book, self.translation))
-        return self.search('{0} {1}'.format(book, capped_chapter))
+        return self.get_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter())
 
     def get_chapters(self, book, chapter_from, chapter_to):
         """
@@ -142,9 +134,10 @@ class WebExtractor:
         capped_chapter_to = common.get_capped_integer(chapter_to,
                                                       max_value=common.get_chapter_count(book, self.translation))
         capped_passage_to = common.get_capped_integer(passage_to)
-        # Defer to a simpler alternative function when sourcing passages from the same chapter
+        # Defer to a direct search invocation when sourcing passages from the same chapter
         if capped_chapter_from == capped_chapter_to:
-            return self.get_passages(book, capped_chapter_from, capped_passage_from, capped_passage_to)
+            return self.search('{0} {1}:{2} - {3}'.format(book, capped_chapter_from, capped_passage_from,
+                                                          capped_passage_to))
 
         # Get the partial section of the first chapter being requested, omitting some initial passages
         initial_chapter = self.get_passages(book, capped_chapter_from, capped_passage_from, common.get_end_of_chapter())
@@ -269,8 +262,13 @@ class WebExtractor:
         # Combine the text contents of all passage sections on the page.
         # Convert non-breaking spaces to normal spaces when retrieving the raw passage contents.
         # Also strip excess whitespaces to prevent a whitespace build-up when combining multiple passages.
+        #
+        # Double square brackets are removed here, as they are mostly just indicators that the passages is only kept
+        # due to convention with earlier translations. This replacement is done here, as it can sometimes have a
+        # trailing space which can cause double spacing, which needs to be normalised.
         raw_passage_text = '\n'.join([tag.text.replace('\xa0', ' ').strip() for tag in
-                                      soup.find_all('div', {'class': 'passage-content'})])
+                                      soup.find_all('div', {'class': 'passage-content'})]) \
+            .replace('[[', '').replace(']]', '')
         # To account for spaces between tags that end up blending into the passage contents, this regex replacement is
         # specifically used to remove that additional spacing, since it is part of the actual page layout.
         all_text = re.sub('([^ ]) {2,3}([^ ])', r'\1 \2', raw_passage_text)
@@ -290,13 +288,13 @@ class WebExtractor:
         # to eliminate both the in-line note and its space in an easy manner.
         if translation == 'EXB':
             all_text = re.sub('\s\[.+?\]', '', all_text)
-        elif translation == 'NASB':
-            # NASB includes asterisks on certain verbs in the New Testament. This is an in-line marker that the verb
-            # has been translated from present-tense Greek to past-tense English for better flow in modern usage.
-            # As it is not actually part of the passage text itself, this is expected to be ignored.
-            # Also note that this is a naive replacement - fortunately, asterisks do not seem to be used as a proper
-            # text character anywhere in the NASB Bible.
-            all_text = all_text.replace('*', '')
+        # Some translations include asterisks on certain words in the New Testament. This usually indicates an in-line
+        # marker that the word has been translated from present-tense Greek to past-tense English for better flow
+        # in modern usage, though not all translations provide consistent footnotes on what the asterisk implies.
+        # As it is not actually part of the passage text itself, this is expected to be ignored.
+        # Also note that this is a naive replacement - fortunately, asterisks do not seem to be used as a proper
+        # text character anywhere in the currently supported Bible translations.
+        all_text = all_text.replace('*', '')
 
         if not self.output_as_list:
             # Do any final touch-ups to the passage contents before outputting the string

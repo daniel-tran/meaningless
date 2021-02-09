@@ -173,9 +173,16 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_esv_translation_note(self):
         bible = WebExtractor(translation='ESV')
         text = bible.search('John 7:53')
-        john7_53 = '\u2075\u00b3 [[They went each to his own house,'
+        john7_53 = '\u2075\u00b3 They went each to his own house,'
         # Translation notes can vary between translations in both content and tag representation.
         # This could be problematic depending on how many form variations are present on the Bible Gateway site.
+        self.assertEqual(john7_53, text, 'Passage is incorrect')
+
+    def test_get_passage_net_double_square_brackets_with_trailing_space(self):
+        bible = WebExtractor(translation='NET')
+        text = bible.search('John 7:53')
+        john7_53 = '\u2075\u00b3 And each one departed to his own house.'
+        # After removing the double square brackets, the double space should also be normalised correctly
         self.assertEqual(john7_53, text, 'Passage is incorrect')
 
     def test_get_passage_lowercase_translation(self):

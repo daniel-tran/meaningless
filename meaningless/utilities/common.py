@@ -20,7 +20,8 @@ def is_unsupported_translation(translation):
     """
     # These translations are particularly difficult to extract information from due to them using
     # non-conventional page layouts compared to other translations: 'MOUNCE', 'VOICE', 'MSG', 'PHILLIPS'
-    return translation.upper() not in ['NIV', 'NASB', 'NKJV', 'NRSV', 'ESV', 'WEB', 'NLT', 'KJV']
+    return translation.upper() not in ['ASV', 'AKJV', 'ESV', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB',
+                                       'NET', 'NIV', 'NKJV', 'NLT', 'NLV', 'NRSV', 'WEB', 'YLT']
 
 
 def get_end_of_chapter():
@@ -230,8 +231,36 @@ def get_capped_integer(number, min_value=1, max_value=100):
     7
     >>> get_capped_integer(42, max_value=7)
     7
+    >>> get_capped_integer('0', min_value='7')
+    7
+    >>> get_capped_integer('42', max_value='7')
+    7
     """
-    return min(max(number, min_value), max_value)
+    return min(max(int(number), int(min_value)), int(max_value))
+
+
+def dict_keys_to_sorted_list(keys):
+    """
+    A helper function that converts a dictionary's keys to a sorted list.
+
+    :param keys: Dictionary keys
+    :type keys: object
+    :return: Dictionary keys casted as a sorted list
+    :rtype: list
+
+    >>> dict_keys_to_sorted_list({4: '', 2: '', 7: ''}.keys())
+    [2, 4, 7]
+    >>> dict_keys_to_sorted_list({'4': '', '2': '', '7': ''}.keys())
+    ['2', '4', '7']
+    """
+    def key_sorting_function(key):
+        # An inner sorting function that is primarily used for sorting numeric keys or strings of numeric characters.
+        # TODO Sorting on string keys with actual alphabetic characters requires additional logic and doctests
+        return int(key)
+
+    sorted_keys = list(keys)
+    sorted_keys.sort(key=key_sorting_function)
+    return sorted_keys
 
 
 def get_translation_language(translation):
