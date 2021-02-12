@@ -20,7 +20,7 @@ def is_unsupported_translation(translation):
     """
     # These translations are particularly difficult to extract information from due to them using
     # non-conventional page layouts compared to other translations: 'MOUNCE', 'VOICE', 'MSG', 'PHILLIPS'
-    return translation.upper() not in ['ASV', 'AKJV', 'ESV', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB',
+    return translation.upper() not in ['ASV', 'AKJV', 'BRG', 'ESV', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB',
                                        'NET', 'NIV', 'NKJV', 'NLT', 'NLV', 'NRSV', 'WEB', 'YLT']
 
 
