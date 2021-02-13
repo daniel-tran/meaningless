@@ -209,6 +209,14 @@ class UnitTests(unittest.TestCase):
         # Corner Unicode characters should be removed
         self.assertEqual(mark16_20, text, 'Passage is incorrect')
 
+    def test_get_passage_jub_pilcrow(self):
+        bible = WebExtractor(translation='JUB')
+        text = bible.search('Acts 5:12')
+        acts5_12 = '\u00b9\u00b2 And by the hands of the apostles many signs and wonders were wrought in the people. ' \
+                   '(And they were all with one accord in Solomon\u2019s porch.'
+        # The pilcrow character and its trailing space should not be present
+        self.assertEqual(acts5_12, text, 'Passage is incorrect')
+
     def test_get_passage_nrsv_double_spaces(self):
         bible = WebExtractor(translation='NRSV')
         text = bible.search('Matthew 1:2 - 3')
