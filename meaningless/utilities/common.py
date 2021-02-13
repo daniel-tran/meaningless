@@ -22,7 +22,7 @@ def is_unsupported_translation(translation):
     # non-conventional page layouts compared to other translations: 'MOUNCE', 'VOICE', 'MSG', 'PHILLIPS'
     return translation.upper() not in ['ASV', 'AKJV', 'BRG', 'EHV', 'ESV', 'ESVUK', 'GW', 'ISV', 'JUB', 'KJV',
                                        'KJ21', 'LEB', 'MEV', 'NASB', 'NET', 'NIV', 'NKJV', 'NLT',
-                                       'NLV', 'NRSV', 'WEB', 'YLT']
+                                       'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
 
 
 def get_end_of_chapter():
