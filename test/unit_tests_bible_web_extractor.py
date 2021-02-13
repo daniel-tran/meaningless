@@ -201,6 +201,14 @@ class UnitTests(unittest.TestCase):
         # An asterisk is normally present within this passage using this translation, but it should be omitted.
         self.assertEqual(john5_8, text, 'Passage is incorrect')
 
+    def test_get_passage_gw_unicode_marker(self):
+        bible = WebExtractor(translation='GW')
+        text = bible.search('Mark 16:20')
+        mark16_20 = '\u00b2\u2070 The disciples spread the Good News everywhere. The Lord worked with them. ' \
+                    'He confirmed his word by the miraculous signs that accompanied it.'
+        # Corner Unicode characters should be removed
+        self.assertEqual(mark16_20, text, 'Passage is incorrect')
+
     def test_get_passage_nrsv_double_spaces(self):
         bible = WebExtractor(translation='NRSV')
         text = bible.search('Matthew 1:2 - 3')

@@ -295,6 +295,8 @@ class WebExtractor:
         # Also note that this is a naive replacement - fortunately, asterisks do not seem to be used as a proper
         # text character anywhere in the currently supported Bible translations.
         all_text = all_text.replace('*', '')
+        # Translations such as GW add these text markers around certain words, which can be removed
+        all_text = all_text.replace('\u231E', '').replace('\u231F', '')
 
         if not self.output_as_list:
             # Do any final touch-ups to the passage contents before outputting the string
