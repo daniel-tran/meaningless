@@ -20,9 +20,9 @@ def is_unsupported_translation(translation):
     """
     # These translations are particularly difficult to extract information from due to them using
     # non-conventional page layouts compared to other translations: 'MOUNCE', 'VOICE', 'MSG', 'PHILLIPS'
-    return translation.upper() not in ['ASV', 'AKJV', 'BRG', 'EHV', 'ESV', 'ESVUK', 'GW', 'ISV', 'JUB', 'KJV',
-                                       'KJ21', 'LEB', 'MEV', 'NASB', 'NET', 'NIV', 'NKJV', 'NLT',
-                                       'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
+    return translation.upper() not in ['ASV', 'AKJV', 'BRG', 'EHV', 'ESV', 'ESVUK', 'GW', 'ISV',
+                                       'JUB', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB', 'NASB1995', 'NET',
+                                       'NIV', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
 
 
 def get_end_of_chapter():
