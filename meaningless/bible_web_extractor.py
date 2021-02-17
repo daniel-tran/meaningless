@@ -201,6 +201,8 @@ class WebExtractor:
         # Compile the list of tags to remove from the parsed web page, corresponding to the following elements:
         # h1
         #    - Ignore passage display
+        # h2
+        #    - Ignore chapter headings
         # h3
         #    - Ignore section headings
         # h4
@@ -215,14 +217,16 @@ class WebExtractor:
         #    - Ignore the footer area, which is composed of several main tags
         # p with 'translation-note' class
         #    - Ignore explicit translation notes in translations such as ESV
+        # p with 'first-line-none' class
+        #    - Ignore blurb of notable chapter details in trnaslations such as GNV
         # crossref
         #    - Ignore in-line references in translations such as WEB
-        removable_tags = soup.find_all(re.compile('^h1$|^h3$|^h4$')) \
+        removable_tags = soup.find_all(re.compile('^h1$|^h2$|^h3$|^h4$')) \
             + soup.find_all('a', {'class': re.compile('^full-chap-link$|^bibleref$')}) \
             + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
             + soup.find_all('div', {
                             'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
-            + soup.find_all('p', {'class': 'translation-note'}) \
+            + soup.find_all('p', {'class': re.compile('^translation-note$|^first-line-none$')}) \
             + soup.find_all('crossref')
         [tag.decompose() for tag in removable_tags]
 

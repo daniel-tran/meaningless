@@ -257,6 +257,14 @@ class UnitTests(unittest.TestCase):
                    ' and any wooden article is to be rinsed with water.'
         self.assertEqual(lev15_12, text, 'Passage is incorrect')
 
+    def test_get_passage_gnv_chapter_start(self):
+        bible = WebExtractor(translation='GNV')
+        text = bible.search('Jonah 1:1')
+        jonah1_1 = '\u00b9 The word of the Lord came also unto Jonah the son of Amittai, saying,'
+        # The start of the chapter has a heading and a blurb of notable details within the chapter.
+        # Both of which can be omitted, as they are mostly present for reference purposes.
+        self.assertEqual(jonah1_1, text, 'Passage is incorrect')
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.

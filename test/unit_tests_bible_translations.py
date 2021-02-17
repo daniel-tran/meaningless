@@ -250,5 +250,10 @@ class UnitTests(unittest.TestCase):
         self.check_baseline_passages(translation)
         self.check_omitted_passages(translation)
 
+    def test_translation_gnv(self):
+        translation = 'GNV'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
 if __name__ == "__main__":
     unittest.main()
