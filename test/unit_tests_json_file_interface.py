@@ -28,8 +28,9 @@ class UnitTests(unittest.TestCase):
     def test_write(self):
         document = {'Disco': {1: 'Beatdown', 2: 'Elysium'}}
         json_file_interface.write(self.get_temp_file('test_write.json'), document)
-        self.assertTrue(filecmp.cmp(self.get_temp_file('test_write.json'),
-                                    self.get_static_file('test_write.json')), 'Files do not match')
+        # Mainly testing for file contents, ignoring other details like encoding and line endings
+        self.assertEqual(json_file_interface.read(self.get_static_file('test_write.json')),
+                         json_file_interface.read(self.get_temp_file('test_write.json')), 'Files do not match')
 
     def test_read_nonexistent_file(self):
         self.assertRaises(FileNotFoundError, json_file_interface.read,
@@ -56,8 +57,9 @@ class UnitTests(unittest.TestCase):
         file_path = self.get_temp_file('test_write_list_contents.json')
         json_file_interface.write(file_path, document)
         # A list should just translate to a linear series of YAML keys
-        self.assertTrue(filecmp.cmp(file_path, self.get_static_file('test_write_list_contents.json')),
-                        'Files do not match')
+        # Mainly testing for file contents, ignoring other details like encoding and line endings
+        self.assertEqual(json_file_interface.read(self.get_static_file('test_write_list_contents.json')),
+                         json_file_interface.read(file_path), 'Files do not match')
 
     def test_read_path_exceeds_windows_limit(self):
         filename = 'G' * 255
