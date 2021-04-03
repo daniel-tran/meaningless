@@ -217,8 +217,6 @@ class WebExtractor:
         #    - Ignore the footer area, which is composed of several main tags
         # p with 'translation-note' class
         #    - Ignore explicit translation notes in translations such as ESV
-        # p with 'first-line-none' class
-        #    - Ignore blurb of notable chapter details in trnaslations such as GNV
         # crossref
         #    - Ignore in-line references in translations such as WEB
         removable_tags = soup.find_all(re.compile('^h1$|^h2$|^h3$|^h4$')) \
@@ -226,8 +224,12 @@ class WebExtractor:
             + soup.find_all('sup', {'class': re.compile('^crossreference$|^footnote$')}) \
             + soup.find_all('div', {
                             'class': re.compile('^footnotes$|^dropdowns$|^crossrefs$|^passage-other-trans$')}) \
-            + soup.find_all('p', {'class': re.compile('^translation-note$|^first-line-none$')}) \
+            + soup.find_all('p', {'class': re.compile('^translation-note$')}) \
             + soup.find_all('crossref')
+        # Normally, paragraphs with the 'first-line-none' class would contain valid passage contents.
+        # In the GNV translation, this class name is specifically used for the blurb of notable chapter details.
+        if translation == 'GNV':
+            removable_tags += soup.find_all('p', {'class': re.compile('^first-line-none$')})
         [tag.decompose() for tag in removable_tags]
 
         # Compile a list of ways Psalm interludes can be found. These are to be preserved, as it would be the
