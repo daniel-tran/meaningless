@@ -57,6 +57,8 @@ def get_chapter_count(book, translation='NIV'):
     8
     >>> get_chapter_count('Psalms')
     150
+    >>> get_chapter_count('Philippians')
+    4
     """
     # Standardise letter casing to help find the key easier
     book_name = book.title()
@@ -67,6 +69,9 @@ def get_chapter_count(book, translation='NIV'):
     elif book_name == 'Psalms':
         # Psalm and its plural variation are basically the same book, but prefer the singular variant
         book_name = 'Psalm'
+    elif book_name == 'Philippians':
+        # Prefer the spelling variation with two L's, partly for backwards compatibility with previous versions
+        book_name = 'Phillippians'
 
     # This is the default mapping of books to their chapter counts
     chapter_count_mappings = {
