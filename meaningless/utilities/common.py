@@ -118,7 +118,7 @@ def get_chapter_count(book, translation='NIV'):
         '2 Corinthians': 13,
         'Galatians': 6,
         'Ephesians': 6,
-        'Phillippians': 4,
+        'Philippians': 4,
         'Colossians': 4,
         '1 Thessalonians': 5,
         '2 Thessalonians': 3,
