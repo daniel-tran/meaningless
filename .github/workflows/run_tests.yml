@@ -1,5 +1,6 @@
 name: Run tests for Meaningless
 on:
+  push:
   workflow_dispatch:
   schedule:
     # Every Sunday at 1PM UTC
