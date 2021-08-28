@@ -58,13 +58,14 @@ class UnitTests(unittest.TestCase):
 
     def test_read_path_exceeds_windows_limit(self):
         filename = 'G' * 255
-        self.assertRaises(FileNotFoundError, yaml_file_interface.read,
+        self.assertRaises((FileNotFoundError, OSError), yaml_file_interface.read,
                           self.get_static_file('{0}.yaml'.format(filename)))
 
     def test_write_path_exceeds_windows_limit(self):
         document = {'Disco': 7}
         filename = 'G' * 255
-        self.assertRaises(FileNotFoundError, yaml_file_interface.write, './tmp/{0}.yaml'.format(filename), document)
+        self.assertRaises((FileNotFoundError, OSError), yaml_file_interface.write, './tmp/{0}.yaml'.format(filename),
+                          document)
 
     def test_read_empty_path(self):
         self.assertRaises(FileNotFoundError, yaml_file_interface.read, '')
