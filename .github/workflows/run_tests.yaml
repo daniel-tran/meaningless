@@ -14,7 +14,7 @@ jobs:
         # Omit macos-latest due to its high cost to run in GitHub Actions.
         # Note that we can also test specific OS versions, e.g. windows-2016
         os: [ubuntu-latest, windows-latest]
-        python-version: ['3.6', '3.7']
+        python-version: ['3.6', '3.7', '3.8']
     name: Build for ${{ matrix.os }} with Python ${{ matrix.python-version }}
     steps:
       - name: Checkout
