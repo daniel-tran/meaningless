@@ -1,6 +1,5 @@
 import unittest
 import sys
-import filecmp
 from ruamel.yaml.parser import ParserError
 sys.path.append('../')
 from meaningless import yaml_file_interface
@@ -23,8 +22,9 @@ class UnitTests(unittest.TestCase):
     def test_write(self):
         document = {'Disco': {1: 'Beatdown', 2: 'Elysium'}}
         yaml_file_interface.write('./tmp/test_write.yaml', document)
-        self.assertTrue(filecmp.cmp('./tmp/test_write.yaml',
-                                    self.get_static_file('test_write.yaml')), 'Files do not match')
+        self.assertEqual(yaml_file_interface.read('./tmp/test_write.yaml'),
+                         yaml_file_interface.read(self.get_static_file('test_write.yaml')),
+                         'Files do not match')
 
     def test_read_nonexistent_file(self):
         self.assertRaises(FileNotFoundError, yaml_file_interface.read,
@@ -43,26 +43,29 @@ class UnitTests(unittest.TestCase):
         yaml_path = './tmp/test_write_string_contents.yaml'
         yaml_file_interface.write(yaml_path, document)
         # Despite not being a dictionary, this writes valid YAML to the file - the result being a single YAML key
-        self.assertTrue(filecmp.cmp(yaml_path, self.get_static_file('test_write_string_contents.yaml')),
-                        'Files do not match')
+        self.assertEqual(yaml_file_interface.read(yaml_path),
+                         yaml_file_interface.read(self.get_static_file('test_write_string_contents.yaml')),
+                         'Files do not match')
 
     def test_write_list_contents(self):
         document = ['Disco', 'Fever']
         yaml_path = './tmp/test_write_list_contents.yaml'
         yaml_file_interface.write(yaml_path, document)
         # A list should just translate to a linear series of YAML keys
-        self.assertTrue(filecmp.cmp(yaml_path, self.get_static_file('test_write_list_contents.yaml')),
-                        'Files do not match')
+        self.assertEqual(yaml_file_interface.read(yaml_path),
+                         yaml_file_interface.read(self.get_static_file('test_write_list_contents.yaml')),
+                         'Files do not match')
 
     def test_read_path_exceeds_windows_limit(self):
         filename = 'G' * 255
-        self.assertRaises(FileNotFoundError, yaml_file_interface.read,
+        self.assertRaises((FileNotFoundError, OSError), yaml_file_interface.read,
                           self.get_static_file('{0}.yaml'.format(filename)))
 
     def test_write_path_exceeds_windows_limit(self):
         document = {'Disco': 7}
         filename = 'G' * 255
-        self.assertRaises(FileNotFoundError, yaml_file_interface.write, './tmp/{0}.yaml'.format(filename), document)
+        self.assertRaises((FileNotFoundError, OSError), yaml_file_interface.write, './tmp/{0}.yaml'.format(filename),
+                          document)
 
     def test_read_empty_path(self):
         self.assertRaises(FileNotFoundError, yaml_file_interface.read, '')
@@ -79,8 +82,9 @@ class UnitTests(unittest.TestCase):
         document = {}
         yaml_path = './tmp/test_write_empty_file.yaml'
         yaml_file_interface.write(yaml_path, document)
-        self.assertTrue(filecmp.cmp(yaml_path, self.get_static_file('test_write_empty_file.yaml')),
-                        'Files do not match')
+        self.assertEqual(yaml_file_interface.read(yaml_path),
+                         yaml_file_interface.read(self.get_static_file('test_write_empty_file.yaml')),
+                         'Files do not match')
 
     def test_read_invalid_formatted_file(self):
         self.assertRaises(ParserError, yaml_file_interface.read,
