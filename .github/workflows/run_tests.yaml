@@ -2,8 +2,8 @@ name: Run tests for Meaningless
 on:
   workflow_dispatch:
   schedule:
-    # Every Sunday at 1PM UTC
-    - cron: '0 13 * * 0'
+    # Every Sunday at 1:45PM UTC
+    - cron: '45 13 * * 0'
 jobs:
   Run-Tests:
     runs-on: ${{ matrix.os }}
