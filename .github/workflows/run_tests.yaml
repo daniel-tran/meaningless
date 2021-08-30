@@ -29,19 +29,30 @@ jobs:
       - name: Run unit tests
         run: |
           cd test
+          echo "Running Base Extractor unit tests..."
           python unit_tests_bible_base_extractor.py
+          echo "Running List Extractor unit tests..."
           python unit_tests_bible_list_extractor.py
+          echo "Running JSON Extractor unit tests..."
           python unit_tests_bible_json_extractor.py
+          echo "Running YAML Extractor unit tests..."
           python unit_tests_bible_yaml_extractor.py
+          echo "Running JSON file interface unit tests..."
           python unit_tests_json_file_interface.py
+          echo "Running YAML file interface unit tests..."
           python unit_tests_yaml_file_interface.py
+          echo "Running JSON Downloader unit tests..."
           python unit_tests_bible_json_downloader.py
+          echo "Running YAML Downloader unit tests..."
           python unit_tests_bible_yaml_downloader.py
       - name: Run system tests
         run: |
           cd test
+          echo "Running Web Extractor system tests..."
           python unit_tests_bible_web_extractor.py
+          echo "Running Base Downloader system tests..."
           python unit_tests_bible_base_downloader.py
+          echo "Running Bible translation system tests..."
           python unit_tests_bible_translations.py
       - name: Report job status
         run: |
