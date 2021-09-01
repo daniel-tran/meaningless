@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.0
+- Added initial continuous integration workflow with GitHub Actions
+- Added translation support for: BRG, CJB, EHV, ESVUK, GNV, GW, ISV, JUB, NASB1995, NOG
+- Drop library support for Python 3.5
+
 ## 0.2.0
 - Added Base Extractor, Base Downloader, JSON Extractor and JSON Downloader
   - Base Extractor contains shared logic for both the YAML and JSON Extractors
