@@ -1,3 +1,5 @@
+[![Test Status](https://github.com/daniel-tran/meaningless/actions/workflows/run_tests.yaml/badge.svg)](https://github.com/daniel-tran/meaningless/actions/workflows/run_tests.yaml)
+
 Meaningless is a Python library used to retrieve, process and download Bible passages from Bible Gateway.
 
 Features include:
@@ -9,24 +11,42 @@ Features include:
 - Handling of edge case passages, such as those with tabular data and omitted passages in certain translations.
 - Flags to enable particular content modifications, such as ignoring passage numbers.
 
+**Now accepting feature requests!** If you want to see a certain feature included, please create an issue describing all the nececssary details.
+
 # Supported translations
 
 - ASV
 - AKJV
+- BRG
+- CJB
+- EHV
 - ESV
+- ESVUK
+- GNV
+- GW
+- ISV
+- JUB
 - KJV
 - KJ21
 - LEB
 - MEV
 - NASB
+- NASB1995
 - NET
 - NIV
 - NKJV
 - NLT
 - NLV
+- NOG
 - NRSV
 - WEB
 - YLT
+
+# Installation
+
+```
+pip install meaningless
+```
 
 # Usage
 
@@ -244,6 +264,11 @@ Without having to go through every single passage and check if it is omitted, a 
 These passages are checked on the [Bible Gateway](https://www.biblegateway.com) site, and then added to the Base Downloader's internal list of omitted passages for the relevant translation.
 
 If you notice any problems such as unhandled omitted passages or incorrect tagging of an omitted passage in the Base Downloader, please create an issue to report it.
+
+## Does this library provide support for the Apocrypha books?
+
+At the moment, you can use the Web Extractor's `search()` and `search_multiple()` functions to obtain passages from the Apocrypha books.
+There is currently no official support for the Apocrypha books in the other downloaders and extractors, at least until proper use cases can be identified.
 
 # Contributors
 - [daniel-tran](https://github.com/daniel-tran) (Creator & current maintainer)

@@ -3,11 +3,22 @@
 2. Setup a Python virtual environment.
 3. Install the dependencies documented in `REQUIREMENTS.txt`.
 
+# Running tests locally
+If you are using PyCharm, you can run the tests within the IDE.
+
+You can also run the tests on the command line. For example:
+```bash
+cd .\meaningless\test
+python unit_tests_json_file_interface.py
+```
+
 # Submitting a change
 1. **Check that all tests pass with your change**, in addition to any newly introduced tests.
 2. Add a description of your change to `CHANGELOG.md`.
 3. Push your changes to your forked repo.
 4. Create a pull request with your changes. You can also add yourself to the Contributors list in `README.md`.
+  a. Pull requests should be made against the current development branch, which is the version number.
+  b. For consistency, the title should be prefixed with the version number followed by a colon.
 
 # Architecture
 The following diagram represents the logical dependencies of each library component, and how changes in one component can propagate to others:
