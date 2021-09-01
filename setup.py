@@ -32,10 +32,10 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Operating System :: Microsoft :: Windows',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Religion',
     ],
     keywords='bible yaml biblegateway',
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     install_requires=install_requires,
 )
