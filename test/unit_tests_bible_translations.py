@@ -205,5 +205,55 @@ class UnitTests(unittest.TestCase):
         self.check_baseline_passages(translation)
         self.check_omitted_passages(translation)
 
+    def test_translation_brg(self):
+        translation = 'BRG'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_ehv(self):
+        translation = 'EHV'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_esvuk(self):
+        translation = 'ESVUK'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_gw(self):
+        translation = 'GW'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_isv(self):
+        translation = 'ISV'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_jub(self):
+        translation = 'JUB'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_nog(self):
+        translation = 'NOG'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_nasb1995(self):
+        translation = 'NASB1995'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_cjb(self):
+        translation = 'CJB'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_gnv(self):
+        translation = 'GNV'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
 if __name__ == "__main__":
     unittest.main()

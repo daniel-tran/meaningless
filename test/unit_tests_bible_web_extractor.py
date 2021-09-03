@@ -201,6 +201,22 @@ class UnitTests(unittest.TestCase):
         # An asterisk is normally present within this passage using this translation, but it should be omitted.
         self.assertEqual(john5_8, text, 'Passage is incorrect')
 
+    def test_get_passage_gw_unicode_marker(self):
+        bible = WebExtractor(translation='GW')
+        text = bible.search('Mark 16:20')
+        mark16_20 = '\u00b2\u2070 The disciples spread the Good News everywhere. The Lord worked with them. ' \
+                    'He confirmed his word by the miraculous signs that accompanied it.'
+        # Corner Unicode characters should be removed
+        self.assertEqual(mark16_20, text, 'Passage is incorrect')
+
+    def test_get_passage_jub_pilcrow(self):
+        bible = WebExtractor(translation='JUB')
+        text = bible.search('Acts 5:12')
+        acts5_12 = '\u00b9\u00b2 And by the hands of the apostles many signs and wonders were wrought in the people. ' \
+                   '(And they were all with one accord in Solomon\u2019s porch.'
+        # The pilcrow character and its trailing space should not be present
+        self.assertEqual(acts5_12, text, 'Passage is incorrect')
+
     def test_get_passage_nrsv_double_spaces(self):
         bible = WebExtractor(translation='NRSV')
         text = bible.search('Matthew 1:2 - 3')
@@ -240,6 +256,14 @@ class UnitTests(unittest.TestCase):
         lev15_12 = '\u00b9\u00b2 "\'A clay pot that the man touches must be broken,' \
                    ' and any wooden article is to be rinsed with water.'
         self.assertEqual(lev15_12, text, 'Passage is incorrect')
+
+    def test_get_passage_gnv_chapter_start(self):
+        bible = WebExtractor(translation='GNV')
+        text = bible.search('Jonah 1:1')
+        jonah1_1 = '\u00b9 The word of the Lord came also unto Jonah the son of Amittai, saying,'
+        # The start of the chapter has a heading and a blurb of notable details within the chapter.
+        # Both of which can be omitted, as they are mostly present for reference purposes.
+        self.assertEqual(jonah1_1, text, 'Passage is incorrect')
 
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
