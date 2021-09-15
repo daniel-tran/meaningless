@@ -17,8 +17,8 @@ python unit_tests_json_file_interface.py
 2. Add a description of your change to `CHANGELOG.md`.
 3. Push your changes to your forked repo.
 4. Create a pull request with your changes. You can also add yourself to the Contributors list in `README.md`.
-  a. Pull requests should be made against the current development branch, which is the version number.
-  b. For consistency, the title should be prefixed with the version number followed by a colon.
+5. Pull requests should be made against the current development branch, which is the version number.
+6. For consistency, the title should be prefixed with the version number followed by a colon.
 
 # Architecture
 The following diagram represents the logical dependencies of each library component, and how changes in one component can propagate to others:
