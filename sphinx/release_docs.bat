@@ -5,7 +5,7 @@
 pushd %~dp0
 
 set builddir=.\build\html\
-set releasedir=.\release\
+set releasedir=..\docs\
 
 if not exist %releasedir% (
     mkdir %releasedir%
