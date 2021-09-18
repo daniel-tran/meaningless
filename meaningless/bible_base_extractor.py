@@ -240,6 +240,4 @@ class BaseExtractor:
         :return: Type-casted dictionary key
         :rtype: int or str
         """
-        if self.read_key_as_string:
-            return str(key)
-        return int(key)
+        return common.cast_to_str_or_int(key, self.read_key_as_string)

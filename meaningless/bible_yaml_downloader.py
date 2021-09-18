@@ -11,4 +11,4 @@ class YAMLDownloader(BaseDownloader):
                  strip_excess_whitespace=False, enable_multiprocessing=True, use_ascii_punctuation=False):
         super().__init__(yaml_file_interface.write, translation, show_passage_numbers, default_directory,
                      strip_excess_whitespace, enable_multiprocessing, use_ascii_punctuation,
-                     file_extension='.yaml')
+                     file_extension='.yaml', write_key_as_string=False)

@@ -236,5 +236,19 @@ class UnitTests(unittest.TestCase):
         static_file = yaml_file_interface.read(static_file_path)
         self.assertEqual(downloaded_file['Ecclesiastes'], static_file['Ecclesiastes'], 'Passage contents do not match')
 
+    def test_base_download_with_string_keys(self):
+        download_path = './tmp/test_base_download_with_string_keys'
+        static_file_path = '{0}/test_base_download_with_string_keys.yaml'.format(self.get_test_directory())
+        bible = BaseDownloader(file_writing_function=yaml_file_interface.write,
+                               default_directory=download_path, translation=self.get_test_translation(),
+                               write_key_as_string=True)
+        bible.download_chapter('Ecclesiastes', 1)
+        downloaded_file = yaml_file_interface.read('{0}/Ecclesiastes'.format(download_path))
+        static_file = yaml_file_interface.read(static_file_path)
+        # Downloaded YAML files normally preserve integer keys, so check that passage access with string keys is OK
+        self.assertEqual(downloaded_file['Ecclesiastes']['1']['2'], static_file['Ecclesiastes']['1']['2'],
+                         'Passage sample does not match')
+        self.assertEqual(downloaded_file['Ecclesiastes'], static_file['Ecclesiastes'], 'Passage contents do not match')
+
 if __name__ == "__main__":
     unittest.main()

@@ -160,7 +160,7 @@ def get_page(url):
 
     >>> get_page('https://www.biblegateway.com')
     b'<!DOCTYPE html>...'
-    >>> get_page('https://www.something.com')
+    >>> get_page('https://www.com')
     Traceback (most recent call last):
     ...
     urllib.error.URLError: <urlopen error [WinError 10061] No connection could be made because the target \
@@ -310,6 +310,40 @@ def unicode_to_ascii_punctuation(text):
     """
     punctuation_map = text.maketrans('\u201c\u2018\u2014\u2019\u201d', '"\'-\'"')
     return text.translate(punctuation_map)
+
+
+def cast_to_str_or_int(text, cast_to_str):
+    """
+    A helper function to convert a given input to either a string or an integer.
+
+    :param text: Input text
+    :type text: str
+    :param cast_to_str: When True, input text is cast to a string. When False, input is cast to an integer.
+    :type cast_to_str: bool
+    :return: A string or integer representation of the input string
+    :rtype: int (str if cast_to_str is True)
+
+    >>> cast_to_str_or_int('Tri-Beam', True)
+    'Tri-Beam'
+    >>> cast_to_str_or_int('42', False)
+    42
+    >>> cast_to_str_or_int('42', True)
+    '42'
+    >>> cast_to_str_or_int(42, False)
+    42
+    >>> cast_to_str_or_int(42, True)
+    '42'
+    >>> cast_to_str_or_int('Tri-Beam', False)
+    'Tri-Beam'
+    """
+    if not cast_to_str:
+        # Input text that cannot be cast to an integer are instead cast to a string
+        try:
+            return int(text)
+        except ValueError:
+            pass
+    return str(text)
+
 
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.
