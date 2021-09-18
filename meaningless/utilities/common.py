@@ -20,9 +20,43 @@ def is_unsupported_translation(translation):
     """
     # These translations are particularly difficult to extract information from due to them using
     # non-conventional page layouts compared to other translations: 'MOUNCE', 'VOICE', 'MSG', 'PHILLIPS'
-    return translation.upper() not in ['ASV', 'AKJV', 'BRG', 'CJB', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
-                                       'JUB', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB', 'NASB1995', 'NET',
-                                       'NIV', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
+    return not is_supported_english_translation(translation) and not is_supported_spanish_translation(translation)
+
+
+def is_supported_english_translation(translation):
+    """
+    A helper function to determine if the provided string is a supported English translation.
+
+    :param translation: Translation code
+    :type translation: str
+    :return: True = the translation is not supported, False = the translation is supported
+    :rtype: bool
+
+    >>> is_supported_english_translation('NIV')
+    True
+    >>> is_supported_english_translation('RVA')
+    False
+    """
+    return translation.upper() in ['ASV', 'AKJV', 'BRG', 'CJB', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
+                                   'JUB', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB', 'NASB1995', 'NET',
+                                   'NIV', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
+
+
+def is_supported_spanish_translation(translation):
+    """
+    A helper function to determine if the provided string is a supported Spanish translation.
+
+    :param translation: Translation code
+    :type translation: str
+    :return: True = the translation is not supported, False = the translation is supported
+    :rtype: bool
+
+    >>> is_supported_spanish_translation('RVA')
+    True
+    >>> is_supported_spanish_translation('NIV')
+    False
+    """
+    return translation.upper() in ['RVA']
 
 
 def get_end_of_chapter():
@@ -38,7 +72,7 @@ def get_end_of_chapter():
 
 def get_chapter_count(book, translation='NIV'):
     """
-    A helper function to return the number of chapter in a given book for a particular translation.
+    A helper function to return the number of chapters in a given book for a particular translation.
 
     :param book: Name of the book
     :type book: str
@@ -53,11 +87,35 @@ def get_chapter_count(book, translation='NIV'):
     0
     >>> get_chapter_count('Ecclesiastes', translation='msg')
     0
-    >>> get_chapter_count('Song of Solomon')
+    >>> get_chapter_count('Juan', 'RVA')
+    21
+    """
+    if is_supported_english_translation(translation):
+        return get_english_chapter_count(book)
+    elif is_supported_spanish_translation(translation):
+        return get_spanish_chapter_count(book)
+    else:
+        return 0
+
+
+def get_english_chapter_count(book):
+    """
+    A helper function to return the number of chapters in a given book in the English version of the Bible.
+
+    :param book: Name of the book
+    :type book: str
+    :return: Number of chapters in the book. 0 usually means an invalid book or unsupported translation.
+    :rtype: int
+
+    >>> get_english_chapter_count('Ecclesiastes')
+    12
+    >>> get_english_chapter_count('Barnabas')
+    0
+    >>> get_english_chapter_count('Song of Solomon')
     8
-    >>> get_chapter_count('Psalms')
+    >>> get_english_chapter_count('Psalms')
     150
-    >>> get_chapter_count('Philippians')
+    >>> get_english_chapter_count('Philippians')
     4
     """
     # Standardise letter casing to help find the key easier
@@ -142,9 +200,98 @@ def get_chapter_count(book, translation='NIV'):
         'Jude': 1,
         'Revelation': 22
     }
-    # TODO Additional logic can be added here that changes chapter_count_mappings based on a given translation
+    if book_name not in chapter_count_mappings.keys():
+        return 0
+    return chapter_count_mappings[book_name]
 
-    if book_name not in chapter_count_mappings.keys() or is_unsupported_translation(translation):
+
+def get_spanish_chapter_count(book):
+    """
+    A helper function to return the number of chapters in a given book in the Spanish version of the Bible.
+
+    :param book: Name of the book
+    :type book: str
+    :return: Number of chapters in the book. 0 means an invalid book.
+    :rtype: int
+
+    >>> get_spanish_chapter_count('Hechos')
+    28
+    >>> get_spanish_chapter_count('Ecclesiastes')
+    0
+    """
+    # Standardise letter casing to help find the key easier
+    book_name = book.title()
+
+    # This is the default mapping of books to their chapter counts
+    chapter_count_mappings = {
+        'Génesis': 50,
+        'Éxodo': 40,
+        'Levítico': 27,
+        'Números': 36,
+        'Deuteronomio': 34,
+        'Josué': 24,
+        'Jueces': 21,
+        'Rut': 4,
+        '1 Samuel': 31,
+        '2 Samuel': 24,
+        '1 Reyes': 22,
+        '2 Reyes': 25,
+        '1 Crónicas': 29,
+        '2 Crónicas': 36,
+        'Esdras': 10,
+        'Nehemías': 13,
+        'Ester': 10,
+        'Job': 42,
+        'Salmos': 150,
+        'Proverbios': 31,
+        'Eclesiastés': 12,
+        'Cantares': 8,
+        'Isaías': 66,
+        'Jeremías': 52,
+        'Lamentaciones': 5,
+        'Ezequiel': 48,
+        'Daniel': 12,
+        'Oseas': 14,
+        'Joel': 3,
+        'Amós': 9,
+        'Abdías': 1,
+        'Jonás': 4,
+        'Miqueas': 7,
+        'Nahúm': 3,
+        'Habacuc': 3,
+        'Sofonías': 3,
+        'Hageo': 2,
+        'Zacarías': 14,
+        'Malaquías': 4,
+        'Mateo': 28,
+        'Marcos': 16,
+        'Lucas': 24,
+        'Juan': 21,
+        'Hechos': 28,
+        'Romanos': 16,
+        '1 Corintios': 16,
+        '2 Corintios': 13,
+        'Gálatas': 6,
+        'Efesios': 6,
+        'Filipenses': 4,
+        'Colosenses': 4,
+        '1 Tesalonicenses': 5,
+        '2 Tesalonicenses': 3,
+        '1 Timoteo': 6,
+        '2 Timoteo': 4,
+        'Tito': 3,
+        'Filemón': 1,
+        'Hebreos': 13,
+        'Santiago': 5,
+        '1 Pedro': 5,
+        '2 Pedro': 3,
+        '1 Juan': 5,
+        '2 Juan': 1,
+        '3 Juan': 1,
+        'Judas': 1,
+        'Apocalipsis': 22
+    }
+    if book_name not in chapter_count_mappings.keys():
         return 0
     return chapter_count_mappings[book_name]
 
@@ -280,14 +427,18 @@ def get_translation_language(translation):
 
     >>> get_translation_language('NIV')
     'English'
+    >>> get_translation_language('RVA')
+    'Español'
     >>> get_translation_language('mounce')
     ''
     """
     translation = translation.title()
-    if is_unsupported_translation(translation):
+    if is_supported_english_translation(translation):
+        return 'English'
+    elif is_supported_spanish_translation(translation):
+        return 'Español'
+    else:
         return ''
-    # TODO Currently, only English translations are supported. This could change in the future with other translations.
-    return 'English'
 
 
 def unicode_to_ascii_punctuation(text):

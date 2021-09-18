@@ -265,6 +265,24 @@ class UnitTests(unittest.TestCase):
         # Both of which can be omitted, as they are mostly present for reference purposes.
         self.assertEqual(jonah1_1, text, 'Passage is incorrect')
 
+    def test_get_passage_rva_english_and_spanish_search(self):
+        bible = WebExtractor(translation='RVA')
+        text1 = bible.search('Filipenses 1:22')
+        text2 = bible.search('Philippians 1:22')
+        # A feature of the Bible gateway search is that book names are internally standardised,
+        # so this would also work for English translations using Spanish book names.
+        self.assertEqual(text1, text2, 'Passage is incorrect')
+
+    def test_get_passage_rva_english_alternative_interfaces(self):
+        bible = WebExtractor(translation='RVA')
+        # The alternative interfaces enforce language-specific book names
+        self.assertRaises(InvalidSearchError, bible.get_passage, 'Ecclesiastes', 1, 2)
+        self.assertRaises(InvalidSearchError, bible.get_passages, 'Ecclesiastes', 1, 2, 3)
+        self.assertRaises(InvalidSearchError, bible.get_chapter, 'Ecclesiastes', 1)
+        self.assertRaises(InvalidSearchError, bible.get_chapters, 'Ecclesiastes', 1, 2)
+        self.assertRaises(InvalidSearchError, bible.get_book, 'Ecclesiastes')
+        self.assertRaises(InvalidSearchError, bible.get_passage_range, 'Ecclesiastes', 1, 2, 1, 3)
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.
@@ -475,6 +493,7 @@ class UnitTests(unittest.TestCase):
     #     # Some translations such as HCSB use a dedicated <selah> tag for Psalm interludes, and is to be excluded
     #     # as it does not appear to be part of the actual Psalm lyrics.
     #     self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
+
 
 if __name__ == "__main__":
     unittest.main()

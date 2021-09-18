@@ -41,7 +41,7 @@ class WebExtractor:
         """
         Gets a single passage from the Bible Gateway site
 
-        :param book: Name of the book
+        :param book: Name of the book (This must match the name used by the translation)
         :type book: str
         :param chapter: Chapter number
         :type chapter: int
@@ -56,7 +56,7 @@ class WebExtractor:
         """
         Gets a range of passages of the same chapter from the Bible Gateway site
 
-        :param book: Name of the book
+        :param book: Name of the book (This must match the name used by the translation)
         :type book: str
         :param chapter: Chapter number
         :type chapter: int
@@ -73,7 +73,7 @@ class WebExtractor:
         """
         Gets a single chapter from the Bible Gateway site
 
-        :param book: Name of the book
+        :param book: Name of the book (This must match the name used by the translation)
         :type book: str
         :param chapter: Chapter number
         :type chapter: int
@@ -86,7 +86,7 @@ class WebExtractor:
         """
         Gets a range of passages from a specified chapters selection from the Bible Gateway site
 
-        :param book: Name of the book
+        :param book: Name of the book (This must match the name used by the translation)
         :type book: str
         :param chapter_from: First chapter number to get
         :type chapter_from: int
@@ -101,7 +101,7 @@ class WebExtractor:
         """
         Gets all chapters for a specific book from the Bible Gateway site
 
-        :param book: Name of the book
+        :param book: Name of the book (This must match the name used by the translation)
         :type book: str
         :return: All passages in the specified book. Empty string/list if the passage is invalid.
         :rtype: str (list if self.output_as_list is True)
@@ -113,7 +113,7 @@ class WebExtractor:
         """
         Gets a range of passages from one specific passage to another passage from the Bible Gateway site
 
-        :param book: Name of the book
+        :param book: Name of the book (This must match the name used by the translation)
         :type book: str
         :param chapter_from: First chapter number to get
         :type chapter_from: int
@@ -156,6 +156,7 @@ class WebExtractor:
     def search_multiple(self, passage_names):
         """
         Retrieves a set of passages directly from the Bible Gateway site. Passages can be from different books.
+        The language used for the search text is independent of the translation.
         Note that the output is subject to the Bible Gateway implicit passage limit when sending the web request.
 
         :param passage_names: List of Bible passages that are valid when used on www.biblegateway.com
@@ -168,6 +169,7 @@ class WebExtractor:
     def search(self, passage_name):
         """
         Retrieves a specific passage directly from the Bible Gateway site.
+        The language used for the search text is independent of the translation.
         Note that the output is subject to the Bible Gateway implicit passage limit when sending the web request.
 
         :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com

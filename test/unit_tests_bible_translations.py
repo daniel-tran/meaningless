@@ -3,6 +3,7 @@ import multiprocessing
 import sys
 sys.path.append('../')
 from meaningless import WebExtractor, YAMLDownloader, YAMLExtractor
+from meaningless.utilities import common
 
 
 class UnitTests(unittest.TestCase):
@@ -49,6 +50,7 @@ class UnitTests(unittest.TestCase):
         :type translation: str
         """
         bible = WebExtractor(translation=translation)
+        # Searching is language independent, so any translation can search using the English book names
         actual_passage_results = [
             bible.search('Revelation 21:25'),
             bible.search('Matthew 1:1 - 3'),
@@ -75,7 +77,10 @@ class UnitTests(unittest.TestCase):
                                     default_directory=download_path)
         bible = YAMLExtractor(translation=translation, default_directory=download_path)
 
-        books_with_omissions = ['Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans']
+        if common.is_supported_spanish_translation(translation):
+            books_with_omissions = ['Mateo', 'Marcos', 'Lucas', 'Juan', 'Hechos', 'Romanos']
+        else:
+            books_with_omissions = ['Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans']
         pool = multiprocessing.Pool(len(books_with_omissions))
         pool.map(downloader.download_book, books_with_omissions)
 
@@ -254,6 +259,12 @@ class UnitTests(unittest.TestCase):
         translation = 'GNV'
         self.check_baseline_passages(translation)
         self.check_omitted_passages(translation)
+
+    def test_translation_rva(self):
+        translation = 'RVA'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
 
 if __name__ == "__main__":
     unittest.main()
