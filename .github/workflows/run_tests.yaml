@@ -37,14 +37,20 @@ jobs:
           python unit_tests_bible_json_extractor.py
           echo "Running YAML Extractor unit tests..."
           python unit_tests_bible_yaml_extractor.py
+          echo "Running XML Extractor unit tests..."
+          python unit_tests_bible_xml_extractor.py
           echo "Running JSON file interface unit tests..."
           python unit_tests_json_file_interface.py
           echo "Running YAML file interface unit tests..."
           python unit_tests_yaml_file_interface.py
+          echo "Running XML file interface unit tests..."
+          python unit_tests_xml_file_interface.py
           echo "Running JSON Downloader unit tests..."
           python unit_tests_bible_json_downloader.py
           echo "Running YAML Downloader unit tests..."
           python unit_tests_bible_yaml_downloader.py
+          echo "Running XML Downloader unit tests..."
+          python unit_tests_bible_xml_downloader.py
       - name: Run system tests
         run: |
           cd test
