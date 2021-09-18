@@ -7,3 +7,7 @@ docs/build/
 *.egg-info/
 build/
 dist/
+
+# Ignore PyCharm generated files and virtual environment directory
+.idea/
+venv/
