@@ -250,5 +250,6 @@ class UnitTests(unittest.TestCase):
                          'Passage sample does not match')
         self.assertEqual(downloaded_file['Ecclesiastes'], static_file['Ecclesiastes'], 'Passage contents do not match')
 
+
 if __name__ == "__main__":
     unittest.main()

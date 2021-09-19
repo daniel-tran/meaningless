@@ -20,5 +20,6 @@ class UnitTests(unittest.TestCase):
                          'Name of writing function is incorrect')
         self.assertTrue(bible.write_key_as_string, 'Downloader is not writing keys as strings')
 
+
 if __name__ == "__main__":
     unittest.main()

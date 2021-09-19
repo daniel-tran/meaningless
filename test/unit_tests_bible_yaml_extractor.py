@@ -19,5 +19,6 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(bible.file_reading_function.__name__, yaml_file_interface.read.__name__,
                          'Name of reading function is incorrect')
 
+
 if __name__ == "__main__":
     unittest.main()

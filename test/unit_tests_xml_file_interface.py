@@ -141,5 +141,6 @@ class UnitTests(unittest.TestCase):
         self.assertRaises(xml.parsers.expat.ExpatError, xml_file_interface.read,
                           self.get_static_file('test_read_invalid_formatted_file.xml'))
 
+
 if __name__ == "__main__":
     unittest.main()

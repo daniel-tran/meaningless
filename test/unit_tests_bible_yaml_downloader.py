@@ -19,5 +19,6 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(bible.file_writing_function.__name__, yaml_file_interface.write.__name__,
                          'Name of writing function is incorrect')
 
+
 if __name__ == "__main__":
     unittest.main()

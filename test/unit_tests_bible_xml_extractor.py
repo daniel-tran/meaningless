@@ -20,5 +20,6 @@ class UnitTests(unittest.TestCase):
                          'Name of reading function is incorrect')
         self.assertTrue(bible.read_key_as_string, 'Extractor is not reading keys as strings')
 
+
 if __name__ == "__main__":
     unittest.main()
