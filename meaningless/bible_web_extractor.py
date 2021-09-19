@@ -290,12 +290,7 @@ class WebExtractor:
         # Perform ASCII punctuation conversion after hiding superscript numbers to process a slightly shorter string
         if self.use_ascii_punctuation:
             all_text = common.unicode_to_ascii_punctuation(all_text)
-        # EXB has in-line notes which are usually enclosed within brackets, and should not be displayed.
-        # If the in-line note is simply decomposed, removing the associated space is much more difficult.
-        # Thus, the in-line note text is removed at the end, when the function is strictly handling the passage text
-        # to eliminate both the in-line note and its space in an easy manner.
-        if translation == 'EXB':
-            all_text = re.sub('\s\[.+?\]', '', all_text)
+
         # Some translations include asterisks on certain words in the New Testament. This usually indicates an in-line
         # marker that the word has been translated from present-tense Greek to past-tense English for better flow
         # in modern usage, though not all translations provide consistent footnotes on what the asterisk implies.
