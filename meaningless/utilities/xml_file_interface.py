@@ -69,7 +69,7 @@ def write(data_file, document):
     # Tags cannot start with a number, so prefix them with a placeholder character.
     # Technically, this is not required when writing the document, but not applying the prefix means the
     # XML structure will be rejected by the xmltodict library when trying to read it.
-    contents = re.sub('<(\/?)(\d+)', r'<\1{0}\2'.format(__get_numeric_prefix()),
+    contents = re.sub(r'<(/?)(\d+)', r'<\1{0}\2'.format(__get_numeric_prefix()),
                       xmltodict.unparse(xml_document, pretty=True, indent='  ')
                       )
     # Use UTF-8 encoding to allow for Unicode characters to be written to the file
@@ -100,7 +100,7 @@ def read(data_file):
     # To nicely remove the prefix from keys consisting of only numeric characters, the parsed XML document is
     # dumped as a JSON string, where removing the prefix from the keys still results in a valid document.
     # After removing the prefixes, the document is then reloaded as a JSON document with the correct keys.
-    document = json.loads(re.sub('"{0}(\d+)'.format(__get_numeric_prefix()), r'"\1', json.dumps(raw_document)))
+    document = json.loads(re.sub(r'"{0}(\d+)'.format(__get_numeric_prefix()), r'"\1', json.dumps(raw_document)))
 
     # Don't bother processing the document if it only consisted of the generic root level tag
     if document is not None:
