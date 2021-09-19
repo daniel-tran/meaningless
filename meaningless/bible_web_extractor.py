@@ -308,7 +308,7 @@ class WebExtractor:
         # Translations such as JUB append a pilcrow character at the start of certain passages, which can be removed.
         # These usually have a trailing space, which also needs to be removed to prevent double spacing.
         # This logic would need to be revisited if there are cases of pilcrows without a trailing space.
-        all_text = all_text.replace('\u231e', '').replace('\u231f', '').replace('\u00b6 ', '')
+        all_text = all_text.replace('⌞', '').replace('⌟', '').replace('¶ ', '')
 
         if not self.output_as_list:
             # Do any final touch-ups to the passage contents before outputting the string

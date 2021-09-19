@@ -12,7 +12,7 @@ class UnitTests(unittest.TestCase):
     def test_get_passage(self):
         bible = WebExtractor()
         text = bible.search('Ecclesiastes 1:17')
-        self.assertEqual('\u00b9\u2077 Then I applied myself to the understanding of wisdom, and also of '
+        self.assertEqual('¹⁷ Then I applied myself to the understanding of wisdom, and also of '
                          'madness and folly, but I learned that this, too, is a chasing after the wind.', text,
                          'Passage is incorrect')
 
@@ -27,14 +27,14 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_in_table_form(self):
         bible = WebExtractor()
         text = bible.search('Nehemiah 7:30 - 31')
-        self.assertEqual('\u00b3\u2070 of Ramah and Geba 621 \u00b3\u00b9 of Mikmash 122', text,
+        self.assertEqual('³⁰ of Ramah and Geba 621 ³¹ of Mikmash 122', text,
                          'Passage is incorrect')
 
     def test_get_passage_with_footnotes(self):
         bible = WebExtractor()
         text = bible.search('Nehemiah 7:71')
         # Footnotes are to be ignored
-        self.assertEqual('\u2077\u00b9 Some of the heads of the families gave to the treasury '
+        self.assertEqual('⁷¹ Some of the heads of the families gave to the treasury '
                          'for the work 20,000 darics of gold and 2,200 minas of silver.', text,
                          'Passage is incorrect')
 
@@ -42,26 +42,26 @@ class UnitTests(unittest.TestCase):
         bible = WebExtractor()
         text = bible.search('Matthew 27:46')
         # Preserve Unicode quotation marks, and don't bother trying to carry over the italics styling.
-        self.assertEqual('\u2074\u2076 About three in the afternoon Jesus cried out in a loud voice, '
-                         '\u201cEli, Eli, lema sabachthani?\u201d (which means \u201cMy God, my God, '
-                         'why have you forsaken me?\u201d).',
+        self.assertEqual('⁴⁶ About three in the afternoon Jesus cried out in a loud voice, '
+                         '“Eli, Eli, lema sabachthani?” (which means “My God, my God, '
+                         'why have you forsaken me?”).',
                          text, 'Passage is incorrect')
 
     def test_get_passage_with_headings(self):
         bible = WebExtractor()
         text = bible.search('Exodus 22:31-23:1')
-        ex22 = '\u00b3\u00b9 \u201cYou are to be my holy people. So do not eat the meat of an animal ' \
+        ex22 = '³¹ “You are to be my holy people. So do not eat the meat of an animal ' \
                'torn by wild beasts; throw it to the dogs. '
-        ex23 = '\u201cDo not spread false reports. Do not help a guilty person by being a malicious witness.'
+        ex23 = '“Do not spread false reports. Do not help a guilty person by being a malicious witness.'
         # Use a multi-line string to account for the chapter transition
         self.assertEqual('''{0}\n\n{1}'''.format(ex22, ex23), text, 'Passage is incorrect')
 
     def test_get_passage_with_subheadings(self):
         bible = WebExtractor()
         text = bible.search('Ezekiel 40:19-20')
-        ez40_19 = '\u00b9\u2079 Then he measured the distance from the inside of the lower gateway to ' \
+        ez40_19 = '¹⁹ Then he measured the distance from the inside of the lower gateway to ' \
                   'the outside of the inner court; it was a hundred cubits on the east side as well as on the north. '
-        ez40_20 = '\u00b2\u2070 Then he measured the length and width of the north gate, ' \
+        ez40_20 = '²⁰ Then he measured the length and width of the north gate, ' \
                   'leading into the outer court.'
         # Ignore the subheading, but start its paragraph contents on a new line
         self.assertEqual('''{0}\n{1}'''.format(ez40_19, ez40_20), text, 'Passage is incorrect')
@@ -69,7 +69,7 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_with_indentations(self):
         bible = WebExtractor()
         text = bible.search('Ecclesiastes 1:3')
-        ecc1_3 = ['\u00b3 What do people gain from all their labors',
+        ecc1_3 = ['³ What do people gain from all their labors',
                   '    at which they toil under the sun?'
                   ]
         # Preserve leading spaces in the second line of the passage
@@ -78,10 +78,10 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_with_extended_dash(self):
         bible = WebExtractor()
         text = bible.search('Psalms 42:6')
-        psalm_6 = ['\u2076 My soul is downcast within me;',
+        psalm_6 = ['⁶ My soul is downcast within me;',
                    '    therefore I will remember you',
                    'from the land of the Jordan,',
-                   '    the heights of Hermon\u2014from Mount Mizar.'
+                   '    the heights of Hermon—from Mount Mizar.'
                    ]
         # The extended dash is a Unicode character, and should be preserved
         self.assertEqual('\n'.join(psalm_6), text, 'Passage is incorrect')
@@ -96,7 +96,7 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_with_dual_unicode_quotation_marks(self):
         bible = WebExtractor()
         text = bible.search('Leviticus 15:12')
-        lev15_12 = '\u00b9\u00b2 \u201c\u2018A clay pot that the man touches must be broken,' \
+        lev15_12 = '¹² “‘A clay pot that the man touches must be broken,' \
                    ' and any wooden article is to be rinsed with water.'
         # Preserve both sets of Unicode quotation marks
         self.assertEqual(lev15_12, text, 'Passage is incorrect')
@@ -104,7 +104,7 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_with_poetry_indentation(self):
         bible = WebExtractor()
         text = bible.search('Deuteronomy 7:10')
-        deut7_10 = ['\u00b9\u2070 But',
+        deut7_10 = ['¹⁰ But',
                     'those who hate him he will repay to their face by destruction;',
                     '    he will not be slow to repay to their face those who hate him.']
         # In some cases, passage sections are nested within another <div> tag, presumably to apply CSS indentation
@@ -113,7 +113,7 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_with_max_passage_limitation(self):
         bible = WebExtractor()
         text = bible.search('Genesis 1:1 - 40:38')
-        gen10_15 = ['\u00b9\u2075 Canaan was the father of',
+        gen10_15 = ['¹⁵ Canaan was the father of',
                     'Sidon his firstborn, and of the Hittites,']
         # The Bible Gateway search engine has a certain limit on the number of passages that can be requested at once.
         # Not much is currently known about this limitation, but users should be aware of this during use.
@@ -123,7 +123,7 @@ class UnitTests(unittest.TestCase):
     def test_get_empty_passage(self):
         bible = WebExtractor()
         text = bible.search('Luke 17:36')
-        luke17_36 = '\u00b3\u2076'
+        luke17_36 = '³⁶'
         # In rare cases, the passage can be empty/non-existent depending on the particular translation used.
         # For NIV, this passage is left empty, but ESV outright omits the passage.
         self.assertEqual(luke17_36, text, 'Passage is incorrect')
@@ -131,8 +131,8 @@ class UnitTests(unittest.TestCase):
     def test_get_empty_passage_midway(self):
         bible = WebExtractor()
         text = bible.search('Luke 23:16 - 18')
-        luke17 = ['\u00b9\u2076 Therefore, I will punish him and then release him.\u201d \u00b9\u2077 ',
-                  '\u00b9\u2078 But the whole crowd shouted, \u201cAway with this man! Release Barabbas to us!\u201d'
+        luke17 = ['¹⁶ Therefore, I will punish him and then release him.” ¹⁷ ',
+                  '¹⁸ But the whole crowd shouted, “Away with this man! Release Barabbas to us!”'
                   ]
         # An empty passage in the middle of two other passages preserves its spaces
         self.assertEqual('\n'.join(luke17), text, 'Passage is incorrect')
@@ -157,14 +157,14 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_nlt(self):
         bible = WebExtractor(translation='NLT')
         text = bible.search('Ecclesiastes 1:17')
-        eccl1_17 = '\u00b9\u2077 So I set out to learn everything from wisdom to madness and folly. ' \
+        eccl1_17 = '¹⁷ So I set out to learn everything from wisdom to madness and folly. ' \
                    'But I learned firsthand that pursuing all this is like chasing the wind.'
         self.assertEqual(eccl1_17, text, 'Passage is incorrect')
 
     def test_get_passage_nlt_interlude(self):
         bible = WebExtractor(translation='NLT')
         text = bible.search('Psalm 32:4')
-        psalm32_4 = ['\u2074 Day and night your hand of discipline was heavy on me.',
+        psalm32_4 = ['⁴ Day and night your hand of discipline was heavy on me.',
                      '    My strength evaporated like water in the summer heat. Interlude']
         # Explicit interludes should be omitted, and usually show as italicised text in the Psalm.
         # Implicit interludes are embedded within the passage itself, so not much can be done about it (e.g. YLT)
@@ -173,7 +173,7 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_esv_translation_note(self):
         bible = WebExtractor(translation='ESV')
         text = bible.search('John 7:53')
-        john7_53 = '\u2075\u00b3 They went each to his own house,'
+        john7_53 = '⁵³ They went each to his own house,'
         # Translation notes can vary between translations in both content and tag representation.
         # This could be problematic depending on how many form variations are present on the Bible Gateway site.
         self.assertEqual(john7_53, text, 'Passage is incorrect')
@@ -181,7 +181,7 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_net_double_square_brackets_with_trailing_space(self):
         bible = WebExtractor(translation='NET')
         text = bible.search('John 7:53')
-        john7_53 = '\u2075\u00b3 And each one departed to his own house.'
+        john7_53 = '⁵³ And each one departed to his own house.'
         # After removing the double square brackets, the double space should also be normalised correctly
         self.assertEqual(john7_53, text, 'Passage is incorrect')
 
@@ -197,14 +197,14 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_nasb_asterisk(self):
         bible = WebExtractor(translation='NASB')
         text = bible.search('John 5:8')
-        john5_8 = '\u2078 Jesus said to him, \u201cGet up, pick up your pallet and walk.\u201d'
+        john5_8 = '⁸ Jesus said to him, “Get up, pick up your pallet and walk.”'
         # An asterisk is normally present within this passage using this translation, but it should be omitted.
         self.assertEqual(john5_8, text, 'Passage is incorrect')
 
     def test_get_passage_gw_unicode_marker(self):
         bible = WebExtractor(translation='GW')
         text = bible.search('Mark 16:20')
-        mark16_20 = '\u00b2\u2070 The disciples spread the Good News everywhere. The Lord worked with them. ' \
+        mark16_20 = '²⁰ The disciples spread the Good News everywhere. The Lord worked with them. ' \
                     'He confirmed his word by the miraculous signs that accompanied it.'
         # Corner Unicode characters should be removed
         self.assertEqual(mark16_20, text, 'Passage is incorrect')
@@ -212,17 +212,17 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_jub_pilcrow(self):
         bible = WebExtractor(translation='JUB')
         text = bible.search('Acts 5:12')
-        acts5_12 = '\u00b9\u00b2 And by the hands of the apostles many signs and wonders were wrought in the people. ' \
-                   '(And they were all with one accord in Solomon\u2019s porch.'
+        acts5_12 = '¹² And by the hands of the apostles many signs and wonders were wrought in the people. ' \
+                   '(And they were all with one accord in Solomon’s porch.'
         # The pilcrow character and its trailing space should not be present
         self.assertEqual(acts5_12, text, 'Passage is incorrect')
 
     def test_get_passage_nrsv_double_spaces(self):
         bible = WebExtractor(translation='NRSV')
         text = bible.search('Matthew 1:2 - 3')
-        matt = '\u00b2 Abraham was the father of Isaac, and Isaac the father of Jacob, ' \
+        matt = '² Abraham was the father of Isaac, and Isaac the father of Jacob, ' \
                'and Jacob the father of Judah and his brothers, ' \
-               '\u00b3 and Judah the father of Perez and Zerah by Tamar, and Perez the father of Hezron, ' \
+               '³ and Judah the father of Perez and Zerah by Tamar, and Perez the father of Hezron, ' \
                'and Hezron the father of Aram,'
         # Trailing double space at the end of verse 2 should just shorten to a single space
         self.assertEqual(matt, text, 'Passage is incorrect')
@@ -230,14 +230,14 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_web_inline_reference(self):
         bible = WebExtractor(translation='WEB')
         text = bible.search('Mark 9:44')
-        mark9_44 = '\u2074\u2074 \u2018where their worm doesn\u2019t die, and the fire is not quenched.\u2019'
+        mark9_44 = '⁴⁴ ‘where their worm doesn’t die, and the fire is not quenched.’'
         # This passage has an in-line reference which is actually an anchor tag
         self.assertEqual(mark9_44, text, 'Passage is incorrect')
 
     def test_get_passage_web_multiple_inline_references(self):
         bible = WebExtractor(translation='WEB')
         text = bible.search('Mark 13:25')
-        mark13_25 = '\u00b2\u2075 the stars will be falling from the sky, ' \
+        mark13_25 = '²⁵ the stars will be falling from the sky, ' \
                     'and the powers that are in the heavens will be shaken.'
         # Multiple in-line references are separated by a semi-solon, which should also be omitted
         self.assertEqual(mark13_25, text, 'Passage is incorrect')
@@ -245,7 +245,7 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_nkjv_interlude(self):
         bible = WebExtractor(translation='NKJV')
         text = bible.search('Psalm 32:4')
-        psalm32_4 = ['\u2074 For day and night Your hand was heavy upon me;',
+        psalm32_4 = ['⁴ For day and night Your hand was heavy upon me;',
                      'My vitality was turned into the drought of summer. Selah']
         # Explicit interludes should be omitted, and usually show as italicised text in the Psalm.
         self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')
@@ -253,14 +253,14 @@ class UnitTests(unittest.TestCase):
     def test_get_passage_with_ascii_punctuation(self):
         bible = WebExtractor(use_ascii_punctuation=True)
         text = bible.search('Leviticus 15:12')
-        lev15_12 = '\u00b9\u00b2 "\'A clay pot that the man touches must be broken,' \
+        lev15_12 = '¹² "\'A clay pot that the man touches must be broken,' \
                    ' and any wooden article is to be rinsed with water.'
         self.assertEqual(lev15_12, text, 'Passage is incorrect')
 
     def test_get_passage_gnv_chapter_start(self):
         bible = WebExtractor(translation='GNV')
         text = bible.search('Jonah 1:1')
-        jonah1_1 = '\u00b9 The word of the Lord came also unto Jonah the son of Amittai, saying,'
+        jonah1_1 = '¹ The word of the Lord came also unto Jonah the son of Amittai, saying,'
         # The start of the chapter has a heading and a blurb of notable details within the chapter.
         # Both of which can be omitted, as they are mostly present for reference purposes.
         self.assertEqual(jonah1_1, text, 'Passage is incorrect')
@@ -480,16 +480,16 @@ class UnitTests(unittest.TestCase):
 
     # def test_get_passage_exb(self):
     #     text = bible_extractor.get_passage('Ecclesiastes 1:17', translation='EXB')
-    #     eccl1_17 = '\u00b9\u2077 So I \u00b7decided to find out about wisdom and knowledge and also ' \
-    #                '\u00b7about foolish thinking, but this turned out to be like chasing the wind.'
+    #     eccl1_17 = '¹⁷ So I ·decided to find out about wisdom and knowledge and also ' \
+    #                '·about foolish thinking, but this turned out to be like chasing the wind.'
     #     # The in-line notes should be removed along with any erroneous spaces
     #     self.assertEqual(eccl1_17, text, 'Passage is incorrect')
 
     # def test_get_passage_hcsb_interlude(self):
     #     text = bible_extractor.get_passage('Psalm 32:4', translation='HCSB')
-    #     psalm32_4 = ['\u2074 For day and night Your hand was heavy on me;',
+    #     psalm32_4 = ['⁴ For day and night Your hand was heavy on me;',
     #                  'my strength was drained',
-    #                  'as in the summer\u2019s heat.']
+    #                  'as in the summer’s heat.']
     #     # Some translations such as HCSB use a dedicated <selah> tag for Psalm interludes, and is to be excluded
     #     # as it does not appear to be part of the actual Psalm lyrics.
     #     self.assertEqual('\n'.join(psalm32_4), text, 'Passage is incorrect')

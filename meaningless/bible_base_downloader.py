@@ -380,8 +380,8 @@ class BaseDownloader:
             # Unclear if this is a formatting issue on the Bible Gateway site, but it is added for consistency.
             # This is not done on the web extractor due to the difficulty of selecting the first passage in an
             # arbitrary range.
-            if passage_num == 1 and self.show_passage_numbers and not passage.startswith('\u00b9 '):
-                passage = '\u00b9 {0}'.format(passage)
+            if passage_num == 1 and self.show_passage_numbers and not passage.startswith('¹ '):
+                passage = '¹ {0}'.format(passage)
 
             passages[self.__key_cast(passage_num)] = passage
             passage_num += 1

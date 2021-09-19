@@ -331,19 +331,18 @@ def superscript_numbers(text, remove_brackets=True):
     :rtype: str
 
     >>> superscript_numbers('[0123456789]')
-    '\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079'
+    '⁰¹²³⁴⁵⁶⁷⁸⁹'
     >>> superscript_numbers('Antidisestablishmentarianism')
     'Antidisestablishmentarianism'
     >>> superscript_numbers('[7]', False)
-    '[\u2077]'
+    '[⁷]'
     """
     superscript_text = text
     if remove_brackets:
         # The strip method can't be relied on here, as the string itself can be space padded at times.
         # Using sequential replacements should be OK, unless there are more characters to handle.
         superscript_text = superscript_text.replace('[', '').replace(']', '').replace('(', '').replace(')', '')
-    superscript_translation_table = superscript_text.maketrans('0123456789', '\u2070\u00b9\u00b2\u00b3\u2074\u2075'
-                                                                             '\u2076\u2077\u2078\u2079')
+    superscript_translation_table = superscript_text.maketrans('0123456789', '⁰¹²³⁴⁵⁶⁷⁸⁹')
     return superscript_text.translate(superscript_translation_table)
 
 
@@ -357,12 +356,12 @@ def remove_superscript_numbers_in_passage(text):
     :return: String with the superscript numbers that have a trailing space removed
     :rtype: str
 
-    >>> remove_superscript_numbers_in_passage('\u2070 \u00b9 \u00b2 \u00b3 \u2074 \u2075 \u2076 \u2077 \u2078 \u2079 ')
+    >>> remove_superscript_numbers_in_passage('⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ')
     ''
-    >>> remove_superscript_numbers_in_passage('E=mc\u00b2')
+    >>> remove_superscript_numbers_in_passage('E=mc²')
     'E=mc'
     """
-    return re.sub('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+\s{0,1}', '', text)
+    return re.sub(r'[⁰¹²³⁴⁵⁶⁷⁸⁹]+\s?', '', text)
 
 
 def get_capped_integer(number, min_value=1, max_value=100):
@@ -450,16 +449,16 @@ def unicode_to_ascii_punctuation(text):
     :return: String with ASCII punctuation where relevant
     :rtype: str
 
-    >>> unicode_to_ascii_punctuation('\u2018GG\u2019')
+    >>> unicode_to_ascii_punctuation('‘GG’')
     "'GG'"
-    >>> unicode_to_ascii_punctuation('\u201cG\u2014G\u201d')
+    >>> unicode_to_ascii_punctuation('“G—G”')
     '"G-G"'
     >>> unicode_to_ascii_punctuation('GG')
     'GG'
-    >>> unicode_to_ascii_punctuation('\u2070')
-    '\u2070'
+    >>> unicode_to_ascii_punctuation('⁰')
+    '⁰'
     """
-    punctuation_map = text.maketrans('\u201c\u2018\u2014\u2019\u201d', '"\'-\'"')
+    punctuation_map = text.maketrans('“‘—’”', '"\'-\'"')
     return text.translate(punctuation_map)
 
 
