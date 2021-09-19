@@ -370,11 +370,11 @@ def get_capped_integer(number, min_value=1, max_value=100):
     A helper function to limit an integer between an upper and lower bound
 
     :param number: Number to keep limited
-    :type number: int
+    :type number: int or str
     :param min_value: Lowest possible value assigned when number is lower than this
-    :type min_value: int
+    :type min_value: int or str
     :param max_value: Highest possible value assigned when number is larger than this
-    :type max_value: int
+    :type max_value: int or str
     :return: Integer that adheres to min_value <= number <= max_value
     :rtype: int
 
@@ -468,7 +468,7 @@ def cast_to_str_or_int(text, cast_to_str):
     A helper function to convert a given input to either a string or an integer.
 
     :param text: Input text
-    :type text: str
+    :type text: int or str
     :param cast_to_str: When True, input text is cast to a string. When False, input is cast to an integer.
     :type cast_to_str: bool
     :return: A string or integer representation of the input string

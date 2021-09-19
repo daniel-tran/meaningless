@@ -48,7 +48,7 @@ class WebExtractor:
         :param passage: Passage number
         :type passage: int
         :return: The specified passage. Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.get_passage_range(book, chapter, passage, chapter, passage)
 
@@ -65,7 +65,7 @@ class WebExtractor:
         :param passage_to: Last passage number to get
         :type passage_to: int
         :return: The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.get_passage_range(book, chapter, passage_from, chapter, passage_to)
 
@@ -78,7 +78,7 @@ class WebExtractor:
         :param chapter: Chapter number
         :type chapter: int
         :return: All passages in the chapter. Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.get_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter())
 
@@ -93,7 +93,7 @@ class WebExtractor:
         :param chapter_to: Last chapter number to get
         :type chapter_to: int
         :return: All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.
-        :rtype: str (list if output_as_list is True)
+        :rtype: str or list
         """
         return self.get_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter())
 
@@ -104,7 +104,7 @@ class WebExtractor:
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
         :return: All passages in the specified book. Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.get_passage_range(book, 1, 1, common.get_chapter_count(book, self.translation),
                                       common.get_end_of_chapter())
@@ -124,7 +124,7 @@ class WebExtractor:
         :param passage_to: Last passage number to get in the last chapter
         :type passage_to: int
         :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         # Capping the chapter and passage information, as this gets included in site search string and can cause
         # the web request to stagger if this manages to be long enough.
@@ -162,7 +162,7 @@ class WebExtractor:
         :param passage_names: List of Bible passages that are valid when used on www.biblegateway.com
         :type passage_names: list
         :return: Bible passages with newline separators for each set of passages
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.search(';'.join(passage_names))
 
@@ -175,7 +175,7 @@ class WebExtractor:
         :param passage_name: Name of the Bible passage which is valid when used on www.biblegateway.com
         :type passage_name: str
         :return: Bible passage with preserved line breaks
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         # Some translations are very tricky to extract passages from, and currently, so specific extraction logic
         # for these translations should not be introduced until they need to be supported.

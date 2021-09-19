@@ -86,7 +86,7 @@ class BaseDownloader:
         :param file_writing_function: Function definition used to specify how to write to a given file.
                                       The function should only take 2 arguments, which are the file path to write to
                                       and the in-memory object being sourced (in that order).
-        :type file_writing_function: object
+        :type file_writing_function: callable[[str, dict], int]
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
         :param show_passage_numbers: If True, any present passage numbers are preserved. Defaults to True.
@@ -392,7 +392,7 @@ class BaseDownloader:
         A helper function to cast a dictionary key to a string or an integer.
 
         :param key: Dictionary key
-        :type key: str
+        :type key: int or str
         :return: Type-casted dictionary key
         :rtype: int or str
         """
