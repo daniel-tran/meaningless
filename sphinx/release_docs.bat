@@ -16,6 +16,7 @@ if exist %builddir% (
     robocopy %builddir% %releasedir% *.js /E
     robocopy %builddir% %releasedir% *.css /E
     robocopy %builddir% %releasedir% *.png /E
+    robocopy %builddir% %releasedir% *.nojekyll /E
 )
 
 popd

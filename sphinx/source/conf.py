@@ -35,7 +35,8 @@ with open('../../VERSION.txt', 'r') as fh:
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc'
+    'sphinx.ext.autodoc',
+    'sphinx.ext.githubpages'
 ]
 
 # Prevent import errors halting the building process when
