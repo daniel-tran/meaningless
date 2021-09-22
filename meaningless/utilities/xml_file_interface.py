@@ -37,10 +37,21 @@ def __get_space_placeholder():
     return __get_numeric_prefix()
 
 
+def __get_cdata_key():
+    """
+    Gets the placeholder string for the cdata key that is automatically added into a parsed XML document
+
+    :return: Returns the key name
+    :rtype: str
+    """
+    return ''
+
+
 def write(data_file, document):
     """
     A helper function to write to a XML data file.
     Note that the input data must adhere to the following conventions:
+
     1. It is a dictionary or similar data structure with key-value pairs.
     2. Key names beyond the first level of the dictionary do not contain spaces.
     3. Any existing keys with underscores are assumed to be placeholders for spaces.
@@ -82,6 +93,7 @@ def read(data_file):
     """
     A helper function to read a XML data file.
     Note that the file data must adhere to the following conventions:
+
     1. The top-level tag is called 'root'.
     2. Tag names at the second level are the only tag names with underscores being used as word separators.
     3. Tag names at the second level with underscores are assumed to be placeholders for spaces.
@@ -95,12 +107,24 @@ def read(data_file):
     # Use UTF-8 encoding to be able to read Unicode characters
     with open(data_file, 'r', encoding='utf-8') as file:
         contents = file.read()
+    # Since white space and newlines are preserved, the side effect is that a cdata key is automatically added into
+    # each level of the document, with its value being spaces and newline characters.
+    raw_document = xmltodict.parse(contents, strip_whitespace=False, cdata_key=__get_cdata_key())
     # Extract the inner contents only, since the root element is not needed for reading a XML document
-    raw_document = xmltodict.parse(contents)[__get_root_name()]
+    raw_inner_contents = raw_document[__get_root_name()]
     # To nicely remove the prefix from keys consisting of only numeric characters, the parsed XML document is
     # dumped as a JSON string, where removing the prefix from the keys still results in a valid document.
-    # After removing the prefixes, the document is then reloaded as a JSON document with the correct keys.
-    document = json.loads(re.sub(r'"{0}(\d+)'.format(__get_numeric_prefix()), r'"\1', json.dumps(raw_document)))
+    # Do not include the corresponding double quote in the regex, as the key could be alphanumeric.
+    inner_contents = re.sub(r'"{0}(\d+)'.format(__get_numeric_prefix()), r'"\1', json.dumps(raw_inner_contents))
+    # The cdata key should not be included in the returned data structure, otherwise it can cause usage issues,
+    # particularly when re-writing said data structure to a file and reading it back again.
+    # While the data structure is still in text form, the cdata key and its value are removed here, since this
+    # key is generated at all levels of the document. Other implementation details to note are:
+    # - The cdata key can be expected to be the last item in any given level of the document.
+    # - Using an invalid XML tag name as the cdata key means no tag name "reservation" is required.
+    inner_contents = re.sub(r',? ?"{0}": ".*?"'.format(__get_cdata_key()), r'', inner_contents)
+    # After normalising the document, it is reloaded as a JSON document with the correct keys.
+    document = json.loads(inner_contents)
 
     # Don't bother processing the document if it only consisted of the generic root level tag
     if document is not None:
@@ -112,7 +136,7 @@ def read(data_file):
                 new_key = key.replace(__get_space_placeholder(), ' ').strip()
             else:
                 # Key does not have a space placeholder, so it could be an integer. Try to cast it back, since the
-                # limitation of string-only keys is XMl is no longer applicable.
+                # limitation of string-only keys in XML is no longer applicable.
                 new_key = common.cast_to_str_or_int(key, False)
             document[new_key] = document.pop(key)
     return document

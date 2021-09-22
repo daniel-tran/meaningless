@@ -141,6 +141,24 @@ class UnitTests(unittest.TestCase):
         self.assertRaises(xml.parsers.expat.ExpatError, xml_file_interface.read,
                           self.get_static_file('test_read_invalid_formatted_file.xml'))
 
+    def test_read_with_empty_tag(self):
+        # An empty tag is not only invalid XML, but is also reserved for special use within the file interface
+        self.assertRaises(xml.parsers.expat.ExpatError, xml_file_interface.read,
+                          self.get_static_file('test_read_with_empty_tag.xml'))
+
+    def test_read_and_rewrite_file(self):
+        filename = 'test_read_and_rewrite_file.xml'
+        document1 = xml_file_interface.read(self.get_static_file(filename))
+        xml_file_interface.write(self.get_temp_file(filename), document1)
+        document2 = xml_file_interface.read(self.get_temp_file(filename))
+        self.assertEqual(document1, document2, 'Files do not match')
+
+    def test_read_with_trailing_whitespace(self):
+        filename = 'test_read_with_trailing_whitespace.xml'
+        document = xml_file_interface.read(self.get_static_file(filename))
+        self.assertEqual(document['Disco']['Beatdown'], '1 ', 'First entry is incorrect')
+        self.assertEqual(document['Disco']['Elysium'], '2\n', 'Second entry is incorrect')
+
 
 if __name__ == "__main__":
     unittest.main()
