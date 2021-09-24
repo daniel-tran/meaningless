@@ -222,8 +222,6 @@ class UnitTests(unittest.TestCase):
               'Single-processed download took {1} seconds'.format(multi_processed_time, single_processed_time))
 
         self.assertTrue(filecmp.cmp(multi_processed_file, single_processed_file), 'Files do not match')
-        self.assertTrue(multi_processed_time <= single_processed_time,
-                        'Multi-processed download should have been faster')
 
     def test_base_download_with_ascii_punctuation(self):
         download_path = './tmp/test_base_download_with_ascii_punctuation'
