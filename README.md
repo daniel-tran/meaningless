@@ -13,6 +13,24 @@ Features include:
 
 **Now accepting feature requests!** If you want to see a certain feature included, please create an issue describing all the necessary details.
 
+# Installation
+
+```
+pip install meaningless
+```
+
+# API Documentation
+
+Documentation is generated using Sphinx.
+
+## Online
+
+The API documentation is hosted through GitHub Pages at the following link: https://daniel-tran.github.io/meaningless/
+
+## Offline
+
+You can view the API documentation as static HTML documents from `docs\index.html`. After cloning this repo, you can load the HTML files in a web browser, which allows you to navigate to other sections.
+
 # Supported translations
 
 ## English
@@ -47,12 +65,6 @@ Features include:
 ## Español
 
 - RVA
-
-# Installation
-
-```
-pip install meaningless
-```
 
 # Usage
 
@@ -309,18 +321,6 @@ Running the above code would produce a file called `Ecclesiastes.xml` in the cur
 ```
 
 **Note that you allowed to write badly formed XML documents using this file interface, but they will cause runtime errors in your code upon trying to read and process them.**
-
-# API Documentation
-
-Documentation is generated using Sphinx.
-
-## Online
-
-The API documentation is hosted through GitHub Pages at the following link: https://daniel-tran.github.io/meaningless/
-
-## Offline
-
-You can view the API documentation as static HTML documents from `docs\index.html`. After cloning this repo, you can load the HTML files in a web browser, which allows you to navigate to other sections.
 
 # Q&A
 
