@@ -59,7 +59,7 @@ jobs:
           echo "Running Base Downloader system tests..."
           python unit_tests_bible_base_downloader.py
           echo "Running Bible translation system tests..."
-          python unit_tests_bible_translations.py
+          python system_tests_bible_translations.py
       - name: Report job status
         run: |
           echo "This job's status is ${{ job.status }}."

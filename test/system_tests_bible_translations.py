@@ -33,10 +33,10 @@ class UnitTests(unittest.TestCase):
             # Baseline passages use a more generic file name, since the intention is to test a specific passage type.
             # The book is re-purposed as the baseline test index so that the parameters are still fairly intuitive
             # when invoking this method.
-            static_file = './static/unit_tests_bible_translations/{0}/passage_baseline_{1}.txt'.format(translation,
+            static_file = './static/system_tests_bible_translations/{0}/passage_baseline_{1}.txt'.format(translation,
                                                                                                        book)
         else:
-            static_file = './static/unit_tests_bible_translations/{0}/passage_{1}_{2}_{3}.txt'.format(translation, book,
+            static_file = './static/system_tests_bible_translations/{0}/passage_{1}_{2}_{3}.txt'.format(translation, book,
                                                                                                       chapter, passage)
         with open(static_file, 'r', encoding='utf-8') as file:
             contents = file.read()
