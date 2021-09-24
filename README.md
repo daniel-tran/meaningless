@@ -3,17 +3,19 @@
 Meaningless is a Python library used to retrieve, process and download Bible passages from Bible Gateway.
 
 Features include:
-- Passage retrieval from the [Bible Gateway](https://www.biblegateway.com) site or from a local YAML/JSON file.
+- Passage retrieval from the [Bible Gateway](https://www.biblegateway.com) site or from a local YAML/JSON/XML file.
 - Different output formats for different purposes:
   - Multi-line strings for printing Bible passages.
   - Python list of strings (or in-memory data structure) for passing Bible passages to other Python logic.
-  - YAML/JSON files for persistent storage of Bible passages.
+  - YAML/JSON/XML files for persistent storage of Bible passages.
 - Handling of edge case passages, such as those with tabular data and omitted passages in certain translations.
 - Flags to enable particular content modifications, such as ignoring passage numbers.
 
-**Now accepting feature requests!** If you want to see a certain feature included, please create an issue describing all the nececssary details.
+**Now accepting feature requests!** If you want to see a certain feature included, please create an issue describing all the necessary details.
 
 # Supported translations
+
+## English
 
 - ASV
 - AKJV
@@ -41,6 +43,10 @@ Features include:
 - NRSV
 - WEB
 - YLT
+
+## Español
+
+- RVA
 
 # Installation
 
@@ -212,9 +218,109 @@ Running the above code would produce a file called `Ecclesiastes.json` in the cu
 }
 ```
 
+## XML Downloader
+The XML Downloader is effectively the same as the YAML Downloader except the resulting file is in a specific XML format and has a different file extension.
+```python
+from meaningless import XMLDownloader
+
+if __name__ == '__main__':
+    downloader = XMLDownloader()
+    downloader.download_passage('Ecclesiastes', 1, 2)
+```
+Output:
+
+Running the above code would produce a file called `Ecclesiastes.xml` in the current working directory with the following contents:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Info>
+    <Language>English</Language>
+    <Translation>NIV</Translation>
+  </Info>
+  <Ecclesiastes>
+    <_1>
+      <_2>² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”</_2>
+    </_1>
+  </Ecclesiastes>
+</root>
+```
+
+Note that the following adjustments are made to the downloaded contents to ensure it is a well-formed XML document:
+
+1. A top-level "root" tag is present.
+2. All tag names starting with a number are prefixed.
+3. Tags corresponding to book names use a placeholder character for spaces.
+
+## XML Extractor
+Much like the YAML Extractor, the XML Extractor uses the generated files from the XML Downloader to find passages.
+```python
+from meaningless import XMLExtractor
+
+if __name__ == '__main__':
+    bible = XMLExtractor()
+    passage = bible.get_passage('Ecclesiastes', 1, 2)
+    print(passage)
+```
+Output:
+
+Assuming the XML downloader has already generated a XML file in the current directory called `Ecclesiastes.xml` which contains the book of Ecclesiastes in XML format:
+```
+² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”
+```
+
+## XML File Interface
+The XML File Interface is a set of helper methods used to read and write XML files. Unlike the other file interfaces, this is more geared towards the XML document format used by the XML Downloader and Extractor, so you may observe some strange behaviour if you try using this for general purpose XML file interactions.
+```python
+from meaningless import XMLDownloader, xml_file_interface
+
+if __name__ == '__main__':
+    downloader = XMLDownloader()
+    downloader.download_passage('Ecclesiastes', 1, 2)
+    bible = xml_file_interface.read('./Ecclesiastes.xml')
+    bible['Info']['Customised'] = True
+    xml_file_interface.write('./Ecclesiastes.xml', bible)
+```
+Output:
+
+Running the above code would produce a file called `Ecclesiastes.xml` in the current working directory with the following contents:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Info>
+    <Language>English</Language>
+    <Translation>NIV</Translation>
+    <Customised>true</Customised>
+  </Info>
+  <Ecclesiastes>
+    <_1>
+      <_2>² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”</_2>
+    </_1>
+  </Ecclesiastes>
+</root>
+```
+
+**Note that you allowed to write badly formed XML documents using this file interface, but they will cause runtime errors in your code upon trying to read and process them.**
+
 # API Documentation
-To view the available classes and methods in this library, you can view them as static HTML documents from `docs\release\index.html`. After cloning this repo, you can load the HTML files in a web browser, which allows you to navigate to other sections.
-These files were generated using Sphinx.
+
+Documentation is generated using Sphinx.
+
+## Online
+
+The API documentation is hosted through GitHub Pages at the following link: https://daniel-tran.github.io/meaningless/
+
+## Offline
+
+You can view the API documentation as static HTML documents from `docs\index.html`. After cloning this repo, you can load the HTML files in a web browser, which allows you to navigate to other sections.
 
 # Q&A
 
@@ -232,16 +338,6 @@ Or you can also send an email to [dantran.au@gmail.com](mailto:dantran.au@gmail.
 ## Should I manually edit the downloaded file?
 
 **This is NOT recommended** under normal circumstances, as it may cause problems with the library API when using the modified file.
-
-## What's the process for supporting new translations?
-
-- Add a new test case to `unit_tests_bible_translations.py` for the new translation. This is used to validate end-to-end correctness.
-  - Add all the necessary test data files under `test\static\unit_tests_bible_translations` in a new folder named according to the new translation.
-- Make appropriate modifications to the Web Extractor to account for translation-specific components, such as double spaces and in-line translation notes.
-  - Add unit tests for the Web Extractor to test these specific changes.
-  - Run all the Web Extractor unit tests to ensure stable behaviour with said changes.
-- Add appropriate modifications to the Base Downloader to specify any omitted passages that are present in the new translation.
-  - Update the relevant test case in `unit_tests_bible_translations.py` to check for correct handling of omitted passages.
 
 ## If multiple translations are supported, why aren't there more unit tests for these?
 
@@ -273,4 +369,4 @@ There is currently no official support for the Apocrypha books in the other down
 # Contributors
 - [daniel-tran](https://github.com/daniel-tran) (Creator & current maintainer)
 
-To make a contribution to this library, refer to `DEVELOPMENT.md`.
+To make a contribution to this library, refer to `CONTRIBUTING.md`.
