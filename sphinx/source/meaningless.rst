@@ -44,3 +44,21 @@ JSON Extractor
    :undoc-members:
    :show-inheritance:
    :inherited-members:
+
+XML Downloader
+-----------------------------------
+
+.. automodule:: meaningless.bible_xml_downloader
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+XML Extractor
+----------------------------------
+
+.. automodule:: meaningless.bible_xml_extractor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:

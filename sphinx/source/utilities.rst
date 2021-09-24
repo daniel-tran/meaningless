@@ -24,3 +24,11 @@ JSON File Interface
    :members:
    :undoc-members:
    :show-inheritance:
+
+XML File Interface
+-------------------------------------------
+
+.. automodule:: meaningless.utilities.xml_file_interface
+   :members:
+   :undoc-members:
+   :show-inheritance:
