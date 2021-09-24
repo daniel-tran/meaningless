@@ -3,7 +3,7 @@ import sys
 import filecmp
 from timeit import default_timer
 sys.path.append('../')
-from meaningless import yaml_file_interface, InvalidSearchError, InvalidPassageError
+from meaningless import yaml_file_interface, InvalidSearchError, InvalidPassageError, UnsupportedTranslationError
 from meaningless.bible_base_downloader import BaseDownloader
 
 
@@ -249,6 +249,12 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(downloaded_file['Ecclesiastes']['1']['2'], static_file['Ecclesiastes']['1']['2'],
                          'Passage sample does not match')
         self.assertEqual(downloaded_file['Ecclesiastes'], static_file['Ecclesiastes'], 'Passage contents do not match')
+
+    def test_unsupported_translation(self):
+        download_path = './tmp/test_unsupported_translation/'
+        bible = BaseDownloader(file_writing_function=yaml_file_interface.write, default_directory=download_path,
+                               translation='test_unsupported_translation')
+        self.assertRaises(UnsupportedTranslationError, bible.download_book, 'Ecclesiastes')
 
 
 if __name__ == "__main__":

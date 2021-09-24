@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../')
-from meaningless import UnsupportedTranslationError
+from meaningless import UnsupportedTranslationError, TranslationMismatchError, InvalidPassageError
 from meaningless.bible_base_extractor import BaseExtractor
 from meaningless.utilities import yaml_file_interface, json_file_interface
 
@@ -341,6 +341,23 @@ class UnitTests(unittest.TestCase):
         text = bible.get_passage('Ecclesiastes', 2, 2, file_path=custom_file)
         # Custom file only contains one chapter and one passage, but doesn't start on the first passage or chapter
         self.assertEqual(text, eccl, 'Passages do not match')
+
+    def test_translation_mismatch_error(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              default_directory=self.get_test_directory(), translation=self.get_test_translation())
+        bible.translation = 'NLT'
+        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'Ecclesiastes.yaml')
+        self.assertRaises(TranslationMismatchError, bible.get_passage, 'Ecclesiastes', 2, 2, custom_file)
+
+    def test_invalid_passage_error(self):
+        bible = BaseExtractor(file_reading_function=json_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              default_directory=self.get_test_directory(), translation=self.get_test_translation())
+        # Test JSON file is specifically crafted to load nothing, yet is a valid document
+        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'test_invalid_passage_error.json')
+        self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 9000, 1, 9001, custom_file)
+        self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 1, 1, 1, custom_file)
 
 
 if __name__ == "__main__":
