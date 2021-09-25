@@ -83,6 +83,9 @@ class UnitTests(unittest.TestCase):
             books_with_omissions = ['Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans']
         pool = multiprocessing.Pool(len(books_with_omissions))
         pool.map(downloader.download_book, books_with_omissions)
+        # Wait for the processes to complete and clean up the pool to prevent potential resource leaking
+        pool.close()
+        pool.join()
 
         # Matthew
         book = books_with_omissions[0]
