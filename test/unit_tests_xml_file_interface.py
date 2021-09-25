@@ -77,8 +77,8 @@ class UnitTests(unittest.TestCase):
         document = {1: {'Beatdown': 1, 'Elysium': 2}}
         xml_file_interface.write(self.get_temp_file(filename), document)
         result = xml_file_interface.read(self.get_temp_file(filename))
-        self.assertEqual(result[1]['Beatdown'], '1', 'First entry is incorrect')
-        self.assertEqual(result[1]['Elysium'], '2', 'Second entry is incorrect')
+        self.assertEqual(result['1']['Beatdown'], '1', 'First entry is incorrect')
+        self.assertEqual(result['1']['Elysium'], '2', 'Second entry is incorrect')
 
     def test_read_with_number_prefixed_second_level_key(self):
         filename = 'test_read_with_number_prefixed_second_level_key.xml'
@@ -158,6 +158,12 @@ class UnitTests(unittest.TestCase):
         document = xml_file_interface.read(self.get_static_file(filename))
         self.assertEqual(document['Disco']['Beatdown'], '1 ', 'First entry is incorrect')
         self.assertEqual(document['Disco']['Elysium'], '2\n', 'Second entry is incorrect')
+
+    def test_read_with_trailing_space_placeholder_in_key(self):
+        filename = 'test_read_with_trailing_space_placeholder_in_key.xml'
+        document = xml_file_interface.read(self.get_static_file(filename))
+        self.assertEqual(document['Disco']['Beatdown'], '1', 'First entry is incorrect')
+        self.assertEqual(document['Disco']['2'], 'Elysium', 'Second entry is incorrect')
 
 
 if __name__ == "__main__":
