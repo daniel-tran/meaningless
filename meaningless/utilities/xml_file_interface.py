@@ -68,7 +68,9 @@ def __remove_xml_placeholders_from_key(path, key, value):
     # This is also a convenient way to remove the generated cdata key, by setting it to something that can be ignored.
     if len(new_key) <= 0:
         return
-    return new_key, value
+    # Reading a tag without contents resolve to None, which is incorrect in the case of omitted passages
+    new_value = value if value is not None else ''
+    return new_key, new_value
 
 
 def write(data_file, document):

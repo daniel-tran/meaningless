@@ -121,7 +121,7 @@ class UnitTests(unittest.TestCase):
 
     def test_read_file_with_root_tag_only(self):
         document = xml_file_interface.read(self.get_static_file('test_read_file_with_root_tag_only.xml'))
-        self.assertIsNone(document, 'Document should not have additional content')
+        self.assertEqual(document, '', 'Document should have resolve to no file contents')
 
     def test_read_empty_file(self):
         # An empty XML file is the same as an invalidly formatted file
@@ -164,6 +164,11 @@ class UnitTests(unittest.TestCase):
         document = xml_file_interface.read(self.get_static_file(filename))
         self.assertEqual(document['Disco']['Beatdown'], '1', 'First entry is incorrect')
         self.assertEqual(document['Disco']['2'], 'Elysium', 'Second entry is incorrect')
+
+    def test_read_with_empty_contents_in_tags(self):
+        filename = 'test_read_with_empty_contents_in_tags.xml'
+        document = xml_file_interface.read(self.get_static_file(filename))
+        self.assertEqual(document['Disco']['Beatdown'], '', 'First entry is not empty')
 
 
 if __name__ == "__main__":
