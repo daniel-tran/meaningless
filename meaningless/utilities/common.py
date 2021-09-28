@@ -310,8 +310,7 @@ def get_page(url):
     >>> get_page('https://www.com')
     Traceback (most recent call last):
     ...
-    urllib.error.URLError: <urlopen error [WinError 10061] No connection could be made because the target \
-machine actively refused it>
+    urllib.error.URLError: <urlopen error ...>
     """
     page = urlopen(url)
     content = page.read()
