@@ -14,7 +14,7 @@ class BaseExtractor:
         """
         :param file_reading_function: Function definition used to specify how to read a given file.
                                       The function should only take 1 argument, which states the file path to read.
-        :type file_reading_function: object
+        :type file_reading_function: callable[[str], dict]
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
         :param show_passage_numbers: If True, any present passage numbers are preserved. Defaults to True.
@@ -63,7 +63,7 @@ class BaseExtractor:
                           extension.
         :type file_path: str
         :return: The specified passage. Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.get_passage_range(book, chapter, passage, chapter, passage, file_path)
 
@@ -85,7 +85,7 @@ class BaseExtractor:
                           extension.
         :type file_path: str
         :return: The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.get_passage_range(book, chapter, passage_from, chapter, passage_to, file_path)
 
@@ -103,7 +103,7 @@ class BaseExtractor:
                           extension.
         :type file_path: str
         :return: All passages in the chapter. Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.get_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter(), file_path)
 
@@ -123,7 +123,7 @@ class BaseExtractor:
                           extension.
         :type file_path: str
         :return: All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.get_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter(), file_path)
 
@@ -139,7 +139,7 @@ class BaseExtractor:
                           extension.
         :type file_path: str
         :return: All passages in the specified book. Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         return self.get_chapters(book, 1, common.get_chapter_count(book, self.translation), file_path)
 
@@ -163,7 +163,7 @@ class BaseExtractor:
                           extension.
         :type file_path: str
         :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.
-        :rtype: str (list if self.output_as_list is True)
+        :rtype: str or list
         """
         translation = self.translation.upper()
         if common.is_unsupported_translation(translation):
@@ -236,10 +236,8 @@ class BaseExtractor:
         A helper function to cast a dictionary key to a string or an integer.
 
         :param key: Dictionary key
-        :type key: str
+        :type key: int or str
         :return: Type-casted dictionary key
         :rtype: int or str
         """
-        if self.read_key_as_string:
-            return str(key)
-        return int(key)
+        return common.cast_to_str_or_int(key, self.read_key_as_string)

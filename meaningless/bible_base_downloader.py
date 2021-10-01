@@ -81,12 +81,12 @@ class BaseDownloader:
 
     def __init__(self, file_writing_function, translation='NIV', show_passage_numbers=True,
                  default_directory=os.getcwd(), strip_excess_whitespace=False, enable_multiprocessing=True,
-                 use_ascii_punctuation=False, file_extension=''):
+                 use_ascii_punctuation=False, file_extension='', write_key_as_string=False):
         """
         :param file_writing_function: Function definition used to specify how to write to a given file.
                                       The function should only take 2 arguments, which are the file path to write to
                                       and the in-memory object being sourced (in that order).
-        :type file_writing_function: object
+        :type file_writing_function: callable[[str, dict], int]
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
         :param show_passage_numbers: If True, any present passage numbers are preserved. Defaults to True.
@@ -106,6 +106,9 @@ class BaseDownloader:
         :type use_ascii_punctuation: bool
         :param file_extension: File extension used when reading from a default file when file_path is not provided
         :type file_extension: str
+        :param write_key_as_string: If True, specifies that all keys in the downloaded file are converted to strings.
+               Defaults to False.
+        :type write_key_as_string: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
@@ -115,6 +118,7 @@ class BaseDownloader:
         self.use_ascii_punctuation = use_ascii_punctuation
         self.file_extension = file_extension
         self.file_writing_function = file_writing_function
+        self.write_key_as_string = write_key_as_string
 
     def download_passage(self, book, chapter, passage, file_path=''):
         """
@@ -296,8 +300,9 @@ class BaseDownloader:
                 # Add the process result to the list and extract the value later to prioritise doing more work
                 process_results.append(process)
             else:
-                document[book_name][chapter] = self._get_passages_dict(online_bible, book_name, chapter,
-                                                                       passage_initial, passage_final)
+                document[book_name][self.__key_cast(chapter)] = self._get_passages_dict(online_bible, book_name,
+                                                                                        chapter, passage_initial,
+                                                                                        passage_final)
 
         if self.enable_multiprocessing:
             # Close the pool manually, as the garbage collector might not dispose of this automatically
@@ -306,7 +311,7 @@ class BaseDownloader:
             process_pool.join()
             # When multiprocessing, all process results should be retrieved as a batch operation to minimise
             # the total time cost associated with the "get" method for each result.
-            document[book_name] = {chapter: process_results.pop(0).get() for chapter in chapter_range}
+            document[book_name] = {self.__key_cast(chapter): process_results.pop(0).get() for chapter in chapter_range}
 
         if len(file_path) <= 0:
             file_location = os.path.join(self.default_directory, '{0}{1}'.format(book_name, self.file_extension))
@@ -364,7 +369,7 @@ class BaseDownloader:
                 # regardless of translation.
                 passage_string = '{0} {1}:{2}'.format(book, chapter, passage_num)
                 if passage_string in self.__translations_with_omitted_passages[online_bible.translation]:
-                    passages[passage_num] = ''
+                    passages[self.__key_cast(passage_num)] = ''
                     # Since this passage isn't supposed to exist in the given translation but it is still registered
                     # in the file, the number is upped twice in this loop iteration - once for the omitted
                     # passage and once for the passage after the omitted passage (whose contents is accessible in
@@ -375,9 +380,20 @@ class BaseDownloader:
             # Unclear if this is a formatting issue on the Bible Gateway site, but it is added for consistency.
             # This is not done on the web extractor due to the difficulty of selecting the first passage in an
             # arbitrary range.
-            if passage_num == 1 and self.show_passage_numbers and not passage.startswith('\u00b9 '):
-                passage = '\u00b9 {0}'.format(passage)
+            if passage_num == 1 and self.show_passage_numbers and not passage.startswith('¹ '):
+                passage = '¹ {0}'.format(passage)
 
-            passages[passage_num] = passage
+            passages[self.__key_cast(passage_num)] = passage
             passage_num += 1
         return passages
+
+    def __key_cast(self, key):
+        """
+        A helper function to cast a dictionary key to a string or an integer.
+
+        :param key: Dictionary key
+        :type key: int or str
+        :return: Type-casted dictionary key
+        :rtype: int or str
+        """
+        return common.cast_to_str_or_int(key, self.write_key_as_string)

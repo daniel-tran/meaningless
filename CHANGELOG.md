@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.4.0
+- Documentation is now publicly available through GitHub Pages. See https://daniel-tran.github.io/meaningless/
+  - This was previously an undocumented change as part of the 0.3.0 release.
+- Added XML Extractor and XML Downloader
+- Added xml_file_interface module to assist with XML file access
+- Added translation support for: RVA
+
 ## 0.3.0
 - Added initial continuous integration workflow with GitHub Actions
 - Added translation support for: BRG, CJB, EHV, ESVUK, GNV, GW, ISV, JUB, NASB1995, NOG

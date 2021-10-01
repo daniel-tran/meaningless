@@ -3,7 +3,7 @@ import sys
 import filecmp
 from timeit import default_timer
 sys.path.append('../')
-from meaningless import yaml_file_interface, InvalidSearchError, InvalidPassageError
+from meaningless import yaml_file_interface, InvalidSearchError, InvalidPassageError, UnsupportedTranslationError
 from meaningless.bible_base_downloader import BaseDownloader
 
 
@@ -222,8 +222,6 @@ class UnitTests(unittest.TestCase):
               'Single-processed download took {1} seconds'.format(multi_processed_time, single_processed_time))
 
         self.assertTrue(filecmp.cmp(multi_processed_file, single_processed_file), 'Files do not match')
-        self.assertTrue(multi_processed_time <= single_processed_time,
-                        'Multi-processed download should have been faster')
 
     def test_base_download_with_ascii_punctuation(self):
         download_path = './tmp/test_base_download_with_ascii_punctuation'
@@ -235,6 +233,27 @@ class UnitTests(unittest.TestCase):
         downloaded_file = yaml_file_interface.read('{0}/Ecclesiastes'.format(download_path))
         static_file = yaml_file_interface.read(static_file_path)
         self.assertEqual(downloaded_file['Ecclesiastes'], static_file['Ecclesiastes'], 'Passage contents do not match')
+
+    def test_base_download_with_string_keys(self):
+        download_path = './tmp/test_base_download_with_string_keys'
+        static_file_path = '{0}/test_base_download_with_string_keys.yaml'.format(self.get_test_directory())
+        bible = BaseDownloader(file_writing_function=yaml_file_interface.write,
+                               default_directory=download_path, translation=self.get_test_translation(),
+                               write_key_as_string=True)
+        bible.download_chapter('Ecclesiastes', 1)
+        downloaded_file = yaml_file_interface.read('{0}/Ecclesiastes'.format(download_path))
+        static_file = yaml_file_interface.read(static_file_path)
+        # Downloaded YAML files normally preserve integer keys, so check that passage access with string keys is OK
+        self.assertEqual(downloaded_file['Ecclesiastes']['1']['2'], static_file['Ecclesiastes']['1']['2'],
+                         'Passage sample does not match')
+        self.assertEqual(downloaded_file['Ecclesiastes'], static_file['Ecclesiastes'], 'Passage contents do not match')
+
+    def test_unsupported_translation(self):
+        download_path = './tmp/test_unsupported_translation/'
+        bible = BaseDownloader(file_writing_function=yaml_file_interface.write, default_directory=download_path,
+                               translation='test_unsupported_translation')
+        self.assertRaises(UnsupportedTranslationError, bible.download_book, 'Ecclesiastes')
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../')
-from meaningless import UnsupportedTranslationError
+from meaningless import UnsupportedTranslationError, TranslationMismatchError, InvalidPassageError
 from meaningless.bible_base_extractor import BaseExtractor
 from meaningless.utilities import yaml_file_interface, json_file_interface
 
@@ -45,7 +45,7 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         text = bible.get_passage('Ecclesiastes', 2, 26)
-        self.assertEqual('\u00b2\u2076 For to the man who pleases him, God gives wisdom, knowledge, and joy; but '
+        self.assertEqual('²⁶ For to the man who pleases him, God gives wisdom, knowledge, and joy; but '
                          'to the sinner he gives travail, to gather and to heap up, that he may give to '
                          'him who pleases God. This also is vanity and a chasing after wind.', text,
                          'Passage is incorrect')
@@ -55,10 +55,10 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         text = bible.get_passages('Ecclesiastes', 2, 24, 25)
-        self.assertEqual('\u00b2\u2074 There is nothing better for a man than that he should eat and drink, and '
+        self.assertEqual('²⁴ There is nothing better for a man than that he should eat and drink, and '
                          'make his soul enjoy good in his labor. This also I saw, that it is from the '
                          'hand of God. '
-                         '\u00b2\u2075 For who can eat, or who can have enjoyment, more than I?', text,
+                         '²⁵ For who can eat, or who can have enjoyment, more than I?', text,
                          'Passage is incorrect')
 
     def test_get_base_chapter(self):
@@ -76,8 +76,8 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         text = bible.get_passage_range('Ecclesiastes', 9, 18, 10, 1)
-        eccl = ['\u00b9\u2078 Wisdom is better than weapons of war; but one sinner destroys much good.',
-                '\u00b9 Dead flies cause the oil of the perfumer to produce an evil odor;',
+        eccl = ['¹⁸ Wisdom is better than weapons of war; but one sinner destroys much good.',
+                '¹ Dead flies cause the oil of the perfumer to produce an evil odor;',
                 '    so does a little folly outweigh wisdom and honor.'
                 ]
         # This passage selection is on a chapter boundary, which means Ecclesiastes 9:18 has the trailing line character
@@ -119,7 +119,7 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         text = bible.get_passage_range('Ecclesiastes', 1, -1, 1, 1)
-        eccl = '\u00b9 The words of the Preacher, the son of David, king in Jerusalem:'
+        eccl = '¹ The words of the Preacher, the son of David, king in Jerusalem:'
         # This should apply value normalisation logic to ensure that negative values don't break the execution flow
         self.assertEqual(eccl, text, 'Passage is incorrect')
         text = bible.get_passage_range('Ecclesiastes', -1, 1, 1, 1)
@@ -131,15 +131,15 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         text = bible.get_passage_range('Ecclesiastes', 9000, 1, 9000, 2)
-        sample1 = ['\u00b9 Remember also your Creator in the days of your youth,',
+        sample1 = ['¹ Remember also your Creator in the days of your youth,',
                    '    before the evil days come, and the years draw near,',
-                   '    when you will say, \u201cI have no pleasure in them;\u201d',
-                   '\u00b2 Before the sun, the light, the moon, and the stars are darkened,',
+                   '    when you will say, “I have no pleasure in them;”',
+                   '² Before the sun, the light, the moon, and the stars are darkened,',
                    '    and the clouds return after the rain;']
         # Excessive chapters should just default to the last chapter of the book
         self.assertEqual('\n'.join(sample1), text, 'Passage is incorrect')
         text = bible.get_passage_range('Ecclesiastes', 1, 9000, 1, 9001)
-        sample2 = '\u00b9\u2078 For in much wisdom is much grief; and he who increases knowledge increases sorrow.'
+        sample2 = '¹⁸ For in much wisdom is much grief; and he who increases knowledge increases sorrow.'
         # Excessive passages should just default to the last passage of the given chapter
         self.assertEqual(sample2, text, 'Passage is incorrect')
 
@@ -234,7 +234,7 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               translation='KJV', default_directory=self.get_test_directory('KJV'))
         text = bible.get_passage('Ecclesiastes', 2, 26)
-        self.assertEqual('\u00b2\u2076 For God giveth to a man that is good in his sight wisdom, and knowledge, '
+        self.assertEqual('²⁶ For God giveth to a man that is good in his sight wisdom, and knowledge, '
                          'and joy: but to the sinner he giveth travail, to gather and to heap up, that '
                          'he may give to him that is good before God. This also is vanity and vexation '
                          'of spirit.', text,
@@ -274,7 +274,7 @@ class UnitTests(unittest.TestCase):
                               default_directory=self.get_test_directory(), translation=self.get_test_translation(),
                               use_ascii_punctuation=True)
         text = bible.get_passage('Ecclesiastes', 1, 2)
-        eccl = '\u00b2 "Vanity of vanities," says the Preacher; "Vanity of vanities, all is vanity."'
+        eccl = '² "Vanity of vanities," says the Preacher; "Vanity of vanities, all is vanity."'
         self.assertEqual(eccl, text, 'Passages do not match')
 
     def test_get_base_passage_with_string_keys(self):
@@ -316,16 +316,16 @@ class UnitTests(unittest.TestCase):
         text2 = bible.get_book('Ecclesiastes')
 
         # Check that the punctuation conversion is a 1:1 translation
-        self.assertEqual(text1.count('\u201c') + text1.count('\u201d'), text2.count('"'), 'Double quotes are unequal')
-        self.assertEqual(text1.count('\u2018') + text1.count('\u2019'), text2.count("'"), 'Single quotes are unequal')
-        self.assertEqual(text1.count('\u2014'), text2.count('-'), 'Dashes are unequal')
+        self.assertEqual(text1.count('“') + text1.count('”'), text2.count('"'), 'Double quotes are unequal')
+        self.assertEqual(text1.count('‘') + text1.count('’'), text2.count("'"), 'Single quotes are unequal')
+        self.assertEqual(text1.count('—'), text2.count('-'), 'Dashes are unequal')
 
     def test_get_base_passage_buffered_first_passage(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               translation=self.get_test_translation())
-        eccl = '\u00b2 \u201cVanity of vanities,\u201d says the Preacher; ' \
-               '\u201cVanity of vanities, all is vanity.\u201d'
+        eccl = '² “Vanity of vanities,” says the Preacher; ' \
+               '“Vanity of vanities, all is vanity.”'
         custom_file = '{0}/{1}'.format(self.get_test_directory(), 'test_get_base_passage_buffered_first_passage.yaml')
         text = bible.get_passage('Ecclesiastes', 1, 2, file_path=custom_file)
         # Custom file only contains one chapter and one passage, but doesn't start on the first passage
@@ -335,12 +335,30 @@ class UnitTests(unittest.TestCase):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               translation=self.get_test_translation())
-        eccl = '\u00b2 I said of laughter, \u201cIt is foolishness;\u201d and of mirth, ' \
-               '\u201cWhat does it accomplish?\u201d'
+        eccl = '² I said of laughter, “It is foolishness;” and of mirth, ' \
+               '“What does it accomplish?”'
         custom_file = '{0}/{1}'.format(self.get_test_directory(), 'test_get_base_passage_buffered_first_chapter.yaml')
         text = bible.get_passage('Ecclesiastes', 2, 2, file_path=custom_file)
         # Custom file only contains one chapter and one passage, but doesn't start on the first passage or chapter
         self.assertEqual(text, eccl, 'Passages do not match')
+
+    def test_translation_mismatch_error(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              default_directory=self.get_test_directory(), translation=self.get_test_translation())
+        bible.translation = 'NLT'
+        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'Ecclesiastes.yaml')
+        self.assertRaises(TranslationMismatchError, bible.get_passage, 'Ecclesiastes', 2, 2, custom_file)
+
+    def test_invalid_passage_error(self):
+        bible = BaseExtractor(file_reading_function=json_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              default_directory=self.get_test_directory(), translation=self.get_test_translation())
+        # Test JSON file is specifically crafted to load nothing, yet is a valid document
+        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'test_invalid_passage_error.json')
+        self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 9000, 1, 9001, custom_file)
+        self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 1, 1, 1, custom_file)
+
 
 if __name__ == "__main__":
     unittest.main()

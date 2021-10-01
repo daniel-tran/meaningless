@@ -20,9 +20,43 @@ def is_unsupported_translation(translation):
     """
     # These translations are particularly difficult to extract information from due to them using
     # non-conventional page layouts compared to other translations: 'MOUNCE', 'VOICE', 'MSG', 'PHILLIPS'
-    return translation.upper() not in ['ASV', 'AKJV', 'BRG', 'CJB', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
-                                       'JUB', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB', 'NASB1995', 'NET',
-                                       'NIV', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
+    return not is_supported_english_translation(translation) and not is_supported_spanish_translation(translation)
+
+
+def is_supported_english_translation(translation):
+    """
+    A helper function to determine if the provided string is a supported English translation.
+
+    :param translation: Translation code
+    :type translation: str
+    :return: True = the translation is not supported, False = the translation is supported
+    :rtype: bool
+
+    >>> is_supported_english_translation('NIV')
+    True
+    >>> is_supported_english_translation('RVA')
+    False
+    """
+    return translation.upper() in ['ASV', 'AKJV', 'BRG', 'CJB', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
+                                   'JUB', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB', 'NASB1995', 'NET',
+                                   'NIV', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
+
+
+def is_supported_spanish_translation(translation):
+    """
+    A helper function to determine if the provided string is a supported Spanish translation.
+
+    :param translation: Translation code
+    :type translation: str
+    :return: True = the translation is not supported, False = the translation is supported
+    :rtype: bool
+
+    >>> is_supported_spanish_translation('RVA')
+    True
+    >>> is_supported_spanish_translation('NIV')
+    False
+    """
+    return translation.upper() in ['RVA']
 
 
 def get_end_of_chapter():
@@ -38,7 +72,7 @@ def get_end_of_chapter():
 
 def get_chapter_count(book, translation='NIV'):
     """
-    A helper function to return the number of chapter in a given book for a particular translation.
+    A helper function to return the number of chapters in a given book for a particular translation.
 
     :param book: Name of the book
     :type book: str
@@ -53,11 +87,35 @@ def get_chapter_count(book, translation='NIV'):
     0
     >>> get_chapter_count('Ecclesiastes', translation='msg')
     0
-    >>> get_chapter_count('Song of Solomon')
+    >>> get_chapter_count('Juan', 'RVA')
+    21
+    """
+    if is_supported_english_translation(translation):
+        return get_english_chapter_count(book)
+    elif is_supported_spanish_translation(translation):
+        return get_spanish_chapter_count(book)
+    else:
+        return 0
+
+
+def get_english_chapter_count(book):
+    """
+    A helper function to return the number of chapters in a given book in the English version of the Bible.
+
+    :param book: Name of the book
+    :type book: str
+    :return: Number of chapters in the book. 0 usually means an invalid book or unsupported translation.
+    :rtype: int
+
+    >>> get_english_chapter_count('Ecclesiastes')
+    12
+    >>> get_english_chapter_count('Barnabas')
+    0
+    >>> get_english_chapter_count('Song of Solomon')
     8
-    >>> get_chapter_count('Psalms')
+    >>> get_english_chapter_count('Psalms')
     150
-    >>> get_chapter_count('Philippians')
+    >>> get_english_chapter_count('Philippians')
     4
     """
     # Standardise letter casing to help find the key easier
@@ -142,9 +200,98 @@ def get_chapter_count(book, translation='NIV'):
         'Jude': 1,
         'Revelation': 22
     }
-    # TODO Additional logic can be added here that changes chapter_count_mappings based on a given translation
+    if book_name not in chapter_count_mappings.keys():
+        return 0
+    return chapter_count_mappings[book_name]
 
-    if book_name not in chapter_count_mappings.keys() or is_unsupported_translation(translation):
+
+def get_spanish_chapter_count(book):
+    """
+    A helper function to return the number of chapters in a given book in the Spanish version of the Bible.
+
+    :param book: Name of the book
+    :type book: str
+    :return: Number of chapters in the book. 0 means an invalid book.
+    :rtype: int
+
+    >>> get_spanish_chapter_count('Hechos')
+    28
+    >>> get_spanish_chapter_count('Ecclesiastes')
+    0
+    """
+    # Standardise letter casing to help find the key easier
+    book_name = book.title()
+
+    # This is the default mapping of books to their chapter counts
+    chapter_count_mappings = {
+        'Génesis': 50,
+        'Éxodo': 40,
+        'Levítico': 27,
+        'Números': 36,
+        'Deuteronomio': 34,
+        'Josué': 24,
+        'Jueces': 21,
+        'Rut': 4,
+        '1 Samuel': 31,
+        '2 Samuel': 24,
+        '1 Reyes': 22,
+        '2 Reyes': 25,
+        '1 Crónicas': 29,
+        '2 Crónicas': 36,
+        'Esdras': 10,
+        'Nehemías': 13,
+        'Ester': 10,
+        'Job': 42,
+        'Salmos': 150,
+        'Proverbios': 31,
+        'Eclesiastés': 12,
+        'Cantares': 8,
+        'Isaías': 66,
+        'Jeremías': 52,
+        'Lamentaciones': 5,
+        'Ezequiel': 48,
+        'Daniel': 12,
+        'Oseas': 14,
+        'Joel': 3,
+        'Amós': 9,
+        'Abdías': 1,
+        'Jonás': 4,
+        'Miqueas': 7,
+        'Nahúm': 3,
+        'Habacuc': 3,
+        'Sofonías': 3,
+        'Hageo': 2,
+        'Zacarías': 14,
+        'Malaquías': 4,
+        'Mateo': 28,
+        'Marcos': 16,
+        'Lucas': 24,
+        'Juan': 21,
+        'Hechos': 28,
+        'Romanos': 16,
+        '1 Corintios': 16,
+        '2 Corintios': 13,
+        'Gálatas': 6,
+        'Efesios': 6,
+        'Filipenses': 4,
+        'Colosenses': 4,
+        '1 Tesalonicenses': 5,
+        '2 Tesalonicenses': 3,
+        '1 Timoteo': 6,
+        '2 Timoteo': 4,
+        'Tito': 3,
+        'Filemón': 1,
+        'Hebreos': 13,
+        'Santiago': 5,
+        '1 Pedro': 5,
+        '2 Pedro': 3,
+        '1 Juan': 5,
+        '2 Juan': 1,
+        '3 Juan': 1,
+        'Judas': 1,
+        'Apocalipsis': 22
+    }
+    if book_name not in chapter_count_mappings.keys():
         return 0
     return chapter_count_mappings[book_name]
 
@@ -160,11 +307,10 @@ def get_page(url):
 
     >>> get_page('https://www.biblegateway.com')
     b'<!DOCTYPE html>...'
-    >>> get_page('https://www.something.com')
+    >>> get_page('https://www.com')
     Traceback (most recent call last):
     ...
-    urllib.error.URLError: <urlopen error [WinError 10061] No connection could be made because the target \
-machine actively refused it>
+    urllib.error.URLError: <urlopen error ...>
     """
     page = urlopen(url)
     content = page.read()
@@ -184,19 +330,18 @@ def superscript_numbers(text, remove_brackets=True):
     :rtype: str
 
     >>> superscript_numbers('[0123456789]')
-    '\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079'
+    '⁰¹²³⁴⁵⁶⁷⁸⁹'
     >>> superscript_numbers('Antidisestablishmentarianism')
     'Antidisestablishmentarianism'
     >>> superscript_numbers('[7]', False)
-    '[\u2077]'
+    '[⁷]'
     """
     superscript_text = text
     if remove_brackets:
         # The strip method can't be relied on here, as the string itself can be space padded at times.
         # Using sequential replacements should be OK, unless there are more characters to handle.
         superscript_text = superscript_text.replace('[', '').replace(']', '').replace('(', '').replace(')', '')
-    superscript_translation_table = superscript_text.maketrans('0123456789', '\u2070\u00b9\u00b2\u00b3\u2074\u2075'
-                                                                             '\u2076\u2077\u2078\u2079')
+    superscript_translation_table = superscript_text.maketrans('0123456789', '⁰¹²³⁴⁵⁶⁷⁸⁹')
     return superscript_text.translate(superscript_translation_table)
 
 
@@ -210,12 +355,12 @@ def remove_superscript_numbers_in_passage(text):
     :return: String with the superscript numbers that have a trailing space removed
     :rtype: str
 
-    >>> remove_superscript_numbers_in_passage('\u2070 \u00b9 \u00b2 \u00b3 \u2074 \u2075 \u2076 \u2077 \u2078 \u2079 ')
+    >>> remove_superscript_numbers_in_passage('⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ')
     ''
-    >>> remove_superscript_numbers_in_passage('E=mc\u00b2')
+    >>> remove_superscript_numbers_in_passage('E=mc²')
     'E=mc'
     """
-    return re.sub('[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]+\s{0,1}', '', text)
+    return re.sub(r'[⁰¹²³⁴⁵⁶⁷⁸⁹]+\s?', '', text)
 
 
 def get_capped_integer(number, min_value=1, max_value=100):
@@ -223,11 +368,11 @@ def get_capped_integer(number, min_value=1, max_value=100):
     A helper function to limit an integer between an upper and lower bound
 
     :param number: Number to keep limited
-    :type number: int
+    :type number: int or str
     :param min_value: Lowest possible value assigned when number is lower than this
-    :type min_value: int
+    :type min_value: int or str
     :param max_value: Highest possible value assigned when number is larger than this
-    :type max_value: int
+    :type max_value: int or str
     :return: Integer that adheres to min_value <= number <= max_value
     :rtype: int
 
@@ -280,14 +425,18 @@ def get_translation_language(translation):
 
     >>> get_translation_language('NIV')
     'English'
+    >>> get_translation_language('RVA')
+    'Español'
     >>> get_translation_language('mounce')
     ''
     """
     translation = translation.title()
-    if is_unsupported_translation(translation):
+    if is_supported_english_translation(translation):
+        return 'English'
+    elif is_supported_spanish_translation(translation):
+        return 'Español'
+    else:
         return ''
-    # TODO Currently, only English translations are supported. This could change in the future with other translations.
-    return 'English'
 
 
 def unicode_to_ascii_punctuation(text):
@@ -299,17 +448,51 @@ def unicode_to_ascii_punctuation(text):
     :return: String with ASCII punctuation where relevant
     :rtype: str
 
-    >>> unicode_to_ascii_punctuation('\u2018GG\u2019')
+    >>> unicode_to_ascii_punctuation('‘GG’')
     "'GG'"
-    >>> unicode_to_ascii_punctuation('\u201cG\u2014G\u201d')
+    >>> unicode_to_ascii_punctuation('“G—G”')
     '"G-G"'
     >>> unicode_to_ascii_punctuation('GG')
     'GG'
-    >>> unicode_to_ascii_punctuation('\u2070')
-    '\u2070'
+    >>> unicode_to_ascii_punctuation('⁰')
+    '⁰'
     """
-    punctuation_map = text.maketrans('\u201c\u2018\u2014\u2019\u201d', '"\'-\'"')
+    punctuation_map = text.maketrans('“‘—’”', '"\'-\'"')
     return text.translate(punctuation_map)
+
+
+def cast_to_str_or_int(text, cast_to_str):
+    """
+    A helper function to convert a given input to either a string or an integer.
+
+    :param text: Input text
+    :type text: int or str
+    :param cast_to_str: When True, input text is cast to a string. When False, input is cast to an integer.
+    :type cast_to_str: bool
+    :return: A string or integer representation of the input string
+    :rtype: int (str if cast_to_str is True)
+
+    >>> cast_to_str_or_int('Tri-Beam', True)
+    'Tri-Beam'
+    >>> cast_to_str_or_int('42', False)
+    42
+    >>> cast_to_str_or_int('42', True)
+    '42'
+    >>> cast_to_str_or_int(42, False)
+    42
+    >>> cast_to_str_or_int(42, True)
+    '42'
+    >>> cast_to_str_or_int('Tri-Beam', False)
+    'Tri-Beam'
+    """
+    if not cast_to_str:
+        # Input text that cannot be cast to an integer are instead cast to a string
+        try:
+            return int(text)
+        except ValueError:
+            pass
+    return str(text)
+
 
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.

@@ -95,5 +95,6 @@ class UnitTests(unittest.TestCase):
         self.assertRaises(json.decoder.JSONDecodeError, json_file_interface.read,
                           self.get_static_file('test_read_invalid_formatted_file.json'))
 
+
 if __name__ == "__main__":
     unittest.main()
