@@ -307,7 +307,7 @@ def get_page(url):
 
     >>> get_page('https://www.biblegateway.com')
     b'<!DOCTYPE html>...'
-    >>> get_page('https://www.com')
+    >>> get_page('https://www.randomwebsite.com')
     Traceback (most recent call last):
     ...
     urllib.error.URLError: <urlopen error ...>
