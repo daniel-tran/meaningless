@@ -60,6 +60,15 @@ jobs:
           python unit_tests_bible_xml_extractor.py
           echo "Running XML Downloader unit tests..."
           python unit_tests_bible_xml_downloader.py
+      - name: Run CSV unit tests
+        run: |
+          cd test
+          echo "Running CSV file interface unit tests..."
+          python unit_tests_csv_file_interface.py
+          echo "Running CSV Extractor unit tests..."
+          python unit_tests_bible_csv_extractor.py
+          echo "Running CSV Downloader unit tests..."
+          python unit_tests_bible_csv_downloader.py
       - name: Run Web Extractor and related unit tests
         run: |
           cd test
