@@ -217,9 +217,7 @@ class BaseExtractor:
         if self.use_ascii_punctuation:
             passage_list = [common.unicode_to_ascii_punctuation(passage) for passage in passage_list]
         if not self.show_passage_numbers:
-            # Note that this is a naive replacement, but should be OK as long as the original file source was from the
-            # module's pre-supplied resources. Otherwise, using an external file source risks losing superscript
-            # numbers that were not intended as passage numbers.
+            # This assumes that all superscript numbers are indicative of the passage number
             passage_list = [common.remove_superscript_numbers_in_passage(passage) for passage in passage_list]
         if self.output_as_list:
             if self.strip_excess_whitespace_from_list:
