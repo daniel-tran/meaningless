@@ -1,3 +1,12 @@
+---
+name: Feature request or improvement
+about: Suggest a new feature or improvement to this library
+title: "[Feature/Improvement] "
+labels: 'enhancement'
+assignees: ''
+
+---
+
 ### Summary of the feature
 Describe the intended feature in terms of:
 - How it would operate under normal usage, and when problems occur.
