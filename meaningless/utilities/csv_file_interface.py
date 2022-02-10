@@ -54,7 +54,7 @@ def write(data_file, document):
 
 def read(data_file):
     """
-    A helper function to read a CSV data file
+    A helper function to read a CSV data file.
     Note that the file data must adhere to the following conventions:
 
     1. A header row is included as the first line.
