@@ -39,6 +39,6 @@ setuptools.setup(
         'Topic :: Religion',
     ],
     keywords='bible yaml json xml biblegateway',
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     install_requires=install_requires,
 )
