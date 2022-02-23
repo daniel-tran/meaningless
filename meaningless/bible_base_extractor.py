@@ -202,7 +202,9 @@ class BaseExtractor:
             if chapter == capped_chapter_from:
                 # For the first chapter, an initial set of passages can be ignored (undercuts the passage selection)
                 # Apply a boundary to the passage to prevent invalid keys being accessed
-                passage_initial = common.get_capped_integer(passage_from, max_value=passage_final)
+                passage_min = next(iter((document[book_name][self.__key_cast(chapter)].keys())))
+                passage_initial = common.get_capped_integer(passage_from, min_value=passage_min,
+                                                            max_value=passage_final)
             if chapter == capped_chapter_to:
                 # For the last chapter, a trailing set of passages can be ignored (exceeds the passage selection)
                 # Apply a boundary to the passage to prevent invalid keys being accessed
