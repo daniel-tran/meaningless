@@ -188,9 +188,10 @@ class BaseExtractor:
 
         # Apply a boundary to the chapters to prevent invalid keys being accessed
         # Use the last key of the book, as it's not guaranteed that the number of chapters == last key
+        chapter_first = common.dict_keys_to_sorted_list(document[book_name].keys())[0]
         chapter_final = common.dict_keys_to_sorted_list(document[book_name].keys())[-1]
-        capped_chapter_from = common.get_capped_integer(chapter_from, max_value=chapter_final)
-        capped_chapter_to = common.get_capped_integer(chapter_to, max_value=chapter_final)
+        capped_chapter_from = common.get_capped_integer(chapter_from, min_value=chapter_first, max_value=chapter_final)
+        capped_chapter_to = common.get_capped_integer(chapter_to, min_value=chapter_first, max_value=chapter_final)
         # Extend the range by 1 since chapter_to is also included in the iteration
         for chapter in range(capped_chapter_from, capped_chapter_to + 1):
             # Determine the range of passages to extract from the chapter
