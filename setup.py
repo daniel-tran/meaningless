@@ -38,7 +38,7 @@ setuptools.setup(
         'Programming Language :: Python :: 3.9',
         'Topic :: Religion',
     ],
-    keywords='bible yaml json xml biblegateway',
+    keywords='bible yaml json xml csv biblegateway',
     python_requires='>=3.7',
     install_requires=install_requires,
 )
