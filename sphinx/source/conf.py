@@ -13,6 +13,7 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
+import re
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../../'))
@@ -21,8 +22,12 @@ sys.path.insert(0, os.path.abspath('../../'))
 # -- Project information -----------------------------------------------------
 
 project = 'Meaningless'
-copyright = '2022, Daniel Tran'
-author = 'Daniel Tran'
+
+# Extract author and copyright year details from the license to avoid data duplication
+with open('../../LICENSE.md', 'r') as fh:
+    details = re.search('Copyright \(c\) (\d+) (.+)$', fh.read(), re.MULTILINE)
+    author = details.group(2)
+    copyright = '{0}, {1}'.format(details.group(1), author)
 
 # The full version, including alpha/beta/rc tags
 with open('../../VERSION.txt', 'r') as fh:
