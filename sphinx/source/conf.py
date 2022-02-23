@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 # -- Project information -----------------------------------------------------
 
 project = 'Meaningless'
-copyright = '2021, Daniel Tran'
+copyright = '2022, Daniel Tran'
 author = 'Daniel Tran'
 
 # The full version, including alpha/beta/rc tags
@@ -53,6 +53,8 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# Toggled mainly to prevent pre-evaluation of default arguments such as os.cwd()
+autodoc_preserve_defaults = True
 
 # -- Options for HTML output -------------------------------------------------
 
