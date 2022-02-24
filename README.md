@@ -3,11 +3,11 @@
 Meaningless is a Python library used to retrieve, process and download Bible passages from Bible Gateway.
 
 Features include:
-- Passage retrieval from the [Bible Gateway](https://www.biblegateway.com) site or from a local YAML/JSON/XML file.
+- Passage retrieval from the [Bible Gateway](https://www.biblegateway.com) site or from a local YAML/JSON/XML/CSV file.
 - Different output formats for different purposes:
   - Multi-line strings for printing Bible passages.
   - Python list of strings (or in-memory data structure) for passing Bible passages to other Python logic.
-  - YAML/JSON/XML files for persistent storage of Bible passages.
+  - YAML/JSON/XML/CSV files for persistent storage of Bible passages or as input for other applications and scripts.
 - Handling of edge case passages, such as those with tabular data and omitted passages in certain translations.
 - Flags to enable particular content modifications, such as ignoring passage numbers.
 
@@ -321,6 +321,69 @@ Running the above code would produce a file called `Ecclesiastes.xml` in the cur
 ```
 
 **Note that you allowed to write badly formed XML documents using this file interface, but they will cause runtime errors in your code upon trying to read and process them.**
+
+## CSV Downloader
+The CSV Downloader is effectively the same as the YAML Downloader except the resulting file is in CSV format and has a different file extension.
+```python
+from meaningless import CSVDownloader
+
+if __name__ == '__main__':
+    downloader = CSVDownloader()
+    downloader.download_passage('Ecclesiastes', 1, 2)
+```
+Output:
+
+Running the above code would produce a file called `Ecclesiastes.csv` in the current working directory with the following contents:
+```
+Book,Chapter,Passage,Text,Language,Translation
+Ecclesiastes,1,2,"² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”",English,NIV
+```
+
+## CSV Extractor
+Much like the YAML Extractor, the CSV Extractor uses the generated files from the CSV Downloader to find passages.
+```python
+from meaningless import CSVExtractor
+
+if __name__ == '__main__':
+    bible = CSVExtractor()
+    passage = bible.get_passage('Ecclesiastes', 1, 2)
+    print(passage)
+```
+Output:
+
+Assuming the CSV downloader has already generated a CSV file in the current directory called `Ecclesiastes.csv` which contains the book of Ecclesiastes in CSV format:
+```
+² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”
+```
+
+## CSV File Interface
+The CSV File Interface is a set of helper methods used to read and write CSV files. Like the XML File Interface, this is geared towards the CSV document format used by the CSV Downloader and Extractor and cannot be used to add custom attributes to the output file when writing CSV data.
+```python
+from meaningless import CSVDownloader, csv_file_interface
+
+if __name__ == '__main__':
+    downloader = CSVDownloader()
+    downloader.download_passage('Ecclesiastes', 1, 2)
+    bible = csv_file_interface.read('./Ecclesiastes.csv')
+    bible['Info']['Language'] = 'English (EN)'
+    csv_file_interface.write('./Ecclesiastes.csv', bible)
+```
+Output:
+
+Running the above code would produce a file called `Ecclesiastes.csv` in the current working directory with the following contents:
+```
+Book,Chapter,Passage,Text,Language,Translation
+Ecclesiastes,1,2,"² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”",English (EN),NIV
+```
 
 # Q&A
 
