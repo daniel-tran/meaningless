@@ -122,7 +122,10 @@ class BaseDownloader:
 
     def download_passage(self, book, chapter, passage, file_path=''):
         """
-        Downloads a single passage as a file
+        Downloads a single passage as a file.
+
+        The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
+        boundaries of the specified book.
 
         :param book: Name of the book
         :type book: str
@@ -142,7 +145,10 @@ class BaseDownloader:
 
     def download_passages(self, book, chapter, passage_from, passage_to, file_path=''):
         """
-        Downloads a range of passages of the same chapter as a file
+        Downloads a range of passages of the same chapter as a file.
+
+        Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+        of the specified book.
 
         :param book: Name of the book
         :type book: str
@@ -164,7 +170,9 @@ class BaseDownloader:
 
     def download_chapter(self, book, chapter, file_path=''):
         """
-        Downloads a single chapter as a file
+        Downloads a single chapter as a file.
+
+        The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.
 
         :param book: Name of the book
         :type book: str
@@ -182,7 +190,9 @@ class BaseDownloader:
 
     def download_chapters(self, book, chapter_from, chapter_to, file_path=''):
         """
-        Downloads a range of passages from a specified chapter selection as a file
+        Downloads a range of passages from a specified chapter selection as a file.
+
+        Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.
 
         :param book: Name of the book
         :type book: str
@@ -219,7 +229,10 @@ class BaseDownloader:
 
     def download_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to, file_path=''):
         """
-        Downloads a range of passages from one specific passage to another passage as a file
+        Downloads a range of passages from one specific passage to another passage as a file.
+
+        Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+        of the specified book.
 
         :param book: Name of the book
         :type book: str

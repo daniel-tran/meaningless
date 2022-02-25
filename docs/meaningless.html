@@ -48,7 +48,7 @@ file extension, etc.).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_web_extractor.WebExtractor.get_book">
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_web_extractor.WebExtractor.get_book" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all chapters for a specific book from the Bible Gateway site</p>
+<dd><p>Gets all chapters for a specific book from the Bible Gateway site.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>book</strong> (<em>str</em>) – Name of the book (This must match the name used by the translation)</p>
@@ -65,7 +65,8 @@ file extension, etc.).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_web_extractor.WebExtractor.get_chapter">
 <span class="sig-name descname"><span class="pre">get_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_web_extractor.WebExtractor.get_chapter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single chapter from the Bible Gateway site</p>
+<dd><p>Gets a single chapter from the Bible Gateway site.</p>
+<p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -85,7 +86,8 @@ file extension, etc.).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_web_extractor.WebExtractor.get_chapters">
 <span class="sig-name descname"><span class="pre">get_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_web_extractor.WebExtractor.get_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from a specified chapters selection from the Bible Gateway site</p>
+<dd><p>Gets a range of passages from a specified chapters selection from the Bible Gateway site.</p>
+<p>The chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -106,7 +108,9 @@ file extension, etc.).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_web_extractor.WebExtractor.get_passage">
 <span class="sig-name descname"><span class="pre">get_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_web_extractor.WebExtractor.get_passage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single passage from the Bible Gateway site</p>
+<dd><p>Gets a single passage from the Bible Gateway site.</p>
+<p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
+boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -127,7 +131,9 @@ file extension, etc.).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_web_extractor.WebExtractor.get_passage_range">
 <span class="sig-name descname"><span class="pre">get_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_web_extractor.WebExtractor.get_passage_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from one specific passage to another passage from the Bible Gateway site</p>
+<dd><p>Gets a range of passages from one specific passage to another passage from the Bible Gateway site.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -150,7 +156,9 @@ file extension, etc.).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_web_extractor.WebExtractor.get_passages">
 <span class="sig-name descname"><span class="pre">get_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_web_extractor.WebExtractor.get_passages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages of the same chapter from the Bible Gateway site</p>
+<dd><p>Gets a range of passages of the same chapter from the Bible Gateway site.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -243,7 +251,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_downloader.YAMLDownloader.download_chapter">
 <span class="sig-name descname"><span class="pre">download_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader.download_chapter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a single chapter as a file</p>
+<dd><p>Downloads a single chapter as a file.</p>
+<p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -267,7 +276,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_downloader.YAMLDownloader.download_chapters">
 <span class="sig-name descname"><span class="pre">download_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader.download_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages from a specified chapter selection as a file</p>
+<dd><p>Downloads a range of passages from a specified chapter selection as a file.</p>
+<p>Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -292,7 +302,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_downloader.YAMLDownloader.download_passage">
 <span class="sig-name descname"><span class="pre">download_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader.download_passage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a single passage as a file</p>
+<dd><p>Downloads a single passage as a file.</p>
+<p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
+boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -317,7 +329,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_downloader.YAMLDownloader.download_passage_range">
 <span class="sig-name descname"><span class="pre">download_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader.download_passage_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages from one specific passage to another passage as a file</p>
+<dd><p>Downloads a range of passages from one specific passage to another passage as a file.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -344,7 +358,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_downloader.YAMLDownloader.download_passages">
 <span class="sig-name descname"><span class="pre">download_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader.download_passages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages of the same chapter as a file</p>
+<dd><p>Downloads a range of passages of the same chapter as a file.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -380,7 +396,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.get_book">
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.get_book" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all chapters for a specific book from the Bible files</p>
+<dd><p>Gets all chapters for a specific book from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -403,7 +420,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.get_chapter">
 <span class="sig-name descname"><span class="pre">get_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.get_chapter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single chapter from the Bible files</p>
+<dd><p>Gets a single chapter from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -427,7 +445,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.get_chapters">
 <span class="sig-name descname"><span class="pre">get_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.get_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from a specified chapters selection from the Bible files</p>
+<dd><p>Gets a range of passages from a specified chapters selection from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -452,7 +471,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.get_passage">
 <span class="sig-name descname"><span class="pre">get_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.get_passage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single passage from the Bible files</p>
+<dd><p>Gets a single passage from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -477,7 +497,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.get_passage_range">
 <span class="sig-name descname"><span class="pre">get_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.get_passage_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from one specific passage to another passage from the Bible files</p>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -504,7 +525,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.get_passages">
 <span class="sig-name descname"><span class="pre">get_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.get_passages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages of the same chapter from the files</p>
+<dd><p>Gets a range of passages of the same chapter from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -563,7 +585,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_downloader.JSONDownloader.download_chapter">
 <span class="sig-name descname"><span class="pre">download_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader.download_chapter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a single chapter as a file</p>
+<dd><p>Downloads a single chapter as a file.</p>
+<p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -587,7 +610,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_downloader.JSONDownloader.download_chapters">
 <span class="sig-name descname"><span class="pre">download_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader.download_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages from a specified chapter selection as a file</p>
+<dd><p>Downloads a range of passages from a specified chapter selection as a file.</p>
+<p>Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -612,7 +636,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_downloader.JSONDownloader.download_passage">
 <span class="sig-name descname"><span class="pre">download_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader.download_passage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a single passage as a file</p>
+<dd><p>Downloads a single passage as a file.</p>
+<p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
+boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -637,7 +663,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_downloader.JSONDownloader.download_passage_range">
 <span class="sig-name descname"><span class="pre">download_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader.download_passage_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages from one specific passage to another passage as a file</p>
+<dd><p>Downloads a range of passages from one specific passage to another passage as a file.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -664,7 +692,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_downloader.JSONDownloader.download_passages">
 <span class="sig-name descname"><span class="pre">download_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader.download_passages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages of the same chapter as a file</p>
+<dd><p>Downloads a range of passages of the same chapter as a file.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -700,7 +730,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.get_book">
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.get_book" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all chapters for a specific book from the Bible files</p>
+<dd><p>Gets all chapters for a specific book from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -723,7 +754,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.get_chapter">
 <span class="sig-name descname"><span class="pre">get_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.get_chapter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single chapter from the Bible files</p>
+<dd><p>Gets a single chapter from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -747,7 +779,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.get_chapters">
 <span class="sig-name descname"><span class="pre">get_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.get_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from a specified chapters selection from the Bible files</p>
+<dd><p>Gets a range of passages from a specified chapters selection from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -772,7 +805,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.get_passage">
 <span class="sig-name descname"><span class="pre">get_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.get_passage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single passage from the Bible files</p>
+<dd><p>Gets a single passage from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -797,7 +831,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.get_passage_range">
 <span class="sig-name descname"><span class="pre">get_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.get_passage_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from one specific passage to another passage from the Bible files</p>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -824,7 +859,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.get_passages">
 <span class="sig-name descname"><span class="pre">get_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.get_passages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages of the same chapter from the files</p>
+<dd><p>Gets a range of passages of the same chapter from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -883,7 +919,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_downloader.XMLDownloader.download_chapter">
 <span class="sig-name descname"><span class="pre">download_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader.download_chapter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a single chapter as a file</p>
+<dd><p>Downloads a single chapter as a file.</p>
+<p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -907,7 +944,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_downloader.XMLDownloader.download_chapters">
 <span class="sig-name descname"><span class="pre">download_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader.download_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages from a specified chapter selection as a file</p>
+<dd><p>Downloads a range of passages from a specified chapter selection as a file.</p>
+<p>Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -932,7 +970,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_downloader.XMLDownloader.download_passage">
 <span class="sig-name descname"><span class="pre">download_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader.download_passage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a single passage as a file</p>
+<dd><p>Downloads a single passage as a file.</p>
+<p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
+boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -957,7 +997,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_downloader.XMLDownloader.download_passage_range">
 <span class="sig-name descname"><span class="pre">download_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader.download_passage_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages from one specific passage to another passage as a file</p>
+<dd><p>Downloads a range of passages from one specific passage to another passage as a file.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -984,7 +1026,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_downloader.XMLDownloader.download_passages">
 <span class="sig-name descname"><span class="pre">download_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader.download_passages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages of the same chapter as a file</p>
+<dd><p>Downloads a range of passages of the same chapter as a file.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1020,7 +1064,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.get_book">
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.get_book" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all chapters for a specific book from the Bible files</p>
+<dd><p>Gets all chapters for a specific book from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1043,7 +1088,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.get_chapter">
 <span class="sig-name descname"><span class="pre">get_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.get_chapter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single chapter from the Bible files</p>
+<dd><p>Gets a single chapter from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1067,7 +1113,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.get_chapters">
 <span class="sig-name descname"><span class="pre">get_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.get_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from a specified chapters selection from the Bible files</p>
+<dd><p>Gets a range of passages from a specified chapters selection from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1092,7 +1139,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.get_passage">
 <span class="sig-name descname"><span class="pre">get_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.get_passage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single passage from the Bible files</p>
+<dd><p>Gets a single passage from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1117,7 +1165,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.get_passage_range">
 <span class="sig-name descname"><span class="pre">get_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.get_passage_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from one specific passage to another passage from the Bible files</p>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1144,7 +1193,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.get_passages">
 <span class="sig-name descname"><span class="pre">get_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.get_passages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages of the same chapter from the files</p>
+<dd><p>Gets a range of passages of the same chapter from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1203,7 +1253,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_downloader.CSVDownloader.download_chapter">
 <span class="sig-name descname"><span class="pre">download_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader.download_chapter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a single chapter as a file</p>
+<dd><p>Downloads a single chapter as a file.</p>
+<p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1227,7 +1278,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_downloader.CSVDownloader.download_chapters">
 <span class="sig-name descname"><span class="pre">download_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader.download_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages from a specified chapter selection as a file</p>
+<dd><p>Downloads a range of passages from a specified chapter selection as a file.</p>
+<p>Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1252,7 +1304,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_downloader.CSVDownloader.download_passage">
 <span class="sig-name descname"><span class="pre">download_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader.download_passage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a single passage as a file</p>
+<dd><p>Downloads a single passage as a file.</p>
+<p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
+boundaries of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1277,7 +1331,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_downloader.CSVDownloader.download_passage_range">
 <span class="sig-name descname"><span class="pre">download_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader.download_passage_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages from one specific passage to another passage as a file</p>
+<dd><p>Downloads a range of passages from one specific passage to another passage as a file.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1304,7 +1360,9 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_downloader.CSVDownloader.download_passages">
 <span class="sig-name descname"><span class="pre">download_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader.download_passages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a range of passages of the same chapter as a file</p>
+<dd><p>Downloads a range of passages of the same chapter as a file.</p>
+<p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+of the specified book.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1340,7 +1398,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.get_book">
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.get_book" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all chapters for a specific book from the Bible files</p>
+<dd><p>Gets all chapters for a specific book from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1363,7 +1422,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.get_chapter">
 <span class="sig-name descname"><span class="pre">get_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.get_chapter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single chapter from the Bible files</p>
+<dd><p>Gets a single chapter from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1387,7 +1447,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.get_chapters">
 <span class="sig-name descname"><span class="pre">get_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.get_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from a specified chapters selection from the Bible files</p>
+<dd><p>Gets a range of passages from a specified chapters selection from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1412,7 +1473,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.get_passage">
 <span class="sig-name descname"><span class="pre">get_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.get_passage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single passage from the Bible files</p>
+<dd><p>Gets a single passage from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1437,7 +1499,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.get_passage_range">
 <span class="sig-name descname"><span class="pre">get_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.get_passage_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from one specific passage to another passage from the Bible files</p>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1464,7 +1527,8 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.get_passages">
 <span class="sig-name descname"><span class="pre">get_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.get_passages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages of the same chapter from the files</p>
+<dd><p>Gets a range of passages of the same chapter from a file.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

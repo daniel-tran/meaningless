@@ -39,7 +39,10 @@ class WebExtractor:
 
     def get_passage(self, book, chapter, passage):
         """
-        Gets a single passage from the Bible Gateway site
+        Gets a single passage from the Bible Gateway site.
+
+        The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
+        boundaries of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -54,7 +57,10 @@ class WebExtractor:
 
     def get_passages(self, book, chapter, passage_from, passage_to):
         """
-        Gets a range of passages of the same chapter from the Bible Gateway site
+        Gets a range of passages of the same chapter from the Bible Gateway site.
+
+        Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+        of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -71,7 +77,9 @@ class WebExtractor:
 
     def get_chapter(self, book, chapter):
         """
-        Gets a single chapter from the Bible Gateway site
+        Gets a single chapter from the Bible Gateway site.
+
+        The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -84,7 +92,9 @@ class WebExtractor:
 
     def get_chapters(self, book, chapter_from, chapter_to):
         """
-        Gets a range of passages from a specified chapters selection from the Bible Gateway site
+        Gets a range of passages from a specified chapters selection from the Bible Gateway site.
+
+        The chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -99,7 +109,7 @@ class WebExtractor:
 
     def get_book(self, book):
         """
-        Gets all chapters for a specific book from the Bible Gateway site
+        Gets all chapters for a specific book from the Bible Gateway site.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -111,7 +121,10 @@ class WebExtractor:
 
     def get_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to):
         """
-        Gets a range of passages from one specific passage to another passage from the Bible Gateway site
+        Gets a range of passages from one specific passage to another passage from the Bible Gateway site.
+
+        Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+        of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str

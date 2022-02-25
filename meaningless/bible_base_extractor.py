@@ -49,7 +49,9 @@ class BaseExtractor:
 
     def get_passage(self, book, chapter, passage, file_path=''):
         """
-        Gets a single passage from the Bible files
+        Gets a single passage from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -69,7 +71,9 @@ class BaseExtractor:
 
     def get_passages(self, book, chapter, passage_from, passage_to, file_path=''):
         """
-        Gets a range of passages of the same chapter from the files
+        Gets a range of passages of the same chapter from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -91,7 +95,9 @@ class BaseExtractor:
 
     def get_chapter(self, book, chapter, file_path=''):
         """
-        Gets a single chapter from the Bible files
+        Gets a single chapter from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -109,7 +115,9 @@ class BaseExtractor:
 
     def get_chapters(self, book, chapter_from, chapter_to, file_path=''):
         """
-        Gets a range of passages from a specified chapters selection from the Bible files
+        Gets a range of passages from a specified chapters selection from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -129,7 +137,9 @@ class BaseExtractor:
 
     def get_book(self, book, file_path=''):
         """
-        Gets all chapters for a specific book from the Bible files
+        Gets all chapters for a specific book from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -145,7 +155,9 @@ class BaseExtractor:
 
     def get_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to, file_path=''):
         """
-        Gets a range of passages from one specific passage to another passage from the Bible files
+        Gets a range of passages from one specific passage to another passage from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
