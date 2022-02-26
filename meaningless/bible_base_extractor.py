@@ -212,16 +212,16 @@ class BaseExtractor:
             # Cast to an integer, as it is used in certain numeric operations later on.
             passage_final = int(common.dict_keys_to_sorted_list(document[book_name][self.__key_cast(chapter)].keys())
                                 [-1])
+            passage_min = int(common.dict_keys_to_sorted_list(document[book_name][self.__key_cast(chapter)].keys())[0])
             if chapter == capped_chapter_from:
                 # For the first chapter, an initial set of passages can be ignored (undercuts the passage selection)
                 # Apply a boundary to the passage to prevent invalid keys being accessed
-                passage_min = next(iter((document[book_name][self.__key_cast(chapter)].keys())))
                 passage_initial = common.get_capped_integer(passage_from, min_value=passage_min,
                                                             max_value=passage_final)
             if chapter == capped_chapter_to:
                 # For the last chapter, a trailing set of passages can be ignored (exceeds the passage selection)
                 # Apply a boundary to the passage to prevent invalid keys being accessed
-                passage_final = common.get_capped_integer(passage_to, max_value=passage_final)
+                passage_final = common.get_capped_integer(passage_to, min_value=passage_min, max_value=passage_final)
             # Extend the range by 1 since the last passage is also included in the iteration
             [passage_list.append(document[book_name][self.__key_cast(chapter)][self.__key_cast(passage)]) for passage in
              range(passage_initial, passage_final + 1)]
