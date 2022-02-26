@@ -125,7 +125,7 @@ class BaseDownloader:
         Downloads a single passage as a file.
 
         The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
-        boundaries of the specified book.
+        boundaries of the specified book, except in the case where passage is unreasonably high.
 
         :param book: Name of the book
         :type book: str
@@ -148,7 +148,7 @@ class BaseDownloader:
         Downloads a range of passages of the same chapter as a file.
 
         Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-        of the specified book.
+        of the specified book, except in the case where passage_from is unreasonably high.
 
         :param book: Name of the book
         :type book: str
@@ -232,7 +232,7 @@ class BaseDownloader:
         Downloads a range of passages from one specific passage to another passage as a file.
 
         Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-        of the specified book.
+        of the specified book, except in the case where passage_from is unreasonably high.
 
         :param book: Name of the book
         :type book: str

@@ -304,7 +304,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader.download_passage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a single passage as a file.</p>
 <p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
-boundaries of the specified book.</p>
+boundaries of the specified book, except in the case where passage is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -331,7 +331,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader.download_passage_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a range of passages from one specific passage to another passage as a file.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-of the specified book.</p>
+of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -360,7 +360,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader.download_passages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a range of passages of the same chapter as a file.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-of the specified book.</p>
+of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -638,7 +638,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader.download_passage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a single passage as a file.</p>
 <p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
-boundaries of the specified book.</p>
+boundaries of the specified book, except in the case where passage is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -665,7 +665,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader.download_passage_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a range of passages from one specific passage to another passage as a file.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-of the specified book.</p>
+of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -694,7 +694,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader.download_passages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a range of passages of the same chapter as a file.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-of the specified book.</p>
+of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -972,7 +972,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader.download_passage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a single passage as a file.</p>
 <p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
-boundaries of the specified book.</p>
+boundaries of the specified book, except in the case where passage is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -999,7 +999,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader.download_passage_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a range of passages from one specific passage to another passage as a file.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-of the specified book.</p>
+of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1028,7 +1028,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader.download_passages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a range of passages of the same chapter as a file.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-of the specified book.</p>
+of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1306,7 +1306,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader.download_passage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a single passage as a file.</p>
 <p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
-boundaries of the specified book.</p>
+boundaries of the specified book, except in the case where passage is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1333,7 +1333,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader.download_passage_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a range of passages from one specific passage to another passage as a file.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-of the specified book.</p>
+of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1362,7 +1362,7 @@ extension.</p></li>
 <span class="sig-name descname"><span class="pre">download_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader.download_passages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a range of passages of the same chapter as a file.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
-of the specified book.</p>
+of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
