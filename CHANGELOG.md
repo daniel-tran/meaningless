@@ -3,6 +3,7 @@
 ## 0.5.0
 - Added CSV Extractor and CSV Downloader
 - Added csv_file_interface module to assist with CSV file access
+- Added translation support for: NIVUK
 - Drop library support for Python 3.6
 
 ## 0.4.0

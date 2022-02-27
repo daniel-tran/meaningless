@@ -54,6 +54,7 @@ You can view the API documentation as static HTML documents from `docs\index.htm
 - NASB1995
 - NET
 - NIV
+- NIVUK
 - NKJV
 - NLT
 - NLV
