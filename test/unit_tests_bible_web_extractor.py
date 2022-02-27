@@ -283,6 +283,15 @@ class UnitTests(unittest.TestCase):
         self.assertRaises(InvalidSearchError, bible.get_book, 'Ecclesiastes')
         self.assertRaises(InvalidSearchError, bible.get_passage_range, 'Ecclesiastes', 1, 2, 1, 3)
 
+    def test_get_passage_nivuk_versenum_tags(self):
+        bible = WebExtractor(translation='NIVUK')
+        text = bible.search('Mark 15:27 - 29')
+        mark = '²⁷ They crucified two rebels with him, one on his right and one on his left. ' \
+               '²⁹ Those who passed by hurled insults at him, shaking their heads and saying, ' \
+               '‘So! You who are going to destroy the temple and build it in three days,'
+        # The versenum tag doesn't contain any useful information and should be removed, along with its extra spacing
+        self.assertEqual(mark, text, 'Passage is incorrect')
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.
