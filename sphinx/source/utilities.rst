@@ -32,3 +32,11 @@ XML File Interface
    :members:
    :undoc-members:
    :show-inheritance:
+
+CSV File Interface
+-------------------------------------------
+
+.. automodule:: meaningless.utilities.csv_file_interface
+   :members:
+   :undoc-members:
+   :show-inheritance:

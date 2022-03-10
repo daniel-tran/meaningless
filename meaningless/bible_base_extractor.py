@@ -49,7 +49,9 @@ class BaseExtractor:
 
     def get_passage(self, book, chapter, passage, file_path=''):
         """
-        Gets a single passage from the Bible files
+        Gets a single passage from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -69,7 +71,9 @@ class BaseExtractor:
 
     def get_passages(self, book, chapter, passage_from, passage_to, file_path=''):
         """
-        Gets a range of passages of the same chapter from the files
+        Gets a range of passages of the same chapter from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -91,7 +95,9 @@ class BaseExtractor:
 
     def get_chapter(self, book, chapter, file_path=''):
         """
-        Gets a single chapter from the Bible files
+        Gets a single chapter from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -109,7 +115,9 @@ class BaseExtractor:
 
     def get_chapters(self, book, chapter_from, chapter_to, file_path=''):
         """
-        Gets a range of passages from a specified chapters selection from the Bible files
+        Gets a range of passages from a specified chapters selection from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -129,7 +137,9 @@ class BaseExtractor:
 
     def get_book(self, book, file_path=''):
         """
-        Gets all chapters for a specific book from the Bible files
+        Gets all chapters for a specific book from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -145,7 +155,9 @@ class BaseExtractor:
 
     def get_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to, file_path=''):
         """
-        Gets a range of passages from one specific passage to another passage from the Bible files
+        Gets a range of passages from one specific passage to another passage from a file.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
         :param book: Name of the book
         :type book: str
@@ -188,9 +200,10 @@ class BaseExtractor:
 
         # Apply a boundary to the chapters to prevent invalid keys being accessed
         # Use the last key of the book, as it's not guaranteed that the number of chapters == last key
+        chapter_first = common.dict_keys_to_sorted_list(document[book_name].keys())[0]
         chapter_final = common.dict_keys_to_sorted_list(document[book_name].keys())[-1]
-        capped_chapter_from = common.get_capped_integer(chapter_from, max_value=chapter_final)
-        capped_chapter_to = common.get_capped_integer(chapter_to, max_value=chapter_final)
+        capped_chapter_from = common.get_capped_integer(chapter_from, min_value=chapter_first, max_value=chapter_final)
+        capped_chapter_to = common.get_capped_integer(chapter_to, min_value=chapter_first, max_value=chapter_final)
         # Extend the range by 1 since chapter_to is also included in the iteration
         for chapter in range(capped_chapter_from, capped_chapter_to + 1):
             # Determine the range of passages to extract from the chapter
@@ -199,14 +212,16 @@ class BaseExtractor:
             # Cast to an integer, as it is used in certain numeric operations later on.
             passage_final = int(common.dict_keys_to_sorted_list(document[book_name][self.__key_cast(chapter)].keys())
                                 [-1])
+            passage_min = int(common.dict_keys_to_sorted_list(document[book_name][self.__key_cast(chapter)].keys())[0])
             if chapter == capped_chapter_from:
                 # For the first chapter, an initial set of passages can be ignored (undercuts the passage selection)
                 # Apply a boundary to the passage to prevent invalid keys being accessed
-                passage_initial = common.get_capped_integer(passage_from, max_value=passage_final)
+                passage_initial = common.get_capped_integer(passage_from, min_value=passage_min,
+                                                            max_value=passage_final)
             if chapter == capped_chapter_to:
                 # For the last chapter, a trailing set of passages can be ignored (exceeds the passage selection)
                 # Apply a boundary to the passage to prevent invalid keys being accessed
-                passage_final = common.get_capped_integer(passage_to, max_value=passage_final)
+                passage_final = common.get_capped_integer(passage_to, min_value=passage_min, max_value=passage_final)
             # Extend the range by 1 since the last passage is also included in the iteration
             [passage_list.append(document[book_name][self.__key_cast(chapter)][self.__key_cast(passage)]) for passage in
              range(passage_initial, passage_final + 1)]
@@ -217,9 +232,7 @@ class BaseExtractor:
         if self.use_ascii_punctuation:
             passage_list = [common.unicode_to_ascii_punctuation(passage) for passage in passage_list]
         if not self.show_passage_numbers:
-            # Note that this is a naive replacement, but should be OK as long as the original file source was from the
-            # module's pre-supplied resources. Otherwise, using an external file source risks losing superscript
-            # numbers that were not intended as passage numbers.
+            # This assumes that all superscript numbers are indicative of the passage number
             passage_list = [common.remove_superscript_numbers_in_passage(passage) for passage in passage_list]
         if self.output_as_list:
             if self.strip_excess_whitespace_from_list:

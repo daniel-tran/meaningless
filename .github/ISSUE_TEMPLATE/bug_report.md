@@ -1,3 +1,12 @@
+---
+name: Bug report
+about: Report a bug in this library
+title: "[Bug] "
+labels: 'bug'
+assignees: ''
+
+---
+
 ### Summary of the problem
 Briefly describe what the current behaviour of the library is that causes the problem in question.
 

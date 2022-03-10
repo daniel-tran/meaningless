@@ -342,6 +342,44 @@ class UnitTests(unittest.TestCase):
         # Custom file only contains one chapter and one passage, but doesn't start on the first passage or chapter
         self.assertEqual(text, eccl, 'Passages do not match')
 
+    def test_get_base_passage_buffered_first_chapter_using_negative_parameters(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              translation=self.get_test_translation())
+        eccl = '² I said of laughter, “It is foolishness;” and of mirth, ' \
+               '“What does it accomplish?”'
+        custom_file = '{0}/{1}'.format(self.get_test_directory(),
+                                       'test_get_base_passage_buffered_first_chapter_using_negative_parameters.yaml')
+        text = bible.get_passage_range('Ecclesiastes', -1, -1, -1, -1, file_path=custom_file)
+        # All parameters should default to their minimum values, resulting in the first passage being returned
+        self.assertEqual(text, eccl, 'Passages do not match')
+
+    def test_get_base_passage_buffered_first_passage_using_chapter_interface(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              translation=self.get_test_translation())
+        eccl = '² “Vanity of vanities,” says the Preacher; ' \
+               '“Vanity of vanities, all is vanity.”'
+        custom_file = '{0}/{1}'.format(self.get_test_directory(),
+                                       'test_get_base_passage_buffered_first_passage_using_chapter_interface.yaml')
+        text = bible.get_chapter('Ecclesiastes', 1, file_path=custom_file)
+        # Custom file only contains one chapter and one passage, but should be able to detect that the passage count
+        # doesn't start at 1
+        self.assertEqual(text, eccl, 'Passages do not match')
+
+    def test_get_base_passage_buffered_first_chapter_using_book_interface(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              translation=self.get_test_translation())
+        eccl = '² I said of laughter, “It is foolishness;” and of mirth, ' \
+               '“What does it accomplish?”'
+        custom_file = '{0}/{1}'.format(self.get_test_directory(),
+                                       'test_get_base_passage_buffered_first_chapter_using_book_interface.yaml')
+        text = bible.get_book('Ecclesiastes', file_path=custom_file)
+        # Custom file only contains one chapter and one passage, but should be able to detect that both the passage
+        # and chapter count don't start at 1
+        self.assertEqual(text, eccl, 'Passages do not match')
+
     def test_translation_mismatch_error(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),

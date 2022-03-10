@@ -20,25 +20,26 @@ The currently recommended code coverage tool is [coverage.py ](https://github.co
 
 # Submitting a change
 1. **Check that all tests pass with your change**, in addition to any newly introduced tests.
-2. Add a description of your change to `CHANGELOG.md`.
-3. Push your changes to your forked repo.
-4. Create a pull request with your changes. You can also add yourself to the Contributors list in `README.md`.
+2. Push your changes to your forked repo.
+3. Create a pull request with your changes.
 - Pull requests should be made against the current development branch, which is the version number.
 - For consistency, the title should be prefixed with the version number followed by a colon.
+
+Depending on the significance of your changes, it may be mentioned in `CHANGELOG.md` or `README.md`.
 
 # Architecture
 The following diagram represents the logical dependencies of each library component, and how changes in one component can propagate to others:
 ```
-                                        Web Extractor
-                                              |
-                      -----------------------------------------------------
-                      |                       |                           |
-              YAML Downloader*         JSON Downloader*             XML Downloader*
-                      |                       |                           |
-        [YAML files only need to     [JSON files only need to     [XML files only need to
-           be downloaded once]          be downloaded once]          be downloaded once]
-                      |                       |                           |
-             YAML Extractor*           JSON Extractor*              XML Extractor*
+                                            Web Extractor
+                                                  |
+              --------------------------------------------------------------------------------
+              |                       |                           |                          |
+      YAML Downloader*         JSON Downloader*             XML Downloader*            CSV Downloader*
+              |                       |                           |                          |
+[YAML files only need to     [JSON files only need to     [XML files only need to     [CSV files only need to
+   be downloaded once]          be downloaded once]          be downloaded once]         be downloaded once]
+              |                       |                           |                          |
+     YAML Extractor*           JSON Extractor*              XML Extractor*             CSV Extractor*
 ```
 
 \* indicates that the component is a subclass of a base implementation, such as the Base Extractor or Base Downloader.

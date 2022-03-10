@@ -39,7 +39,7 @@ def is_supported_english_translation(translation):
     """
     return translation.upper() in ['ASV', 'AKJV', 'BRG', 'CJB', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
                                    'JUB', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB', 'NASB1995', 'NET',
-                                   'NIV', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
+                                   'NIV', 'NIVUK', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
 
 
 def is_supported_spanish_translation(translation):
@@ -307,7 +307,7 @@ def get_page(url):
 
     >>> get_page('https://www.biblegateway.com')
     b'<!DOCTYPE html>...'
-    >>> get_page('https://www.com')
+    >>> get_page('https://www.randomwebsite.com')
     Traceback (most recent call last):
     ...
     urllib.error.URLError: <urlopen error ...>

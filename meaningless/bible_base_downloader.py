@@ -71,6 +71,12 @@ class BaseDownloader:
                 'John 5:4',
                 'Acts 8:37', 'Acts 15:34', 'Acts 28:29',
                 'Romans 16:24'],
+        'NIVUK': ['Matthew 17:21', 'Matthew 18:11', 'Matthew 23:14',
+                  'Mark 7:16', 'Mark 9:44', 'Mark 9:46', 'Mark 11:26', 'Mark 15:28',
+                  'Luke 17:36', 'Luke 23:17',
+                  'John 5:4',
+                  'Acts 8:37', 'Acts 15:34', 'Acts 24:7', 'Acts 28:29',
+                  'Romans 16:24'],
         'NOG': ['Matthew 17:21', 'Matthew 18:11', 'Matthew 23:14',
                 'Mark 9:44', 'Mark 9:46', 'Mark 11:26', 'Mark 15:28',
                 'Luke 17:36', 'Luke 23:17',
@@ -122,7 +128,10 @@ class BaseDownloader:
 
     def download_passage(self, book, chapter, passage, file_path=''):
         """
-        Downloads a single passage as a file
+        Downloads a single passage as a file.
+
+        The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
+        boundaries of the specified book, except in the case where passage is unreasonably high.
 
         :param book: Name of the book
         :type book: str
@@ -142,7 +151,10 @@ class BaseDownloader:
 
     def download_passages(self, book, chapter, passage_from, passage_to, file_path=''):
         """
-        Downloads a range of passages of the same chapter as a file
+        Downloads a range of passages of the same chapter as a file.
+
+        Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+        of the specified book, except in the case where passage_from is unreasonably high.
 
         :param book: Name of the book
         :type book: str
@@ -164,7 +176,9 @@ class BaseDownloader:
 
     def download_chapter(self, book, chapter, file_path=''):
         """
-        Downloads a single chapter as a file
+        Downloads a single chapter as a file.
+
+        The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.
 
         :param book: Name of the book
         :type book: str
@@ -182,7 +196,9 @@ class BaseDownloader:
 
     def download_chapters(self, book, chapter_from, chapter_to, file_path=''):
         """
-        Downloads a range of passages from a specified chapter selection as a file
+        Downloads a range of passages from a specified chapter selection as a file.
+
+        Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.
 
         :param book: Name of the book
         :type book: str
@@ -219,7 +235,10 @@ class BaseDownloader:
 
     def download_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to, file_path=''):
         """
-        Downloads a range of passages from one specific passage to another passage as a file
+        Downloads a range of passages from one specific passage to another passage as a file.
+
+        Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+        of the specified book, except in the case where passage_from is unreasonably high.
 
         :param book: Name of the book
         :type book: str

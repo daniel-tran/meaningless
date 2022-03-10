@@ -39,7 +39,10 @@ class WebExtractor:
 
     def get_passage(self, book, chapter, passage):
         """
-        Gets a single passage from the Bible Gateway site
+        Gets a single passage from the Bible Gateway site.
+
+        The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
+        boundaries of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -54,7 +57,10 @@ class WebExtractor:
 
     def get_passages(self, book, chapter, passage_from, passage_to):
         """
-        Gets a range of passages of the same chapter from the Bible Gateway site
+        Gets a range of passages of the same chapter from the Bible Gateway site.
+
+        Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+        of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -71,7 +77,9 @@ class WebExtractor:
 
     def get_chapter(self, book, chapter):
         """
-        Gets a single chapter from the Bible Gateway site
+        Gets a single chapter from the Bible Gateway site.
+
+        The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -84,7 +92,9 @@ class WebExtractor:
 
     def get_chapters(self, book, chapter_from, chapter_to):
         """
-        Gets a range of passages from a specified chapters selection from the Bible Gateway site
+        Gets a range of passages from a specified chapters selection from the Bible Gateway site.
+
+        The chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -99,7 +109,7 @@ class WebExtractor:
 
     def get_book(self, book):
         """
-        Gets all chapters for a specific book from the Bible Gateway site
+        Gets all chapters for a specific book from the Bible Gateway site.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -111,7 +121,10 @@ class WebExtractor:
 
     def get_passage_range(self, book, chapter_from, passage_from, chapter_to, passage_to):
         """
-        Gets a range of passages from one specific passage to another passage from the Bible Gateway site
+        Gets a range of passages from one specific passage to another passage from the Bible Gateway site.
+
+        Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
+        of the specified book.
 
         :param book: Name of the book (This must match the name used by the translation)
         :type book: str
@@ -251,6 +264,13 @@ class WebExtractor:
         [interlude.replace_with(' {0}'.format(interlude.text)) for interlude in interludes]
         # <br> tags will naturally be ignored when getting text
         [br.replace_with('\n') for br in soup.find_all('br')]
+        # The versenum tag appears in only a few translations such as NIVUK, and is difficult to handle because
+        # its child tags are usually decomposed before this point, but space padding seems to take its place.
+        # Interestingly, the tag itself can be replaced with a placeholder which itself can be removed eventually,
+        # though it needs to be 2 or more characters long to reduce the total number of spaces in the final result
+        # and, optionally, end with a space (this just makes it easier to get the extra spaces normalised)
+        versenum_substitution_text = '--VERSE-NUM-- '
+        [versenum.replace_with(versenum_substitution_text) for versenum in soup.find_all('versenum')]
         # Convert chapter numbers into new lines
         [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
         # Preserve superscript verse numbers by using their Unicode counterparts
@@ -280,6 +300,9 @@ class WebExtractor:
         # To account for spaces between tags that end up blending into the passage contents, this regex replacement is
         # specifically used to remove that additional spacing, since it is part of the actual page layout.
         all_text = re.sub('([^ ]) {2,3}([^ ])', r'\1 \2', raw_passage_text)
+
+        # Remove all substituted versenum tags, and should also normalise the extra space
+        all_text = all_text.replace(versenum_substitution_text, '')
 
         # Remove all superscript numbers if the passage numbers should be hidden
         if not self.show_passage_numbers:

@@ -13,6 +13,7 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
+import re
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../../'))
@@ -21,8 +22,12 @@ sys.path.insert(0, os.path.abspath('../../'))
 # -- Project information -----------------------------------------------------
 
 project = 'Meaningless'
-copyright = '2021, Daniel Tran'
-author = 'Daniel Tran'
+
+# Extract author and copyright year details from the license to avoid data duplication
+with open('../../LICENSE.md', 'r') as fh:
+    details = re.search('Copyright \(c\) (\d+) (.+)$', fh.read(), re.MULTILINE)
+    author = details.group(2)
+    copyright = '{0}, {1}'.format(details.group(1), author)
 
 # The full version, including alpha/beta/rc tags
 with open('../../VERSION.txt', 'r') as fh:
@@ -53,6 +58,8 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# Toggled mainly to prevent pre-evaluation of default arguments such as os.cwd()
+autodoc_preserve_defaults = True
 
 # -- Options for HTML output -------------------------------------------------
 
