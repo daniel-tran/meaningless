@@ -195,8 +195,8 @@ class BaseExtractor:
         # Otherwise, the extractor could be used to read a bunch of files and each return different results
         # on the same passage even though the translation class property is unchanged.
         file_translation = document['Info']['Translation']
-        if translation != file_translation:
-            raise TranslationMismatchError(self.translation, file_translation)
+        if not common.is_matching_translation(translation, file_translation):
+            raise TranslationMismatchError(translation, file_translation)
 
         # Apply a boundary to the chapters to prevent invalid keys being accessed
         # Use the last key of the book, as it's not guaranteed that the number of chapters == last key

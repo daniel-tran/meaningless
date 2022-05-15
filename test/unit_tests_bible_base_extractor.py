@@ -388,6 +388,19 @@ class UnitTests(unittest.TestCase):
         custom_file = '{0}/{1}'.format(self.get_test_directory(), 'Ecclesiastes.yaml')
         self.assertRaises(TranslationMismatchError, bible.get_passage, 'Ecclesiastes', 2, 2, custom_file)
 
+    def test_translation_alias(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              default_directory=self.get_test_directory(), translation='NRSVUE')
+        # Read NRSV contents using an extractor using the NRSVUE translation
+        custom_file = '{0}/{1}'.format(self.get_test_directory('NRSV'), 'Ecclesiastes.yaml')
+        nrsv_text = bible.get_book('Ecclesiastes', file_path=custom_file)
+        # Read NRSVUE contents using an extractor using the NRSV translation
+        bible.translation = 'NRSV'
+        custom_file = '{0}/{1}'.format(self.get_test_directory('NRSVUE'), 'Ecclesiastes.yaml')
+        nrsvue_text = bible.get_book('Ecclesiastes', file_path=custom_file)
+        self.assertEqual(nrsv_text, nrsvue_text, 'Passages do not match')
+
     def test_invalid_passage_error(self):
         bible = BaseExtractor(file_reading_function=json_file_interface.read,
                               file_extension=self.get_test_file_extension(),
