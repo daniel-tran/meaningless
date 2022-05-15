@@ -37,7 +37,7 @@ def is_supported_english_translation(translation):
     >>> is_supported_english_translation('RVA')
     False
     """
-    return translation.upper() in ['ASV', 'AKJV', 'BRG', 'CJB', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
+    return translation.upper() in ['ASV', 'AKJV', 'BRG', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
                                    'JUB', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB', 'NASB1995', 'NET',
                                    'NIV', 'NIVUK', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'NRSVUE', 'WEB', 'YLT']
 
