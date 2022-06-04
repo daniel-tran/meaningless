@@ -245,8 +245,8 @@ class BaseExtractor:
 
         return all_text.strip()
 
-    def find_keyword_in_passages(self, keyword, book, chapter, passage_from, passage_to, file_path='',
-                                 is_case_sensitive=False, is_regex=False):
+    def find_text_in_passages(self, keyword, book, chapter, passage_from, passage_to, file_path='',
+                              is_case_sensitive=False, is_regex=False):
         """
         Gets a range of passages of the same chapter from a file, where each passage contains
         a certain string or matches a particular regular expression.
@@ -278,10 +278,10 @@ class BaseExtractor:
                  or none of the passages met the search criteria.
         :rtype: str or list
         """
-        return self.find_keyword_in_passage_range(keyword, book, chapter, passage_from, chapter,
-                                                  passage_to, file_path, is_case_sensitive, is_regex)
+        return self.find_text_in_passage_range(keyword, book, chapter, passage_from, chapter,
+                                               passage_to, file_path, is_case_sensitive, is_regex)
 
-    def find_keyword_in_chapter(self, keyword, book, chapter, file_path='', is_case_sensitive=False, is_regex=False):
+    def find_text_in_chapter(self, keyword, book, chapter, file_path='', is_case_sensitive=False, is_regex=False):
         """
         Gets a range of passages from one specific passage to another passage from a file, where each passage contains
         a certain string or matches a particular regular expression.
@@ -309,11 +309,11 @@ class BaseExtractor:
                  or none of the passages met the search criteria.
         :rtype: str or list
         """
-        return self.find_keyword_in_passage_range(keyword, book, chapter, 1, chapter,
-                                                  common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
+        return self.find_text_in_passage_range(keyword, book, chapter, 1, chapter,
+                                               common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
 
-    def find_keyword_in_chapters(self, keyword, book, chapter_from, chapter_to, file_path='',
-                                 is_case_sensitive=False, is_regex=False):
+    def find_text_in_chapters(self, keyword, book, chapter_from, chapter_to, file_path='',
+                              is_case_sensitive=False, is_regex=False):
         """
         Gets a range of passages from a specified chapter selection from a file, where each passage contains
         a certain string or matches a particular regular expression.
@@ -343,10 +343,10 @@ class BaseExtractor:
                  or none of the passages met the search criteria.
         :rtype: str or list
         """
-        return self.find_keyword_in_passage_range(keyword, book, chapter_from, 1, chapter_to,
-                                                  common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
+        return self.find_text_in_passage_range(keyword, book, chapter_from, 1, chapter_to,
+                                               common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
 
-    def find_keyword_in_book(self, keyword, book, file_path='', is_case_sensitive=False, is_regex=False):
+    def find_text_in_book(self, keyword, book, file_path='', is_case_sensitive=False, is_regex=False):
         """
         Gets all passages for a specific book from a file, where each passage contains
         a certain string or matches a particular regular expression.
@@ -371,11 +371,11 @@ class BaseExtractor:
                  or none of the passages met the search criteria.
         :rtype: str or list
         """
-        return self.find_keyword_in_passage_range(keyword, book, 1, 1, common.get_chapter_count(book, self.translation),
-                                                  common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
+        return self.find_text_in_passage_range(keyword, book, 1, 1, common.get_chapter_count(book, self.translation),
+                                               common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
 
-    def find_keyword_in_passage_range(self, keyword, book, chapter_from, passage_from, chapter_to, passage_to,
-                                      file_path='', is_case_sensitive=False, is_regex=False):
+    def find_text_in_passage_range(self, keyword, book, chapter_from, passage_from, chapter_to, passage_to,
+                                   file_path='', is_case_sensitive=False, is_regex=False):
         """
         Gets a range of passages from one specific passage to another passage from a file, where each passage contains
         a certain string or matches a particular regular expression.

@@ -410,40 +410,40 @@ class UnitTests(unittest.TestCase):
         self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 9000, 1, 9001, custom_file)
         self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 1, 1, 1, custom_file)
 
-    def test_find_keyword_in_passages(self):
+    def test_find_text_in_passages(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_passages('Vanity of vanities', 'Ecclesiastes', 1, 1, 3)
+        search_result = bible.find_text_in_passages('Vanity of vanities', 'Ecclesiastes', 1, 1, 3)
         expected_result = bible.get_passage('Ecclesiastes', 1, 2)
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_chapter(self):
+    def test_find_text_in_chapter(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_chapter('Preacher', 'Ecclesiastes', 1)
+        search_result = bible.find_text_in_chapter('Preacher', 'Ecclesiastes', 1)
         expected_result = '{0}\n{1}\n{2}'.format(bible.get_passage('Ecclesiastes', 1, 1),
                                                  bible.get_passage('Ecclesiastes', 1, 2),
                                                  bible.get_passage('Ecclesiastes', 1, 12))
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_chapters(self):
+    def test_find_text_in_chapters(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_chapters('vanity', 'Ecclesiastes', 7, 8)
+        search_result = bible.find_text_in_chapters('vanity', 'Ecclesiastes', 7, 8)
         expected_result = '{0}\n{1}\n{2}\n{3}'.format(bible.get_passage('Ecclesiastes', 7, 6),
                                                       bible.get_passage('Ecclesiastes', 7, 15),
                                                       bible.get_passage('Ecclesiastes', 8, 10),
                                                       bible.get_passage('Ecclesiastes', 8, 14))
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_book(self):
+    def test_find_text_in_book(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_book('Preacher', 'Ecclesiastes')
+        search_result = bible.find_text_in_book('Preacher', 'Ecclesiastes')
         expected_result = '{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}'.format(bible.get_passage('Ecclesiastes', 1, 1),
                                                                      bible.get_passage('Ecclesiastes', 1, 2),
                                                                      bible.get_passage('Ecclesiastes', 1, 12),
@@ -453,81 +453,81 @@ class UnitTests(unittest.TestCase):
                                                                      bible.get_passage('Ecclesiastes', 12, 10))
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_passage_range(self):
+    def test_find_text_in_passage_range(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_passage_range('wisdom', 'Ecclesiastes', 1, 18, 2, 4)
+        search_result = bible.find_text_in_passage_range('wisdom', 'Ecclesiastes', 1, 18, 2, 4)
         expected_result = '{0}\n{1}'.format(bible.get_passage('Ecclesiastes', 1, 18),
                                             bible.get_passage('Ecclesiastes', 2, 3))
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_passage_range_for_passage_number(self):
+    def test_find_text_in_passage_range_for_passage_number(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_passage_range('²', 'Ecclesiastes', 1, 1, 1, 18)
+        search_result = bible.find_text_in_passage_range('²', 'Ecclesiastes', 1, 1, 1, 18)
         expected_result = '{0}\n{1}'.format(bible.get_passage('Ecclesiastes', 1, 2),
                                             bible.get_passage('Ecclesiastes', 1, 12))
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
         # Check that keyword searching takes into consideration the show_passage_numbers flag
         bible.show_passage_numbers = False
-        search_result = bible.find_keyword_in_passage_range('²', 'Ecclesiastes', 1, 1, 1, 18)
+        search_result = bible.find_text_in_passage_range('²', 'Ecclesiastes', 1, 1, 1, 18)
         self.assertEqual('', search_result, 'Passages should not have been found')
 
-    def test_find_keyword_in_passage_range_output_as_list(self):
+    def test_find_text_in_passage_range_output_as_list(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation(),
                               output_as_list=True)
-        search_result = bible.find_keyword_in_passage_range('wisdom', 'Ecclesiastes', 1, 18, 2, 4)
+        search_result = bible.find_text_in_passage_range('wisdom', 'Ecclesiastes', 1, 18, 2, 4)
         expected_result = bible.get_passage('Ecclesiastes', 1, 18) + bible.get_passage('Ecclesiastes', 2, 3)
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_passage_range_no_match(self):
+    def test_find_text_in_passage_range_no_match(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_passage_range('Tyre', 'Ecclesiastes', 1, 1, 12, 14)
+        search_result = bible.find_text_in_passage_range('Tyre', 'Ecclesiastes', 1, 1, 12, 14)
         expected_result = ''
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_passage_range_with_custom_file(self):
+    def test_find_text_in_passage_range_with_custom_file(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        file = '{0}/{1}'.format(self.get_test_directory(), 'test_find_keyword_in_passage_range_with_custom_file.yaml')
-        search_result = bible.find_keyword_in_passage_range('One', 'Ecclesiastes', 1, 1, 1, 5, file)
+        file = '{0}/{1}'.format(self.get_test_directory(), 'test_find_text_in_passage_range_with_custom_file.yaml')
+        search_result = bible.find_text_in_passage_range('One', 'Ecclesiastes', 1, 1, 1, 5, file)
         expected_result = bible.get_passage('Ecclesiastes', 1, 4, file)
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_passage_range_case_sensitive(self):
+    def test_find_text_in_passage_range_case_sensitive(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_passage_range('all', 'Ecclesiastes', 1, 1, 1, 8, is_case_sensitive=True)
+        search_result = bible.find_text_in_passage_range('all', 'Ecclesiastes', 1, 1, 1, 8, is_case_sensitive=True)
         expected_result = '{0}\n{1}\n{2}'.format(bible.get_passage('Ecclesiastes', 1, 2),
                                                  bible.get_passage('Ecclesiastes', 1, 3),
                                                  bible.get_passage('Ecclesiastes', 1, 6))
         # Expect to omit passages 7 and 8, since the search word is spelled as 'All'
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_passage_range_case_insensitive_regex(self):
+    def test_find_text_in_passage_range_case_insensitive_regex(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_passage_range(r'vanity|\sgain', 'Ecclesiastes', 1, 1, 1, 8, is_regex=True)
+        search_result = bible.find_text_in_passage_range(r'vanity|\sgain', 'Ecclesiastes', 1, 1, 1, 8, is_regex=True)
         expected_result = '{0}\n{1}'.format(bible.get_passage('Ecclesiastes', 1, 2),
                                             bible.get_passage('Ecclesiastes', 1, 3))
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
-    def test_find_keyword_in_passage_range_case_sensitive_regex(self):
+    def test_find_text_in_passage_range_case_sensitive_regex(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        search_result = bible.find_keyword_in_passage_range('Vanity|There', 'Ecclesiastes', 1, 1, 1, 18,
-                                                            is_regex=True, is_case_sensitive=True)
+        search_result = bible.find_text_in_passage_range('Vanity|There', 'Ecclesiastes', 1, 1, 1, 18,
+                                                         is_regex=True, is_case_sensitive=True)
         expected_result = '{0}\n{1}'.format(bible.get_passage('Ecclesiastes', 1, 2),
                                             bible.get_passage('Ecclesiastes', 1, 11))
         self.assertEqual(expected_result, search_result, 'Passages do not match')
