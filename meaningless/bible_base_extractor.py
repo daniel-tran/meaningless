@@ -245,7 +245,7 @@ class BaseExtractor:
 
         return all_text.strip()
 
-    def find_text_in_passages(self, keyword, book, chapter, passage_from, passage_to, file_path='',
+    def find_text_in_passages(self, search_text, book, chapter, passage_from, passage_to, file_path='',
                               is_case_sensitive=False, is_regex=False):
         """
         Gets a range of passages of the same chapter from a file, where each passage contains
@@ -253,8 +253,8 @@ class BaseExtractor:
 
         Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
-        :param keyword: Search text
-        :type keyword: str
+        :param search_text: Search text
+        :type search_text: str
         :type book: str
         :param book: Name of the book
         :type book: str
@@ -278,18 +278,18 @@ class BaseExtractor:
                  or none of the passages met the search criteria.
         :rtype: str or list
         """
-        return self.find_text_in_passage_range(keyword, book, chapter, passage_from, chapter,
+        return self.find_text_in_passage_range(search_text, book, chapter, passage_from, chapter,
                                                passage_to, file_path, is_case_sensitive, is_regex)
 
-    def find_text_in_chapter(self, keyword, book, chapter, file_path='', is_case_sensitive=False, is_regex=False):
+    def find_text_in_chapter(self, search_text, book, chapter, file_path='', is_case_sensitive=False, is_regex=False):
         """
         Gets a range of passages from one specific passage to another passage from a file, where each passage contains
         a certain string or matches a particular regular expression.
 
         Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
-        :param keyword: Search text
-        :type keyword: str
+        :param search_text: Search text
+        :type search_text: str
         :type book: str
         :param book: Name of the book
         :type book: str
@@ -309,10 +309,10 @@ class BaseExtractor:
                  or none of the passages met the search criteria.
         :rtype: str or list
         """
-        return self.find_text_in_passage_range(keyword, book, chapter, 1, chapter,
+        return self.find_text_in_passage_range(search_text, book, chapter, 1, chapter,
                                                common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
 
-    def find_text_in_chapters(self, keyword, book, chapter_from, chapter_to, file_path='',
+    def find_text_in_chapters(self, search_text, book, chapter_from, chapter_to, file_path='',
                               is_case_sensitive=False, is_regex=False):
         """
         Gets a range of passages from a specified chapter selection from a file, where each passage contains
@@ -320,8 +320,8 @@ class BaseExtractor:
 
         Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
-        :param keyword: Search text
-        :type keyword: str
+        :param search_text: Search text
+        :type search_text: str
         :type book: str
         :param book: Name of the book
         :type book: str
@@ -343,18 +343,18 @@ class BaseExtractor:
                  or none of the passages met the search criteria.
         :rtype: str or list
         """
-        return self.find_text_in_passage_range(keyword, book, chapter_from, 1, chapter_to,
+        return self.find_text_in_passage_range(search_text, book, chapter_from, 1, chapter_to,
                                                common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
 
-    def find_text_in_book(self, keyword, book, file_path='', is_case_sensitive=False, is_regex=False):
+    def find_text_in_book(self, search_text, book, file_path='', is_case_sensitive=False, is_regex=False):
         """
         Gets all passages for a specific book from a file, where each passage contains
         a certain string or matches a particular regular expression.
 
         Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
-        :param keyword: Search text
-        :type keyword: str
+        :param search_text: Search text
+        :type search_text: str
         :param book: Name of the book
         :type book: str
         :param file_path: When specified, reads the file from this location with a custom filename and extension.
@@ -371,10 +371,10 @@ class BaseExtractor:
                  or none of the passages met the search criteria.
         :rtype: str or list
         """
-        return self.find_text_in_passage_range(keyword, book, 1, 1, common.get_chapter_count(book, self.translation),
+        return self.find_text_in_passage_range(search_text, book, 1, 1, common.get_chapter_count(book, self.translation),
                                                common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
 
-    def find_text_in_passage_range(self, keyword, book, chapter_from, passage_from, chapter_to, passage_to,
+    def find_text_in_passage_range(self, search_text, book, chapter_from, passage_from, chapter_to, passage_to,
                                    file_path='', is_case_sensitive=False, is_regex=False):
         """
         Gets a range of passages from one specific passage to another passage from a file, where each passage contains
@@ -382,8 +382,8 @@ class BaseExtractor:
 
         Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
-        :param keyword: Search text
-        :type keyword: str
+        :param search_text: Search text
+        :type search_text: str
         :type book: str
         :param book: Name of the book
         :type book: str
@@ -417,12 +417,12 @@ class BaseExtractor:
 
         matching_passages = []
         if is_case_sensitive:
-            keyword_regex = re.compile(keyword)
+            keyword_regex = re.compile(search_text)
         else:
-            keyword_regex = re.compile(keyword, re.IGNORECASE)
+            keyword_regex = re.compile(search_text, re.IGNORECASE)
         for passage in passages:
-            if (not is_case_sensitive and keyword.casefold() in passage.casefold()) or \
-               (is_case_sensitive and keyword in passage) or \
+            if (not is_case_sensitive and search_text.casefold() in passage.casefold()) or \
+               (is_case_sensitive and search_text in passage) or \
                (is_regex and re.search(keyword_regex, passage)):
                 if not self.output_as_list:
                     # Strip whitespace on string output to match the same kind of returned data as get_passage_range
