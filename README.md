@@ -10,6 +10,7 @@ Features include:
   - YAML/JSON/XML/CSV files for persistent storage of Bible passages or as input for other applications and scripts.
 - Handling of edge case passages, such as those with tabular data and omitted passages in certain translations.
 - Flags to enable particular content modifications, such as ignoring passage numbers.
+- Filtering on Bible passages from a local file based on a given text input or regular expression.
 
 **Now accepting feature requests!** If you want to see a certain feature included, please create an issue describing all the necessary details.
 
@@ -38,7 +39,6 @@ You can view the API documentation as static HTML documents from `docs\index.htm
 - ASV
 - AKJV
 - BRG
-- CJB
 - EHV
 - ESV
 - ESVUK
@@ -60,6 +60,7 @@ You can view the API documentation as static HTML documents from `docs\index.htm
 - NLV
 - NOG
 - NRSV
+- NRSVUE
 - WEB
 - YLT
 
@@ -384,6 +385,56 @@ Ecclesiastes,1,2,"² “Meaningless! Meaningless!”
     says the Teacher.
 “Utterly meaningless!
     Everything is meaningless.”",English (EN),NIV
+```
+
+## Text searching within files
+All file-based extractors support passage filtering by search text or by regular expression.
+
+The section below is a simple example that prints passages containing "meaningless" from Ecclesiastes 1:
+```python
+from meaningless import YAMLDownloader, YAMLExtractor
+
+if __name__ == '__main__':
+    downloader = YAMLDownloader()
+    downloader.download_chapter('Ecclesiastes', 1)
+
+    bible = YAMLExtractor()
+    print(bible.find_text_in_chapter('meaningless', 'Ecclesiastes', 1))
+```
+
+Output:
+```
+² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”
+¹⁴ I have seen all the things that are done under the sun; all of them are meaningless, a chasing after the wind.
+```
+
+The section below is another simple example that prints passages containing "meaningless" or "wisdom" from Ecclesiastes 1:
+```python
+from meaningless import YAMLDownloader, YAMLExtractor
+
+if __name__ == '__main__':
+    downloader = YAMLDownloader()
+    downloader.download_chapter('Ecclesiastes', 1)
+
+    bible = YAMLExtractor()
+    print(bible.find_text_in_chapter('meaningless|wisdom', 'Ecclesiastes', 1, is_regex=True))
+```
+
+Output:
+```
+² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”
+¹³ I applied my mind to study and to explore by wisdom all that is done under the heavens. What a heavy burden God has laid on mankind!
+¹⁴ I have seen all the things that are done under the sun; all of them are meaningless, a chasing after the wind.
+¹⁶ I said to myself, “Look, I have increased in wisdom more than anyone who has ruled over Jerusalem before me; I have experienced much of wisdom and knowledge.”
+¹⁷ Then I applied myself to the understanding of wisdom, and also of madness and folly, but I learned that this, too, is a chasing after the wind.
+¹⁸ For with much wisdom comes much sorrow;
+    the more knowledge, the more grief.
 ```
 
 # Q&A

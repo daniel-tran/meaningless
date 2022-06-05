@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.6.0
+- Added text searching functionality into Base Extractor
+- Added a dedicated area for experimental functionality and helper scripts
+  - With enough refinement, some of these might become new features in future releases
+- Added translation support for: NRSVUE
+- Removed translation support for: CJB
+
 ## 0.5.0
 - Added CSV Extractor and CSV Downloader
 - Added csv_file_interface module to assist with CSV file access
