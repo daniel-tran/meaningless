@@ -245,6 +245,39 @@ class BaseExtractor:
 
         return all_text.strip()
 
+    def find_text_in_passage(self, search_text, book, chapter, passage, file_path='',
+                             is_case_sensitive=False, is_regex=False):
+        """
+        Gets a single passage from a file, containing a certain string or matching a particular regular expression.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
+
+        :param search_text: Search text
+        :type search_text: str
+        :type book: str
+        :param book: Name of the book
+        :type book: str
+        :param chapter: Chapter number
+        :type chapter: int
+        :param passage: Passage number
+        :type passage: int
+        :param file_path: When specified, reads the file from this location with a custom filename and extension.
+                          Using this parameter will take priority over the default_directory class property.
+                          Defaults to the default_directory path with the book as the file name with a default
+                          extension.
+        :type file_path: str
+        :param is_case_sensitive: When True, the passage will attempt to match against the search text or regular
+                                  expression with case sensitivity. Defaults to False.
+        :type is_case_sensitive: bool
+        :param is_regex: When True, the search text will be interpreted as a regular expression. Defaults to False.
+        :type is_regex: bool
+        :return: The specified passage. Empty string/list if the passage is invalid or the passage did not meet
+                 the search criteria.
+        :rtype: str or list
+        """
+        return self.find_text_in_passage_range(search_text, book, chapter, passage, chapter,
+                                               passage, file_path, is_case_sensitive, is_regex)
+
     def find_text_in_passages(self, search_text, book, chapter, passage_from, passage_to, file_path='',
                               is_case_sensitive=False, is_regex=False):
         """

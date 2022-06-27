@@ -410,6 +410,14 @@ class UnitTests(unittest.TestCase):
         self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 9000, 1, 9001, custom_file)
         self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 1, 1, 1, custom_file)
 
+    def test_find_text_in_passage(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              default_directory=self.get_test_directory(), translation=self.get_test_translation())
+        search_result = bible.find_text_in_passage('Vanity of vanities', 'Ecclesiastes', 1, 2)
+        expected_result = bible.get_passage('Ecclesiastes', 1, 2)
+        self.assertEqual(expected_result, search_result, 'Passages do not match')
+
     def test_find_text_in_passages(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
