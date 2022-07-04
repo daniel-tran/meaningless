@@ -56,7 +56,8 @@ class UnitTests(unittest.TestCase):
             bible.search('Matthew 1:1 - 3'),
             bible.search('Nehemiah 7:40 - 42'),
             bible.search('Psalm 32:4'),
-            bible.search('John 7:53')
+            bible.search('John 7:53'),
+            bible.search('Psalm 83')
         ]
         for expected_passage_index in range(0, len(actual_passage_results)):
             self.check_with_static_passage_contents(translation, str(expected_passage_index),
@@ -253,11 +254,6 @@ class UnitTests(unittest.TestCase):
         self.check_baseline_passages(translation)
         self.check_omitted_passages(translation)
 
-    def test_translation_cjb(self):
-        translation = 'CJB'
-        self.check_baseline_passages(translation)
-        self.check_omitted_passages(translation)
-
     def test_translation_gnv(self):
         translation = 'GNV'
         self.check_baseline_passages(translation)
@@ -270,6 +266,11 @@ class UnitTests(unittest.TestCase):
 
     def test_translation_nivuk(self):
         translation = 'NIVUK'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_nrsvue(self):
+        translation = 'NRSVUE'
         self.check_baseline_passages(translation)
         self.check_omitted_passages(translation)
 

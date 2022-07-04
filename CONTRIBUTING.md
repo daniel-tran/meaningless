@@ -63,7 +63,7 @@ Some parts of the library have a repeatable process for adding on new features a
 ## Supporting a new translations
 - Add a new translation code to the appropriate method under `meaningless\utilities\common.py`.
 - Add a new test case to `system_tests_bible_translations.py` for the new translation. This is used to validate end-to-end correctness.
-  - Add all the necessary test data files under `test\static\system_tests_bible_translations` in a new folder named according to the new translation.
+  - Add all the necessary test data files under `test\static\system_tests_bible_translations` in a new folder named according to the new translation. You can use the helper script under `experimental\system_test_helper.py` to make this process easier.
 - Make appropriate modifications to the Web Extractor to account for translation-specific components, such as double spaces and in-line translation notes.
   - Add unit tests for the Web Extractor to test these specific changes.
   - Run all the Web Extractor unit tests to ensure stable behaviour with said changes.
@@ -73,7 +73,7 @@ Some parts of the library have a repeatable process for adding on new features a
 ## Adding a new extractor or downloader
 - Add a new file interface under `meaningless\utilities` with the following two standalone methods:
   - `def write(data_file, document)`
-    - `data_file` is a string corresponnding to the file path to write to.
+    - `data_file` is a string corresponding to the file path to write to.
     - `document` is a dictionary with the structure shown below.
     - Returns 1 when successful.
   - `def read(data_file)`

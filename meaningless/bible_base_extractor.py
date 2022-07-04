@@ -1,4 +1,5 @@
 import os
+import re
 from meaningless.utilities import common
 from meaningless.utilities.exceptions import UnsupportedTranslationError, InvalidPassageError, TranslationMismatchError
 
@@ -115,7 +116,7 @@ class BaseExtractor:
 
     def get_chapters(self, book, chapter_from, chapter_to, file_path=''):
         """
-        Gets a range of passages from a specified chapters selection from a file.
+        Gets a range of passages from a specified chapter selection from a file.
 
         Output will be automatically adjusted to the chapter and passage boundaries from the input file.
 
@@ -195,8 +196,8 @@ class BaseExtractor:
         # Otherwise, the extractor could be used to read a bunch of files and each return different results
         # on the same passage even though the translation class property is unchanged.
         file_translation = document['Info']['Translation']
-        if translation != file_translation:
-            raise TranslationMismatchError(self.translation, file_translation)
+        if not common.is_matching_translation(translation, file_translation):
+            raise TranslationMismatchError(translation, file_translation)
 
         # Apply a boundary to the chapters to prevent invalid keys being accessed
         # Use the last key of the book, as it's not guaranteed that the number of chapters == last key
@@ -243,6 +244,231 @@ class BaseExtractor:
         all_text = ''.join([passage for passage in passage_list])
 
         return all_text.strip()
+
+    def find_text_in_passage(self, search_text, book, chapter, passage, file_path='',
+                             is_case_sensitive=False, is_regex=False):
+        """
+        Gets a single passage from a file, containing a certain string or matching a particular regular expression.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
+
+        :param search_text: Search text
+        :type search_text: str
+        :type book: str
+        :param book: Name of the book
+        :type book: str
+        :param chapter: Chapter number
+        :type chapter: int
+        :param passage: Passage number
+        :type passage: int
+        :param file_path: When specified, reads the file from this location with a custom filename and extension.
+                          Using this parameter will take priority over the default_directory class property.
+                          Defaults to the default_directory path with the book as the file name with a default
+                          extension.
+        :type file_path: str
+        :param is_case_sensitive: When True, the passage will attempt to match against the search text or regular
+                                  expression with case sensitivity. Defaults to False.
+        :type is_case_sensitive: bool
+        :param is_regex: When True, the search text will be interpreted as a regular expression. Defaults to False.
+        :type is_regex: bool
+        :return: The specified passage. Empty string/list if the passage is invalid or the passage did not meet
+                 the search criteria.
+        :rtype: str or list
+        """
+        return self.find_text_in_passage_range(search_text, book, chapter, passage, chapter,
+                                               passage, file_path, is_case_sensitive, is_regex)
+
+    def find_text_in_passages(self, search_text, book, chapter, passage_from, passage_to, file_path='',
+                              is_case_sensitive=False, is_regex=False):
+        """
+        Gets a range of passages of the same chapter from a file, where each passage contains
+        a certain string or matches a particular regular expression.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
+
+        :param search_text: Search text
+        :type search_text: str
+        :type book: str
+        :param book: Name of the book
+        :type book: str
+        :param chapter: Chapter number
+        :type chapter: int
+        :param passage_from: First passage number to get
+        :type passage_from: int
+        :param passage_to: Last passage number to get
+        :type passage_to: int
+        :param file_path: When specified, reads the file from this location with a custom filename and extension.
+                          Using this parameter will take priority over the default_directory class property.
+                          Defaults to the default_directory path with the book as the file name with a default
+                          extension.
+        :type file_path: str
+        :param is_case_sensitive: When True, passages will attempt to match against the search text or regular
+                                  expression with case sensitivity. Defaults to False.
+        :type is_case_sensitive: bool
+        :param is_regex: When True, the search text will be interpreted as a regular expression. Defaults to False.
+        :type is_regex: bool
+        :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+                 or none of the passages met the search criteria.
+        :rtype: str or list
+        """
+        return self.find_text_in_passage_range(search_text, book, chapter, passage_from, chapter,
+                                               passage_to, file_path, is_case_sensitive, is_regex)
+
+    def find_text_in_chapter(self, search_text, book, chapter, file_path='', is_case_sensitive=False, is_regex=False):
+        """
+        Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+        a certain string or matches a particular regular expression.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
+
+        :param search_text: Search text
+        :type search_text: str
+        :type book: str
+        :param book: Name of the book
+        :type book: str
+        :param chapter: Chapter number
+        :type chapter: int
+        :param file_path: When specified, reads the file from this location with a custom filename and extension.
+                          Using this parameter will take priority over the default_directory class property.
+                          Defaults to the default_directory path with the book as the file name with a default
+                          extension.
+        :type file_path: str
+        :param is_case_sensitive: When True, passages will attempt to match against the search text or regular
+                                  expression with case sensitivity. Defaults to False.
+        :type is_case_sensitive: bool
+        :param is_regex: When True, the search text will be interpreted as a regular expression. Defaults to False.
+        :type is_regex: bool
+        :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+                 or none of the passages met the search criteria.
+        :rtype: str or list
+        """
+        return self.find_text_in_passage_range(search_text, book, chapter, 1, chapter,
+                                               common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
+
+    def find_text_in_chapters(self, search_text, book, chapter_from, chapter_to, file_path='',
+                              is_case_sensitive=False, is_regex=False):
+        """
+        Gets a range of passages from a specified chapter selection from a file, where each passage contains
+        a certain string or matches a particular regular expression.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
+
+        :param search_text: Search text
+        :type search_text: str
+        :type book: str
+        :param book: Name of the book
+        :type book: str
+        :param chapter_from: First chapter number to get
+        :type chapter_from: int
+        :param chapter_to: Last chapter number to get
+        :type chapter_to: int
+        :param file_path: When specified, reads the file from this location with a custom filename and extension.
+                          Using this parameter will take priority over the default_directory class property.
+                          Defaults to the default_directory path with the book as the file name with a default
+                          extension.
+        :type file_path: str
+        :param is_case_sensitive: When True, passages will attempt to match against the search text or regular
+                                  expression with case sensitivity. Defaults to False.
+        :type is_case_sensitive: bool
+        :param is_regex: When True, the search text will be interpreted as a regular expression. Defaults to False.
+        :type is_regex: bool
+        :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+                 or none of the passages met the search criteria.
+        :rtype: str or list
+        """
+        return self.find_text_in_passage_range(search_text, book, chapter_from, 1, chapter_to,
+                                               common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
+
+    def find_text_in_book(self, search_text, book, file_path='', is_case_sensitive=False, is_regex=False):
+        """
+        Gets all passages for a specific book from a file, where each passage contains
+        a certain string or matches a particular regular expression.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
+
+        :param search_text: Search text
+        :type search_text: str
+        :param book: Name of the book
+        :type book: str
+        :param file_path: When specified, reads the file from this location with a custom filename and extension.
+                          Using this parameter will take priority over the default_directory class property.
+                          Defaults to the default_directory path with the book as the file name with a default
+                          extension.
+        :type file_path: str
+        :param is_case_sensitive: When True, passages will attempt to match against the search text or regular
+                                  expression with case sensitivity. Defaults to False.
+        :type is_case_sensitive: bool
+        :param is_regex: When True, the search text will be interpreted as a regular expression. Defaults to False.
+        :type is_regex: bool
+        :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+                 or none of the passages met the search criteria.
+        :rtype: str or list
+        """
+        return self.find_text_in_passage_range(search_text, book, 1, 1, common.get_chapter_count(book, self.translation),
+                                               common.get_end_of_chapter(), file_path, is_case_sensitive, is_regex)
+
+    def find_text_in_passage_range(self, search_text, book, chapter_from, passage_from, chapter_to, passage_to,
+                                   file_path='', is_case_sensitive=False, is_regex=False):
+        """
+        Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+        a certain string or matches a particular regular expression.
+
+        Output will be automatically adjusted to the chapter and passage boundaries from the input file.
+
+        :param search_text: Search text
+        :type search_text: str
+        :type book: str
+        :param book: Name of the book
+        :type book: str
+        :param chapter_from: First chapter number to get
+        :type chapter_from: int
+        :param passage_from: First passage number to get in the first chapter
+        :type passage_from: int
+        :param chapter_to: Last chapter number to get
+        :type chapter_to: int
+        :param passage_to: Last passage number to get in the last chapter
+        :type passage_to: int
+        :param file_path: When specified, reads the file from this location with a custom filename and extension.
+                          Using this parameter will take priority over the default_directory class property.
+                          Defaults to the default_directory path with the book as the file name with a default
+                          extension.
+        :type file_path: str
+        :param is_case_sensitive: When True, passages will attempt to match against the search text or regular
+                                  expression with case sensitivity. Defaults to False.
+        :type is_case_sensitive: bool
+        :param is_regex: When True, the search text will be interpreted as a regular expression. Defaults to False.
+        :type is_regex: bool
+        :return: All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+                 or none of the passages met the search criteria.
+        :rtype: str or list
+        """
+        # Temporarily force output as a list to process individual passages more easily
+        # Note that an exception occurring during passage retrieval will result in self.output_as_list not reverting
+        # to its original value. Any logic that catches raised exceptions for this function may be required to manually
+        # restore the original value for self.output_as_list, depending on the exception handling logic being used.
+        output_as_list = self.output_as_list
+        self.output_as_list = True
+        passages = self.get_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, file_path)
+        self.output_as_list = output_as_list
+
+        matching_passages = []
+        if is_case_sensitive:
+            keyword_regex = re.compile(search_text)
+        else:
+            keyword_regex = re.compile(search_text, re.IGNORECASE)
+        for passage in passages:
+            if (not is_case_sensitive and search_text.casefold() in passage.casefold()) or \
+               (is_case_sensitive and search_text in passage) or \
+               (is_regex and re.search(keyword_regex, passage)):
+                if not self.output_as_list:
+                    # Strip whitespace on string output to match the same kind of returned data as get_passage_range
+                    matching_passages.append(passage.strip())
+                else:
+                    matching_passages.append(passage)
+
+        if self.output_as_list:
+            return matching_passages
+        return '\n'.join(matching_passages)
 
     def __key_cast(self, key):
         """

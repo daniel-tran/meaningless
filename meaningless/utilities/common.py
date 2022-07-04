@@ -37,9 +37,9 @@ def is_supported_english_translation(translation):
     >>> is_supported_english_translation('RVA')
     False
     """
-    return translation.upper() in ['ASV', 'AKJV', 'BRG', 'CJB', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
+    return translation.upper() in ['ASV', 'AKJV', 'BRG', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
                                    'JUB', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB', 'NASB1995', 'NET',
-                                   'NIV', 'NIVUK', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'WEB', 'YLT']
+                                   'NIV', 'NIVUK', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'NRSVUE', 'WEB', 'YLT']
 
 
 def is_supported_spanish_translation(translation):
@@ -57,6 +57,37 @@ def is_supported_spanish_translation(translation):
     False
     """
     return translation.upper() in ['RVA']
+
+
+def is_matching_translation(translation1, translation2):
+    """
+    A helper function to compare two translation strings and determine if they are equivalent.
+    This will also consider any applicable translation aliases.
+
+    :param translation1: First translation code
+    :type translation1: str
+    :param translation2: Second translation code
+    :type translation2: str
+    :return: True = both translations are equivalent, False = the translations are different
+    :rtype: bool
+
+    >>> is_matching_translation('NIV', 'NIV')
+    True
+    >>> is_matching_translation('NlT', 'nLt')
+    True
+    >>> is_matching_translation('NLT', 'NIV')
+    False
+    >>> is_matching_translation('NIV ', 'NIV')
+    False
+    >>> is_matching_translation('NRSV', 'NRSVUE')
+    True
+
+    """
+    translation_first = translation1.upper()
+    translation_second = translation2.upper()
+    aliases_nrsv = ['NRSV', 'NRSVUE']
+    return translation_first == translation_second or \
+        (translation_first in aliases_nrsv and translation_second in aliases_nrsv)
 
 
 def get_end_of_chapter():

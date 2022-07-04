@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>meaningless package &#8212; Meaningless 0.5.0 documentation</title>
+    <title>meaningless package &#8212; Meaningless 0.6.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -394,6 +394,197 @@ extension.</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_extractor.BaseExtractor</span></code></p>
 <p>An base extractor object that retrieves Bible passages from a YAML file</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_book">
+<span class="sig-name descname"><span class="pre">find_text_in_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_book" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all passages for a specific book from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_chapter">
+<span class="sig-name descname"><span class="pre">find_text_in_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_chapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_chapters">
+<span class="sig-name descname"><span class="pre">find_text_in_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_chapters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from a specified chapter selection from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
+<li><p><strong>chapter_to</strong> (<em>int</em>) – Last chapter number to get</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_passage">
+<span class="sig-name descname"><span class="pre">find_text_in_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_passage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a single passage from a file, containing a certain string or matching a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>passage</strong> (<em>int</em>) – Passage number</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, the passage will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid or the passage did not meet
+the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_passage_range">
+<span class="sig-name descname"><span class="pre">find_text_in_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_passage_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
+<li><p><strong>passage_from</strong> (<em>int</em>) – First passage number to get in the first chapter</p></li>
+<li><p><strong>chapter_to</strong> (<em>int</em>) – Last chapter number to get</p></li>
+<li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get in the last chapter</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_passages">
+<span class="sig-name descname"><span class="pre">find_text_in_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_passages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages of the same chapter from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>passage_from</strong> (<em>int</em>) – First passage number to get</p></li>
+<li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.get_book">
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.get_book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all chapters for a specific book from a file.</p>
@@ -445,7 +636,7 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.get_chapters">
 <span class="sig-name descname"><span class="pre">get_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor.get_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from a specified chapters selection from a file.</p>
+<dd><p>Gets a range of passages from a specified chapter selection from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -728,6 +919,197 @@ extension.</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_extractor.BaseExtractor</span></code></p>
 <p>An base extractor object that retrieves Bible passages from a JSON file</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.find_text_in_book">
+<span class="sig-name descname"><span class="pre">find_text_in_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.find_text_in_book" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all passages for a specific book from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.find_text_in_chapter">
+<span class="sig-name descname"><span class="pre">find_text_in_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.find_text_in_chapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.find_text_in_chapters">
+<span class="sig-name descname"><span class="pre">find_text_in_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.find_text_in_chapters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from a specified chapter selection from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
+<li><p><strong>chapter_to</strong> (<em>int</em>) – Last chapter number to get</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.find_text_in_passage">
+<span class="sig-name descname"><span class="pre">find_text_in_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.find_text_in_passage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a single passage from a file, containing a certain string or matching a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>passage</strong> (<em>int</em>) – Passage number</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, the passage will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid or the passage did not meet
+the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.find_text_in_passage_range">
+<span class="sig-name descname"><span class="pre">find_text_in_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.find_text_in_passage_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
+<li><p><strong>passage_from</strong> (<em>int</em>) – First passage number to get in the first chapter</p></li>
+<li><p><strong>chapter_to</strong> (<em>int</em>) – Last chapter number to get</p></li>
+<li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get in the last chapter</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.find_text_in_passages">
+<span class="sig-name descname"><span class="pre">find_text_in_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.find_text_in_passages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages of the same chapter from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>passage_from</strong> (<em>int</em>) – First passage number to get</p></li>
+<li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.get_book">
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.get_book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all chapters for a specific book from a file.</p>
@@ -779,7 +1161,7 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.get_chapters">
 <span class="sig-name descname"><span class="pre">get_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor.get_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from a specified chapters selection from a file.</p>
+<dd><p>Gets a range of passages from a specified chapter selection from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1062,6 +1444,197 @@ extension.</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_extractor.BaseExtractor</span></code></p>
 <p>An base extractor object that retrieves Bible passages from an XML file</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.find_text_in_book">
+<span class="sig-name descname"><span class="pre">find_text_in_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_book" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all passages for a specific book from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.find_text_in_chapter">
+<span class="sig-name descname"><span class="pre">find_text_in_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_chapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.find_text_in_chapters">
+<span class="sig-name descname"><span class="pre">find_text_in_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_chapters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from a specified chapter selection from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
+<li><p><strong>chapter_to</strong> (<em>int</em>) – Last chapter number to get</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.find_text_in_passage">
+<span class="sig-name descname"><span class="pre">find_text_in_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_passage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a single passage from a file, containing a certain string or matching a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>passage</strong> (<em>int</em>) – Passage number</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, the passage will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid or the passage did not meet
+the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.find_text_in_passage_range">
+<span class="sig-name descname"><span class="pre">find_text_in_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_passage_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
+<li><p><strong>passage_from</strong> (<em>int</em>) – First passage number to get in the first chapter</p></li>
+<li><p><strong>chapter_to</strong> (<em>int</em>) – Last chapter number to get</p></li>
+<li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get in the last chapter</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.find_text_in_passages">
+<span class="sig-name descname"><span class="pre">find_text_in_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_passages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages of the same chapter from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>passage_from</strong> (<em>int</em>) – First passage number to get</p></li>
+<li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.get_book">
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.get_book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all chapters for a specific book from a file.</p>
@@ -1113,7 +1686,7 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.get_chapters">
 <span class="sig-name descname"><span class="pre">get_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor.get_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from a specified chapters selection from a file.</p>
+<dd><p>Gets a range of passages from a specified chapter selection from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1396,6 +1969,197 @@ extension.</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_extractor.BaseExtractor</span></code></p>
 <p>An base extractor object that retrieves Bible passages from a CSV file</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.find_text_in_book">
+<span class="sig-name descname"><span class="pre">find_text_in_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_book" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all passages for a specific book from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.find_text_in_chapter">
+<span class="sig-name descname"><span class="pre">find_text_in_chapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_chapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.find_text_in_chapters">
+<span class="sig-name descname"><span class="pre">find_text_in_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_chapters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from a specified chapter selection from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
+<li><p><strong>chapter_to</strong> (<em>int</em>) – Last chapter number to get</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.find_text_in_passage">
+<span class="sig-name descname"><span class="pre">find_text_in_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_passage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a single passage from a file, containing a certain string or matching a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>passage</strong> (<em>int</em>) – Passage number</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, the passage will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid or the passage did not meet
+the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.find_text_in_passage_range">
+<span class="sig-name descname"><span class="pre">find_text_in_passage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_passage_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages from one specific passage to another passage from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
+<li><p><strong>passage_from</strong> (<em>int</em>) – First passage number to get in the first chapter</p></li>
+<li><p><strong>chapter_to</strong> (<em>int</em>) – Last chapter number to get</p></li>
+<li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get in the last chapter</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.find_text_in_passages">
+<span class="sig-name descname"><span class="pre">find_text_in_passages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passage_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_case_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_regex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_passages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a range of passages of the same chapter from a file, where each passage contains
+a certain string or matches a particular regular expression.</p>
+<p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
+<li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
+<li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
+<li><p><strong>passage_from</strong> (<em>int</em>) – First passage number to get</p></li>
+<li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
+Using this parameter will take priority over the default_directory class property.
+Defaults to the default_directory path with the book as the file name with a default
+extension.</p></li>
+<li><p><strong>is_case_sensitive</strong> (<em>bool</em>) – When True, passages will attempt to match against the search text or regular
+expression with case sensitivity. Defaults to False.</p></li>
+<li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
+or none of the passages met the search criteria.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.get_book">
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.get_book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all chapters for a specific book from a file.</p>
@@ -1447,7 +2211,7 @@ extension.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.get_chapters">
 <span class="sig-name descname"><span class="pre">get_chapters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chapter_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor.get_chapters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a range of passages from a specified chapters selection from a file.</p>
+<dd><p>Gets a range of passages from a specified chapter selection from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
