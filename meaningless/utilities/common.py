@@ -229,7 +229,25 @@ def get_english_chapter_count(book):
         '2 John': 1,
         '3 John': 1,
         'Jude': 1,
-        'Revelation': 22
+        'Revelation': 22,
+        'Tobit': 14,
+        'Judith': 16,
+        'Greek Esther': 10,
+        'Wisdom Of Solomon': 19,
+        'Sirach': 51,
+        'Baruch': 5,
+        'Letter Of Jeremiah': 1,
+        'Prayer Of Azariah': 1,
+        'Susanna': 1,
+        'Bel And The Dragon': 1,
+        '1 Maccabees': 16,
+        '2 Maccabees': 15,
+        '1 Esdras': 9,
+        'Prayer Of Manasseh': 1,
+        'Psalm 151': 1,
+        '3 Maccabees': 7,
+        '2 Esdras': 16,
+        '4 Maccabees': 18
     }
     if book_name not in chapter_count_mappings.keys():
         return 0
