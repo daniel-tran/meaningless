@@ -172,7 +172,7 @@ Running the above code would produce a file called `Ecclesiastes.json` in the cu
 {
   "Ecclesiastes": {
     "1": {
-      "2": "\u00b2 \u201cMeaningless! Meaningless!\u201d\n    says the Teacher.\n\u201cUtterly meaningless!\n    Everything is meaningless.\u201d"
+      "2": "² “Meaningless! Meaningless!”\n    says the Teacher.\n“Utterly meaningless!\n    Everything is meaningless.”"
     }
   },
   "Info": {
@@ -221,7 +221,7 @@ Running the above code would produce a file called `Ecclesiastes.json` in the cu
 {
   "Ecclesiastes": {
     "1": {
-      "2": "\u00b2 \u201cMeaningless! Meaningless!\u201d\n    says the Teacher.\n\u201cUtterly meaningless!\n    Everything is meaningless.\u201d"
+      "2": "² “Meaningless! Meaningless!”\n    says the Teacher.\n“Utterly meaningless!\n    Everything is meaningless.”"
     }
   },
   "Info": {
