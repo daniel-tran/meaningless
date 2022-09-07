@@ -478,10 +478,14 @@ If you notice any problems such as unhandled omitted passages or incorrect taggi
 
 ## Does this library provide support for the Apocrypha books?
 
-At the moment, you can use the Web Extractor's `search()` and `search_multiple()` functions to obtain passages from the Apocrypha books.
-There is currently no official support for the Apocrypha books in the other downloaders and extractors, at least until proper use cases can be identified.
+At the moment, you can use the Web Extractor's `search()`, `search_multiple()` and other related functions to obtain passages from the Apocrypha books.
+There is currently no official support for the Apocrypha books in the other downloaders and extractors, at least until the issues identified [here](https://github.com/daniel-tran/meaningless/pull/10#issuecomment-1236274786) become easier to work around.
 
 # Contributors
 - [daniel-tran](https://github.com/daniel-tran) (Creator & current maintainer)
 
 To make a contribution to this library, refer to `CONTRIBUTING.md`.
+
+# Disclaimer
+
+This library is not endorsed by nor affiliated with Bible Gateway or any of its partners.
