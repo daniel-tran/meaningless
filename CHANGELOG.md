@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.6.1
+- Fixed an issue where the JSON file interface was writing Unicode characters incorrectly to output files
+
 ## 0.6.0
 - Added text searching functionality into Base Extractor
 - Added a dedicated area for experimental functionality and helper scripts

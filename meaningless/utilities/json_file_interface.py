@@ -22,7 +22,7 @@ def write(data_file, document):
         os.makedirs(data_directory, exist_ok=True)
     # Use UTF-8 encoding to allow for Unicode characters to be written to the file
     with open(data_file, 'w', newline='', encoding='utf-8') as file:
-        json.dump(document, file, sort_keys=True, indent=2)
+        json.dump(document, file, sort_keys=True, indent=2, ensure_ascii=False)
     return 1
 
 
