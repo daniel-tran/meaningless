@@ -83,7 +83,7 @@ jobs:
           python unit_tests_bible_list_extractor.py
           echo "Running Base Downloader unit tests..."
           python unit_tests_bible_base_downloader.py
-      - if: github.event.inputs.run_system_tests == 'true'
+      - if: github.event.inputs.run_system_tests == 'true' || github.event_name == 'schedule'
         name: Run system tests
         run: |
           cd test
