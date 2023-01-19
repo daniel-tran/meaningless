@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
   <Disc_o>
-    <Beatdown>1</Beatdown>
-    <Elysium>2</Elysium>
+    <_1>
+      <Beatdown>1</Beatdown>
+      <Elysium>2</Elysium>
+    </_1>
   </Disc_o>
 </root>

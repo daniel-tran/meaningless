@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../')
-from meaningless import XMLDownloader, xml_file_interface
+from meaningless import XMLDownloader, xml_file_interface, legacy_xml_file_interface
 
 # These tests just test for certain components which differ from the base downloader
 
@@ -17,6 +17,15 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(bible.file_writing_function.__module__, xml_file_interface.write.__module__,
                          'Module of writing function is incorrect')
         self.assertEqual(bible.file_writing_function.__name__, xml_file_interface.write.__name__,
+                         'Name of writing function is incorrect')
+        self.assertTrue(bible.write_key_as_string, 'Downloader is not writing keys as strings')
+
+    def test_legacy_xml_downloader_settings(self):
+        bible = XMLDownloader(use_legacy_mode=True)
+        self.assertEqual(bible.file_extension, '.xml', 'Extension is incorrect')
+        self.assertEqual(bible.file_writing_function.__module__, legacy_xml_file_interface.write.__module__,
+                         'Module of writing function is incorrect')
+        self.assertEqual(bible.file_writing_function.__name__, legacy_xml_file_interface.write.__name__,
                          'Name of writing function is incorrect')
         self.assertTrue(bible.write_key_as_string, 'Downloader is not writing keys as strings')
 
