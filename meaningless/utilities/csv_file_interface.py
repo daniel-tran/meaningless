@@ -11,7 +11,7 @@ def __get_header_list():
     :return: The list of header fields.
     :rtype: str[]
     """
-    return ['Book', 'Chapter', 'Passage', 'Text', 'Language', 'Translation']
+    return ['Book', 'Chapter', 'Passage', 'Text', 'Language', 'Translation', 'Timestamp', 'Meaningless']
 
 
 def write(data_file, document):
@@ -20,7 +20,8 @@ def write(data_file, document):
     Note that the input data must adhere to the following conventions:
 
     1. The input document is a dictionary.
-    2. There is a top-level key called 'Info', with sub-keys named 'Language' and 'Translation'.
+    2. There is a top-level key called 'Info', with string values for the following keys:
+       'Language', 'Translation', 'Timestamp', 'Meaningless'
     3. There is at least one other top-level key-value pair, mapping to a dictionary of dictionaries.
     4. There are no keys or values with the value set as None (excluding the sub-keys under the top-level 'Info' key).
 
@@ -41,14 +42,21 @@ def write(data_file, document):
     with open(data_file, 'w', newline='', encoding='utf-8-sig') as file:
         csv_writer = csv.writer(file, quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(__get_header_list())
+
+        # Unlike other file interfaces, the metadata info is required to be provided by the input object.
+        # This is to allow the CSV write function to determine the keys to access data for each row.
+        if 'Info' not in document.keys():
+            raise KeyError
+
+        # Convert the mapping of info data into a list to make it easier to unpack the data on the CSV row
+        info_fields = [document['Info'][info_field_key] for info_field_key in document['Info'].keys()]
         for book in document.keys():
             # The book name is not known, so obtain it by skipping all "non-book" keys
             if book in ['Info']:
                 continue
             for chapter in document[book]:
                 for passage in document[book][chapter]:
-                    csv_writer.writerow([book, chapter, passage, document[book][chapter][passage],
-                                         document['Info']['Language'], document['Info']['Translation']])
+                    csv_writer.writerow([book, chapter, passage, document[book][chapter][passage], *info_fields])
     return 1
 
 
@@ -58,7 +66,7 @@ def read(data_file):
     Note that the file data must adhere to the following conventions:
 
     1. A header row is included as the first line.
-    2. All data is contained within the first 6 columns.
+    2. All data is contained within the first 8 columns.
 
     :param data_file: Path the data file to read
     :type data_file: str
@@ -78,10 +86,10 @@ def read(data_file):
 
             # Only assign the metadata once, since this should be the same on all rows anyway
             if 'Info' not in output:
-                output['Info'] = {
-                    'Language': row['Language'],
-                    'Translation': row['Translation']
-                }
+                output['Info'] = {}
+                for info_field_key in row.keys():
+                    if info_field_key not in ['Book', 'Chapter', 'Passage', 'Text']:
+                        output['Info'][info_field_key] = row[info_field_key]
             if book not in output:
                 output[book] = {}
             if chapter not in output[book]:

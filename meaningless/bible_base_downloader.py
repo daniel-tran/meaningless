@@ -1,5 +1,6 @@
 import os
 import multiprocessing
+import datetime
 from meaningless.bible_web_extractor import WebExtractor
 from meaningless.utilities import common
 from meaningless.utilities.exceptions import UnsupportedTranslationError, InvalidPassageError
@@ -291,7 +292,9 @@ class BaseDownloader:
         document = {
             'Info': {
                 'Language': common.get_translation_language(translation),
-                'Translation': translation
+                'Translation': translation,
+                'Timestamp': datetime.datetime.now().astimezone().isoformat(),
+                'Meaningless': common.get_library_version()
             },
             book_name: {}
         }
