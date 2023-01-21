@@ -1,7 +1,7 @@
 import setuptools
+from meaningless.utilities import common
 
-with open('VERSION.txt', 'r') as fh:
-    version = fh.read()
+version = common.get_library_version()
 
 with open('README.md', 'r', encoding='utf-8') as fh:
     readme = fh.read()
