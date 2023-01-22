@@ -60,6 +60,17 @@ Implementation details specifically geared for performance optimisation, such as
 # Development Guide
 Some parts of the library have a repeatable process for adding on new features and such, which are documented below:
 
+## Introducing breaking changes
+When modifying some behaviour that no longer ensures backward compatibility with the previous release, there are two recommended approaches:
+
+1. Modified behaviour is now the default expectation, so users wanting the old behaviour have to "opt out".
+2. Old behaviour is still the default expectation, so users wanting the modified behaviour have to "opt in".
+
+At minimum, the support for both old and new behaviour should be maintained for at least one minor release. Afterwards, contributors have two options:
+
+1. The old behaviour can be formally removed in the next major version.
+2. The old behaviour is maintained along with the new behaviour into the foreseeable future.
+
 ## Supporting a new translations
 - Add a new translation code to the appropriate method under `meaningless\utilities\common.py`.
 - Add a new test case to `system_tests_bible_translations.py` for the new translation. This is used to validate end-to-end correctness.
@@ -101,7 +112,9 @@ This is the dictionary structure that is passed into `write` and returned from `
   },
   "Info": {
     "Language": "Translation Language",
-    "Translation": "Translation Code"
+    "Translation": "Translation Code",
+    "Timestamp": "Timestamp in ISO 8601 format",
+    "Meaningless": "Version of Meaningless the file was downloaded from"
   }
 }
 ```
