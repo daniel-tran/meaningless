@@ -59,6 +59,8 @@ jobs:
       - name: Run XML unit tests
         run: |
           cd test
+          echo "Running Legacy XML file interface unit tests..."
+          python unit_tests_legacy_xml_file_interface.py
           echo "Running XML file interface unit tests..."
           python unit_tests_xml_file_interface.py
           echo "Running XML Extractor unit tests..."
