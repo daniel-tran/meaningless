@@ -142,13 +142,13 @@ def write(data_file, document):
         # all cases anyway for simpler logic.
         modified_document[__get_root_name()][__get_book_name()] = {
             '@name': key,
-            '@tag': '{0}{1}'.format(__get_space_placeholder(), key.replace(' ', __get_space_placeholder())),
+            '@tag': f'{__get_space_placeholder()}{key.replace(" ", __get_space_placeholder())}',
             __get_chapter_name(): []
         }
         for chapter in list(document[key].keys()):
             modified_document[__get_root_name()][__get_book_name()][__get_chapter_name()].append({
                 '@number': chapter,
-                '@tag': '{0}{1}'.format(__get_numeric_prefix(), chapter),
+                '@tag': f'{__get_numeric_prefix()}{chapter}',
                 __get_passage_name(): []
             })
             for passage in list(document[key][chapter].keys()):
@@ -156,7 +156,7 @@ def write(data_file, document):
                 modified_document[__get_root_name()][__get_book_name()][__get_chapter_name()][-1][__get_passage_name()]\
                     .append({
                         '@number': passage,
-                        '@tag': '{0}{1}'.format(__get_numeric_prefix(), passage),
+                        '@tag': f'{__get_numeric_prefix()}{passage}',
                         '#text': str(document[key][chapter][passage])
                     })
     # Use space indentation, to keep in line with most of the other file interfaces
@@ -200,7 +200,7 @@ def read(data_file):
     # XML-compliant modifications are only needed to pass the underlying XML validation checks.
     tags_with_predefined_replacements = [__get_book_name(), __get_chapter_name(), __get_passage_name()]
     for tag in tags_with_predefined_replacements:
-        contents = re.sub(r'<{0}\s*.*?\s*tag="(.+?)">(.*?)</{0}>'.format(tag), r'<\1>\2</\1>',
+        contents = re.sub(fr'<{tag}\s*.*?\s*tag="(.+?)">(.*?)</{tag}>', r'<\1>\2</\1>',
                           contents, flags=re.DOTALL)
     # Since white space and newlines are preserved, the side effect is that a cdata key is automatically added into
     # each level of the document, with its value being spaces and newline characters.

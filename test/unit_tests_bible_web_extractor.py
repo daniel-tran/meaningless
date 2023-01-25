@@ -54,7 +54,7 @@ class UnitTests(unittest.TestCase):
                'torn by wild beasts; throw it to the dogs. '
         ex23 = '“Do not spread false reports. Do not help a guilty person by being a malicious witness.'
         # Use a multi-line string to account for the chapter transition
-        self.assertEqual('''{0}\n\n{1}'''.format(ex22, ex23), text, 'Passage is incorrect')
+        self.assertEqual(f'''{ex22}\n\n{ex23}''', text, 'Passage is incorrect')
 
     def test_get_passage_with_subheadings(self):
         bible = WebExtractor()
@@ -64,7 +64,7 @@ class UnitTests(unittest.TestCase):
         ez40_20 = '²⁰ Then he measured the length and width of the north gate, ' \
                   'leading into the outer court.'
         # Ignore the subheading, but start its paragraph contents on a new line
-        self.assertEqual('''{0}\n{1}'''.format(ez40_19, ez40_20), text, 'Passage is incorrect')
+        self.assertEqual(f'''{ez40_19}\n{ez40_20}''', text, 'Passage is incorrect')
 
     def test_get_passage_with_indentations(self):
         bible = WebExtractor()

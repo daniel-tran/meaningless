@@ -28,7 +28,7 @@ class UnitTests(unittest.TestCase):
         :return: Directory path containing readable files
         :rtype: str
         """
-        return './static/unit_tests_bible_list_extractor/{0}'.format(translation)
+        return f'./static/unit_tests_bible_list_extractor/{translation}'
 
     @staticmethod
     def get_test_file_extension():
@@ -141,7 +141,7 @@ class UnitTests(unittest.TestCase):
     def test_get_book_list(self):
         bible = WebExtractor(output_as_list=True, translation=self.get_test_translation())
         text = bible.get_book('Philemon')
-        static_file = '{0}/test_get_book_list.txt'.format(self.get_test_directory())
+        static_file = f'{self.get_test_directory()}/test_get_book_list.txt'
         with open(static_file, 'r', encoding='utf-8') as file:
             phil = file.read()
         # To avoid having to paste the entire contents of Philemon in the test, this is tested by joining all the
@@ -174,7 +174,7 @@ class UnitTests(unittest.TestCase):
     def test_get_chapter_list_with_ascii_punctuation(self):
         bible = WebExtractor(output_as_list=True, translation=self.get_test_translation(), use_ascii_punctuation=True)
         text = bible.get_chapter('Ecclesiastes', 2)
-        static_file = '{0}/test_get_chapter_list_with_ascii_punctuation.txt'.format(self.get_test_directory())
+        static_file = f'{self.get_test_directory()}/test_get_chapter_list_with_ascii_punctuation.txt'
         with open(static_file, 'r', encoding='utf-8') as file:
             eccl = file.read()
         # This chapter doesn't have Unicode single quotes, but should have the other translated characters

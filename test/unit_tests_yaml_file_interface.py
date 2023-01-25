@@ -11,7 +11,7 @@ class UnitTests(unittest.TestCase):
     #       All other methods will simply be interpreted as test helper functions.
 
     def get_static_file(self, filename):
-        return './static/unit_tests_yaml_file_interface/{0}'.format(filename)
+        return f'./static/unit_tests_yaml_file_interface/{filename}'
 
     def test_read(self):
         document = yaml_file_interface.read(self.get_static_file('test_read.yaml'))
@@ -59,12 +59,12 @@ class UnitTests(unittest.TestCase):
     def test_read_path_exceeds_windows_limit(self):
         filename = 'G' * 255
         self.assertRaises((FileNotFoundError, OSError), yaml_file_interface.read,
-                          self.get_static_file('{0}.yaml'.format(filename)))
+                          self.get_static_file(f'{filename}.yaml'))
 
     def test_write_path_exceeds_windows_limit(self):
         document = {'Disco': 7}
         filename = 'G' * 255
-        self.assertRaises((FileNotFoundError, OSError), yaml_file_interface.write, './tmp/{0}.yaml'.format(filename),
+        self.assertRaises((FileNotFoundError, OSError), yaml_file_interface.write, f'./tmp/{filename}.yaml',
                           document)
 
     def test_read_empty_path(self):

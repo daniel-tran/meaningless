@@ -33,11 +33,10 @@ class UnitTests(unittest.TestCase):
             # Baseline passages use a more generic file name, since the intention is to test a specific passage type.
             # The book is re-purposed as the baseline test index so that the parameters are still fairly intuitive
             # when invoking this method.
-            static_file = './static/system_tests_bible_translations/{0}/passage_baseline_{1}.txt'.format(translation,
-                                                                                                       book)
+            static_file = f'./static/system_tests_bible_translations/{translation}/passage_baseline_{book}.txt'
         else:
-            static_file = './static/system_tests_bible_translations/{0}/passage_{1}_{2}_{3}.txt'.format(translation, book,
-                                                                                                      chapter, passage)
+            static_file = f'./static/system_tests_bible_translations/{translation}/' \
+                          f'passage_{book}_{chapter}_{passage}.txt'
         with open(static_file, 'r', encoding='utf-8') as file:
             contents = file.read()
         self.assertEqual(contents, actual_result, 'Passage is incorrect')
@@ -71,7 +70,7 @@ class UnitTests(unittest.TestCase):
         :param translation: Translation code for the tests. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
         """
-        download_path = './tmp/check_omitted_passages/{0}'.format(translation)
+        download_path = f'./tmp/check_omitted_passages/{translation}'
         # Downloading the books with a process map is somewhat faster than using multiple daemon processes to
         # acquire each book sequentially.
         downloader = YAMLDownloader(translation=translation, enable_multiprocessing=False,

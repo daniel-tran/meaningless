@@ -13,11 +13,11 @@ class UnitTests(unittest.TestCase):
 
     @staticmethod
     def get_static_file(filename):
-        return './static/unit_tests_json_file_interface/{0}'.format(filename)
+        return f'./static/unit_tests_json_file_interface/{filename}'
 
     @staticmethod
     def get_temp_file(filename):
-        return './tmp/unit_tests_json_file_interface/{0}'.format(filename)
+        return f'./tmp/unit_tests_json_file_interface/{filename}'
 
     def test_read(self):
         document = json_file_interface.read(self.get_static_file('test_read.json'))
@@ -64,12 +64,12 @@ class UnitTests(unittest.TestCase):
     def test_read_path_exceeds_windows_limit(self):
         filename = 'G' * 255
         self.assertRaises((FileNotFoundError, OSError), json_file_interface.read,
-                          self.get_static_file('{0}.json'.format(filename)))
+                          self.get_static_file(f'{filename}.json'))
 
     def test_write_path_exceeds_windows_limit(self):
         document = {'Disco': 7}
         filename = 'G' * 255
-        self.assertRaises((FileNotFoundError, OSError), json_file_interface.write, './tmp/{0}.json'.format(filename),
+        self.assertRaises((FileNotFoundError, OSError), json_file_interface.write, f'./tmp/{filename}.json',
                           document)
 
     def test_read_empty_path(self):

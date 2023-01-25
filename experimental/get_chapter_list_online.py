@@ -91,7 +91,7 @@ def get_online_chapter_list(translation, book_name):
     if not version_string:
         return []
 
-    url = 'https://www.biblegateway.com/versions/{0}/#booklist'.format(version_string)
+    url = f'https://www.biblegateway.com/versions/{version_string}/#booklist'
 
     # There's a match, so download the page and search it for the requested book
     soup = BeautifulSoup(common.get_page(url), 'html.parser')

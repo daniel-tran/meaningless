@@ -342,7 +342,7 @@ class BaseDownloader:
             document[book_name] = {self.__key_cast(chapter): process_results.pop(0).get() for chapter in chapter_range}
 
         if len(file_path) <= 0:
-            file_location = os.path.join(self.default_directory, '{0}{1}'.format(book_name, self.file_extension))
+            file_location = os.path.join(self.default_directory, f'{book_name}{self.file_extension}')
         else:
             file_location = file_path
         return self.file_writing_function(file_location, document)
@@ -395,7 +395,7 @@ class BaseDownloader:
                 # passages for this particular translation, and assigning an empty string if it is omitted.
                 # This is to ensure the passage key matches the actual passage contents,
                 # regardless of translation.
-                passage_string = '{0} {1}:{2}'.format(book, chapter, passage_num)
+                passage_string = f'{book} {chapter}:{passage_num}'
                 if passage_string in self.__translations_with_omitted_passages[online_bible.translation]:
                     passages[self.__key_cast(passage_num)] = ''
                     # Since this passage isn't supposed to exist in the given translation but it is still registered
@@ -409,7 +409,7 @@ class BaseDownloader:
             # This is not done on the web extractor due to the difficulty of selecting the first passage in an
             # arbitrary range.
             if passage_num == 1 and self.show_passage_numbers and not passage.startswith('¹ '):
-                passage = '¹ {0}'.format(passage)
+                passage = f'¹ {passage}'
 
             passages[self.__key_cast(passage_num)] = passage
             passage_num += 1

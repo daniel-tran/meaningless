@@ -149,8 +149,7 @@ class WebExtractor:
         capped_passage_to = common.get_capped_integer(passage_to)
         # Defer to a direct search invocation when sourcing passages from the same chapter
         if capped_chapter_from == capped_chapter_to:
-            return self.search('{0} {1}:{2} - {3}'.format(book, capped_chapter_from, capped_passage_from,
-                                                          capped_passage_to))
+            return self.search(f'{book} {capped_chapter_from}:{capped_passage_from} - {capped_passage_to}')
 
         # Get the partial section of the first chapter being requested, omitting some initial passages
         initial_chapter = self.get_passages(book, capped_chapter_from, capped_passage_from, common.get_end_of_chapter())
@@ -198,7 +197,7 @@ class WebExtractor:
 
         # Use the printer-friendly view since there are fewer page elements to load and process
         source_site_params = urlencode({'version': self.translation, 'search': passage_name, 'interface': 'print'})
-        source_site = 'https://www.biblegateway.com/passage/?{0}'.format(source_site_params)
+        source_site = f'https://www.biblegateway.com/passage/?{source_site_params}'
         soup = BeautifulSoup(common.get_page(source_site), 'html.parser')
 
         # Don't collect contents from an invalid verse, since they do not exist.
@@ -261,7 +260,7 @@ class WebExtractor:
         # Psalm interludes may or may not have a leading space, depending on the translation.
         # In any case, always add one in so that the interlude doesn't meld into the passage contents.
         # To account for double spaces, this relies on a regex replacement later on to convert down to a single space.
-        [interlude.replace_with(' {0}'.format(interlude.text)) for interlude in interludes]
+        [interlude.replace_with(f' {interlude.text}') for interlude in interludes]
         # <br> tags will naturally be ignored when getting text
         [br.replace_with('\n') for br in soup.find_all('br')]
         # The versenum tag appears in only a few translations such as NIVUK, and is difficult to handle because
@@ -275,17 +274,17 @@ class WebExtractor:
         [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
         # Preserve superscript verse numbers by using their Unicode counterparts
         # Add in the custom passage separator as well while access to the verse numbers is still available
-        [sup.replace_with('{0}{1}'.format(passage_separator, common.superscript_numbers(sup.text)))
+        [sup.replace_with(f'{passage_separator}{common.superscript_numbers(sup.text)}')
          for sup in soup.find_all('sup', {'class': 'versenum'})]
         # Some verses such as Nehemiah 7:30 - 42 store text in a <table> instead of <p>, which means
         # spacing is not preserved when collecting the text. Therefore, a space is manually injected
         # onto the end of the left cell's text to stop it from joining the right cell's text.
         # Note: Python "double colon" syntax for lists is used to retrieve items at every N interval including 0.
         # TODO: If a verse with >2 columns is found, this WILL need to be updated to be more dynamic
-        [td.replace_with('{0} '.format(td.text)) for td in soup.find_all('td')[::2]]
+        [td.replace_with(f'{td.text} ') for td in soup.find_all('td')[::2]]
         # Preserve paragraph spacing by manually pre-pending a new line
         # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
-        [p.replace_with('\n{0}'.format(p.text)) for p in soup.find_all('p')]
+        [p.replace_with(f'\n{p.text}') for p in soup.find_all('p')]
 
         # Combine the text contents of all passage sections on the page.
         # Convert non-breaking spaces to normal spaces when retrieving the raw passage contents.

@@ -25,7 +25,7 @@ from meaningless.utilities import common
 project = 'Meaningless'
 
 author = 'Daniel Tran'
-copyright = '{0}, {1}'.format(date.today().year, author)
+copyright = f'{date.today().year}, {author}'
 
 # The full version, including alpha/beta/rc tags
 release = common.get_library_version()
