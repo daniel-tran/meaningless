@@ -22,5 +22,4 @@ from meaningless.utilities.exceptions import (
 )
 # Include the file interfaces, mainly as an out-of-the-box mechanism for reading downloaded files
 # as well as writing output using the information obtained from the extractors.
-from meaningless.utilities import yaml_file_interface, json_file_interface, xml_file_interface, csv_file_interface, \
-    legacy_xml_file_interface
+from meaningless.utilities import yaml_file_interface, json_file_interface, xml_file_interface, csv_file_interface

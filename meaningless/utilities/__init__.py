@@ -2,4 +2,4 @@
 # Note that common is not included in the default module import, since it's mostly intended for internal use.
 
 from meaningless.utilities import yaml_file_interface, json_file_interface, xml_file_interface, csv_file_interface, \
-    legacy_xml_file_interface, exceptions
+    exceptions

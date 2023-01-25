@@ -263,64 +263,6 @@ Note that the input data must adhere to the following conventions:</p>
 </dd></dl>
 
 </section>
-<section id="module-meaningless.utilities.legacy_xml_file_interface">
-<span id="legacy-xml-file-interface"></span><h2>Legacy XML File Interface<a class="headerlink" href="#module-meaningless.utilities.legacy_xml_file_interface" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="meaningless.utilities.legacy_xml_file_interface.read">
-<span class="sig-prename descclassname"><span class="pre">meaningless.utilities.legacy_xml_file_interface.</span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.utilities.legacy_xml_file_interface.read" title="Permalink to this definition">¶</a></dt>
-<dd><p>A helper function to read a XML data file.
-Note that the file data must adhere to the following conventions:</p>
-<ol class="arabic simple">
-<li><p>The top-level tag is called ‘root’.</p></li>
-<li><p>Tag names with underscores are assumed to be placeholders for spaces.</p></li>
-<li><p>Tag names that start with a number should only be prefixed with underscores.</p></li>
-</ol>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data_file</strong> (<em>str</em>) – Path to the data file to read</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Contents of the file as an object. Raises an exception when a read problem occurs.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-<div class="deprecated">
-<p><span class="versionmodified deprecated">Deprecated since version 0.7.0: </span>Use xml_file_interface instead for XML file interactions</p>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="meaningless.utilities.legacy_xml_file_interface.write">
-<span class="sig-prename descclassname"><span class="pre">meaningless.utilities.legacy_xml_file_interface.</span></span><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.utilities.legacy_xml_file_interface.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>A helper function to write to a XML data file.
-Note that the input data must adhere to the following conventions:</p>
-<ol class="arabic simple">
-<li><p>It is a dictionary or similar data structure with key-value pairs.</p></li>
-<li><p>Key names beyond the first level of the dictionary do not contain spaces.</p></li>
-<li><p>Any existing keys with underscores are assumed to be placeholders for spaces.</p></li>
-</ol>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data_file</strong> (<em>str</em>) – Path to the data file to write to</p></li>
-<li><p><strong>document</strong> (<em>dict</em>) – In-memory data structure, usually a dictionary</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Returns 1 on success. Raises an exception when a write problem occurs.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-<div class="deprecated">
-<p><span class="versionmodified deprecated">Deprecated since version 0.7.0: </span>Use xml_file_interface instead for XML file interactions</p>
-</div>
-</dd></dl>
-
-</section>
 </section>
 
 
