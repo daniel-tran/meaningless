@@ -40,3 +40,11 @@ CSV File Interface
    :members:
    :undoc-members:
    :show-inheritance:
+
+Legacy XML File Interface
+-------------------------------------------
+
+.. automodule:: meaningless.utilities.legacy_xml_file_interface
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,7 +1,7 @@
 import setuptools
+from meaningless.utilities import common
 
-with open('VERSION.txt', 'r') as fh:
-    version = fh.read()
+version = common.get_library_version()
 
 with open('README.md', 'r', encoding='utf-8') as fh:
     readme = fh.read()
@@ -33,12 +33,12 @@ setuptools.setup(
         'Natural Language :: English',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Religion',
     ],
     keywords='bible yaml json xml csv biblegateway',
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     install_requires=install_requires,
 )

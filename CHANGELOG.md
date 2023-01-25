@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.7.0
+- Refined xml_file_interface to use a more standard XML document structure with easier integration with XSLT
+  - Added `use_legacy_mode` flag to XML Downloader and Extractor to continue using the original behaviour and assist with transitioning to the updated XML file interface
+  - Added legacy_xml_file_interface module for backward compatibility with XML files using the previous (deprecated) document structure
+- Added download timestamp and library version information to output files
+- Drop library support for Python 3.7
+
 ## 0.6.1
 - Fixed an issue where the JSON file interface was writing Unicode characters incorrectly to output files
 

@@ -20,7 +20,7 @@ class UnitTests(unittest.TestCase):
     def test_read(self):
         document = csv_file_interface.read(self.get_static_file('test_read.csv'))
         self.assertEqual(document['Disco']['42']['7'], 'Beatdown', 'Text is incorrect')
-        self.assertEqual(len(document['Info'].keys()), 2, 'Number of informational items is incorrect')
+        self.assertEqual(len(document['Info'].keys()), 4, 'Number of informational items is incorrect')
         self.assertEqual(document['Info']['Language'], 'English', 'Language is incorrect')
         self.assertEqual(document['Info']['Translation'], 'Elysium', 'Translation is incorrect')
 
@@ -154,9 +154,8 @@ class UnitTests(unittest.TestCase):
     def test_write_empty_file(self):
         document = {}
         filename = 'test_write_empty_file.csv'
-        csv_file_interface.write(self.get_temp_file(filename), document)
-        self.assertEqual(csv_file_interface.read(self.get_static_file(filename)),
-                         csv_file_interface.read(self.get_temp_file(filename)), 'Files do not match')
+        # Empty document still contains no metadata, which should trigger an exception
+        self.assertRaises(KeyError, csv_file_interface.write, self.get_temp_file(filename), document)
 
 
 if __name__ == "__main__":

@@ -99,8 +99,8 @@ if __name__ == '__main__':
 ```
 Output:
 
-Running the above code would produce a file called `Ecclesiastes.yaml` in the current working directory with the following contents:
-```
+Running the above code would produce a file called `Ecclesiastes.yaml` in the current working directory with the approximate contents:
+```yaml
 Ecclesiastes:
   1:
     2: "² “Meaningless! Meaningless!”\n    says the Teacher.\n“Utterly meaningless!\n\
@@ -108,6 +108,8 @@ Ecclesiastes:
 Info:
   Language: English
   Translation: NIV
+  Timestamp: '0000-00-00T00:00:00.000000+00:00'
+  Meaningless: 0.0.0
 ```
 
 ## YAML Extractor
@@ -144,8 +146,8 @@ if __name__ == '__main__':
 ```
 Output:
 
-Running the above code would produce a file called `Ecclesiastes.yaml` in the current working directory with the following contents:
-```python
+Running the above code would produce a file called `Ecclesiastes.yaml` in the current working directory with the approximate contents:
+```yaml
 Ecclesiastes:
   1:
     2: "² “Meaningless! Meaningless!”\n    says the Teacher.\n“Utterly meaningless!\n\
@@ -153,6 +155,8 @@ Ecclesiastes:
 Info:
   Language: English
   Translation: NIV
+  Timestamp: '0000-00-00T00:00:00.000000+00:00'
+  Meaningless: 0.0.0
   Customised?: true
 ```
 
@@ -167,8 +171,8 @@ if __name__ == '__main__':
 ```
 Output:
 
-Running the above code would produce a file called `Ecclesiastes.json` in the current working directory with the following contents:
-```
+Running the above code would produce a file called `Ecclesiastes.json` in the current working directory with the approximate contents:
+```json
 {
   "Ecclesiastes": {
     "1": {
@@ -177,6 +181,8 @@ Running the above code would produce a file called `Ecclesiastes.json` in the cu
   },
   "Info": {
     "Language": "English",
+    "Meaningless": "0.0.0",
+    "Timestamp": "0000-00-00T00:00:00.000000+00:00",
     "Translation": "NIV"
   }
 }
@@ -216,8 +222,8 @@ if __name__ == '__main__':
 ```
 Output:
 
-Running the above code would produce a file called `Ecclesiastes.json` in the current working directory with the following contents:
-```python
+Running the above code would produce a file called `Ecclesiastes.json` in the current working directory with the approximate contents:
+```json
 {
   "Ecclesiastes": {
     "1": {
@@ -227,6 +233,8 @@ Running the above code would produce a file called `Ecclesiastes.json` in the cu
   "Info": {
     "Customised?": true,
     "Language": "English",
+    "Meaningless": "0.0.0",
+    "Timestamp": "0000-00-00T00:00:00.000000+00:00",
     "Translation": "NIV"
   }
 }
@@ -243,13 +251,105 @@ if __name__ == '__main__':
 ```
 Output:
 
-Running the above code would produce a file called `Ecclesiastes.xml` in the current working directory with the following contents:
+Running the above code would produce a file called `Ecclesiastes.xml` in the current working directory with the approximate contents:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <info>
+    <language>English</language>
+    <translation>NIV</translation>
+    <timestamp>0000-00-00T00:00:00.000000+00:00</timestamp>
+    <meaningless>0.0.0</meaningless>
+  </info>
+  <book name="Ecclesiastes" tag="_Ecclesiastes">
+    <chapter number="1" tag="_1">
+      <passage number="2" tag="_2">² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”</passage>
+    </chapter>
+  </book>
+</root>
+```
+
+## XML Extractor
+Much like the YAML Extractor, the XML Extractor uses the generated files from the XML Downloader to find passages.
+```python
+from meaningless import XMLExtractor
+
+if __name__ == '__main__':
+    bible = XMLExtractor()
+    passage = bible.get_passage('Ecclesiastes', 1, 2)
+    print(passage)
+```
+Output:
+
+Assuming the XML downloader has already generated an XML file in the current directory called `Ecclesiastes.xml` which contains the book of Ecclesiastes in XML format:
+```
+² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”
+```
+
+## XML File Interface
+The XML File Interface is a set of helper methods used to read and write XML files. Unlike the other file interfaces, this is more geared towards the specific document format used by the XML Downloader and Extractor, so you may observe some strange behaviour if you try using this for general purpose XML file interactions.
+```python
+from meaningless import XMLDownloader, xml_file_interface
+
+if __name__ == '__main__':
+    downloader = XMLDownloader()
+    downloader.download_passage('Ecclesiastes', 1, 2)
+    bible = xml_file_interface.read('./Ecclesiastes.xml')
+    bible['Info']['Customised'] = True
+    xml_file_interface.write('./Ecclesiastes.xml', bible)
+```
+Output:
+
+Running the above code would produce a file called `Ecclesiastes.xml` in the current working directory with the approximate contents:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <info>
+    <language>English</language>
+    <translation>NIV</translation>
+    <timestamp>0000-00-00T00:00:00.000000+00:00</timestamp>
+    <meaningless>0.0.0</meaningless>
+    <customised>true</customised>
+  </info>
+  <book name="Ecclesiastes" tag="_Ecclesiastes">
+    <chapter number="1" tag="_1">
+      <passage number="2" tag="_2">² “Meaningless! Meaningless!”
+    says the Teacher.
+“Utterly meaningless!
+    Everything is meaningless.”</passage>
+    </chapter>
+  </book>
+</root>
+```
+
+**Note that you are allowed to write badly formed XML documents using this file interface, but they will cause runtime errors in your code upon trying to read and process them.**
+
+## Legacy XML Downloader
+The Legacy XML Downloader is effectively the same as the XML Downloader prior to version 0.7.0.
+```python
+from meaningless import XMLDownloader
+
+if __name__ == '__main__':
+    downloader = XMLDownloader(use_legacy_mode=True)
+    downloader.download_passage('Ecclesiastes', 1, 2)
+```
+Output:
+
+Running the above code would produce a file called `Ecclesiastes.xml` in the current working directory with the approximate contents:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <root>
   <Info>
     <Language>English</Language>
     <Translation>NIV</Translation>
+    <Timestamp>0000-00-00T00:00:00.000000+00:00</Timestamp>
+    <Meaningless>0.0.0</Meaningless>
   </Info>
   <Ecclesiastes>
     <_1>
@@ -268,19 +368,19 @@ Note that the following adjustments are made to the downloaded contents to ensur
 2. All tag names starting with a number are prefixed.
 3. Tags corresponding to book names use a placeholder character for spaces.
 
-## XML Extractor
-Much like the YAML Extractor, the XML Extractor uses the generated files from the XML Downloader to find passages.
+## Legacy XML Extractor
+The Legacy XML Extractor is effectively the same as the XML Downloader prior to version 0.7.0, and as such, only supports processing of XML files from versions prior to 0.7.0 or produced by the Legacy XML File Interface
 ```python
 from meaningless import XMLExtractor
 
 if __name__ == '__main__':
-    bible = XMLExtractor()
+    bible = XMLExtractor(use_legacy_mode=True)
     passage = bible.get_passage('Ecclesiastes', 1, 2)
     print(passage)
 ```
 Output:
 
-Assuming the XML downloader has already generated a XML file in the current directory called `Ecclesiastes.xml` which contains the book of Ecclesiastes in XML format:
+Assuming the Legacy XML downloader has already generated a XML file in the current directory called `Ecclesiastes.xml` which contains the book of Ecclesiastes in XML format:
 ```
 ² “Meaningless! Meaningless!”
     says the Teacher.
@@ -288,27 +388,29 @@ Assuming the XML downloader has already generated a XML file in the current dire
     Everything is meaningless.”
 ```
 
-## XML File Interface
-The XML File Interface is a set of helper methods used to read and write XML files. Unlike the other file interfaces, this is more geared towards the XML document format used by the XML Downloader and Extractor, so you may observe some strange behaviour if you try using this for general purpose XML file interactions.
+## Legacy XML File Interface
+The Legacy XML File Interface is a set of helper methods used to read and write XML files using the document structure prior to version 0.7.0. You may observe some strange behaviour if you try using this for general purpose XML file interactions, so it is only recommended for use with files produced by the Legacy XML Downloader.
 ```python
-from meaningless import XMLDownloader, xml_file_interface
+from meaningless import XMLDownloader, legacy_xml_file_interface
 
 if __name__ == '__main__':
-    downloader = XMLDownloader()
+    downloader = XMLDownloader(use_legacy_mode=True)
     downloader.download_passage('Ecclesiastes', 1, 2)
-    bible = xml_file_interface.read('./Ecclesiastes.xml')
+    bible = legacy_xml_file_interface.read('./Ecclesiastes.xml')
     bible['Info']['Customised'] = True
-    xml_file_interface.write('./Ecclesiastes.xml', bible)
+    legacy_xml_file_interface.write('./Ecclesiastes.xml', bible)
 ```
 Output:
 
-Running the above code would produce a file called `Ecclesiastes.xml` in the current working directory with the following contents:
+Running the above code would produce a file called `Ecclesiastes.xml` in the current working directory with the approximate contents:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <root>
   <Info>
     <Language>English</Language>
     <Translation>NIV</Translation>
+    <Timestamp>0000-00-00T00:00:00.000000+00:00</Timestamp>
+    <Meaningless>0.0.0</Meaningless>
     <Customised>true</Customised>
   </Info>
   <Ecclesiastes>
@@ -335,13 +437,13 @@ if __name__ == '__main__':
 ```
 Output:
 
-Running the above code would produce a file called `Ecclesiastes.csv` in the current working directory with the following contents:
+Running the above code would produce a file called `Ecclesiastes.csv` in the current working directory with the approximate contents:
 ```
-Book,Chapter,Passage,Text,Language,Translation
+Book,Chapter,Passage,Text,Language,Translation,Timestamp,Meaningless
 Ecclesiastes,1,2,"² “Meaningless! Meaningless!”
     says the Teacher.
 “Utterly meaningless!
-    Everything is meaningless.”",English,NIV
+    Everything is meaningless.”",English,NIV,0000-00-00T00:00:00.000000+00:00,0.0.0
 ```
 
 ## CSV Extractor
@@ -365,7 +467,7 @@ Assuming the CSV downloader has already generated a CSV file in the current dire
 ```
 
 ## CSV File Interface
-The CSV File Interface is a set of helper methods used to read and write CSV files. Like the XML File Interface, this is geared towards the CSV document format used by the CSV Downloader and Extractor and cannot be used to add custom attributes to the output file when writing CSV data.
+The CSV File Interface is a set of helper methods used to read and write CSV files. This is geared towards the CSV document format used by the CSV Downloader and Extractor and cannot be used to add custom attributes to the output file when writing CSV data.
 ```python
 from meaningless import CSVDownloader, csv_file_interface
 
@@ -378,13 +480,13 @@ if __name__ == '__main__':
 ```
 Output:
 
-Running the above code would produce a file called `Ecclesiastes.csv` in the current working directory with the following contents:
+Running the above code would produce a file called `Ecclesiastes.csv` in the current working directory with the approximate contents:
 ```
-Book,Chapter,Passage,Text,Language,Translation
+Book,Chapter,Passage,Text,Language,Translation,Timestamp,Meaningless
 Ecclesiastes,1,2,"² “Meaningless! Meaningless!”
     says the Teacher.
 “Utterly meaningless!
-    Everything is meaningless.”",English (EN),NIV
+    Everything is meaningless.”",English (EN),NIV,0000-00-00T00:00:00.000000+00:00,0.0.0
 ```
 
 ## Text searching within files

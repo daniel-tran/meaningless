@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <book name="Disco">
+    <chapter number="1">
+      <passage number="1">Beatdown</passage>
+      <passage number="2">Elysium</passage>
+    </chapter>
+  </book>
+</root>

@@ -1,6 +1,5 @@
 import unittest
 import sys
-import filecmp
 from timeit import default_timer
 sys.path.append('../')
 from meaningless import yaml_file_interface, InvalidSearchError, InvalidPassageError, UnsupportedTranslationError
@@ -154,14 +153,18 @@ class UnitTests(unittest.TestCase):
         bible = BaseDownloader(file_writing_function=yaml_file_interface.write,
                                default_directory=download_path)
         # File contents should remain the same with and without the custom path parameter
-        bible.download_passage_range('1 John', 1, 3, 1, 5)
-        bible.download_passage_range('1 John', 1, 3, 1, 5, file_path=custom_path)
-        self.assertTrue(filecmp.cmp('{0}/1 John'.format(download_path), custom_path), 'Files do not match')
+        book = '1 John'
+        bible.download_passage_range(book, 1, 3, 1, 5)
+        bible.download_passage_range(book, 1, 3, 1, 5, file_path=custom_path)
+        self.assertEqual(yaml_file_interface.read('{0}/{1}'.format(download_path, book))[book],
+                         yaml_file_interface.read(custom_path)[book],
+                         'Files do not match')
         # A default directory with a relative reference should also preserve the same file contents
         bible.default_directory = './tmp/../tmp/test_base_download_with_different_file_path/Fardel'
-        bible.download_passage_range('1 John', 1, 3, 1, 5)
-        self.assertTrue(filecmp.cmp('{0}/1 John'.format(bible.default_directory), custom_path),
-                        'Files do not match')
+        bible.download_passage_range(book, 1, 3, 1, 5)
+        self.assertEqual(yaml_file_interface.read('{0}/{1}'.format(bible.default_directory, book))[book],
+                         yaml_file_interface.read(custom_path)[book],
+                         'Files do not match')
 
     def test_base_download_with_excessive_values(self):
         download_path = './tmp/test_base_download_with_excessive_values/'
@@ -194,12 +197,14 @@ class UnitTests(unittest.TestCase):
         download_path = './tmp/test_base_download_lowercase_translation/NLT'
         bible = BaseDownloader(file_writing_function=yaml_file_interface.write,
                                default_directory=download_path, translation='NLT')
-        bible.download_book('Philemon')
+        book = 'Philemon'
+        bible.download_book(book)
         bible.translation = 'nlt'
-        lowercase_file_path = '{0}/Philemon-lowercase'.format(download_path)
-        bible.download_book('Philemon', file_path=lowercase_file_path)
-        self.assertTrue(filecmp.cmp('{0}/Philemon'.format(download_path), lowercase_file_path),
-                        'Files do not match')
+        lowercase_file_path = '{0}/{1}-lowercase'.format(download_path, book)
+        bible.download_book(book, file_path=lowercase_file_path)
+        self.assertEqual(yaml_file_interface.read('{0}/{1}'.format(download_path, book))[book],
+                         yaml_file_interface.read(lowercase_file_path)[book],
+                         'Files do not match')
 
     def test_base_download_single_process_benchmark(self):
         download_path = './tmp/test_base_download_single_process_benchmark'
@@ -209,19 +214,22 @@ class UnitTests(unittest.TestCase):
                                default_directory=download_path, enable_multiprocessing=True)
 
         start = default_timer()
-        bible.download_book('Acts', file_path=multi_processed_file)
+        book = 'Acts'
+        bible.download_book(book, file_path=multi_processed_file)
         end = default_timer()
         multi_processed_time = end - start
 
         bible.enable_multiprocessing = False
         start = default_timer()
-        bible.download_book('Acts', file_path=single_processed_file)
+        bible.download_book(book, file_path=single_processed_file)
         end = default_timer()
         single_processed_time = end - start
         print('Multi-processed download took {0} seconds\n'
               'Single-processed download took {1} seconds'.format(multi_processed_time, single_processed_time))
 
-        self.assertTrue(filecmp.cmp(multi_processed_file, single_processed_file), 'Files do not match')
+        self.assertEqual(yaml_file_interface.read(multi_processed_file)[book],
+                         yaml_file_interface.read(single_processed_file)[book],
+                         'Files do not match')
 
     def test_base_download_with_ascii_punctuation(self):
         download_path = './tmp/test_base_download_with_ascii_punctuation'

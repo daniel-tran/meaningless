@@ -4,6 +4,16 @@ import re
 # This is a collection of helper methods used across the various modules.
 
 
+def get_library_version():
+    """
+    Returns the current version of the Meaningless library
+
+    :return: The current library version as a string
+    :rtype: str
+    """
+    return '0.7.0'
+
+
 def is_unsupported_translation(translation):
     """
     A helper function to determine if the provided translation code is supported

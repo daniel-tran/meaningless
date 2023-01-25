@@ -2,8 +2,7 @@
 <root>
   <book name="Disco" tag="_Disco">
     <chapter number="1" tag="_1">
-      <passage number="1" tag="_1">Beatdown</passage>
-      <passage number="2" tag="_2">Elysium</passage>
+      <passage number="1" tag="_1"></passage>
     </chapter>
   </book>
 </root>

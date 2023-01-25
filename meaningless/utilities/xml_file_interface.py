@@ -1,8 +1,6 @@
 import re
 import os
-import json
 import xmltodict
-from meaningless.utilities import common
 
 # This is a collection of common methods used for interacting with XML files.
 
@@ -15,6 +13,36 @@ def __get_root_name():
     :rtype: str
     """
     return 'root'
+
+
+def __get_book_name():
+    """
+    Gets the tag name used for books in the document.
+
+    :return: Returns the tag name.
+    :rtype: str
+    """
+    return 'book'
+
+
+def __get_chapter_name():
+    """
+    Gets the tag name used for chapters in the document.
+
+    :return: Returns the tag name.
+    :rtype: str
+    """
+    return 'chapter'
+
+
+def __get_passage_name():
+    """
+    Gets the tag name used for passages in the document.
+
+    :return: Returns the tag name.
+    :rtype: str
+    """
+    return 'passage'
 
 
 def __get_numeric_prefix():
@@ -47,7 +75,7 @@ def __get_cdata_key():
     return ''
 
 
-def __remove_xml_placeholders_from_key(path, key, value):
+def __restore_xml_key_and_value(path, key, value):
     """
     A post-processing function when parsing the XML document to normalise keys into a more familiar format.
 
@@ -64,6 +92,9 @@ def __remove_xml_placeholders_from_key(path, key, value):
     # Since the space placeholder is a reserved string, any legitimate use for this in a tag name is ignored.
     # Strip excess whitespace afterwards to remove converted space placeholders at the start or end of a string.
     new_key = key.replace(__get_space_placeholder(), ' ').replace(__get_numeric_prefix(), '').strip()
+    # Most keys can be reverted back to their original case, as XML conventions no longer apply
+    if new_key not in [__get_root_name()]:
+        new_key = new_key.title()
     # Omit keys that are empty or consisted only of space placeholders, which would have reduced to an empty string.
     # This is also a convenient way to remove the generated cdata key, by setting it to something that can be ignored.
     if len(new_key) <= 0:
@@ -78,9 +109,9 @@ def write(data_file, document):
     A helper function to write to a XML data file.
     Note that the input data must adhere to the following conventions:
 
-    1. It is a dictionary or similar data structure with key-value pairs.
-    2. Key names beyond the first level of the dictionary do not contain spaces.
-    3. Any existing keys with underscores are assumed to be placeholders for spaces.
+    1. If a top-level key is named 'Info', it must be a mapping of string keys to string values.
+    2. All other top-level keys map to a 3-layer dictionary or similar data structure with key-value pairs.
+    3. The 3rd layer of this data structure is a mapping of string keys to string values.
 
     :param data_file: Path to the data file to write to
     :type data_file: str
@@ -94,24 +125,42 @@ def write(data_file, document):
     data_directory = os.path.dirname(data_file)
     if not os.path.exists(data_directory):
         os.makedirs(data_directory, exist_ok=True)
-    modified_document = document
-    # Replace spaces in tag names, as leaving them in invalidates the document.
-    # Note that, for simplicity, this ONLY applies to the first level of tags and is NOT a generic solution.
-    for key in list(modified_document.keys()):
-        # Always convert the key to a string to ensure that the resulting XML tag name is valid
-        new_key = common.cast_to_str_or_int(key, True).replace(' ', __get_space_placeholder())
-        modified_document[new_key] = modified_document.pop(key)
-    # XML document must only have one root level tag to be a valid structure.
-    modified_document = {__get_root_name(): modified_document}
-    # Ensure all keys in the data structure are strings, since the xmltodict library will assume this when processing
-    # the document. Use conversion to JSON to achieve this, since it automatically casts numeric keys as strings.
-    modified_document = json.loads(json.dumps(modified_document))
-    # Tags cannot start with a number, so prefix them with a placeholder character.
-    # Technically, this is not required when writing the document, but not applying the prefix means the
-    # XML structure will be rejected by the xmltodict library when trying to read it.
-    contents = re.sub(r'<(/?)(\d+)', r'<\1{0}\2'.format(__get_numeric_prefix()),
-                      xmltodict.unparse(modified_document, pretty=True, indent='  ')
-                      )
+
+    modified_document = {__get_root_name(): {}}
+    for key in list(document.keys()):
+        # Copy in all the "non-book" information as is
+        if key in ['Info']:
+            # Convert all immediate keys to lowercase, which is the general XML convention
+            new_key = key.lower()
+            modified_document[__get_root_name()][new_key] = {}
+            for sub_key in document[key]:
+                modified_document[__get_root_name()][new_key][sub_key.lower()] = document[key][sub_key]
+            continue
+
+        # The XML output should provide some supplementary metadata for use in the read() function
+        # Note that the leading prefix is only required for book names which start with a number, but add it in
+        # all cases anyway for simpler logic.
+        modified_document[__get_root_name()][__get_book_name()] = {
+            '@name': key,
+            '@tag': '{0}{1}'.format(__get_space_placeholder(), key.replace(' ', __get_space_placeholder())),
+            __get_chapter_name(): []
+        }
+        for chapter in list(document[key].keys()):
+            modified_document[__get_root_name()][__get_book_name()][__get_chapter_name()].append({
+                '@number': chapter,
+                '@tag': '{0}{1}'.format(__get_numeric_prefix(), chapter),
+                __get_passage_name(): []
+            })
+            for passage in list(document[key][chapter].keys()):
+                # Avoid potential unparsing errors by always casting the passage content as a string
+                modified_document[__get_root_name()][__get_book_name()][__get_chapter_name()][-1][__get_passage_name()]\
+                    .append({
+                        '@number': passage,
+                        '@tag': '{0}{1}'.format(__get_numeric_prefix(), passage),
+                        '#text': str(document[key][chapter][passage])
+                    })
+    # Use space indentation, to keep in line with most of the other file interfaces
+    contents = xmltodict.unparse(modified_document, pretty=True, indent='  ')
     # Use UTF-8 encoding to allow for Unicode characters to be written to the file
     with open(data_file, 'w', newline='', encoding='utf-8') as file:
         file.write(contents)
@@ -121,11 +170,18 @@ def write(data_file, document):
 def read(data_file):
     """
     A helper function to read a XML data file.
-    Note that the file data must adhere to the following conventions:
+    Note that the input data must adhere to the following conventions:
 
     1. The top-level tag is called 'root'.
-    2. Tag names with underscores are assumed to be placeholders for spaces.
-    3. Tag names that start with a number should only be prefixed with underscores.
+    2. All <book> tags must have a "tag" attribute.
+    3. All <chapter> tags must have a "tag" attribute and must be nested within a <book> tag.
+    4. All <passage> tags must have a "tag" attribute and must be nested within a <chapter> tag.
+
+    If the XML data file is valid, the returned object will differ from the XML data file in the following ways:
+
+    1. Leading and trailing underscores will be removed.
+    2. All other underscores will be converted into spaces.
+    3. All keys will be converted to title case (all first letters of each word are capitalised)
 
     :param data_file: Path to the data file to read
     :type data_file: str
@@ -135,8 +191,19 @@ def read(data_file):
     # Use UTF-8 encoding to be able to read Unicode characters
     with open(data_file, 'r', encoding='utf-8') as file:
         contents = file.read()
+    # Pre-process the XML contents such that when it gets parsed, it is mostly in the expected structure
+    # that file interfaces are to operate by.
+    #
+    # This works by pre-computing the relevant object keys as XML-compliant values when writing
+    # the file and restoring that value as the preferred tag name when reading it back.
+    # After parsing, it's necessary to do some post-processing on the document again, as most of the
+    # XML-compliant modifications are only needed to pass the underlying XML validation checks.
+    tags_with_predefined_replacements = [__get_book_name(), __get_chapter_name(), __get_passage_name()]
+    for tag in tags_with_predefined_replacements:
+        contents = re.sub(r'<{0}\s*.*?\s*tag="(.+?)">(.*?)</{0}>'.format(tag), r'<\1>\2</\1>',
+                          contents, flags=re.DOTALL)
     # Since white space and newlines are preserved, the side effect is that a cdata key is automatically added into
     # each level of the document, with its value being spaces and newline characters.
     raw_document = xmltodict.parse(contents, strip_whitespace=False, cdata_key=__get_cdata_key(),
-                                   postprocessor=__remove_xml_placeholders_from_key)
+                                   postprocessor=__restore_xml_key_and_value)
     return raw_document[__get_root_name()]

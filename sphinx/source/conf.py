@@ -17,6 +17,7 @@ from datetime import date
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../../'))
+from meaningless.utilities import common
 
 
 # -- Project information -----------------------------------------------------
@@ -27,8 +28,12 @@ author = 'Daniel Tran'
 copyright = '{0}, {1}'.format(date.today().year, author)
 
 # The full version, including alpha/beta/rc tags
-with open('../../VERSION.txt', 'r') as fh:
-    release = fh.read()
+release = common.get_library_version()
+
+# Supply text prompts to substitute with variables from this file
+rst_prolog = f'''
+.. |library_version| replace:: {release}
+'''
 
 
 # -- General configuration ---------------------------------------------------
