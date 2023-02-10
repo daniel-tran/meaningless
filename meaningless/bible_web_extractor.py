@@ -265,11 +265,10 @@ class WebExtractor:
         [br.replace_with('\n') for br in soup.find_all('br')]
         # The versenum tag appears in only a few translations such as NIVUK, and is difficult to handle because
         # its child tags are usually decomposed before this point, but space padding seems to take its place.
-        # Interestingly, the tag itself can be replaced with a placeholder which itself can be removed eventually,
-        # though it needs to be 2 or more characters long to reduce the total number of spaces in the final result
-        # and, optionally, end with a space (this just makes it easier to get the extra spaces normalised)
-        versenum_substitution_text = '--VERSE-NUM-- '
-        [versenum.replace_with(versenum_substitution_text) for versenum in soup.find_all('versenum')]
+        # Interestingly, the tag itself has attributes that indicate what the actual passage number is, so this is
+        # extracted instead of the actual text content contained within the tag.
+        [versenum.replace_with(f'{passage_separator}{common.superscript_numbers(versenum.attrs["id"])}')
+         for versenum in soup.find_all('versenum')]
         # Convert chapter numbers into new lines
         [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
         # Preserve superscript verse numbers by using their Unicode counterparts
@@ -299,9 +298,6 @@ class WebExtractor:
         # To account for spaces between tags that end up blending into the passage contents, this regex replacement is
         # specifically used to remove that additional spacing, since it is part of the actual page layout.
         all_text = re.sub('([^ ]) {2,3}([^ ])', r'\1 \2', raw_passage_text)
-
-        # Remove all substituted versenum tags, and should also normalise the extra space
-        all_text = all_text.replace(versenum_substitution_text, '')
 
         # Remove all superscript numbers if the passage numbers should be hidden
         if not self.show_passage_numbers:

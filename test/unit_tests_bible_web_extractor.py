@@ -287,10 +287,18 @@ class UnitTests(unittest.TestCase):
         bible = WebExtractor(translation='NIVUK')
         text = bible.search('Mark 15:27 - 29')
         mark = '²⁷ They crucified two rebels with him, one on his right and one on his left. ' \
+               '²⁸ ' \
                '²⁹ Those who passed by hurled insults at him, shaking their heads and saying, ' \
                '‘So! You who are going to destroy the temple and build it in three days,'
-        # The versenum tag doesn't contain any useful information and should be removed, along with its extra spacing
+        # Versenum tags normally have nothing of interest in their tag text, but they still have passage number
+        # information that can be extracted instead
         self.assertEqual(mark, text, 'Passage is incorrect')
+
+    def test_get_individual_passages_nivuk_versenum_tags(self):
+        bible = WebExtractor(translation='NIVUK')
+        text = [bible.search('John 5:4'), bible.search('Mark 9:44'), bible.search('Mark 15:28')]
+        # If searching only for an omitted passage, the Web Extractor should not leak out passage separators
+        self.assertEqual('⁴ ⁴⁴ ²⁸', ' '.join(text), 'Passage is incorrect')
 
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
