@@ -156,7 +156,7 @@ def get_english_chapter_count(book):
     8
     >>> get_english_chapter_count('Psalms')
     150
-    >>> get_english_chapter_count('Philippians')
+    >>> get_english_chapter_count('Phillippians')
     4
     """
     # Standardise letter casing to help find the key easier
@@ -168,9 +168,9 @@ def get_english_chapter_count(book):
     elif book_name == 'Psalms':
         # Psalm and its plural variation are basically the same book, but prefer the singular variant
         book_name = 'Psalm'
-    elif book_name == 'Philippians':
-        # Prefer the spelling variation with two L's, partly for backwards compatibility with previous versions
-        book_name = 'Phillippians'
+    elif book_name == 'Phillippians':
+        # Most, if not all, translations use the spelling with one L but also accept the alternative spelling
+        book_name = 'Philippians'
 
     # This is the default mapping of books to their chapter counts
     chapter_count_mappings = {
@@ -223,7 +223,7 @@ def get_english_chapter_count(book):
         '2 Corinthians': 13,
         'Galatians': 6,
         'Ephesians': 6,
-        'Phillippians': 4,
+        'Philippians': 4,
         'Colossians': 4,
         '1 Thessalonians': 5,
         '2 Thessalonians': 3,
