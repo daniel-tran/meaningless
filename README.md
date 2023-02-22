@@ -58,6 +58,7 @@ You can view the API documentation as static HTML documents from `docs\index.htm
 - NKJV
 - NLT
 - NLV
+- NMB (New Testament only)
 - NOG
 - NRSV
 - NRSVUE

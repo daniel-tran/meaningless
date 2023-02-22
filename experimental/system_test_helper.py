@@ -3,6 +3,7 @@ import os
 import sys
 sys.path.append('../')
 from meaningless import WebExtractor, YAMLDownloader, yaml_file_interface
+from meaningless.utilities.common import BIBLE_TRANSLATIONS
 
 
 def write_baseline(folder, translation, search, index):
@@ -64,12 +65,17 @@ if __name__ == "__main__":
     continue_message = 'Strike the Enter or Return key to continue.'
     input(f'Stage 1: Test data for baseline passages. {continue_message}')
     if 1 in stages:
+        # If a translation omits the Old Testament, its first book will not match a translation that contains the OT
+        translation_contains_ot = list(BIBLE_TRANSLATIONS[download_translation]['Books'].keys())[0] == \
+                                  list(BIBLE_TRANSLATIONS['NIV']['Books'].keys())[0]
         write_baseline(output_folder, download_translation, 'Revelation 21:25', 0)
         write_baseline(output_folder, download_translation, 'Matthew 1:1 - 3', 1)
-        write_baseline(output_folder, download_translation, 'Nehemiah 7:40 - 42', 2)
-        write_baseline(output_folder, download_translation, 'Psalm 32:4', 3)
+        if translation_contains_ot:
+            write_baseline(output_folder, download_translation, 'Nehemiah 7:40 - 42', 2)
+            write_baseline(output_folder, download_translation, 'Psalm 32:4', 3)
         write_baseline(output_folder, download_translation, 'John 7:53', 4)
-        write_baseline(output_folder, download_translation, 'Psalm 83', 5)
+        if translation_contains_ot:
+            write_baseline(output_folder, download_translation, 'Psalm 83', 5)
     input(f'Stage 1 completed. {continue_message}')
 
     input(f'Stage 2: Intermediate data for download book tests. {continue_message}')

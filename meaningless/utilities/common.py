@@ -309,17 +309,23 @@ def cast_to_str_or_int(text, cast_to_str):
     return str(text)
 
 
-def get_bible_data_for_language(language):
+def get_bible_data_for_language(language, mode=0):
     """
     A helper function to return miscellaneous Bible data for a particular supported language
 
     :param language: Language
     :type language: str
+    :param mode: Numeric value corresponding to a specific data set. Defaults to 0.
+                 0 = All information
+                 1 = New Testament only
+    :type mode: int
     :return: Dictionary containing Bible data relating to a particular supported language
     :rtype: dict
 
     >>> get_bible_data_for_language('English')
     {'Language': 'English', 'Books': {...'Ruth': 4...}
+    >>> get_bible_data_for_language('English', mode=1)
+    {'Language': 'English', 'Books': {'Matthew': 28...}
     >>> get_bible_data_for_language('Español')
     {'Language': 'Español', 'Books': {...'Rut': 4...}
     >>> get_bible_data_for_language('Saiyan')
@@ -478,7 +484,11 @@ def get_bible_data_for_language(language):
     }
 
     if bible_language in bible_book_mapping.keys():
-        bible_books = {**bible_book_mapping[bible_language]['OT'], **bible_book_mapping[bible_language]['NT']}
+        if mode == 1:
+            bible_books = bible_book_mapping[bible_language]['NT']
+        else:
+            # Default to all information when the mode doesn't match one of the preset data sets
+            bible_books = {**bible_book_mapping[bible_language]['OT'], **bible_book_mapping[bible_language]['NT']}
     else:
         # Unsupported language
         bible_books = {}
@@ -513,6 +523,7 @@ BIBLE_TRANSLATIONS = {
     'NKJV': get_bible_data_for_language('English'),
     'NLT': get_bible_data_for_language('English'),
     'NLV': get_bible_data_for_language('English'),
+    'NMB': get_bible_data_for_language('English', mode=1),
     'NOG': get_bible_data_for_language('English'),
     'NRSV': get_bible_data_for_language('English'),  # Contains Apocrypha books that are currently omitted
     'NRSVUE': get_bible_data_for_language('English'),  # Contains Apocrypha books that are currently omitted
