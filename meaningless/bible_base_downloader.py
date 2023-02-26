@@ -290,7 +290,7 @@ class BaseDownloader:
                 'Language': common.get_translation_language(translation),
                 'Translation': translation,
                 'Timestamp': datetime.datetime.now().astimezone().isoformat(),
-                'Meaningless': common.get_library_version()
+                'Meaningless': common.MEANINGLESS_VERSION
             },
             book_name: {}
         }

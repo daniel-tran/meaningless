@@ -3,15 +3,10 @@ import re
 
 # This is a collection of helper methods used across the various modules.
 
-
-def get_library_version():
-    """
-    Returns the current version of the Meaningless library
-
-    :return: The current library version as a string
-    :rtype: str
-    """
-    return '0.7.0'
+MEANINGLESS_VERSION = '1.0.0'
+'''
+The current version of the Meaningless library.
+'''
 
 
 def is_unsupported_translation(translation):
@@ -532,10 +527,10 @@ BIBLE_TRANSLATIONS = {
     # Spanish
     'RVA': get_bible_data_for_language('Español')
 }
-"""
+'''
 The mapping of supported translations and associated Bible data, excluding Apocrypha information. For simplicity, all
 book names use their common variant (e.g. 'Song Of Songs' instead of 'Song Of Solomon').
-"""
+'''
 
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.

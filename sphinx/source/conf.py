@@ -28,7 +28,7 @@ author = 'Daniel Tran'
 copyright = f'{date.today().year}, {author}'
 
 # The full version, including alpha/beta/rc tags
-release = common.get_library_version()
+release = common.MEANINGLESS_VERSION
 
 # Supply text prompts to substitute with variables from this file
 rst_prolog = f'''
