@@ -1,7 +1,7 @@
 # Setup
 1. Fork the repo and clone it locally.
 2. Setup a Python virtual environment.
-3. Install the dependencies documented in `REQUIREMENTS.txt`.
+3. Install the dependencies documented in `REQUIREMENTS.txt` (and `REQUIREMENTS_DEVELOPMENT.txt` if you expect to do things such as regenerating the documentation and viewing code coverage results).
 
 # Running tests locally
 If you are using PyCharm, you can run the tests within the IDE.

@@ -1,0 +1,4 @@
+# These are additional modules used as part of library development work
+Sphinx>=6.1.3
+build>=0.10.0
+coverage>=7.2.1
