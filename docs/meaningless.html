@@ -1,18 +1,17 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>meaningless package &#8212; Meaningless 1.0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="meaningless.utilities package" href="utilities.html" />
@@ -34,9 +33,9 @@
           <div class="body" role="main">
             
   <section id="meaningless-package">
-<h1>meaningless package<a class="headerlink" href="#meaningless-package" title="Permalink to this headline">¶</a></h1>
+<h1>meaningless package<a class="headerlink" href="#meaningless-package" title="Permalink to this heading">¶</a></h1>
 <section id="module-meaningless.bible_web_extractor">
-<span id="web-extractor"></span><h2>Web Extractor<a class="headerlink" href="#module-meaningless.bible_web_extractor" title="Permalink to this headline">¶</a></h2>
+<span id="web-extractor"></span><h2>Web Extractor<a class="headerlink" href="#module-meaningless.bible_web_extractor" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="meaningless.bible_web_extractor.WebExtractor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">meaningless.bible_web_extractor.</span></span><span class="sig-name descname"><span class="pre">WebExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NIV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_passage_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_as_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_excess_whitespace_from_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii_punctuation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_web_extractor.WebExtractor" title="Permalink to this definition">¶</a></dt>
@@ -50,13 +49,13 @@ file extension, etc.).</p>
 <span class="sig-name descname"><span class="pre">get_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_web_extractor.WebExtractor.get_book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all chapters for a specific book from the Bible Gateway site.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>book</strong> (<em>str</em>) – Name of the book (This must match the name used by the translation)</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the specified book. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -68,16 +67,16 @@ file extension, etc.).</p>
 <dd><p>Gets a single chapter from the Bible Gateway site.</p>
 <p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book (This must match the name used by the translation)</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the chapter. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -89,17 +88,17 @@ file extension, etc.).</p>
 <dd><p>Gets a range of passages from a specified chapters selection from the Bible Gateway site.</p>
 <p>The chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book (This must match the name used by the translation)</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
 <li><p><strong>chapter_to</strong> (<em>int</em>) – Last chapter number to get</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -112,17 +111,17 @@ file extension, etc.).</p>
 <p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
 boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book (This must match the name used by the translation)</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
 <li><p><strong>passage</strong> (<em>int</em>) – Passage number</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -135,7 +134,7 @@ boundaries of the specified book.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book (This must match the name used by the translation)</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -144,10 +143,10 @@ of the specified book.</p>
 <li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get in the last chapter</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -160,7 +159,7 @@ of the specified book.</p>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book (This must match the name used by the translation)</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -168,10 +167,10 @@ of the specified book.</p>
 <li><p><strong>passage_to</strong> (<em>int</em>) – Last passage number to get</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -184,13 +183,13 @@ of the specified book.</p>
 The language used for the search text is independent of the translation.
 Note that the output is subject to the Bible Gateway implicit passage limit when sending the web request.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>passage_name</strong> (<em>str</em>) – Name of the Bible passage which is valid when used on www.biblegateway.com</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Bible passage with preserved line breaks</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -203,13 +202,13 @@ Note that the output is subject to the Bible Gateway implicit passage limit when
 The language used for the search text is independent of the translation.
 Note that the output is subject to the Bible Gateway implicit passage limit when sending the web request.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>passage_names</strong> (<em>list</em>) – List of Bible passages that are valid when used on www.biblegateway.com</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Bible passages with newline separators for each set of passages</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -219,18 +218,18 @@ Note that the output is subject to the Bible Gateway implicit passage limit when
 
 </section>
 <section id="module-meaningless.bible_yaml_downloader">
-<span id="yaml-downloader"></span><h2>YAML Downloader<a class="headerlink" href="#module-meaningless.bible_yaml_downloader" title="Permalink to this headline">¶</a></h2>
+<span id="yaml-downloader"></span><h2>YAML Downloader<a class="headerlink" href="#module-meaningless.bible_yaml_downloader" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_downloader.YAMLDownloader">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">meaningless.bible_yaml_downloader.</span></span><span class="sig-name descname"><span class="pre">YAMLDownloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NIV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_passage_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">os.getcwd()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_excess_whitespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_multiprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii_punctuation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_downloader.BaseDownloader</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDownloader</span></code></p>
 <p>A downloader object that stores Bible passages into a local YAML file</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_downloader.YAMLDownloader.download_book">
 <span class="sig-name descname"><span class="pre">download_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_downloader.YAMLDownloader.download_book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a specific book of the Bible and saves it as a file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>file_path</strong> (<em>str</em>) – When specified, saves the file to this location with a custom filename and extension.
@@ -239,10 +238,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -254,7 +253,7 @@ extension.</p></li>
 <dd><p>Downloads a single chapter as a file.</p>
 <p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -264,10 +263,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -279,7 +278,7 @@ extension.</p></li>
 <dd><p>Downloads a range of passages from a specified chapter selection as a file.</p>
 <p>Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -290,10 +289,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -306,7 +305,7 @@ extension.</p></li>
 <p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
 boundaries of the specified book, except in the case where passage is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -317,10 +316,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -333,7 +332,7 @@ extension.</p></li>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -346,10 +345,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -362,7 +361,7 @@ extension.</p></li>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -374,10 +373,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -387,11 +386,11 @@ extension.</p></li>
 
 </section>
 <section id="module-meaningless.bible_yaml_extractor">
-<span id="yaml-extractor"></span><h2>YAML Extractor<a class="headerlink" href="#module-meaningless.bible_yaml_extractor" title="Permalink to this headline">¶</a></h2>
+<span id="yaml-extractor"></span><h2>YAML Extractor<a class="headerlink" href="#module-meaningless.bible_yaml_extractor" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">meaningless.bible_yaml_extractor.</span></span><span class="sig-name descname"><span class="pre">YAMLExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NIV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_passage_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_as_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_excess_whitespace_from_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">os.getcwd()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii_punctuation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_yaml_extractor.YAMLExtractor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_extractor.BaseExtractor</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExtractor</span></code></p>
 <p>An base extractor object that retrieves Bible passages from a YAML file</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_book">
@@ -400,7 +399,7 @@ extension.</p></li>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -413,11 +412,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -430,7 +429,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -444,11 +443,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -461,7 +460,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -476,11 +475,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -492,7 +491,7 @@ or none of the passages met the search criteria.</p>
 <dd><p>Gets a single passage from a file, containing a certain string or matching a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -507,11 +506,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid or the passage did not meet
 the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -524,7 +523,7 @@ the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -541,11 +540,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -558,7 +557,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -574,11 +573,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -590,7 +589,7 @@ or none of the passages met the search criteria.</p>
 <dd><p>Gets all chapters for a specific book from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
@@ -599,10 +598,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the specified book. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -614,7 +613,7 @@ extension.</p></li>
 <dd><p>Gets a single chapter from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -624,10 +623,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the chapter. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -639,7 +638,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages from a specified chapter selection from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -650,10 +649,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -665,7 +664,7 @@ extension.</p></li>
 <dd><p>Gets a single passage from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -676,10 +675,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -691,7 +690,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages from one specific passage to another passage from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -704,10 +703,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -719,7 +718,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages of the same chapter from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -731,10 +730,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -744,18 +743,18 @@ extension.</p></li>
 
 </section>
 <section id="module-meaningless.bible_json_downloader">
-<span id="json-downloader"></span><h2>JSON Downloader<a class="headerlink" href="#module-meaningless.bible_json_downloader" title="Permalink to this headline">¶</a></h2>
+<span id="json-downloader"></span><h2>JSON Downloader<a class="headerlink" href="#module-meaningless.bible_json_downloader" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="meaningless.bible_json_downloader.JSONDownloader">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">meaningless.bible_json_downloader.</span></span><span class="sig-name descname"><span class="pre">JSONDownloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NIV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_passage_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">os.getcwd()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_excess_whitespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_multiprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii_punctuation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_downloader.BaseDownloader</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDownloader</span></code></p>
 <p>An downloader object that stores Bible passages into a local JSON file</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_downloader.JSONDownloader.download_book">
 <span class="sig-name descname"><span class="pre">download_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_downloader.JSONDownloader.download_book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a specific book of the Bible and saves it as a file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>file_path</strong> (<em>str</em>) – When specified, saves the file to this location with a custom filename and extension.
@@ -764,10 +763,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -779,7 +778,7 @@ extension.</p></li>
 <dd><p>Downloads a single chapter as a file.</p>
 <p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -789,10 +788,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -804,7 +803,7 @@ extension.</p></li>
 <dd><p>Downloads a range of passages from a specified chapter selection as a file.</p>
 <p>Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -815,10 +814,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -831,7 +830,7 @@ extension.</p></li>
 <p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
 boundaries of the specified book, except in the case where passage is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -842,10 +841,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -858,7 +857,7 @@ extension.</p></li>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -871,10 +870,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -887,7 +886,7 @@ extension.</p></li>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -899,10 +898,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -912,11 +911,11 @@ extension.</p></li>
 
 </section>
 <section id="module-meaningless.bible_json_extractor">
-<span id="json-extractor"></span><h2>JSON Extractor<a class="headerlink" href="#module-meaningless.bible_json_extractor" title="Permalink to this headline">¶</a></h2>
+<span id="json-extractor"></span><h2>JSON Extractor<a class="headerlink" href="#module-meaningless.bible_json_extractor" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">meaningless.bible_json_extractor.</span></span><span class="sig-name descname"><span class="pre">JSONExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NIV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_passage_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_as_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_excess_whitespace_from_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">os.getcwd()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii_punctuation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_json_extractor.JSONExtractor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_extractor.BaseExtractor</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExtractor</span></code></p>
 <p>An base extractor object that retrieves Bible passages from a JSON file</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_json_extractor.JSONExtractor.find_text_in_book">
@@ -925,7 +924,7 @@ extension.</p></li>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -938,11 +937,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -955,7 +954,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -969,11 +968,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -986,7 +985,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1001,11 +1000,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1017,7 +1016,7 @@ or none of the passages met the search criteria.</p>
 <dd><p>Gets a single passage from a file, containing a certain string or matching a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1032,11 +1031,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid or the passage did not meet
 the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1049,7 +1048,7 @@ the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1066,11 +1065,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1083,7 +1082,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1099,11 +1098,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1115,7 +1114,7 @@ or none of the passages met the search criteria.</p>
 <dd><p>Gets all chapters for a specific book from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
@@ -1124,10 +1123,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the specified book. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1139,7 +1138,7 @@ extension.</p></li>
 <dd><p>Gets a single chapter from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1149,10 +1148,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the chapter. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1164,7 +1163,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages from a specified chapter selection from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -1175,10 +1174,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1190,7 +1189,7 @@ extension.</p></li>
 <dd><p>Gets a single passage from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1201,10 +1200,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1216,7 +1215,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages from one specific passage to another passage from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -1229,10 +1228,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1244,7 +1243,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages of the same chapter from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1256,10 +1255,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1269,18 +1268,18 @@ extension.</p></li>
 
 </section>
 <section id="module-meaningless.bible_xml_downloader">
-<span id="xml-downloader"></span><h2>XML Downloader<a class="headerlink" href="#module-meaningless.bible_xml_downloader" title="Permalink to this headline">¶</a></h2>
+<span id="xml-downloader"></span><h2>XML Downloader<a class="headerlink" href="#module-meaningless.bible_xml_downloader" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="meaningless.bible_xml_downloader.XMLDownloader">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">meaningless.bible_xml_downloader.</span></span><span class="sig-name descname"><span class="pre">XMLDownloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NIV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_passage_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">os.getcwd()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_excess_whitespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_multiprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii_punctuation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_downloader.BaseDownloader</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDownloader</span></code></p>
 <p>An downloader object that stores Bible passages into a local XML file</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_downloader.XMLDownloader.download_book">
 <span class="sig-name descname"><span class="pre">download_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_downloader.XMLDownloader.download_book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a specific book of the Bible and saves it as a file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>file_path</strong> (<em>str</em>) – When specified, saves the file to this location with a custom filename and extension.
@@ -1289,10 +1288,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1304,7 +1303,7 @@ extension.</p></li>
 <dd><p>Downloads a single chapter as a file.</p>
 <p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1314,10 +1313,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1329,7 +1328,7 @@ extension.</p></li>
 <dd><p>Downloads a range of passages from a specified chapter selection as a file.</p>
 <p>Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -1340,10 +1339,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1356,7 +1355,7 @@ extension.</p></li>
 <p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
 boundaries of the specified book, except in the case where passage is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1367,10 +1366,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1383,7 +1382,7 @@ extension.</p></li>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -1396,10 +1395,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1412,7 +1411,7 @@ extension.</p></li>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1424,10 +1423,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1437,11 +1436,11 @@ extension.</p></li>
 
 </section>
 <section id="module-meaningless.bible_xml_extractor">
-<span id="xml-extractor"></span><h2>XML Extractor<a class="headerlink" href="#module-meaningless.bible_xml_extractor" title="Permalink to this headline">¶</a></h2>
+<span id="xml-extractor"></span><h2>XML Extractor<a class="headerlink" href="#module-meaningless.bible_xml_extractor" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">meaningless.bible_xml_extractor.</span></span><span class="sig-name descname"><span class="pre">XMLExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NIV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_passage_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_as_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_excess_whitespace_from_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">os.getcwd()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii_punctuation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_xml_extractor.XMLExtractor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_extractor.BaseExtractor</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExtractor</span></code></p>
 <p>An base extractor object that retrieves Bible passages from an XML file</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_xml_extractor.XMLExtractor.find_text_in_book">
@@ -1450,7 +1449,7 @@ extension.</p></li>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1463,11 +1462,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1480,7 +1479,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1494,11 +1493,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1511,7 +1510,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1526,11 +1525,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1542,7 +1541,7 @@ or none of the passages met the search criteria.</p>
 <dd><p>Gets a single passage from a file, containing a certain string or matching a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1557,11 +1556,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid or the passage did not meet
 the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1574,7 +1573,7 @@ the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1591,11 +1590,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1608,7 +1607,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1624,11 +1623,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1640,7 +1639,7 @@ or none of the passages met the search criteria.</p>
 <dd><p>Gets all chapters for a specific book from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
@@ -1649,10 +1648,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the specified book. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1664,7 +1663,7 @@ extension.</p></li>
 <dd><p>Gets a single chapter from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1674,10 +1673,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the chapter. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1689,7 +1688,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages from a specified chapter selection from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -1700,10 +1699,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1715,7 +1714,7 @@ extension.</p></li>
 <dd><p>Gets a single passage from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1726,10 +1725,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1741,7 +1740,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages from one specific passage to another passage from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -1754,10 +1753,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1769,7 +1768,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages of the same chapter from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1781,10 +1780,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -1794,18 +1793,18 @@ extension.</p></li>
 
 </section>
 <section id="module-meaningless.bible_csv_downloader">
-<span id="csv-downloader"></span><h2>CSV Downloader<a class="headerlink" href="#module-meaningless.bible_csv_downloader" title="Permalink to this headline">¶</a></h2>
+<span id="csv-downloader"></span><h2>CSV Downloader<a class="headerlink" href="#module-meaningless.bible_csv_downloader" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="meaningless.bible_csv_downloader.CSVDownloader">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">meaningless.bible_csv_downloader.</span></span><span class="sig-name descname"><span class="pre">CSVDownloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NIV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_passage_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">os.getcwd()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_excess_whitespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_multiprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii_punctuation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_downloader.BaseDownloader</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDownloader</span></code></p>
 <p>An downloader object that stores Bible passages into a local CSV file</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_downloader.CSVDownloader.download_book">
 <span class="sig-name descname"><span class="pre">download_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_downloader.CSVDownloader.download_book" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a specific book of the Bible and saves it as a file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>file_path</strong> (<em>str</em>) – When specified, saves the file to this location with a custom filename and extension.
@@ -1814,10 +1813,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1829,7 +1828,7 @@ extension.</p></li>
 <dd><p>Downloads a single chapter as a file.</p>
 <p>The chapter parameter will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1839,10 +1838,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1854,7 +1853,7 @@ extension.</p></li>
 <dd><p>Downloads a range of passages from a specified chapter selection as a file.</p>
 <p>Chapter parameters will be automatically adjusted to the chapter boundaries of the specified book.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -1865,10 +1864,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1881,7 +1880,7 @@ extension.</p></li>
 <p>The chapter and passage parameters will be automatically adjusted to the respective chapter and passage
 boundaries of the specified book, except in the case where passage is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1892,10 +1891,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1908,7 +1907,7 @@ extension.</p></li>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -1921,10 +1920,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1937,7 +1936,7 @@ extension.</p></li>
 <p>Chapter and passage parameters will be automatically adjusted to the respective chapter and passage boundaries
 of the specified book, except in the case where passage_from is unreasonably high.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -1949,10 +1948,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>1 if the download was successful. 0 if an error occurred.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -1962,11 +1961,11 @@ extension.</p></li>
 
 </section>
 <section id="module-meaningless.bible_csv_extractor">
-<span id="csv-extractor"></span><h2>CSV Extractor<a class="headerlink" href="#module-meaningless.bible_csv_extractor" title="Permalink to this headline">¶</a></h2>
+<span id="csv-extractor"></span><h2>CSV Extractor<a class="headerlink" href="#module-meaningless.bible_csv_extractor" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">meaningless.bible_csv_extractor.</span></span><span class="sig-name descname"><span class="pre">CSVExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NIV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_passage_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_as_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_excess_whitespace_from_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">os.getcwd()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii_punctuation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#meaningless.bible_csv_extractor.CSVExtractor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">meaningless.bible_base_extractor.BaseExtractor</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExtractor</span></code></p>
 <p>An base extractor object that retrieves Bible passages from a CSV file</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="meaningless.bible_csv_extractor.CSVExtractor.find_text_in_book">
@@ -1975,7 +1974,7 @@ extension.</p></li>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -1988,11 +1987,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2005,7 +2004,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -2019,11 +2018,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2036,7 +2035,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -2051,11 +2050,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2067,7 +2066,7 @@ or none of the passages met the search criteria.</p>
 <dd><p>Gets a single passage from a file, containing a certain string or matching a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -2082,11 +2081,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid or the passage did not meet
 the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2099,7 +2098,7 @@ the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -2116,11 +2115,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2133,7 +2132,7 @@ or none of the passages met the search criteria.</p>
 a certain string or matches a particular regular expression.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>search_text</strong> (<em>str</em>) – Search text</p></li>
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
@@ -2149,11 +2148,11 @@ expression with case sensitivity. Defaults to False.</p></li>
 <li><p><strong>is_regex</strong> (<em>bool</em>) – When True, the search text will be interpreted as a regular expression. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid
 or none of the passages met the search criteria.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2165,7 +2164,7 @@ or none of the passages met the search criteria.</p>
 <dd><p>Gets all chapters for a specific book from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>file_path</strong> (<em>str</em>) – When specified, reads the file from this location with a custom filename and extension.
@@ -2174,10 +2173,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the specified book. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2189,7 +2188,7 @@ extension.</p></li>
 <dd><p>Gets a single chapter from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -2199,10 +2198,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages in the chapter. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2214,7 +2213,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages from a specified chapter selection from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -2225,10 +2224,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified chapters (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2240,7 +2239,7 @@ extension.</p></li>
 <dd><p>Gets a single passage from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -2251,10 +2250,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The specified passage. Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2266,7 +2265,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages from one specific passage to another passage from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter_from</strong> (<em>int</em>) – First chapter number to get</p></li>
@@ -2279,10 +2278,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2294,7 +2293,7 @@ extension.</p></li>
 <dd><p>Gets a range of passages of the same chapter from a file.</p>
 <p>Output will be automatically adjusted to the chapter and passage boundaries from the input file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>book</strong> (<em>str</em>) – Name of the book</p></li>
 <li><p><strong>chapter</strong> (<em>int</em>) – Chapter number</p></li>
@@ -2306,10 +2305,10 @@ Defaults to the default_directory path with the book as the file name with a def
 extension.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The passages between the specified passages (inclusive). Empty string/list if the passage is invalid.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or list</p>
 </dd>
 </dl>
@@ -2366,7 +2365,7 @@ extension.</p></li>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -2383,8 +2382,8 @@ extension.</p></li>
       &copy;2023, Daniel Tran.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/meaningless.rst.txt"
