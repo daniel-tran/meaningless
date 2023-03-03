@@ -267,8 +267,9 @@ class WebExtractor:
         # its child tags are usually decomposed before this point, but space padding seems to take its place.
         # Interestingly, the tag itself has attributes that indicate what the actual passage number is, so this is
         # extracted instead of the actual text content contained within the tag.
-        [versenum.replace_with(f'{passage_separator}{common.superscript_numbers(versenum.attrs["id"])}')
-         for versenum in soup.find_all('versenum')]
+        if translation == 'NIVUK':
+            [versenum.replace_with(f'{passage_separator}{common.superscript_numbers(versenum.attrs["id"])}')
+                for versenum in soup.find_all('versenum')]
         # Convert chapter numbers into new lines
         [chapter_num.replace_with('\n') for chapter_num in soup.find_all('span', {'class': 'chapternum'})]
         # Preserve superscript verse numbers by using their Unicode counterparts

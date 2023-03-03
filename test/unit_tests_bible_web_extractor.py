@@ -227,6 +227,13 @@ class UnitTests(unittest.TestCase):
         # Trailing double space at the end of verse 2 should just shorten to a single space
         self.assertEqual(matt, text, 'Passage is incorrect')
 
+    def test_get_passage_nrsvue_versenum_tag(self):
+        bible = WebExtractor(translation='NRSVUE')
+        text = bible.search('Matthew 9:1')
+        matt = '¹ And after getting into a boat he crossed the sea and came to his own town.'
+        # Passage already includes a superscript passage number, so no need to do special processing of versenum tags
+        self.assertEqual(matt, text, 'Passage is incorrect')
+
     def test_get_passage_web_inline_reference(self):
         bible = WebExtractor(translation='WEB')
         text = bible.search('Mark 9:44')
