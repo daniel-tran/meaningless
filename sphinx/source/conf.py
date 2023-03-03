@@ -70,6 +70,13 @@ autodoc_preserve_defaults = True
 #
 html_theme = 'alabaster'
 
+# Theme options to configure specific aspects of the documentation
+html_theme_options = {
+    'description': 'Retrieves, processes and downloads Bible passages from Bible Gateway',
+    'fixed_sidebar': True,
+    'show_powered_by': False
+}
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
