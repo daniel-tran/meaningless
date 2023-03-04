@@ -70,6 +70,9 @@ autodoc_preserve_defaults = True
 #
 html_theme = 'alabaster'
 
+# Use .png instead of .ico because it's easier to edit with tools like Paint.NET
+html_favicon = 'favicon.png'
+
 # Theme options to configure specific aspects of the documentation
 html_theme_options = {
     'description': 'Retrieves, processes and downloads Bible passages from Bible Gateway',
