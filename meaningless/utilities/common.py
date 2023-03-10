@@ -1,4 +1,6 @@
 from urllib.request import urlopen
+from urllib.error import URLError
+from time import sleep
 import re
 
 # This is a collection of helper methods used across the various modules.
@@ -109,26 +111,45 @@ def get_chapter_count(book, translation='NIV'):
     return 0
 
 
-def get_page(url):
+def get_page(url, retry_count=3, retry_delay=2):
     """
     A helper function that returns the contents of a web page.
 
     :param url: Page URL to obtain
     :type url: str
+    :param retry_count: Number of attempts to resend the request if it fails after the first try
+    :type retry_count: int
+    :param retry_delay: Number of seconds to wait before retrying a request. This increases after every retry.
+    :type retry_delay: int
     :return: Page contents. Raises an error if the web page could not be loaded for any reason.
-    :rtype: object
+    :rtype: str
 
     >>> get_page('https://www.biblegateway.com')
     b'<!DOCTYPE html>...'
-    >>> get_page('https://www.randomwebsite.com')
+    >>> get_page('https://www.randomwebsite.com', retry_count=0)
     Traceback (most recent call last):
     ...
     urllib.error.URLError: <urlopen error ...>
+    >>> get_page('https://pypi.org/project/meaningless/meaningless/', retry_count=2, retry_delay=1)
+    Traceback (most recent call last):
+    ...
+    urllib.error.HTTPError: HTTP Error 404: Not Found
     """
-    page = urlopen(url)
-    content = page.read()
-    page.close()
-    return content
+    # Cap the values to ensure the function isn't suspended for an eternity, but still attempts at least once
+    retries = get_capped_integer(retry_count, 0, 10)
+    delay = get_capped_integer(retry_delay, 0, 30)
+    delay_multiplier = 2
+    # The extra addition to the range end is to account for the initial request
+    for retry in range(0, retries + 1):
+        try:
+            with urlopen(url) as response:
+                return response.read()
+        except URLError as exception:
+            if retry < retries:
+                sleep(delay)
+                delay *= delay_multiplier
+                continue
+            raise exception
 
 
 def superscript_numbers(text, remove_brackets=True):
