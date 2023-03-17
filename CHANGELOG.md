@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.0.0
+- Removed legacy_xml_file_interface module and the `use_legacy_mode` flag in the XML Downloader and Extractor
+- Added experimental Apocrypha Web Extractor for the NRSVUE translation
+- Added translation support for: NMB
+
 ## 0.7.0
 - Refined xml_file_interface to use a more standard XML document structure with easier integration with XSLT
   - Added `use_legacy_mode` flag to XML Downloader and Extractor to continue using the original behaviour and assist with transitioning to the updated XML file interface

@@ -29,7 +29,7 @@ class UnitTests(unittest.TestCase):
         :return: Directory path containing readable files
         :rtype: str
         """
-        return './static/unit_tests_bible_base_extractor/{0}'.format(translation)
+        return f'./static/unit_tests_bible_base_extractor/{translation}'
 
     @staticmethod
     def get_test_file_extension():
@@ -66,7 +66,7 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         text = bible.get_chapter('Ecclesiastes', 11)
-        static_file = '{0}/test_get_base_chapter.txt'.format(self.get_test_directory())
+        static_file = f'{self.get_test_directory()}/test_get_base_chapter.txt'
         with open(static_file, 'r', encoding='utf-8') as file:
             eccl = file.read()
         self.assertEqual(eccl, text, 'Passage is incorrect')
@@ -88,7 +88,7 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         text = bible.get_chapters('Ecclesiastes', 11, 12)
-        static_file = '{0}/test_get_base_chapters.txt'.format(self.get_test_directory())
+        static_file = f'{self.get_test_directory()}/test_get_base_chapters.txt'
         with open(static_file, 'r', encoding='utf-8') as file:
             eccl = file.read()
         self.assertEqual(eccl, text, 'Passage is incorrect')
@@ -98,7 +98,7 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         text = bible.get_book('Philemon')
-        static_file = '{0}/test_get_base_book.txt'.format(self.get_test_directory())
+        static_file = f'{self.get_test_directory()}/test_get_base_book.txt'
         with open(static_file, 'r', encoding='utf-8') as file:
             phil = file.read()
         self.assertEqual(phil, text, 'Passage is incorrect')
@@ -213,7 +213,7 @@ class UnitTests(unittest.TestCase):
                               show_passage_numbers=False, default_directory=self.get_test_directory(),
                               translation=self.get_test_translation())
         text = bible.get_chapter('Ecclesiastes', 11)
-        static_file = '{0}/test_get_base_chapter_without_passage_numbers.txt'.format(self.get_test_directory())
+        static_file = f'{self.get_test_directory()}/test_get_base_chapter_without_passage_numbers.txt'
         with open(static_file, 'r', encoding='utf-8') as file:
             eccl = file.read()
         self.assertEqual(eccl, text, 'Passage is incorrect')
@@ -224,7 +224,7 @@ class UnitTests(unittest.TestCase):
                               show_passage_numbers=False, default_directory=self.get_test_directory(),
                               translation=self.get_test_translation())
         text = bible.get_chapters('Ecclesiastes', 11, 12)
-        static_file = '{0}/test_get_base_chapters_without_passage_numbers.txt'.format(self.get_test_directory())
+        static_file = f'{self.get_test_directory()}/test_get_base_chapters_without_passage_numbers.txt'
         with open(static_file, 'r', encoding='utf-8') as file:
             eccl = file.read()
         self.assertEqual(eccl, text, 'Passage is incorrect')
@@ -263,7 +263,7 @@ class UnitTests(unittest.TestCase):
         text1 = bible.get_passage('Ecclesiastes', 2, 26)
         # File path parameter should overwrite the default directory, regardless of what it was set to
         bible.default_directory = '../'
-        file = '{0}/{1}'.format(self.get_test_directory(), 'Ecclesiastes.yaml')
+        file = f'{self.get_test_directory()}/Ecclesiastes.yaml'
         text2 = bible.get_passage('Ecclesiastes', 2, 26, file)
         # Translations should be case insensitive under the hood
         self.assertEqual(text1, text2, 'Passages do not match')
@@ -326,7 +326,7 @@ class UnitTests(unittest.TestCase):
                               translation=self.get_test_translation())
         eccl = '² “Vanity of vanities,” says the Preacher; ' \
                '“Vanity of vanities, all is vanity.”'
-        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'test_get_base_passage_buffered_first_passage.yaml')
+        custom_file = f'{self.get_test_directory()}/test_get_base_passage_buffered_first_passage.yaml'
         text = bible.get_passage('Ecclesiastes', 1, 2, file_path=custom_file)
         # Custom file only contains one chapter and one passage, but doesn't start on the first passage
         self.assertEqual(text, eccl, 'Passages do not match')
@@ -337,7 +337,7 @@ class UnitTests(unittest.TestCase):
                               translation=self.get_test_translation())
         eccl = '² I said of laughter, “It is foolishness;” and of mirth, ' \
                '“What does it accomplish?”'
-        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'test_get_base_passage_buffered_first_chapter.yaml')
+        custom_file = f'{self.get_test_directory()}/test_get_base_passage_buffered_first_chapter.yaml'
         text = bible.get_passage('Ecclesiastes', 2, 2, file_path=custom_file)
         # Custom file only contains one chapter and one passage, but doesn't start on the first passage or chapter
         self.assertEqual(text, eccl, 'Passages do not match')
@@ -348,8 +348,8 @@ class UnitTests(unittest.TestCase):
                               translation=self.get_test_translation())
         eccl = '² I said of laughter, “It is foolishness;” and of mirth, ' \
                '“What does it accomplish?”'
-        custom_file = '{0}/{1}'.format(self.get_test_directory(),
-                                       'test_get_base_passage_buffered_first_chapter_using_negative_parameters.yaml')
+        custom_file = f'{self.get_test_directory()}/' \
+                      f'test_get_base_passage_buffered_first_chapter_using_negative_parameters.yaml'
         text = bible.get_passage_range('Ecclesiastes', -1, -1, -1, -1, file_path=custom_file)
         # All parameters should default to their minimum values, resulting in the first passage being returned
         self.assertEqual(text, eccl, 'Passages do not match')
@@ -360,8 +360,8 @@ class UnitTests(unittest.TestCase):
                               translation=self.get_test_translation())
         eccl = '² “Vanity of vanities,” says the Preacher; ' \
                '“Vanity of vanities, all is vanity.”'
-        custom_file = '{0}/{1}'.format(self.get_test_directory(),
-                                       'test_get_base_passage_buffered_first_passage_using_chapter_interface.yaml')
+        custom_file = f'{self.get_test_directory()}/' \
+                      f'test_get_base_passage_buffered_first_passage_using_chapter_interface.yaml'
         text = bible.get_chapter('Ecclesiastes', 1, file_path=custom_file)
         # Custom file only contains one chapter and one passage, but should be able to detect that the passage count
         # doesn't start at 1
@@ -373,8 +373,8 @@ class UnitTests(unittest.TestCase):
                               translation=self.get_test_translation())
         eccl = '² I said of laughter, “It is foolishness;” and of mirth, ' \
                '“What does it accomplish?”'
-        custom_file = '{0}/{1}'.format(self.get_test_directory(),
-                                       'test_get_base_passage_buffered_first_chapter_using_book_interface.yaml')
+        custom_file = f'{self.get_test_directory()}/' \
+                      f'test_get_base_passage_buffered_first_chapter_using_book_interface.yaml'
         text = bible.get_book('Ecclesiastes', file_path=custom_file)
         # Custom file only contains one chapter and one passage, but should be able to detect that both the passage
         # and chapter count don't start at 1
@@ -385,7 +385,7 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         bible.translation = 'NLT'
-        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'Ecclesiastes.yaml')
+        custom_file = f'{self.get_test_directory()}/Ecclesiastes.yaml'
         self.assertRaises(TranslationMismatchError, bible.get_passage, 'Ecclesiastes', 2, 2, custom_file)
 
     def test_translation_alias(self):
@@ -393,11 +393,11 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation='NRSVUE')
         # Read NRSV contents using an extractor using the NRSVUE translation
-        custom_file = '{0}/{1}'.format(self.get_test_directory('NRSV'), 'Ecclesiastes.yaml')
+        custom_file = f'{self.get_test_directory("NRSV")}/Ecclesiastes.yaml'
         nrsv_text = bible.get_book('Ecclesiastes', file_path=custom_file)
         # Read NRSVUE contents using an extractor using the NRSV translation
         bible.translation = 'NRSV'
-        custom_file = '{0}/{1}'.format(self.get_test_directory('NRSVUE'), 'Ecclesiastes.yaml')
+        custom_file = f'{self.get_test_directory("NRSVUE")}/Ecclesiastes.yaml'
         nrsvue_text = bible.get_book('Ecclesiastes', file_path=custom_file)
         self.assertEqual(nrsv_text, nrsvue_text, 'Passages do not match')
 
@@ -406,7 +406,7 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         # Test JSON file is specifically crafted to load nothing, yet is a valid document
-        custom_file = '{0}/{1}'.format(self.get_test_directory(), 'test_invalid_passage_error.json')
+        custom_file = f'{self.get_test_directory()}/test_invalid_passage_error.json'
         self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 9000, 1, 9001, custom_file)
         self.assertRaises(InvalidPassageError, bible.get_passage_range, 'Ecclesiastes', 1, 1, 1, 1, custom_file)
 
@@ -431,9 +431,9 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         search_result = bible.find_text_in_chapter('Preacher', 'Ecclesiastes', 1)
-        expected_result = '{0}\n{1}\n{2}'.format(bible.get_passage('Ecclesiastes', 1, 1),
-                                                 bible.get_passage('Ecclesiastes', 1, 2),
-                                                 bible.get_passage('Ecclesiastes', 1, 12))
+        expected_result = '\n'.join([bible.get_passage('Ecclesiastes', 1, 1),
+                                     bible.get_passage('Ecclesiastes', 1, 2),
+                                     bible.get_passage('Ecclesiastes', 1, 12)])
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
     def test_find_text_in_chapters(self):
@@ -441,10 +441,10 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         search_result = bible.find_text_in_chapters('vanity', 'Ecclesiastes', 7, 8)
-        expected_result = '{0}\n{1}\n{2}\n{3}'.format(bible.get_passage('Ecclesiastes', 7, 6),
-                                                      bible.get_passage('Ecclesiastes', 7, 15),
-                                                      bible.get_passage('Ecclesiastes', 8, 10),
-                                                      bible.get_passage('Ecclesiastes', 8, 14))
+        expected_result = '\n'.join([bible.get_passage('Ecclesiastes', 7, 6),
+                                     bible.get_passage('Ecclesiastes', 7, 15),
+                                     bible.get_passage('Ecclesiastes', 8, 10),
+                                     bible.get_passage('Ecclesiastes', 8, 14)])
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
     def test_find_text_in_book(self):
@@ -452,13 +452,13 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         search_result = bible.find_text_in_book('Preacher', 'Ecclesiastes')
-        expected_result = '{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}'.format(bible.get_passage('Ecclesiastes', 1, 1),
-                                                                     bible.get_passage('Ecclesiastes', 1, 2),
-                                                                     bible.get_passage('Ecclesiastes', 1, 12),
-                                                                     bible.get_passage('Ecclesiastes', 7, 27),
-                                                                     bible.get_passage('Ecclesiastes', 12, 8),
-                                                                     bible.get_passage('Ecclesiastes', 12, 9),
-                                                                     bible.get_passage('Ecclesiastes', 12, 10))
+        expected_result = '\n'.join([bible.get_passage('Ecclesiastes', 1, 1),
+                                     bible.get_passage('Ecclesiastes', 1, 2),
+                                     bible.get_passage('Ecclesiastes', 1, 12),
+                                     bible.get_passage('Ecclesiastes', 7, 27),
+                                     bible.get_passage('Ecclesiastes', 12, 8),
+                                     bible.get_passage('Ecclesiastes', 12, 9),
+                                     bible.get_passage('Ecclesiastes', 12, 10)])
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
     def test_find_text_in_passage_range(self):
@@ -466,8 +466,8 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         search_result = bible.find_text_in_passage_range('wisdom', 'Ecclesiastes', 1, 18, 2, 4)
-        expected_result = '{0}\n{1}'.format(bible.get_passage('Ecclesiastes', 1, 18),
-                                            bible.get_passage('Ecclesiastes', 2, 3))
+        expected_result = '\n'.join([bible.get_passage("Ecclesiastes", 1, 18),
+                                     bible.get_passage("Ecclesiastes", 2, 3)])
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
     def test_find_text_in_passage_range_for_passage_number(self):
@@ -475,8 +475,8 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         search_result = bible.find_text_in_passage_range('²', 'Ecclesiastes', 1, 1, 1, 18)
-        expected_result = '{0}\n{1}'.format(bible.get_passage('Ecclesiastes', 1, 2),
-                                            bible.get_passage('Ecclesiastes', 1, 12))
+        expected_result = '\n'.join([bible.get_passage("Ecclesiastes", 1, 2),
+                                     bible.get_passage("Ecclesiastes", 1, 12)])
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
         # Check that keyword searching takes into consideration the show_passage_numbers flag
@@ -505,7 +505,7 @@ class UnitTests(unittest.TestCase):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
-        file = '{0}/{1}'.format(self.get_test_directory(), 'test_find_text_in_passage_range_with_custom_file.yaml')
+        file = f'{self.get_test_directory()}/test_find_text_in_passage_range_with_custom_file.yaml'
         search_result = bible.find_text_in_passage_range('One', 'Ecclesiastes', 1, 1, 1, 5, file)
         expected_result = bible.get_passage('Ecclesiastes', 1, 4, file)
         self.assertEqual(expected_result, search_result, 'Passages do not match')
@@ -515,9 +515,9 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         search_result = bible.find_text_in_passage_range('all', 'Ecclesiastes', 1, 1, 1, 8, is_case_sensitive=True)
-        expected_result = '{0}\n{1}\n{2}'.format(bible.get_passage('Ecclesiastes', 1, 2),
-                                                 bible.get_passage('Ecclesiastes', 1, 3),
-                                                 bible.get_passage('Ecclesiastes', 1, 6))
+        expected_result = '\n'.join([bible.get_passage('Ecclesiastes', 1, 2),
+                                     bible.get_passage('Ecclesiastes', 1, 3),
+                                     bible.get_passage('Ecclesiastes', 1, 6)])
         # Expect to omit passages 7 and 8, since the search word is spelled as 'All'
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
@@ -526,8 +526,8 @@ class UnitTests(unittest.TestCase):
                               file_extension=self.get_test_file_extension(),
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         search_result = bible.find_text_in_passage_range(r'vanity|\sgain', 'Ecclesiastes', 1, 1, 1, 8, is_regex=True)
-        expected_result = '{0}\n{1}'.format(bible.get_passage('Ecclesiastes', 1, 2),
-                                            bible.get_passage('Ecclesiastes', 1, 3))
+        expected_result = '\n'.join([bible.get_passage('Ecclesiastes', 1, 2),
+                                     bible.get_passage('Ecclesiastes', 1, 3)])
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
     def test_find_text_in_passage_range_case_sensitive_regex(self):
@@ -536,8 +536,8 @@ class UnitTests(unittest.TestCase):
                               default_directory=self.get_test_directory(), translation=self.get_test_translation())
         search_result = bible.find_text_in_passage_range('Vanity|There', 'Ecclesiastes', 1, 1, 1, 18,
                                                          is_regex=True, is_case_sensitive=True)
-        expected_result = '{0}\n{1}'.format(bible.get_passage('Ecclesiastes', 1, 2),
-                                            bible.get_passage('Ecclesiastes', 1, 11))
+        expected_result = '\n'.join([bible.get_passage('Ecclesiastes', 1, 2),
+                                     bible.get_passage('Ecclesiastes', 1, 11)])
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
 

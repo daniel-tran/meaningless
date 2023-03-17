@@ -26,7 +26,7 @@ def find_keyword(keyword, translation, search_type):
     source_site_params = urlencode({'version': translation, 'search': keyword, 'searchtype': search_type,
                                     'resultspp': '500'})
     soup = BeautifulSoup(common.get_page(
-        'https://www.biblegateway.com/quicksearch/?{0}'.format(source_site_params)), 'html.parser')
+        f'https://www.biblegateway.com/quicksearch/?{source_site_params}'), 'html.parser')
 
     # Headers are for any paragraph headings present with the passage text.
     # Elements with the 'bible-item-extras' class are neighbouring hyperlinks that have the same parent element

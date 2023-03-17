@@ -25,10 +25,10 @@ from meaningless.utilities import common
 project = 'Meaningless'
 
 author = 'Daniel Tran'
-copyright = '{0}, {1}'.format(date.today().year, author)
+copyright = f'{date.today().year}, {author}'
 
 # The full version, including alpha/beta/rc tags
-release = common.get_library_version()
+release = common.MEANINGLESS_VERSION
 
 # Supply text prompts to substitute with variables from this file
 rst_prolog = f'''
@@ -69,6 +69,16 @@ autodoc_preserve_defaults = True
 # a list of builtin themes.
 #
 html_theme = 'alabaster'
+
+# Use .png instead of .ico because it's easier to edit with tools like Paint.NET
+html_favicon = 'favicon.png'
+
+# Theme options to configure specific aspects of the documentation
+html_theme_options = {
+    'description': 'Retrieves, processes and downloads Bible passages from Bible Gateway',
+    'fixed_sidebar': True,
+    'show_powered_by': False
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

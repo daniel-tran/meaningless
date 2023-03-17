@@ -14,9 +14,9 @@ def download_book_with_debug_messages(yaml_downloader, book_name):
     :param book_name: Name of the book
     :type book_name: str
     """
-    print('Downloading {0}...'.format(book_name))
+    print(f'Downloading {book_name}...')
     yaml_downloader.download_book(book_name)
-    print('Completed download for {0}.'.format(book_name))
+    print(f'Completed download for {book_name}.')
 
 
 if __name__ == "__main__":
@@ -42,4 +42,4 @@ if __name__ == "__main__":
 
     process_pool = multiprocessing.Pool(6)
     process_pool.starmap(download_book_with_debug_messages, params, 6)
-    print('Completed download of the following books: {0}'.format(str(books)))
+    print(f'Completed download of the following books: {str(books)}')

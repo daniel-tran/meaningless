@@ -33,33 +33,38 @@ class UnitTests(unittest.TestCase):
             # Baseline passages use a more generic file name, since the intention is to test a specific passage type.
             # The book is re-purposed as the baseline test index so that the parameters are still fairly intuitive
             # when invoking this method.
-            static_file = './static/system_tests_bible_translations/{0}/passage_baseline_{1}.txt'.format(translation,
-                                                                                                       book)
+            static_file = f'./static/system_tests_bible_translations/{translation}/passage_baseline_{book}.txt'
         else:
-            static_file = './static/system_tests_bible_translations/{0}/passage_{1}_{2}_{3}.txt'.format(translation, book,
-                                                                                                      chapter, passage)
+            static_file = f'./static/system_tests_bible_translations/{translation}/' \
+                          f'passage_{book}_{chapter}_{passage}.txt'
         with open(static_file, 'r', encoding='utf-8') as file:
             contents = file.read()
         self.assertEqual(contents, actual_result, 'Passage is incorrect')
 
-    def check_baseline_passages(self, translation):
+    def check_baseline_passages(self, translation, translation_contains_ot=True):
         """
         Checks that a translation can return the correct results for a basic set of passages
 
         :param translation: Translation code for the tests. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
+        :param translation_contains_ot: Indicates if the translation contains the Old Testament. Defaults to false.
+        :type translation_contains_ot: bool
         """
         bible = WebExtractor(translation=translation)
         # Searching is language independent, so any translation can search using the English book names
+        ot_placeholder = '__OLD_TESTAMENT_IS_NOT_AVAILABLE__'
         actual_passage_results = [
             bible.search('Revelation 21:25'),
             bible.search('Matthew 1:1 - 3'),
-            bible.search('Nehemiah 7:40 - 42'),
-            bible.search('Psalm 32:4'),
+            bible.search('Nehemiah 7:40 - 42') if translation_contains_ot else ot_placeholder,
+            bible.search('Psalm 32:4') if translation_contains_ot else ot_placeholder,
             bible.search('John 7:53'),
-            bible.search('Psalm 83')
+            bible.search('Psalm 83') if translation_contains_ot else ot_placeholder
         ]
         for expected_passage_index in range(0, len(actual_passage_results)):
+            if actual_passage_results[expected_passage_index] == ot_placeholder:
+                # The translation doesn't contain the Old Testament thus no search was conducted & is safe to skip
+                continue
             self.check_with_static_passage_contents(translation, str(expected_passage_index),
                                                     actual_result=actual_passage_results[expected_passage_index],
                                                     is_baseline=True)
@@ -71,14 +76,14 @@ class UnitTests(unittest.TestCase):
         :param translation: Translation code for the tests. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
         """
-        download_path = './tmp/check_omitted_passages/{0}'.format(translation)
+        download_path = f'./tmp/check_omitted_passages/{translation}'
         # Downloading the books with a process map is somewhat faster than using multiple daemon processes to
         # acquire each book sequentially.
         downloader = YAMLDownloader(translation=translation, enable_multiprocessing=False,
                                     default_directory=download_path)
         bible = YAMLExtractor(translation=translation, default_directory=download_path)
 
-        if common.is_supported_spanish_translation(translation):
+        if common.BIBLE_TRANSLATIONS[translation]['Language'] == 'Español':
             books_with_omissions = ['Mateo', 'Marcos', 'Lucas', 'Juan', 'Hechos', 'Romanos']
         else:
             books_with_omissions = ['Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans']
@@ -272,6 +277,11 @@ class UnitTests(unittest.TestCase):
     def test_translation_nrsvue(self):
         translation = 'NRSVUE'
         self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_nmb(self):
+        translation = 'NMB'
+        self.check_baseline_passages(translation, translation_contains_ot=False)
         self.check_omitted_passages(translation)
 
 

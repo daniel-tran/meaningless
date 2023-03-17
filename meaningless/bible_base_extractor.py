@@ -186,7 +186,7 @@ class BaseExtractor:
         if len(file_path) > 0:
             file_to_read = file_path
         else:
-            file_to_read = os.path.join(self.default_directory, '{0}{1}'.format(book_name, self.file_extension))
+            file_to_read = os.path.join(self.default_directory, f'{book_name}{self.file_extension}')
         document = self.file_reading_function(file_to_read)
         passage_list = []
         # Fail-fast on invalid passages

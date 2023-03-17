@@ -78,12 +78,8 @@ class BaseDownloader:
                 'John 5:4',
                 'Acts 8:37', 'Acts 15:34', 'Acts 28:29',
                 'Romans 16:24'],
-        'NIVUK': ['Matthew 17:21', 'Matthew 18:11', 'Matthew 23:14',
-                  'Mark 7:16', 'Mark 9:44', 'Mark 9:46', 'Mark 11:26', 'Mark 15:28',
-                  'Luke 17:36', 'Luke 23:17',
-                  'John 5:4',
-                  'Acts 8:37', 'Acts 15:34', 'Acts 24:7', 'Acts 28:29',
-                  'Romans 16:24'],
+        # NIVUK has some omitted passages, but they are handled in the Web Extractor such that their contents can be
+        # minimally deduced and thus not require the special passage handling logic in this class
         'NOG': ['Matthew 17:21', 'Matthew 18:11', 'Matthew 23:14',
                 'Mark 9:44', 'Mark 9:46', 'Mark 11:26', 'Mark 15:28',
                 'Luke 17:36', 'Luke 23:17',
@@ -294,7 +290,7 @@ class BaseDownloader:
                 'Language': common.get_translation_language(translation),
                 'Translation': translation,
                 'Timestamp': datetime.datetime.now().astimezone().isoformat(),
-                'Meaningless': common.get_library_version()
+                'Meaningless': common.MEANINGLESS_VERSION
             },
             book_name: {}
         }
@@ -342,7 +338,7 @@ class BaseDownloader:
             document[book_name] = {self.__key_cast(chapter): process_results.pop(0).get() for chapter in chapter_range}
 
         if len(file_path) <= 0:
-            file_location = os.path.join(self.default_directory, '{0}{1}'.format(book_name, self.file_extension))
+            file_location = os.path.join(self.default_directory, f'{book_name}{self.file_extension}')
         else:
             file_location = file_path
         return self.file_writing_function(file_location, document)
@@ -395,7 +391,7 @@ class BaseDownloader:
                 # passages for this particular translation, and assigning an empty string if it is omitted.
                 # This is to ensure the passage key matches the actual passage contents,
                 # regardless of translation.
-                passage_string = '{0} {1}:{2}'.format(book, chapter, passage_num)
+                passage_string = f'{book} {chapter}:{passage_num}'
                 if passage_string in self.__translations_with_omitted_passages[online_bible.translation]:
                     passages[self.__key_cast(passage_num)] = ''
                     # Since this passage isn't supposed to exist in the given translation but it is still registered
@@ -409,7 +405,7 @@ class BaseDownloader:
             # This is not done on the web extractor due to the difficulty of selecting the first passage in an
             # arbitrary range.
             if passage_num == 1 and self.show_passage_numbers and not passage.startswith('¹ '):
-                passage = '¹ {0}'.format(passage)
+                passage = f'¹ {passage}'
 
             passages[self.__key_cast(passage_num)] = passage
             passage_num += 1

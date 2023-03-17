@@ -12,11 +12,11 @@ class UnitTests(unittest.TestCase):
 
     @staticmethod
     def get_static_file(filename):
-        return './static/unit_tests_xml_file_interface/{0}'.format(filename)
+        return f'./static/unit_tests_xml_file_interface/{filename}'
 
     @staticmethod
     def get_temp_file(filename):
-        return './tmp/unit_tests_xml_file_interface/{0}'.format(filename)
+        return f'./tmp/unit_tests_xml_file_interface/{filename}'
 
     def test_read(self):
         document = xml_file_interface.read(self.get_static_file('test_read.xml'))
@@ -103,13 +103,13 @@ class UnitTests(unittest.TestCase):
         self.assertRaises(AttributeError, xml_file_interface.write, filename, document)
 
     def test_read_path_exceeds_windows_limit(self):
-        filename = '{0}.xml'.format('G' * 255)
+        filename = f'{"G" * 255}.xml'
         self.assertRaises((FileNotFoundError, OSError), xml_file_interface.read,
                           self.get_static_file(filename))
 
     def test_write_path_exceeds_windows_limit(self):
         document = {'Disco': {'1': {'1': 7}}}
-        filename = './tmp/{0}.xml'.format('G' * 255)
+        filename = f'./tmp/{"G" * 255}.xml'
         self.assertRaises((FileNotFoundError, OSError), xml_file_interface.write, filename, document)
 
     def test_read_empty_path(self):

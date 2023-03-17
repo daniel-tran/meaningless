@@ -3,6 +3,7 @@ import os
 import sys
 sys.path.append('../')
 from meaningless import WebExtractor, YAMLDownloader, yaml_file_interface
+from meaningless.utilities.common import BIBLE_TRANSLATIONS
 
 
 def write_baseline(folder, translation, search, index):
@@ -20,10 +21,10 @@ def write_baseline(folder, translation, search, index):
     :type index: int
     """
     bible = WebExtractor(translation=translation)
-    baseline_folder = '{0}/{1}/'.format(folder, translation)
+    baseline_folder = f'{folder}/{translation}/'
     if not os.path.exists(baseline_folder):
         os.makedirs(baseline_folder, exist_ok=True)
-    baseline_file = '{0}/passage_baseline_{1}.txt'.format(baseline_folder, index)
+    baseline_file = f'{baseline_folder}/passage_baseline_{index}.txt'
     with open(baseline_file, 'w', encoding='utf-8') as destination:
         result = bible.search(search)
         print(result)
@@ -46,9 +47,9 @@ def write_passage(folder, translation, book, chapter, passage):
     :param passage: Passage number
     :type passage: int
     """
-    passage_file = '{0}/{1}/passage_{2}_{3}_{4}.txt'.format(folder, translation, book, chapter, passage)
+    passage_file = f'{folder}/{translation}/passage_{book}_{chapter}_{passage}.txt'
     with open(passage_file, 'w', encoding='utf-8') as destination:
-        book_file_path = '{0}/{1}/{2}.yaml'.format(folder, translation, book)
+        book_file_path = f'{folder}/{translation}/{book}.yaml'
         result = yaml_file_interface.read(book_file_path)[book][chapter][passage].strip()
         print(result)
         destination.write(result)
@@ -62,29 +63,34 @@ if __name__ == "__main__":
     stages = [1, 2, 3, 4]
 
     continue_message = 'Strike the Enter or Return key to continue.'
-    input('Stage 1: Test data for baseline passages. {0}'.format(continue_message))
+    input(f'Stage 1: Test data for baseline passages. {continue_message}')
     if 1 in stages:
+        # If a translation omits the Old Testament, its first book will not match a translation that contains the OT
+        translation_contains_ot = list(BIBLE_TRANSLATIONS[download_translation]['Books'].keys())[0] == \
+                                  list(BIBLE_TRANSLATIONS['NIV']['Books'].keys())[0]
         write_baseline(output_folder, download_translation, 'Revelation 21:25', 0)
         write_baseline(output_folder, download_translation, 'Matthew 1:1 - 3', 1)
-        write_baseline(output_folder, download_translation, 'Nehemiah 7:40 - 42', 2)
-        write_baseline(output_folder, download_translation, 'Psalm 32:4', 3)
+        if translation_contains_ot:
+            write_baseline(output_folder, download_translation, 'Nehemiah 7:40 - 42', 2)
+            write_baseline(output_folder, download_translation, 'Psalm 32:4', 3)
         write_baseline(output_folder, download_translation, 'John 7:53', 4)
-        write_baseline(output_folder, download_translation, 'Psalm 83', 5)
-    input('Stage 1 completed. {0}'.format(continue_message))
+        if translation_contains_ot:
+            write_baseline(output_folder, download_translation, 'Psalm 83', 5)
+    input(f'Stage 1 completed. {continue_message}')
 
-    input('Stage 2: Intermediate data for download book tests. {0}'.format(continue_message))
+    input(f'Stage 2: Intermediate data for download book tests. {continue_message}')
     books_with_omissions = ['Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans']
     if 2 in stages:
         print('Note: This should only take about 1 - 2 minutes to complete with a decent Internet connection.')
         downloader = YAMLDownloader(translation=download_translation)
-        downloader.default_directory = '{0}/{1}/'.format(output_folder, download_translation)
+        downloader.default_directory = f'{output_folder}/{download_translation}/'
         downloader.enable_multiprocessing = False
 
         process_pool = multiprocessing.Pool(len(books_with_omissions))
         process_pool.map(downloader.download_book, books_with_omissions)
-    input('Stage 2 completed. {0}'.format(continue_message))
+    input(f'Stage 2 completed. {continue_message}')
 
-    input('Stage 3: Test data for omitted passages. {0}'.format(continue_message))
+    input(f'Stage 3: Test data for omitted passages. {continue_message}')
     if 3 in stages:
         print('----------------- Matthew -----------------')
         book_to_process = 'Matthew'
@@ -125,10 +131,10 @@ if __name__ == "__main__":
         write_passage(output_folder, download_translation, book_to_process, 28, 29)
         print('----------------- Romans -----------------')
         write_passage(output_folder, download_translation, 'Romans', 16, 24)
-    input('Stage 3 completed. {0}'.format(continue_message))
+    input(f'Stage 3 completed. {continue_message}')
 
-    input('Stage 4: Clean up intermediate files. {0}'.format(continue_message))
+    input(f'Stage 4: Clean up intermediate files. {continue_message}')
     if 4 in stages:
         for removable_book in books_with_omissions:
-            os.remove('{0}/{1}/{2}.yaml'.format(output_folder, download_translation, removable_book))
-    input('Stage 4 completed. {0}'.format(continue_message))
+            os.remove(f'{output_folder}/{download_translation}/{removable_book}.yaml')
+    input(f'Stage 4 completed. {continue_message}')

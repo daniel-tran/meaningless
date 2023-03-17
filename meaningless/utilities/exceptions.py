@@ -15,7 +15,7 @@ class UnsupportedTranslationError(BaseError):
         :param translation: Translation code. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
         """
-        super(UnsupportedTranslationError, self).__init__('{0} is an unsupported translation'.format(translation))
+        super(UnsupportedTranslationError, self).__init__(f'{translation} is an unsupported translation')
         self.translation = translation
 
 
@@ -41,13 +41,13 @@ class InvalidPassageError(BaseError):
         """
         if chapter_from == chapter_to:
             if passage_from == passage_to:
-                passage = '{0}:{1}'.format(chapter_from, passage_from)
+                passage = f'{chapter_from}:{passage_from}'
             else:
-                passage = '{0}:{1} - {2}'.format(chapter_from, passage_from, passage_to)
+                passage = f'{chapter_from}:{passage_from} - {passage_to}'
         else:
-            passage = '{0}:{1} - {2}:{3}'.format(chapter_from, passage_from, chapter_to, passage_to)
-        super(InvalidPassageError, self).__init__('{0} {1} is an invalid passage in the {2} translation'.format(
-            book, passage, translation))
+            passage = f'{chapter_from}:{passage_from} - {chapter_to}:{passage_to}'
+        super(InvalidPassageError, self).__init__(
+            f'{book} {passage} is an invalid passage in the {translation} translation')
         self.book = book
         self.chapter_from = chapter_from
         self.passage_from = passage_from
@@ -66,7 +66,7 @@ class InvalidSearchError(BaseError):
         :param url: The URL which contains the invalid search results
         :type url: str
         """
-        super(InvalidSearchError, self).__init__('Failed to retrieve search results from {0}'.format(url))
+        super(InvalidSearchError, self).__init__(f'Failed to retrieve search results from {url}')
         self.url = url
 
 
@@ -82,8 +82,8 @@ class TranslationMismatchError(BaseError):
         :param file_translation: Translation code used in the file. For example, 'NIV', 'ESV', 'NLT'
         :type file_translation: str
         """
-        super(TranslationMismatchError, self).__init__('The extractor is using the {0} translation, '
-                                                       'but attempted to read a file in the {1} translation'.format(
-                                                         extractor_translation, file_translation))
+        super(TranslationMismatchError, self).__init__(
+            f'The extractor is using the {extractor_translation} translation, '
+            f'but attempted to read a file in the {file_translation} translation')
         self.extractor_translation = extractor_translation
         self.file_translation = file_translation

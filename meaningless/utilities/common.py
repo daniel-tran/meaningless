@@ -1,17 +1,14 @@
 from urllib.request import urlopen
+from urllib.error import URLError
+from time import sleep
 import re
 
 # This is a collection of helper methods used across the various modules.
 
-
-def get_library_version():
-    """
-    Returns the current version of the Meaningless library
-
-    :return: The current library version as a string
-    :rtype: str
-    """
-    return '0.7.0'
+MEANINGLESS_VERSION = '1.0.0'
+'''
+The current version of the Meaningless library.
+'''
 
 
 def is_unsupported_translation(translation):
@@ -30,43 +27,7 @@ def is_unsupported_translation(translation):
     """
     # These translations are particularly difficult to extract information from due to them using
     # non-conventional page layouts compared to other translations: 'MOUNCE', 'VOICE', 'MSG', 'PHILLIPS'
-    return not is_supported_english_translation(translation) and not is_supported_spanish_translation(translation)
-
-
-def is_supported_english_translation(translation):
-    """
-    A helper function to determine if the provided string is a supported English translation.
-
-    :param translation: Translation code
-    :type translation: str
-    :return: True = the translation is not supported, False = the translation is supported
-    :rtype: bool
-
-    >>> is_supported_english_translation('NIV')
-    True
-    >>> is_supported_english_translation('RVA')
-    False
-    """
-    return translation.upper() in ['ASV', 'AKJV', 'BRG', 'EHV', 'ESV', 'ESVUK', 'GNV', 'GW', 'ISV',
-                                   'JUB', 'KJV', 'KJ21', 'LEB', 'MEV', 'NASB', 'NASB1995', 'NET',
-                                   'NIV', 'NIVUK', 'NKJV', 'NLT', 'NLV', 'NOG', 'NRSV', 'NRSVUE', 'WEB', 'YLT']
-
-
-def is_supported_spanish_translation(translation):
-    """
-    A helper function to determine if the provided string is a supported Spanish translation.
-
-    :param translation: Translation code
-    :type translation: str
-    :return: True = the translation is not supported, False = the translation is supported
-    :rtype: bool
-
-    >>> is_supported_spanish_translation('RVA')
-    True
-    >>> is_supported_spanish_translation('NIV')
-    False
-    """
-    return translation.upper() in ['RVA']
+    return translation.upper() not in BIBLE_TRANSLATIONS.keys()
 
 
 def is_matching_translation(translation1, translation2):
@@ -131,232 +92,64 @@ def get_chapter_count(book, translation='NIV'):
     >>> get_chapter_count('Juan', 'RVA')
     21
     """
-    if is_supported_english_translation(translation):
-        return get_english_chapter_count(book)
-    elif is_supported_spanish_translation(translation):
-        return get_spanish_chapter_count(book)
-    else:
-        return 0
+    bible_translation = translation.upper()
+    bible_book = book.title()
 
-
-def get_english_chapter_count(book):
-    """
-    A helper function to return the number of chapters in a given book in the English version of the Bible.
-
-    :param book: Name of the book
-    :type book: str
-    :return: Number of chapters in the book. 0 usually means an invalid book or unsupported translation.
-    :rtype: int
-
-    >>> get_english_chapter_count('Ecclesiastes')
-    12
-    >>> get_english_chapter_count('Barnabas')
-    0
-    >>> get_english_chapter_count('Song of Solomon')
-    8
-    >>> get_english_chapter_count('Psalms')
-    150
-    >>> get_english_chapter_count('Philippians')
-    4
-    """
-    # Standardise letter casing to help find the key easier
-    book_name = book.title()
-
-    if book_name == 'Song Of Solomon':
+    if bible_book == 'Song Of Solomon':
         # Song Of Songs has an alternate name
-        book_name = 'Song Of Songs'
-    elif book_name == 'Psalms':
+        bible_book = 'Song Of Songs'
+    elif bible_book == 'Psalms':
         # Psalm and its plural variation are basically the same book, but prefer the singular variant
-        book_name = 'Psalm'
-    elif book_name == 'Philippians':
-        # Prefer the spelling variation with two L's, partly for backwards compatibility with previous versions
-        book_name = 'Phillippians'
+        bible_book = 'Psalm'
+    elif bible_book == 'Phillippians':
+        # Most, if not all, translations use the spelling with one L but also accept the alternative spelling
+        bible_book = 'Philippians'
 
-    # This is the default mapping of books to their chapter counts
-    chapter_count_mappings = {
-        'Genesis': 50,
-        'Exodus': 40,
-        'Leviticus': 27,
-        'Numbers': 36,
-        'Deuteronomy': 34,
-        'Joshua': 24,
-        'Judges': 21,
-        'Ruth': 4,
-        '1 Samuel': 31,
-        '2 Samuel': 24,
-        '1 Kings': 22,
-        '2 Kings': 25,
-        '1 Chronicles': 29,
-        '2 Chronicles': 36,
-        'Ezra': 10,
-        'Nehemiah': 13,
-        'Esther': 10,
-        'Job': 42,
-        'Psalm': 150,
-        'Proverbs': 31,
-        'Ecclesiastes': 12,
-        'Song Of Songs': 8,
-        'Isaiah': 66,
-        'Jeremiah': 52,
-        'Lamentations': 5,
-        'Ezekiel': 48,
-        'Daniel': 12,
-        'Hosea': 14,
-        'Joel': 3,
-        'Amos': 9,
-        'Obadiah': 1,
-        'Jonah': 4,
-        'Micah': 7,
-        'Nahum': 3,
-        'Habakkuk': 3,
-        'Zephaniah': 3,
-        'Haggai': 2,
-        'Zechariah': 14,
-        'Malachi': 4,
-        'Matthew': 28,
-        'Mark': 16,
-        'Luke': 24,
-        'John': 21,
-        'Acts': 28,
-        'Romans': 16,
-        '1 Corinthians': 16,
-        '2 Corinthians': 13,
-        'Galatians': 6,
-        'Ephesians': 6,
-        'Phillippians': 4,
-        'Colossians': 4,
-        '1 Thessalonians': 5,
-        '2 Thessalonians': 3,
-        '1 Timothy': 6,
-        '2 Timothy': 4,
-        'Titus': 3,
-        'Philemon': 1,
-        'Hebrews': 13,
-        'James': 5,
-        '1 Peter': 5,
-        '2 Peter': 3,
-        '1 John': 5,
-        '2 John': 1,
-        '3 John': 1,
-        'Jude': 1,
-        'Revelation': 22
-    }
-    if book_name not in chapter_count_mappings.keys():
-        return 0
-    return chapter_count_mappings[book_name]
+    if bible_translation in BIBLE_TRANSLATIONS.keys() and \
+       bible_book in BIBLE_TRANSLATIONS[bible_translation]['Books'].keys():
+        return BIBLE_TRANSLATIONS[bible_translation]['Books'][bible_book]
+    return 0
 
 
-def get_spanish_chapter_count(book):
-    """
-    A helper function to return the number of chapters in a given book in the Spanish version of the Bible.
-
-    :param book: Name of the book
-    :type book: str
-    :return: Number of chapters in the book. 0 means an invalid book.
-    :rtype: int
-
-    >>> get_spanish_chapter_count('Hechos')
-    28
-    >>> get_spanish_chapter_count('Ecclesiastes')
-    0
-    """
-    # Standardise letter casing to help find the key easier
-    book_name = book.title()
-
-    # This is the default mapping of books to their chapter counts
-    chapter_count_mappings = {
-        'Génesis': 50,
-        'Éxodo': 40,
-        'Levítico': 27,
-        'Números': 36,
-        'Deuteronomio': 34,
-        'Josué': 24,
-        'Jueces': 21,
-        'Rut': 4,
-        '1 Samuel': 31,
-        '2 Samuel': 24,
-        '1 Reyes': 22,
-        '2 Reyes': 25,
-        '1 Crónicas': 29,
-        '2 Crónicas': 36,
-        'Esdras': 10,
-        'Nehemías': 13,
-        'Ester': 10,
-        'Job': 42,
-        'Salmos': 150,
-        'Proverbios': 31,
-        'Eclesiastés': 12,
-        'Cantares': 8,
-        'Isaías': 66,
-        'Jeremías': 52,
-        'Lamentaciones': 5,
-        'Ezequiel': 48,
-        'Daniel': 12,
-        'Oseas': 14,
-        'Joel': 3,
-        'Amós': 9,
-        'Abdías': 1,
-        'Jonás': 4,
-        'Miqueas': 7,
-        'Nahúm': 3,
-        'Habacuc': 3,
-        'Sofonías': 3,
-        'Hageo': 2,
-        'Zacarías': 14,
-        'Malaquías': 4,
-        'Mateo': 28,
-        'Marcos': 16,
-        'Lucas': 24,
-        'Juan': 21,
-        'Hechos': 28,
-        'Romanos': 16,
-        '1 Corintios': 16,
-        '2 Corintios': 13,
-        'Gálatas': 6,
-        'Efesios': 6,
-        'Filipenses': 4,
-        'Colosenses': 4,
-        '1 Tesalonicenses': 5,
-        '2 Tesalonicenses': 3,
-        '1 Timoteo': 6,
-        '2 Timoteo': 4,
-        'Tito': 3,
-        'Filemón': 1,
-        'Hebreos': 13,
-        'Santiago': 5,
-        '1 Pedro': 5,
-        '2 Pedro': 3,
-        '1 Juan': 5,
-        '2 Juan': 1,
-        '3 Juan': 1,
-        'Judas': 1,
-        'Apocalipsis': 22
-    }
-    if book_name not in chapter_count_mappings.keys():
-        return 0
-    return chapter_count_mappings[book_name]
-
-
-def get_page(url):
+def get_page(url, retry_count=3, retry_delay=2):
     """
     A helper function that returns the contents of a web page.
 
     :param url: Page URL to obtain
     :type url: str
+    :param retry_count: Number of attempts to resend the request if it fails after the first try
+    :type retry_count: int
+    :param retry_delay: Number of seconds to wait before retrying a request. This increases after every retry.
+    :type retry_delay: int
     :return: Page contents. Raises an error if the web page could not be loaded for any reason.
-    :rtype: object
+    :rtype: str
 
     >>> get_page('https://www.biblegateway.com')
     b'<!DOCTYPE html>...'
-    >>> get_page('https://www.randomwebsite.com')
+    >>> get_page('https://www.randomwebsite.com', retry_count=0)
     Traceback (most recent call last):
     ...
     urllib.error.URLError: <urlopen error ...>
+    >>> get_page('https://pypi.org/project/meaningless/meaningless/', retry_count=2, retry_delay=1)
+    Traceback (most recent call last):
+    ...
+    urllib.error.HTTPError: HTTP Error 404: Not Found
     """
-    page = urlopen(url)
-    content = page.read()
-    page.close()
-    return content
+    # Cap the values to ensure the function isn't suspended for an eternity, but still attempts at least once
+    retries = get_capped_integer(retry_count, 0, 10)
+    delay = get_capped_integer(retry_delay, 0, 30)
+    delay_multiplier = 2
+    # The extra addition to the range end is to account for the initial request
+    for retry in range(0, retries + 1):
+        try:
+            with urlopen(url) as response:
+                return response.read()
+        except URLError as exception:
+            if retry < retries:
+                sleep(delay)
+                delay *= delay_multiplier
+                continue
+            raise exception
 
 
 def superscript_numbers(text, remove_brackets=True):
@@ -471,13 +264,10 @@ def get_translation_language(translation):
     >>> get_translation_language('mounce')
     ''
     """
-    translation = translation.title()
-    if is_supported_english_translation(translation):
-        return 'English'
-    elif is_supported_spanish_translation(translation):
-        return 'Español'
-    else:
-        return ''
+    bible_translation = translation.upper()
+    if bible_translation in BIBLE_TRANSLATIONS.keys():
+        return BIBLE_TRANSLATIONS[bible_translation]['Language']
+    return ''
 
 
 def unicode_to_ascii_punctuation(text):
@@ -534,6 +324,234 @@ def cast_to_str_or_int(text, cast_to_str):
             pass
     return str(text)
 
+
+def get_bible_data_for_language(language, mode=0):
+    """
+    A helper function to return miscellaneous Bible data for a particular supported language
+
+    :param language: Language
+    :type language: str
+    :param mode: Numeric value corresponding to a specific data set. Defaults to 0.
+                 0 = All information
+                 1 = New Testament only
+    :type mode: int
+    :return: Dictionary containing Bible data relating to a particular supported language
+    :rtype: dict
+
+    >>> get_bible_data_for_language('English')
+    {'Language': 'English', 'Books': {...'Ruth': 4...}
+    >>> get_bible_data_for_language('English', mode=1)
+    {'Language': 'English', 'Books': {'Matthew': 28...}
+    >>> get_bible_data_for_language('Español')
+    {'Language': 'Español', 'Books': {...'Rut': 4...}
+    >>> get_bible_data_for_language('Saiyan')
+    {'Language': 'Saiyan', 'Books': {}}
+    """
+    bible_language = language.title()
+
+    # This is a general mapping of books and their total chapters applicable to most translations of a specific
+    # language. Apocrypha books are not listed, partly because their total chapters vary between translations but
+    # mostly due to these books not being officially supported.
+    bible_book_mapping = {
+        'English': {
+            'OT': {
+                'Genesis': 50,
+                'Exodus': 40,
+                'Leviticus': 27,
+                'Numbers': 36,
+                'Deuteronomy': 34,
+                'Joshua': 24,
+                'Judges': 21,
+                'Ruth': 4,
+                '1 Samuel': 31,
+                '2 Samuel': 24,
+                '1 Kings': 22,
+                '2 Kings': 25,
+                '1 Chronicles': 29,
+                '2 Chronicles': 36,
+                'Ezra': 10,
+                'Nehemiah': 13,
+                'Esther': 10,
+                'Job': 42,
+                'Psalm': 150,
+                'Proverbs': 31,
+                'Ecclesiastes': 12,
+                'Song Of Songs': 8,
+                'Isaiah': 66,
+                'Jeremiah': 52,
+                'Lamentations': 5,
+                'Ezekiel': 48,
+                'Daniel': 12,
+                'Hosea': 14,
+                'Joel': 3,
+                'Amos': 9,
+                'Obadiah': 1,
+                'Jonah': 4,
+                'Micah': 7,
+                'Nahum': 3,
+                'Habakkuk': 3,
+                'Zephaniah': 3,
+                'Haggai': 2,
+                'Zechariah': 14,
+                'Malachi': 4
+            },
+            'NT': {
+                'Matthew': 28,
+                'Mark': 16,
+                'Luke': 24,
+                'John': 21,
+                'Acts': 28,
+                'Romans': 16,
+                '1 Corinthians': 16,
+                '2 Corinthians': 13,
+                'Galatians': 6,
+                'Ephesians': 6,
+                'Philippians': 4,
+                'Colossians': 4,
+                '1 Thessalonians': 5,
+                '2 Thessalonians': 3,
+                '1 Timothy': 6,
+                '2 Timothy': 4,
+                'Titus': 3,
+                'Philemon': 1,
+                'Hebrews': 13,
+                'James': 5,
+                '1 Peter': 5,
+                '2 Peter': 3,
+                '1 John': 5,
+                '2 John': 1,
+                '3 John': 1,
+                'Jude': 1,
+                'Revelation': 22
+            }
+        },
+        'Español': {
+            'OT': {
+                'Génesis': 50,
+                'Éxodo': 40,
+                'Levítico': 27,
+                'Números': 36,
+                'Deuteronomio': 34,
+                'Josué': 24,
+                'Jueces': 21,
+                'Rut': 4,
+                '1 Samuel': 31,
+                '2 Samuel': 24,
+                '1 Reyes': 22,
+                '2 Reyes': 25,
+                '1 Crónicas': 29,
+                '2 Crónicas': 36,
+                'Esdras': 10,
+                'Nehemías': 13,
+                'Ester': 10,
+                'Job': 42,
+                'Salmos': 150,
+                'Proverbios': 31,
+                'Eclesiastés': 12,
+                'Cantares': 8,
+                'Isaías': 66,
+                'Jeremías': 52,
+                'Lamentaciones': 5,
+                'Ezequiel': 48,
+                'Daniel': 12,
+                'Oseas': 14,
+                'Joel': 3,
+                'Amós': 9,
+                'Abdías': 1,
+                'Jonás': 4,
+                'Miqueas': 7,
+                'Nahúm': 3,
+                'Habacuc': 3,
+                'Sofonías': 3,
+                'Hageo': 2,
+                'Zacarías': 14,
+                'Malaquías': 4
+            },
+            'NT': {
+                'Mateo': 28,
+                'Marcos': 16,
+                'Lucas': 24,
+                'Juan': 21,
+                'Hechos': 28,
+                'Romanos': 16,
+                '1 Corintios': 16,
+                '2 Corintios': 13,
+                'Gálatas': 6,
+                'Efesios': 6,
+                'Filipenses': 4,
+                'Colosenses': 4,
+                '1 Tesalonicenses': 5,
+                '2 Tesalonicenses': 3,
+                '1 Timoteo': 6,
+                '2 Timoteo': 4,
+                'Tito': 3,
+                'Filemón': 1,
+                'Hebreos': 13,
+                'Santiago': 5,
+                '1 Pedro': 5,
+                '2 Pedro': 3,
+                '1 Juan': 5,
+                '2 Juan': 1,
+                '3 Juan': 1,
+                'Judas': 1,
+                'Apocalipsis': 22
+            }
+        }
+    }
+
+    if bible_language in bible_book_mapping.keys():
+        if mode == 1:
+            bible_books = bible_book_mapping[bible_language]['NT']
+        else:
+            # Default to all information when the mode doesn't match one of the preset data sets
+            bible_books = {**bible_book_mapping[bible_language]['OT'], **bible_book_mapping[bible_language]['NT']}
+    else:
+        # Unsupported language
+        bible_books = {}
+
+    return {
+         'Language': bible_language,
+         'Books': bible_books
+    }
+
+
+BIBLE_TRANSLATIONS = {
+    # English
+    'ASV': get_bible_data_for_language('English'),
+    'AKJV': get_bible_data_for_language('English'),
+    'BRG': get_bible_data_for_language('English'),
+    'EHV': get_bible_data_for_language('English'),
+    'ESV': get_bible_data_for_language('English'),
+    'ESVUK': get_bible_data_for_language('English'),
+    'GNV': get_bible_data_for_language('English'),
+    'GW': get_bible_data_for_language('English'),
+    'ISV': get_bible_data_for_language('English'),
+    'JUB': get_bible_data_for_language('English'),
+    'KJV': get_bible_data_for_language('English'),
+    'KJ21': get_bible_data_for_language('English'),
+    'LEB': get_bible_data_for_language('English'),
+    'MEV': get_bible_data_for_language('English'),
+    'NASB': get_bible_data_for_language('English'),
+    'NASB1995': get_bible_data_for_language('English'),
+    'NET': get_bible_data_for_language('English'),
+    'NIV': get_bible_data_for_language('English'),
+    'NIVUK': get_bible_data_for_language('English'),
+    'NKJV': get_bible_data_for_language('English'),
+    'NLT': get_bible_data_for_language('English'),
+    'NLV': get_bible_data_for_language('English'),
+    'NMB': get_bible_data_for_language('English', mode=1),
+    'NOG': get_bible_data_for_language('English'),
+    'NRSV': get_bible_data_for_language('English'),  # Contains Apocrypha books that are currently omitted
+    'NRSVUE': get_bible_data_for_language('English'),  # Contains Apocrypha books that are currently omitted
+    'WEB': get_bible_data_for_language('English'),
+    'YLT': get_bible_data_for_language('English'),
+    # Spanish
+    'RVA': get_bible_data_for_language('Español')
+}
+'''
+The mapping of supported translations and associated Bible data, excluding Apocrypha information. For simplicity, all
+book names use their common variant (e.g. 'Song Of Songs' instead of 'Song Of Solomon').
+'''
 
 if __name__ == "__main__":
     # Run this section when run as a standalone script. Don't run this part when being imported.

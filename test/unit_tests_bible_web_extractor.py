@@ -54,7 +54,7 @@ class UnitTests(unittest.TestCase):
                'torn by wild beasts; throw it to the dogs. '
         ex23 = '“Do not spread false reports. Do not help a guilty person by being a malicious witness.'
         # Use a multi-line string to account for the chapter transition
-        self.assertEqual('''{0}\n\n{1}'''.format(ex22, ex23), text, 'Passage is incorrect')
+        self.assertEqual(f'''{ex22}\n\n{ex23}''', text, 'Passage is incorrect')
 
     def test_get_passage_with_subheadings(self):
         bible = WebExtractor()
@@ -64,7 +64,7 @@ class UnitTests(unittest.TestCase):
         ez40_20 = '²⁰ Then he measured the length and width of the north gate, ' \
                   'leading into the outer court.'
         # Ignore the subheading, but start its paragraph contents on a new line
-        self.assertEqual('''{0}\n{1}'''.format(ez40_19, ez40_20), text, 'Passage is incorrect')
+        self.assertEqual(f'''{ez40_19}\n{ez40_20}''', text, 'Passage is incorrect')
 
     def test_get_passage_with_indentations(self):
         bible = WebExtractor()
@@ -227,6 +227,13 @@ class UnitTests(unittest.TestCase):
         # Trailing double space at the end of verse 2 should just shorten to a single space
         self.assertEqual(matt, text, 'Passage is incorrect')
 
+    def test_get_passage_nrsvue_versenum_tag(self):
+        bible = WebExtractor(translation='NRSVUE')
+        text = bible.search('Matthew 9:1')
+        matt = '¹ And after getting into a boat he crossed the sea and came to his own town.'
+        # Passage already includes a superscript passage number, so no need to do special processing of versenum tags
+        self.assertEqual(matt, text, 'Passage is incorrect')
+
     def test_get_passage_web_inline_reference(self):
         bible = WebExtractor(translation='WEB')
         text = bible.search('Mark 9:44')
@@ -287,10 +294,18 @@ class UnitTests(unittest.TestCase):
         bible = WebExtractor(translation='NIVUK')
         text = bible.search('Mark 15:27 - 29')
         mark = '²⁷ They crucified two rebels with him, one on his right and one on his left. ' \
+               '²⁸ ' \
                '²⁹ Those who passed by hurled insults at him, shaking their heads and saying, ' \
                '‘So! You who are going to destroy the temple and build it in three days,'
-        # The versenum tag doesn't contain any useful information and should be removed, along with its extra spacing
+        # Versenum tags normally have nothing of interest in their tag text, but they still have passage number
+        # information that can be extracted instead
         self.assertEqual(mark, text, 'Passage is incorrect')
+
+    def test_get_individual_passages_nivuk_versenum_tags(self):
+        bible = WebExtractor(translation='NIVUK')
+        text = [bible.search('John 5:4'), bible.search('Mark 9:44'), bible.search('Mark 15:28')]
+        # If searching only for an omitted passage, the Web Extractor should not leak out passage separators
+        self.assertEqual('⁴ ⁴⁴ ²⁸', ' '.join(text), 'Passage is incorrect')
 
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,

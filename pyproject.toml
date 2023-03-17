@@ -1,0 +1,41 @@
+[build-system]
+requires = ['setuptools>=61.0']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'meaningless'
+dynamic = ['version', 'readme', 'dependencies']
+authors = [
+  {name = 'Daniel Tran', email = 'dantran.au@gmail.com'}
+]
+description = 'Retrieves, processes and downloads Bible passages from Bible Gateway'
+license.file = 'LICENSE.md'
+keywords = ['bible', 'yaml', 'json', 'xml', 'csv', 'biblegateway']
+classifiers = [
+  'Development Status :: 4 - Beta',
+  'Intended Audience :: Religion',
+  'Intended Audience :: Developers',
+  'License :: OSI Approved :: MIT License',
+  'Natural Language :: English',
+  'Operating System :: Microsoft :: Windows',
+  'Operating System :: POSIX :: Linux',
+  'Programming Language :: Python :: 3.8',
+  'Programming Language :: Python :: 3.9',
+  'Programming Language :: Python :: 3.10',
+  'Topic :: Religion'
+]
+requires-python = '>=3.8'
+
+[project.urls]
+'Homepage' = 'https://github.com/daniel-tran/meaningless'
+'Documentation' = 'https://daniel-tran.github.io/meaningless'
+
+[tool.setuptools]
+# This disables module auto discovery, since some top-level folders are not supposed to be packaged
+py-modules = []
+packages = ['meaningless']
+
+[tool.setuptools.dynamic]
+version = {attr = 'meaningless.utilities.common.MEANINGLESS_VERSION'}
+readme = {file = ['README.md', 'CHANGELOG.md'], content-type = 'text/markdown'}
+dependencies = {file = ['REQUIREMENTS.txt']}

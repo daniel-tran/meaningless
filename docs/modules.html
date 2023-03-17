@@ -1,22 +1,22 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>meaningless &#8212; Meaningless 0.7.0 documentation</title>
+    <title>meaningless &#8212; Meaningless 1.0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="icon" href="_static/favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="meaningless package" href="meaningless.html" />
-    <link rel="prev" title="Meaningless 0.7.0 - API Documentation" href="index.html" />
+    <link rel="prev" title="Meaningless 1.0.0 - API Documentation" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -24,54 +24,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
-  <section id="meaningless">
-<h1>meaningless<a class="headerlink" href="#meaningless" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="meaningless.html">meaningless package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_web_extractor">Web Extractor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_yaml_downloader">YAML Downloader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_yaml_extractor">YAML Extractor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_json_downloader">JSON Downloader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_json_extractor">JSON Extractor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_xml_downloader">XML Downloader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_xml_extractor">XML Extractor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_csv_downloader">CSV Downloader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_csv_extractor">CSV Extractor</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="utilities.html">meaningless.utilities package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.exceptions">Exceptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.yaml_file_interface">YAML File Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.json_file_interface">JSON File Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.xml_file_interface">XML File Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.csv_file_interface">CSV File Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.legacy_xml_file_interface">Legacy XML File Interface</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
-
-
-          </div>
-          
-        </div>
-      </div>
+  <div class="document">
+    
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Meaningless</a></h1>
 
 
+
+<p class="blurb">Retrieves, processes and downloads Bible passages from Bible Gateway</p>
 
 
 
@@ -92,7 +53,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Meaningless 0.7.0 - API Documentation</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">Meaningless 1.0.0 - API Documentation</a></li>
       <li>Next: <a href="meaningless.html" title="next chapter">meaningless package</a></li>
   </ul></li>
 </ul>
@@ -106,7 +67,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -117,14 +78,197 @@
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="meaningless">
+<h1>meaningless<a class="headerlink" href="#meaningless" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="meaningless.html">meaningless package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_web_extractor">Web Extractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meaningless.html#meaningless.bible_web_extractor.WebExtractor"><code class="docutils literal notranslate"><span class="pre">WebExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_web_extractor.WebExtractor.get_book"><code class="docutils literal notranslate"><span class="pre">WebExtractor.get_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_web_extractor.WebExtractor.get_chapter"><code class="docutils literal notranslate"><span class="pre">WebExtractor.get_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_web_extractor.WebExtractor.get_chapters"><code class="docutils literal notranslate"><span class="pre">WebExtractor.get_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_web_extractor.WebExtractor.get_passage"><code class="docutils literal notranslate"><span class="pre">WebExtractor.get_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_web_extractor.WebExtractor.get_passage_range"><code class="docutils literal notranslate"><span class="pre">WebExtractor.get_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_web_extractor.WebExtractor.get_passages"><code class="docutils literal notranslate"><span class="pre">WebExtractor.get_passages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_web_extractor.WebExtractor.search"><code class="docutils literal notranslate"><span class="pre">WebExtractor.search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_web_extractor.WebExtractor.search_multiple"><code class="docutils literal notranslate"><span class="pre">WebExtractor.search_multiple()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_yaml_downloader">YAML Downloader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_downloader.YAMLDownloader"><code class="docutils literal notranslate"><span class="pre">YAMLDownloader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_downloader.YAMLDownloader.download_book"><code class="docutils literal notranslate"><span class="pre">YAMLDownloader.download_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_downloader.YAMLDownloader.download_chapter"><code class="docutils literal notranslate"><span class="pre">YAMLDownloader.download_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_downloader.YAMLDownloader.download_chapters"><code class="docutils literal notranslate"><span class="pre">YAMLDownloader.download_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_downloader.YAMLDownloader.download_passage"><code class="docutils literal notranslate"><span class="pre">YAMLDownloader.download_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_downloader.YAMLDownloader.download_passage_range"><code class="docutils literal notranslate"><span class="pre">YAMLDownloader.download_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_downloader.YAMLDownloader.download_passages"><code class="docutils literal notranslate"><span class="pre">YAMLDownloader.download_passages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_yaml_extractor">YAML Extractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_book"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.find_text_in_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_chapter"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.find_text_in_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_chapters"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.find_text_in_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_passage"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.find_text_in_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_passage_range"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.find_text_in_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.find_text_in_passages"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.find_text_in_passages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.get_book"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.get_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.get_chapter"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.get_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.get_chapters"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.get_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.get_passage"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.get_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.get_passage_range"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.get_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_yaml_extractor.YAMLExtractor.get_passages"><code class="docutils literal notranslate"><span class="pre">YAMLExtractor.get_passages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_json_downloader">JSON Downloader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meaningless.html#meaningless.bible_json_downloader.JSONDownloader"><code class="docutils literal notranslate"><span class="pre">JSONDownloader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_downloader.JSONDownloader.download_book"><code class="docutils literal notranslate"><span class="pre">JSONDownloader.download_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_downloader.JSONDownloader.download_chapter"><code class="docutils literal notranslate"><span class="pre">JSONDownloader.download_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_downloader.JSONDownloader.download_chapters"><code class="docutils literal notranslate"><span class="pre">JSONDownloader.download_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_downloader.JSONDownloader.download_passage"><code class="docutils literal notranslate"><span class="pre">JSONDownloader.download_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_downloader.JSONDownloader.download_passage_range"><code class="docutils literal notranslate"><span class="pre">JSONDownloader.download_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_downloader.JSONDownloader.download_passages"><code class="docutils literal notranslate"><span class="pre">JSONDownloader.download_passages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_json_extractor">JSON Extractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor"><code class="docutils literal notranslate"><span class="pre">JSONExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.find_text_in_book"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.find_text_in_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.find_text_in_chapter"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.find_text_in_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.find_text_in_chapters"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.find_text_in_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.find_text_in_passage"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.find_text_in_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.find_text_in_passage_range"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.find_text_in_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.find_text_in_passages"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.find_text_in_passages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.get_book"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.get_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.get_chapter"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.get_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.get_chapters"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.get_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.get_passage"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.get_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.get_passage_range"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.get_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_json_extractor.JSONExtractor.get_passages"><code class="docutils literal notranslate"><span class="pre">JSONExtractor.get_passages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_xml_downloader">XML Downloader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_downloader.XMLDownloader"><code class="docutils literal notranslate"><span class="pre">XMLDownloader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_downloader.XMLDownloader.download_book"><code class="docutils literal notranslate"><span class="pre">XMLDownloader.download_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_downloader.XMLDownloader.download_chapter"><code class="docutils literal notranslate"><span class="pre">XMLDownloader.download_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_downloader.XMLDownloader.download_chapters"><code class="docutils literal notranslate"><span class="pre">XMLDownloader.download_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_downloader.XMLDownloader.download_passage"><code class="docutils literal notranslate"><span class="pre">XMLDownloader.download_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_downloader.XMLDownloader.download_passage_range"><code class="docutils literal notranslate"><span class="pre">XMLDownloader.download_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_downloader.XMLDownloader.download_passages"><code class="docutils literal notranslate"><span class="pre">XMLDownloader.download_passages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_xml_extractor">XML Extractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor"><code class="docutils literal notranslate"><span class="pre">XMLExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_book"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.find_text_in_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_chapter"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.find_text_in_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_chapters"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.find_text_in_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_passage"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.find_text_in_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_passage_range"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.find_text_in_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.find_text_in_passages"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.find_text_in_passages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.get_book"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.get_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.get_chapter"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.get_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.get_chapters"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.get_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.get_passage"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.get_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.get_passage_range"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.get_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_xml_extractor.XMLExtractor.get_passages"><code class="docutils literal notranslate"><span class="pre">XMLExtractor.get_passages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_csv_downloader">CSV Downloader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_downloader.CSVDownloader"><code class="docutils literal notranslate"><span class="pre">CSVDownloader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_downloader.CSVDownloader.download_book"><code class="docutils literal notranslate"><span class="pre">CSVDownloader.download_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_downloader.CSVDownloader.download_chapter"><code class="docutils literal notranslate"><span class="pre">CSVDownloader.download_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_downloader.CSVDownloader.download_chapters"><code class="docutils literal notranslate"><span class="pre">CSVDownloader.download_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_downloader.CSVDownloader.download_passage"><code class="docutils literal notranslate"><span class="pre">CSVDownloader.download_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_downloader.CSVDownloader.download_passage_range"><code class="docutils literal notranslate"><span class="pre">CSVDownloader.download_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_downloader.CSVDownloader.download_passages"><code class="docutils literal notranslate"><span class="pre">CSVDownloader.download_passages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="meaningless.html#module-meaningless.bible_csv_extractor">CSV Extractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor"><code class="docutils literal notranslate"><span class="pre">CSVExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_book"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.find_text_in_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_chapter"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.find_text_in_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_chapters"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.find_text_in_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_passage"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.find_text_in_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_passage_range"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.find_text_in_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.find_text_in_passages"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.find_text_in_passages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.get_book"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.get_book()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.get_chapter"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.get_chapter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.get_chapters"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.get_chapters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.get_passage"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.get_passage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.get_passage_range"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.get_passage_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="meaningless.html#meaningless.bible_csv_extractor.CSVExtractor.get_passages"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.get_passages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utilities.html">meaningless.utilities package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.exceptions">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.exceptions.BaseError"><code class="docutils literal notranslate"><span class="pre">BaseError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.exceptions.InvalidPassageError"><code class="docutils literal notranslate"><span class="pre">InvalidPassageError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.exceptions.InvalidSearchError"><code class="docutils literal notranslate"><span class="pre">InvalidSearchError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.exceptions.TranslationMismatchError"><code class="docutils literal notranslate"><span class="pre">TranslationMismatchError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.exceptions.UnsupportedTranslationError"><code class="docutils literal notranslate"><span class="pre">UnsupportedTranslationError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.yaml_file_interface">YAML File Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.yaml_file_interface.read"><code class="docutils literal notranslate"><span class="pre">read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.yaml_file_interface.write"><code class="docutils literal notranslate"><span class="pre">write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.json_file_interface">JSON File Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.json_file_interface.read"><code class="docutils literal notranslate"><span class="pre">read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.json_file_interface.write"><code class="docutils literal notranslate"><span class="pre">write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.xml_file_interface">XML File Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.xml_file_interface.read"><code class="docutils literal notranslate"><span class="pre">read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.xml_file_interface.write"><code class="docutils literal notranslate"><span class="pre">write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-meaningless.utilities.csv_file_interface">CSV File Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.csv_file_interface.read"><code class="docutils literal notranslate"><span class="pre">read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#meaningless.utilities.csv_file_interface.write"><code class="docutils literal notranslate"><span class="pre">write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
     <div class="footer">
       &copy;2023, Daniel Tran.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/modules.rst.txt"

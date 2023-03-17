@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../')
-from meaningless import XMLExtractor, xml_file_interface, legacy_xml_file_interface
+from meaningless import XMLExtractor, xml_file_interface
 
 # These tests just test for certain components which differ from the base extractor
 
@@ -17,15 +17,6 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(bible.file_reading_function.__module__, xml_file_interface.read.__module__,
                          'Module of reading function is incorrect')
         self.assertEqual(bible.file_reading_function.__name__, xml_file_interface.read.__name__,
-                         'Name of reading function is incorrect')
-        self.assertTrue(bible.read_key_as_string, 'Extractor is not reading keys as strings')
-
-    def test_legacy_xml_extractor_settings(self):
-        bible = XMLExtractor(use_legacy_mode=True)
-        self.assertEqual(bible.file_extension, '.xml', 'Extension is incorrect')
-        self.assertEqual(bible.file_reading_function.__module__, legacy_xml_file_interface.read.__module__,
-                         'Module of reading function is incorrect')
-        self.assertEqual(bible.file_reading_function.__name__, legacy_xml_file_interface.read.__name__,
                          'Name of reading function is incorrect')
         self.assertTrue(bible.read_key_as_string, 'Extractor is not reading keys as strings')
 
