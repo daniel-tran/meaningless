@@ -2,7 +2,7 @@ import unittest
 import multiprocessing
 import sys
 sys.path.append('../')
-from meaningless import WebExtractor, YAMLDownloader, YAMLExtractor
+from meaningless import WebExtractor, JSONDownloader, JSONExtractor
 from meaningless.utilities import common
 
 
@@ -79,9 +79,9 @@ class UnitTests(unittest.TestCase):
         download_path = f'./tmp/check_omitted_passages/{translation}'
         # Downloading the books with a process map is somewhat faster than using multiple daemon processes to
         # acquire each book sequentially.
-        downloader = YAMLDownloader(translation=translation, enable_multiprocessing=False,
+        downloader = JSONDownloader(translation=translation, enable_multiprocessing=False,
                                     default_directory=download_path)
-        bible = YAMLExtractor(translation=translation, default_directory=download_path)
+        bible = JSONExtractor(translation=translation, default_directory=download_path)
 
         if common.BIBLE_TRANSLATIONS[translation]['Language'] == 'Español':
             books_with_omissions = ['Mateo', 'Marcos', 'Lucas', 'Juan', 'Hechos', 'Romanos']
