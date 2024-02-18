@@ -172,10 +172,10 @@ class ApocryphaWebExtractor(WebExtractor):
         # the web request to stagger if this manages to be long enough.
         capped_chapter_from = common.get_capped_integer(chapter_from,
                                                         max_value=self.__apocrypha_chapter_count_mappings[book_name])
-        capped_passage_from = common.get_capped_integer(passage_from)
+        capped_passage_from = common.get_capped_integer(passage_from, max_value=common.get_end_of_chapter())
         capped_chapter_to = common.get_capped_integer(chapter_to,
                                                       max_value=self.__apocrypha_chapter_count_mappings[book_name])
-        capped_passage_to = common.get_capped_integer(passage_to)
+        capped_passage_to = common.get_capped_integer(passage_to, max_value=common.get_end_of_chapter())
 
         output = []
         chapter = capped_chapter_from
