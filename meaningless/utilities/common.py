@@ -5,7 +5,7 @@ import re
 
 # This is a collection of helper methods used across the various modules.
 
-MEANINGLESS_VERSION = '1.0.0'
+MEANINGLESS_VERSION = '1.1.0'
 '''
 The current version of the Meaningless library.
 '''
