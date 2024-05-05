@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1.0
+- Fixed an issue where `get_passage_range` in the Web Extractor would incorrectly cap the upper limit of passages to 100
+- Drop library support for Python 3.8
+- Python version support now extends to the 4 earliest versions (subject to its EOL date) which are at least receiving security fixes
+
 ## 1.0.0
 - Removed legacy_xml_file_interface module and the `use_legacy_mode` flag in the XML Downloader and Extractor
 - Added experimental Apocrypha Web Extractor for the NRSVUE translation

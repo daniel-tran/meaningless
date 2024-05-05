@@ -143,10 +143,10 @@ class WebExtractor:
         # the web request to stagger if this manages to be long enough.
         capped_chapter_from = common.get_capped_integer(chapter_from,
                                                         max_value=common.get_chapter_count(book, self.translation))
-        capped_passage_from = common.get_capped_integer(passage_from)
+        capped_passage_from = common.get_capped_integer(passage_from, max_value=common.get_end_of_chapter())
         capped_chapter_to = common.get_capped_integer(chapter_to,
                                                       max_value=common.get_chapter_count(book, self.translation))
-        capped_passage_to = common.get_capped_integer(passage_to)
+        capped_passage_to = common.get_capped_integer(passage_to, max_value=common.get_end_of_chapter())
         # Defer to a direct search invocation when sourcing passages from the same chapter
         if capped_chapter_from == capped_chapter_to:
             return self.search(f'{book} {capped_chapter_from}:{capped_passage_from} - {capped_passage_to}')
