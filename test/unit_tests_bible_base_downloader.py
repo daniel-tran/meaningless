@@ -98,7 +98,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(downloaded_file['Philemon'], static_file['Philemon'], 'Passage contents do not match')
 
     def test_base_download_passages(self):
-        download_path = './tmp/test_yaml_download_passages/'
+        download_path = './tmp/test_base_download_passages/'
         bible = BaseDownloader(file_writing_function=yaml_file_interface.write,
                                default_directory=download_path, translation=self.get_test_translation())
         bible.download_passages('Philemon', 1, 1, 3)
