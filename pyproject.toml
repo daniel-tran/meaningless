@@ -19,13 +19,13 @@ classifiers = [
   'Natural Language :: English',
   'Operating System :: Microsoft :: Windows',
   'Operating System :: POSIX :: Linux',
-  'Programming Language :: Python :: 3.9',
   'Programming Language :: Python :: 3.10',
   'Programming Language :: Python :: 3.11',
   'Programming Language :: Python :: 3.12',
+  'Programming Language :: Python :: 3.13',
   'Topic :: Religion'
 ]
-requires-python = '>=3.9'
+requires-python = '>=3.10'
 
 [project.urls]
 'Homepage' = 'https://github.com/daniel-tran/meaningless'
