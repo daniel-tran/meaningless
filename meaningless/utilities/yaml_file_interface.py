@@ -15,6 +15,7 @@ def write(data_file, document):
     :return: Returns 1 on success. Raises an exception when a write problem occurs.
     :rtype: int
     """
+    max_line_length = 2048
     # Only create the directory if it doesn't already exist. This is also to account for directories which are the
     # top level of a given drive (e.g. C:/) which can't be created by the file system due to denied access.
     data_directory = os.path.dirname(data_file)
@@ -22,7 +23,11 @@ def write(data_file, document):
         os.makedirs(data_directory, exist_ok=True)
     # Use UTF-8 encoding to allow for Unicode characters to be written to the file
     with open(data_file, 'w', newline='', encoding='utf-8') as file:
-        YAML().dump(document, file)
+        loader = YAML()
+        # For multiline strings, YAML files assume a single space between words that connect multiple lines, which can
+        # be problematic when a line ends with a newline character. Simply extending the line width fixes this.
+        loader.width = max_line_length
+        loader.dump(document, file)
     return 1
 
 
