@@ -540,6 +540,19 @@ class UnitTests(unittest.TestCase):
                                      bible.get_passage('Ecclesiastes', 1, 11)])
         self.assertEqual(expected_result, search_result, 'Passages do not match')
 
+    def test_find_text_in_passage_range_error_cleanup(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              translation='LOL', default_directory=self.get_test_directory(), output_as_list=False)
+        # UnsupportedTranslationError is the easiest error to trigger while still applying hidden property modifications
+        self.assertRaises(UnsupportedTranslationError, bible.find_text_in_passage, '', 'Ecclesiastes', 1, 2)
+        self.assertFalse(bible.output_as_list, 'output_as_list was not reverted to False when error was raised')
+
+        # Test that settings aren't forcefully set to a certain value when an error occurs
+        bible.output_as_list = True
+        self.assertRaises(UnsupportedTranslationError, bible.find_text_in_passage, '', 'Ecclesiastes', 1, 2)
+        self.assertTrue(bible.output_as_list, 'output_as_list was not reverted to True when error was raised')
+
 
 if __name__ == "__main__":
     unittest.main()
