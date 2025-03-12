@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.2.0
+- Fixed an issue where the YAML Extractor sometimes includes extra whitespace that is not present in the Web Extractor
+- Fixed an issue where the `output_as_list` flag in the Base Extractor would be modified when an error occurred while calling one of the text searching functions
+- Drop library support for Python 3.9
+
 ## 1.1.0
 - Fixed an issue where `get_passage_range` in the Web Extractor would incorrectly cap the upper limit of passages to 100
 - Drop library support for Python 3.8
