@@ -34,7 +34,11 @@ requires-python = '>=3.10'
 [tool.setuptools]
 # This disables module auto discovery, since some top-level folders are not supposed to be packaged
 py-modules = []
-packages = ['meaningless']
+
+[tool.setuptools.packages.find]
+# This is needed for dynamically deriving the version from a constant
+where = ['.']
+include = ['meaningless*']
 
 [tool.setuptools.dynamic]
 version = {attr = 'meaningless.utilities.common.MEANINGLESS_VERSION'}
