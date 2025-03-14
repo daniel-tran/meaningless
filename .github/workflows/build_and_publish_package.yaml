@@ -1,0 +1,50 @@
+name: Build and Publish Meaningless package
+on:
+  workflow_dispatch:
+    inputs:
+      publish_type:
+        type: choice
+        description: 'Specify which package index to publish to'
+        required: true
+        options:
+        - Build package only (no publishing)
+        - test.pypi.org
+        - pypi.org
+jobs:
+  Build-and-Publish-Package:
+    runs-on: windows-latest
+    environment: pypi-publishing
+    name: Build and Publish Meaningless package
+    env:
+      TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r REQUIREMENTS.txt
+          pip install -r REQUIREMENTS_DEVELOPMENT.txt
+          pip install -r REQUIREMENTS_PYPI.txt
+      - name: Build Meaningless library
+        run: |
+          python -m build
+      - if: github.event.inputs.publish_type == 'test.pypi.org'
+        name: Publish Meaningless package to Test Python Package Index
+        run: |
+          python -m twine upload --repository testpypi dist\*
+        env:
+          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD_TEST }}
+      - if: github.event.inputs.publish_type == 'pypi.org'
+        name: Publish Meaningless package to Python Package Index
+        run: |
+          python -m twine upload dist\*
+        env:
+          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD_PROD }}
+      - name: Report job status
+        run: |
+          echo "This job's status is ${{ job.status }}."

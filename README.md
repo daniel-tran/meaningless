@@ -104,8 +104,7 @@ Running the above code would produce a file called `Ecclesiastes.yaml` in the cu
 ```yaml
 Ecclesiastes:
   1:
-    2: "² “Meaningless! Meaningless!”\n    says the Teacher.\n“Utterly meaningless!\n\
-      \    Everything is meaningless.”"
+    2: "² “Meaningless! Meaningless!”\n    says the Teacher.\n“Utterly meaningless!\n    Everything is meaningless.”"
 Info:
   Language: English
   Translation: NIV
@@ -151,8 +150,7 @@ Running the above code would produce a file called `Ecclesiastes.yaml` in the cu
 ```yaml
 Ecclesiastes:
   1:
-    2: "² “Meaningless! Meaningless!”\n    says the Teacher.\n“Utterly meaningless!\n\
-      \    Everything is meaningless.”"
+    2: "² “Meaningless! Meaningless!”\n    says the Teacher.\n“Utterly meaningless!\n    Everything is meaningless.”"
 Info:
   Language: English
   Translation: NIV

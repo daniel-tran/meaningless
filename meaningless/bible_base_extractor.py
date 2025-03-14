@@ -443,13 +443,12 @@ class BaseExtractor:
         :rtype: str or list
         """
         # Temporarily force output as a list to process individual passages more easily
-        # Note that an exception occurring during passage retrieval will result in self.output_as_list not reverting
-        # to its original value. Any logic that catches raised exceptions for this function may be required to manually
-        # restore the original value for self.output_as_list, depending on the exception handling logic being used.
         output_as_list = self.output_as_list
-        self.output_as_list = True
-        passages = self.get_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, file_path)
-        self.output_as_list = output_as_list
+        try:
+            self.output_as_list = True
+            passages = self.get_passage_range(book, chapter_from, passage_from, chapter_to, passage_to, file_path)
+        finally:
+            self.output_as_list = output_as_list
 
         matching_passages = []
         if is_case_sensitive:

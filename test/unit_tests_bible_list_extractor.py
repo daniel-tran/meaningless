@@ -224,7 +224,7 @@ class UnitTests(unittest.TestCase):
                               translation=self.get_test_translation())
         text = bible.get_passages('1 John', 1, 8, 9)
         john = ['⁸ If we say that we have no sin, we deceive ourselves, and the truth is not in us. ',
-                '⁹ If we confess our sins, he is faithful and righteous to forgive us the sins, '
+                '⁹ If we confess our sins, he is faithful and righteous to forgive us the sins '
                 'and to cleanse us from all unrighteousness. ']
         self.assertEqual(john, text, 'Passage is incorrect')
 

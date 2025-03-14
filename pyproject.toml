@@ -19,13 +19,13 @@ classifiers = [
   'Natural Language :: English',
   'Operating System :: Microsoft :: Windows',
   'Operating System :: POSIX :: Linux',
-  'Programming Language :: Python :: 3.9',
   'Programming Language :: Python :: 3.10',
   'Programming Language :: Python :: 3.11',
   'Programming Language :: Python :: 3.12',
+  'Programming Language :: Python :: 3.13',
   'Topic :: Religion'
 ]
-requires-python = '>=3.9'
+requires-python = '>=3.10'
 
 [project.urls]
 'Homepage' = 'https://github.com/daniel-tran/meaningless'
@@ -34,7 +34,11 @@ requires-python = '>=3.9'
 [tool.setuptools]
 # This disables module auto discovery, since some top-level folders are not supposed to be packaged
 py-modules = []
-packages = ['meaningless']
+
+[tool.setuptools.packages.find]
+# This is needed for dynamically deriving the version from a constant
+where = ['.']
+include = ['meaningless*']
 
 [tool.setuptools.dynamic]
 version = {attr = 'meaningless.utilities.common.MEANINGLESS_VERSION'}
