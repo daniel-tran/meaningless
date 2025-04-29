@@ -3,6 +3,7 @@ import sys
 sys.path.append('../')
 from meaningless import yaml_file_interface, WebExtractor, InvalidSearchError
 from meaningless.bible_base_extractor import BaseExtractor
+from meaningless.utilities import common
 
 
 class UnitTests(unittest.TestCase):
@@ -180,6 +181,24 @@ class UnitTests(unittest.TestCase):
         # This chapter doesn't have Unicode single quotes, but should have the other translated characters
         self.assertEqual(eccl, ''.join(text), 'Passage is incorrect')
 
+    def test_get_passage_list_with_minimal_copyright(self):
+        bible = WebExtractor(output_as_list=True, add_minimal_copyright=True)
+        text = bible.get_passage('Ecclesiastes', 11, 7)
+        eccl11 = ['⁷ Light is sweet,\n'
+                  '    and it pleases the eyes to see the sun.',
+                  f' {common.get_minimal_copyright_text(bible.translation)}'
+                  ]
+        self.assertEqual(eccl11, text, 'Passage is incorrect')
+
+    def test_get_passage_list_with_minimal_copyright_and_stripped_whitespace(self):
+        bible = WebExtractor(output_as_list=True, add_minimal_copyright=True, strip_excess_whitespace_from_list=True)
+        text = bible.get_passage('Ecclesiastes', 11, 7)
+        eccl11 = ['⁷ Light is sweet,\n'
+                  '    and it pleases the eyes to see the sun.',
+                  common.get_minimal_copyright_text(bible.translation)
+                  ]
+        self.assertEqual(eccl11, text, 'Passage is incorrect')
+
     def test_get_multiple_passage_list_from_string(self):
         bible = WebExtractor(output_as_list=True)
         text = bible.search_multiple(['1 John 1:8 - 9', 'Haggai 1:3'])
@@ -301,6 +320,22 @@ class UnitTests(unittest.TestCase):
         text = bible.get_book('Ecclesiastes')
         eccl = online_bible.get_book('Ecclesiastes')
         # Results should be identical between the web and base extractor
+        self.assertEqual(eccl, text, 'Passage is incorrect')
+
+    def test_get_base_book_list_with_minimal_copyright(self):
+        online_bible = WebExtractor(output_as_list=True, show_passage_numbers=False,
+                                    add_minimal_copyright=True,
+                                    translation=self.get_test_translation())
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              output_as_list=True, show_passage_numbers=False,
+                              default_directory=self.get_test_directory(),
+                              add_minimal_copyright=True,
+                              translation=self.get_test_translation())
+        text = bible.get_chapter('Ecclesiastes', 11)
+        eccl = online_bible.get_chapter('Ecclesiastes', 11)
+        # Results should be identical between the web and base extractor
+        # Ignoring passage numbers, as the web extractor omits this for the first passage of each chapter
         self.assertEqual(eccl, text, 'Passage is incorrect')
 
 

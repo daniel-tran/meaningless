@@ -270,6 +270,49 @@ def get_translation_language(translation):
     return ''
 
 
+def get_minimal_copyright_text(translation):
+    """
+    A helper function to provide the minimal recommended copyright text as per the Bible Gateway Terms of Use Agreement
+    when quoting passages for non-commercial use.
+
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :type translation: str
+    :return: Minimal copyright text as a string. Empty string if the translation is not supported.
+    :rtype: str
+
+    >>> get_minimal_copyright_text('NIV')
+    '(NIV)'
+    >>> get_minimal_copyright_text('mounce')
+    ''
+    """
+    bible_translation = translation.upper()
+    if bible_translation in BIBLE_TRANSLATIONS.keys():
+        return f'({translation})'
+    return ''
+
+
+def get_translation_copyright(translation):
+    """
+    A helper function to provide the copyright link for a given Bible translation
+
+    :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
+    :type translation: str
+    :return: Copyright link used as a string. Empty string if the translation is not supported.
+    :rtype: str
+
+    >>> get_translation_copyright('NIV')
+    'https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy'
+    >>> get_translation_copyright('RVA')
+    'https://www.biblegateway.com/versions/Reina-Valera-Antigua-RVA-Biblia/#copy'
+    >>> get_translation_copyright('mounce')
+    ''
+    """
+    bible_translation = translation.upper()
+    if bible_translation in BIBLE_TRANSLATIONS.keys():
+        return BIBLE_TRANSLATIONS[bible_translation]['Copyright']
+    return ''
+
+
 def unicode_to_ascii_punctuation(text):
     """
     A helper function to convert certain punctuation characters from Unicode to ASCII
@@ -515,38 +558,142 @@ def get_bible_data_for_language(language, mode=0):
     }
 
 
+BIBLE_KEY_COPYRIGHT = 'Copyright'
 BIBLE_TRANSLATIONS = {
     # English
-    'ASV': get_bible_data_for_language('English'),
-    'AKJV': get_bible_data_for_language('English'),
-    'BRG': get_bible_data_for_language('English'),
-    'EHV': get_bible_data_for_language('English'),
-    'ESV': get_bible_data_for_language('English'),
-    'ESVUK': get_bible_data_for_language('English'),
-    'GNV': get_bible_data_for_language('English'),
-    'GW': get_bible_data_for_language('English'),
-    'ISV': get_bible_data_for_language('English'),
-    'JUB': get_bible_data_for_language('English'),
-    'KJV': get_bible_data_for_language('English'),
-    'KJ21': get_bible_data_for_language('English'),
-    'LEB': get_bible_data_for_language('English'),
-    'MEV': get_bible_data_for_language('English'),
-    'NASB': get_bible_data_for_language('English'),
-    'NASB1995': get_bible_data_for_language('English'),
-    'NET': get_bible_data_for_language('English'),
-    'NIV': get_bible_data_for_language('English'),
-    'NIVUK': get_bible_data_for_language('English'),
-    'NKJV': get_bible_data_for_language('English'),
-    'NLT': get_bible_data_for_language('English'),
-    'NLV': get_bible_data_for_language('English'),
-    'NMB': get_bible_data_for_language('English', mode=1),
-    'NOG': get_bible_data_for_language('English'),
-    'NRSV': get_bible_data_for_language('English'),  # Contains Apocrypha books that are currently omitted
-    'NRSVUE': get_bible_data_for_language('English'),  # Contains Apocrypha books that are currently omitted
-    'WEB': get_bible_data_for_language('English'),
-    'YLT': get_bible_data_for_language('English'),
+    'AMP': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Amplified-Bible-AMP/#copy',
+    },
+    'ASV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/American-Standard-Version-ASV-Bible/#copy'
+    },
+    'AKJV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Authorized-King-James-Version-AKJV-Bible/#copy'
+    },
+    'BRG': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/BRG-Bible/#copy'
+    },
+    'CSB': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Christian-Standard-Bible-CSB/#copy'
+    },
+    'EHV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Evangelical-Heritage-Version-EHV-Bible/#copy'
+    },
+    'ESV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/English-Standard-Version-ESV-Bible/#copy'
+    },
+    'ESVUK': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/English-Standard-Version-Anglicised-ESV-Bible/#copy'
+    },
+    'GNV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/1599-Geneva-Bible-GNV/#copy'
+    },
+    'GW': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/GODS-WORD-Translation-GW-Bible/#copy'
+    },
+    'ISV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/International-Standard-Version-ISV-Bible/#copy'
+    },
+    'JUB': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Jubilee-Bible-2000-JUB/#copy'
+    },
+    'KJV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/King-James-Version-KJV-Bible/#copy'
+    },
+    'KJ21': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/21st-Century-King-James-Version-KJ21-Bible/#copy'
+    },
+    'LEB': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Lexham-English-Bible-LEB/#copy'
+    },
+    'MEV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Modern-English-Version-MEV-Bible/#copy'
+    },
+    'NASB': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-American-Standard-Bible-NASB/#copy'
+    },
+    'NASB1995': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-American-Standard-Bible-NASB1995/#copy'
+    },
+    'NET': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-English-Translation-NET-Bible/#copy'
+    },
+    'NIV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy'
+    },
+    'NIVUK': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-International-Version-UK-NIVUK-Bible/#copy'
+    },
+    'NKJV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-King-James-Version-NKJV-Bible/#copy'
+    },
+    'NLT': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-Living-Translation-NLT-Bible/#copy'
+    },
+    'NLV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-Life-Version-NLV-Bible/#copy'
+    },
+    'NMB': {
+        **get_bible_data_for_language('English', mode=1),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-Matthew-Bible-NMB/#copy'
+    },
+    'NOG': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Names-of-God-NOG-Bible/#copy'
+    },
+    'NRSV': {
+        **get_bible_data_for_language('English'),  # Contains Apocrypha books that are currently omitted,
+        # If you try to visit https://www.biblegateway.com/versions/New-Revised-Standard-Version-NRSV-Bible/#copy
+        # you will be redirected to the NRSVUE translation
+        BIBLE_KEY_COPYRIGHT:
+            'https://www.biblegateway.com/versions/New-Revised-Standard-Version-Updated-Edition-NRSVue-Bible/#copy'
+    },
+    'NRSVUE': {
+        **get_bible_data_for_language('English'),  # Contains Apocrypha books that are currently omitted
+        BIBLE_KEY_COPYRIGHT:
+            'https://www.biblegateway.com/versions/New-Revised-Standard-Version-Updated-Edition-NRSVue-Bible/#copy'
+    },
+    'RSV': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Revised-Standard-Version-RSV-Bible/#copy'
+    },
+    'WEB': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/World-English-Bible-WEB/#copy'
+    },
+    'YLT': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Youngs-Literal-Translation-YLT-Bible/#copy'
+    },
     # Spanish
-    'RVA': get_bible_data_for_language('Español')
+    'RVA': {
+        **get_bible_data_for_language('Español'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Reina-Valera-Antigua-RVA-Biblia/#copy'
+    }
 }
 '''
 The mapping of supported translations and associated Bible data, excluding Apocrypha information. For simplicity, all

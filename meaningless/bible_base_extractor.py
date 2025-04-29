@@ -11,7 +11,7 @@ class BaseExtractor:
 
     def __init__(self, file_reading_function, translation='NIV', show_passage_numbers=True, output_as_list=False,
                  strip_excess_whitespace_from_list=False, default_directory=os.getcwd(),
-                 use_ascii_punctuation=False, file_extension='', read_key_as_string=False):
+                 use_ascii_punctuation=False, file_extension='', read_key_as_string=False, add_minimal_copyright=False):
         """
         :param file_reading_function: Function definition used to specify how to read a given file.
                                       The function should only take 1 argument, which states the file path to read.
@@ -37,6 +37,12 @@ class BaseExtractor:
         :param read_key_as_string: If True, specifies that all keys in the extracted file will be strings.
                Defaults to False.
         :type read_key_as_string: bool
+        :param add_minimal_copyright: If True, includes additional text that follows recommendations from the Bible
+                                      Gateway Terms of Use Agreement when quoting passages for non-commercial use.
+                                      When output_as_list is also True, the minimal copyright text is included as a
+                                      separate string at the end of the list.
+                                      Defaults to False.
+        :type add_minimal_copyright: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
@@ -47,6 +53,7 @@ class BaseExtractor:
         self.file_extension = file_extension
         self.file_reading_function = file_reading_function
         self.read_key_as_string = read_key_as_string
+        self.add_minimal_copyright = add_minimal_copyright
 
     def get_passage(self, book, chapter, passage, file_path=''):
         """
@@ -230,18 +237,24 @@ class BaseExtractor:
             if not self.output_as_list:
                 passage_list.append('\n')
 
+        minimal_copyright_text = f' {common.get_minimal_copyright_text(translation)}'
         if self.use_ascii_punctuation:
             passage_list = [common.unicode_to_ascii_punctuation(passage) for passage in passage_list]
         if not self.show_passage_numbers:
             # This assumes that all superscript numbers are indicative of the passage number
             passage_list = [common.remove_superscript_numbers_in_passage(passage) for passage in passage_list]
         if self.output_as_list:
+            if self.add_minimal_copyright:
+                # Minimal copyright text is added here to apply any effects of strip_excess_whitespace_from_list
+                passage_list.append(minimal_copyright_text)
             if self.strip_excess_whitespace_from_list:
                 return [passage.strip() for passage in passage_list]
             return passage_list
         # Convert the list of passages into a string, as strings are immutable and manually re-initialising a new string
         # in the loop can be costly to performance.
-        all_text = ''.join([passage for passage in passage_list])
+        all_text = ''.join([passage for passage in passage_list]).strip()
+        if self.add_minimal_copyright:
+            all_text += minimal_copyright_text
 
         return all_text.strip()
 

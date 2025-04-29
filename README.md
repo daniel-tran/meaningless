@@ -108,6 +108,7 @@ Ecclesiastes:
 Info:
   Language: English
   Translation: NIV
+  Copyright: https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy
   Timestamp: '0000-00-00T00:00:00.000000+00:00'
   Meaningless: 0.0.0
 ```
@@ -154,6 +155,7 @@ Ecclesiastes:
 Info:
   Language: English
   Translation: NIV
+  Copyright: https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy
   Timestamp: '0000-00-00T00:00:00.000000+00:00'
   Meaningless: 0.0.0
   Customised?: true
@@ -179,6 +181,7 @@ Running the above code would produce a file called `Ecclesiastes.json` in the cu
     }
   },
   "Info": {
+    "Copyright": "https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy",
     "Language": "English",
     "Meaningless": "0.0.0",
     "Timestamp": "0000-00-00T00:00:00.000000+00:00",
@@ -230,6 +233,7 @@ Running the above code would produce a file called `Ecclesiastes.json` in the cu
     }
   },
   "Info": {
+    "Copyright": "https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy",
     "Customised?": true,
     "Language": "English",
     "Meaningless": "0.0.0",
@@ -257,6 +261,7 @@ Running the above code would produce a file called `Ecclesiastes.xml` in the cur
   <info>
     <language>English</language>
     <translation>NIV</translation>
+    <copyright>https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy</copyright>>
     <timestamp>0000-00-00T00:00:00.000000+00:00</timestamp>
     <meaningless>0.0.0</meaningless>
   </info>
@@ -312,6 +317,7 @@ Running the above code would produce a file called `Ecclesiastes.xml` in the cur
   <info>
     <language>English</language>
     <translation>NIV</translation>
+    <copyright>https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy</copyright>
     <timestamp>0000-00-00T00:00:00.000000+00:00</timestamp>
     <meaningless>0.0.0</meaningless>
     <customised>true</customised>
@@ -342,11 +348,11 @@ Output:
 
 Running the above code would produce a file called `Ecclesiastes.csv` in the current working directory with the approximate contents:
 ```
-Book,Chapter,Passage,Text,Language,Translation,Timestamp,Meaningless
+Book,Chapter,Passage,Text,Language,Translation,Copyright,Timestamp,Meaningless
 Ecclesiastes,1,2,"² “Meaningless! Meaningless!”
     says the Teacher.
 “Utterly meaningless!
-    Everything is meaningless.”",English,NIV,0000-00-00T00:00:00.000000+00:00,0.0.0
+    Everything is meaningless.”",English,NIV,https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy,0000-00-00T00:00:00.000000+00:00,0.0.0
 ```
 
 ## CSV Extractor
@@ -385,11 +391,11 @@ Output:
 
 Running the above code would produce a file called `Ecclesiastes.csv` in the current working directory with the approximate contents:
 ```
-Book,Chapter,Passage,Text,Language,Translation,Timestamp,Meaningless
+Book,Chapter,Passage,Text,Language,Translation,Copyright,Timestamp,Meaningless
 Ecclesiastes,1,2,"² “Meaningless! Meaningless!”
     says the Teacher.
 “Utterly meaningless!
-    Everything is meaningless.”",English (EN),NIV,0000-00-00T00:00:00.000000+00:00,0.0.0
+    Everything is meaningless.”",English (EN),NIV,https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy,0000-00-00T00:00:00.000000+00:00,0.0.0
 ```
 
 ## Text searching within files

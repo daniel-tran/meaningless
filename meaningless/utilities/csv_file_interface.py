@@ -11,7 +11,7 @@ def __get_header_list():
     :return: The list of header fields.
     :rtype: str[]
     """
-    return ['Book', 'Chapter', 'Passage', 'Text', 'Language', 'Translation', 'Timestamp', 'Meaningless']
+    return ['Book', 'Chapter', 'Passage', 'Text', 'Language', 'Translation', 'Copyright', 'Timestamp', 'Meaningless']
 
 
 def write(data_file, document):

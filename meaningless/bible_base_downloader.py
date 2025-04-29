@@ -289,6 +289,7 @@ class BaseDownloader:
             'Info': {
                 'Language': common.get_translation_language(translation),
                 'Translation': translation,
+                'Copyright': common.get_translation_copyright(translation),
                 'Timestamp': datetime.datetime.now().astimezone().isoformat(),
                 'Meaningless': common.MEANINGLESS_VERSION
             },

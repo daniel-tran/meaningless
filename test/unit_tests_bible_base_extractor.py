@@ -3,7 +3,7 @@ import sys
 sys.path.append('../')
 from meaningless import UnsupportedTranslationError, TranslationMismatchError, InvalidPassageError
 from meaningless.bible_base_extractor import BaseExtractor
-from meaningless.utilities import yaml_file_interface, json_file_interface
+from meaningless.utilities import common, yaml_file_interface, json_file_interface
 
 
 class UnitTests(unittest.TestCase):
@@ -379,6 +379,16 @@ class UnitTests(unittest.TestCase):
         # Custom file only contains one chapter and one passage, but should be able to detect that both the passage
         # and chapter count don't start at 1
         self.assertEqual(text, eccl, 'Passages do not match')
+
+    def test_get_base_passage_with_minimal_copyright(self):
+        bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
+                              file_extension=self.get_test_file_extension(),
+                              default_directory=self.get_test_directory(), translation=self.get_test_translation(),
+                              add_minimal_copyright=True)
+        text = bible.get_passage('Ecclesiastes', 1, 2)
+        eccl = f'² “Vanity of vanities,” says the Preacher; “Vanity of vanities, all is vanity.”' \
+               f' {common.get_minimal_copyright_text(bible.translation)}'
+        self.assertEqual(eccl, text, 'Passages do not match')
 
     def test_translation_mismatch_error(self):
         bible = BaseExtractor(file_reading_function=yaml_file_interface.read,
