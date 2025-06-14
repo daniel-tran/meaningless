@@ -224,6 +224,14 @@ class UnitTests(unittest.TestCase):
         # An invalid passage would just be ignored
         self.assertEqual(text1, text2, 'Passage is incorrect')
 
+    def test_get_passages_with_bracket_preceding_superscript_number_csb(self):
+        bible = WebExtractor(output_as_list=True, translation='CSB')
+        text = bible.search('John 7:52-53')
+        john = ['⁵² “You aren’t from Galilee too, are you?” they replied. '
+                '“Investigate and you will see that no prophet arises from Galilee.” \n',
+                '⁵³ [Then each one went to his house.']
+        self.assertEqual(john, text, 'Passage is incorrect')
+
     # -------------- Tests with the Base Extractor --------------
     # By extension, this should also cover any classes that build off the Base Extractor
 

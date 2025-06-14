@@ -322,6 +322,14 @@ class UnitTests(unittest.TestCase):
         # The newline that follows after the omitted verse number should still be removed
         self.assertEqual(psalm, text, 'Passage is incorrect')
 
+    def test_get_passages_with_bracket_preceding_superscript_number_without_passage_numbers(self):
+        bible = WebExtractor(translation='CSB', show_passage_numbers=False)
+        text = bible.search('John 7:52-53')
+        # Ensure the bracket not accidentally removed with the passage number
+        self.assertEqual('“You aren’t from Galilee too, are you?” they replied. '
+                         '“Investigate and you will see that no prophet arises from Galilee.” \n'
+                         '[Then each one went to his house.', text, 'Passage is incorrect')
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.

@@ -40,6 +40,7 @@ You can view the API documentation as static HTML documents from `docs\index.htm
 - ASV
 - AKJV
 - BRG
+- CSB
 - EHV
 - ESV
 - ESVUK

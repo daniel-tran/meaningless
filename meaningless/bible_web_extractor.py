@@ -312,6 +312,11 @@ class WebExtractor:
         # specifically used to remove that additional spacing, since it is part of the actual page layout.
         all_text = re.sub('([^ ]) {2,3}([^ ])', r'\1 \2', raw_passage_text)
 
+        # CSB has some passages with the square bracket preceding the superscript number, but not in the same element.
+        # This switches them to avoid the passage separator from over-cutting the passage text when splitting it
+        # when output_as_list is enabled.
+        all_text = re.sub(fr'(\[)({passage_separator}[⁰¹²³⁴⁵⁶⁷⁸⁹]+ +)', r'\2\1', all_text)
+
         # AMP has newlines directly follow the passage number & trailing space, particularly in Psalms.
         # Bible Gateway support haven't specified a timeline for when this will be fixed, so it's handled here manually.
         if translation == 'AMP':
