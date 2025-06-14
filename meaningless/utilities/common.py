@@ -130,7 +130,7 @@ def get_page(url, retry_count=3, retry_delay=2):
     Traceback (most recent call last):
     ...
     urllib.error.URLError: <urlopen error ...>
-    >>> get_page('https://pypi.org/project/meaningless/meaningless/', retry_count=2, retry_delay=1)
+    >>> get_page('https://www.python.org/meaningless/', retry_count=2, retry_delay=1)
     Traceback (most recent call last):
     ...
     urllib.error.HTTPError: HTTP Error 404: Not Found
