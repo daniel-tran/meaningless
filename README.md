@@ -65,6 +65,7 @@ You can view the API documentation as static HTML documents from `docs\index.htm
 - NOG
 - NRSV
 - NRSVUE
+- RSV
 - WEB
 - YLT
 
