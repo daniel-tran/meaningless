@@ -50,6 +50,7 @@ You can view the API documentation as static HTML documents from `docs\index.htm
 - KJV
 - KJ21
 - LEB
+- LSB
 - MEV
 - NASB
 - NASB1995

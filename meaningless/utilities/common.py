@@ -621,6 +621,10 @@ BIBLE_TRANSLATIONS = {
         **get_bible_data_for_language('English'),
         BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Lexham-English-Bible-LEB/#copy'
     },
+    'LSB': {
+        **get_bible_data_for_language('English'),
+        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Legacy-Standard-Bible-LSB-Bible/#copy'
+    },
     'MEV': {
         **get_bible_data_for_language('English'),
         BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Modern-English-Version-MEV-Bible/#copy'
