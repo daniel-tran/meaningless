@@ -11,7 +11,7 @@ class BaseExtractor:
 
     def __init__(self, file_reading_function, translation='NIV', show_passage_numbers=True, output_as_list=False,
                  strip_excess_whitespace_from_list=False, default_directory=os.getcwd(),
-                 use_ascii_punctuation=False, file_extension='', read_key_as_string=False, add_minimal_copyright=False):
+                 use_ascii_punctuation=False, add_minimal_copyright=False, file_extension='', read_key_as_string=False):
         """
         :param file_reading_function: Function definition used to specify how to read a given file.
                                       The function should only take 1 argument, which states the file path to read.
@@ -32,17 +32,17 @@ class BaseExtractor:
         :param use_ascii_punctuation: When True, converts all Unicode punctuation characters into their ASCII
                                       counterparts. This also applies to passage separators. Defaults to False.
         :type use_ascii_punctuation: bool
-        :param file_extension: File extension used when reading from a default file when file_path is not provided.
-        :type file_extension: str
-        :param read_key_as_string: If True, specifies that all keys in the extracted file will be strings.
-               Defaults to False.
-        :type read_key_as_string: bool
         :param add_minimal_copyright: If True, includes additional text that follows recommendations from the Bible
                                       Gateway Terms of Use Agreement when quoting passages for non-commercial use.
                                       When output_as_list is also True, the minimal copyright text is included as a
                                       separate string at the end of the list.
                                       Defaults to False.
         :type add_minimal_copyright: bool
+        :param file_extension: File extension used when reading from a default file when file_path is not provided.
+        :type file_extension: str
+        :param read_key_as_string: If True, specifies that all keys in the extracted file will be strings.
+               Defaults to False.
+        :type read_key_as_string: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
