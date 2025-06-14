@@ -312,6 +312,11 @@ class WebExtractor:
         # specifically used to remove that additional spacing, since it is part of the actual page layout.
         all_text = re.sub('([^ ]) {2,3}([^ ])', r'\1 \2', raw_passage_text)
 
+        # AMP has newlines directly follow the passage number & trailing space, particularly in Psalms.
+        # Bible Gateway support haven't specified a timeline for when this will be fixed, so it's handled here manually.
+        if translation == 'AMP':
+            all_text = re.sub('([⁰¹²³⁴⁵⁶⁷⁸⁹]+ +)\n', r'\1', all_text)
+
         # Remove all superscript numbers if the passage numbers should be hidden
         if not self.show_passage_numbers:
             all_text = common.remove_superscript_numbers_in_passage(all_text)

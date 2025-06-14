@@ -36,6 +36,7 @@ You can view the API documentation as static HTML documents from `docs\index.htm
 
 ## English
 
+- AMP
 - ASV
 - AKJV
 - BRG
