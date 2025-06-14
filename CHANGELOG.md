@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.3.0
+- Added functionality to include minimal copyright information into the Base Extractor and Web Extractor
+- Added Bible Gateway translation-specific copyright URL to output files
+- Added translation support for: AMP, CSB, LSB, RSV
+
 ## 1.2.0
 - Fixed an issue where the YAML Extractor sometimes includes extra whitespace that is not present in the Web Extractor
 - Fixed an issue where the `output_as_list` flag in the Base Extractor would be modified when an error occurred while calling one of the text searching functions
