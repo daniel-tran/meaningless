@@ -9,13 +9,12 @@ authors = [
   {name = 'Daniel Tran', email = 'dantran.au@gmail.com'}
 ]
 description = 'Retrieves, processes and downloads Bible passages from Bible Gateway'
-license.file = 'LICENSE.md'
+license-files = ['LICENSE.md']
 keywords = ['bible', 'yaml', 'json', 'xml', 'csv', 'biblegateway']
 classifiers = [
   'Development Status :: 5 - Production/Stable',
   'Intended Audience :: Religion',
   'Intended Audience :: Developers',
-  'License :: OSI Approved :: MIT License',
   'Natural Language :: English',
   'Operating System :: Microsoft :: Windows',
   'Operating System :: POSIX :: Linux',
