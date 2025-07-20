@@ -20,7 +20,7 @@ class UnitTests(unittest.TestCase):
     def test_read(self):
         document = csv_file_interface.read(self.get_static_file('test_read.csv'))
         self.assertEqual(document['Disco']['42']['7'], 'Beatdown', 'Text is incorrect')
-        self.assertEqual(len(document['Info'].keys()), 4, 'Number of informational items is incorrect')
+        self.assertEqual(len(document['Info'].keys()), 5, 'Number of informational items is incorrect')
         self.assertEqual(document['Info']['Language'], 'English', 'Language is incorrect')
         self.assertEqual(document['Info']['Translation'], 'Elysium', 'Translation is incorrect')
 

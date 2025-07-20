@@ -284,6 +284,26 @@ class UnitTests(unittest.TestCase):
         self.check_baseline_passages(translation, translation_contains_ot=False)
         self.check_omitted_passages(translation)
 
+    def test_translation_amp(self):
+        translation = 'AMP'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_lsb(self):
+        translation = 'LSB'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_csb(self):
+        translation = 'CSB'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
+    def test_translation_rsv(self):
+        translation = 'RSV'
+        self.check_baseline_passages(translation)
+        self.check_omitted_passages(translation)
+
 
 if __name__ == "__main__":
     unittest.main()

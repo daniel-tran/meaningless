@@ -15,7 +15,7 @@ class WebExtractor:
     """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
-                 strip_excess_whitespace_from_list=False, use_ascii_punctuation=False):
+                 strip_excess_whitespace_from_list=False, use_ascii_punctuation=False, add_minimal_copyright=False):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
@@ -30,12 +30,19 @@ class WebExtractor:
         :param use_ascii_punctuation: When True, converts all Unicode punctuation characters into their ASCII
                                       counterparts. This also applies to passage separators. Defaults to False.
         :type use_ascii_punctuation: bool
+        :param add_minimal_copyright: If True, includes additional text that follows recommendations from the Bible
+                                      Gateway Terms of Use Agreement when quoting passages for non-commercial use.
+                                      When output_as_list is also True, the minimal copyright text is included as a
+                                      separate string at the end of the list.
+                                      Defaults to False.
+        :type add_minimal_copyright: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
         self.output_as_list = output_as_list
         self.strip_excess_whitespace_from_list = strip_excess_whitespace_from_list
         self.use_ascii_punctuation = use_ascii_punctuation
+        self.add_minimal_copyright = add_minimal_copyright
 
     def get_passage(self, book, chapter, passage):
         """
@@ -212,6 +219,11 @@ class WebExtractor:
         else:
             passage_separator = ''
 
+        if self.add_minimal_copyright:
+            minimal_copyright_text = f' {common.get_minimal_copyright_text(translation)}'
+        else:
+            minimal_copyright_text = ''
+
         # Compile the list of tags to remove from the parsed web page, corresponding to the following elements:
         # h1
         #    - Ignore passage display
@@ -300,6 +312,16 @@ class WebExtractor:
         # specifically used to remove that additional spacing, since it is part of the actual page layout.
         all_text = re.sub('([^ ]) {2,3}([^ ])', r'\1 \2', raw_passage_text)
 
+        # CSB has some passages with the square bracket preceding the superscript number, but not in the same element.
+        # This switches them to avoid the passage separator from over-cutting the passage text when splitting it
+        # when output_as_list is enabled.
+        all_text = re.sub(fr'(\[)({passage_separator}[⁰¹²³⁴⁵⁶⁷⁸⁹]+ +)', r'\2\1', all_text)
+
+        # AMP has newlines directly follow the passage number & trailing space, particularly in Psalms.
+        # Bible Gateway support haven't specified a timeline for when this will be fixed, so it's handled here manually.
+        if translation == 'AMP':
+            all_text = re.sub('([⁰¹²³⁴⁵⁶⁷⁸⁹]+ +)\n', r'\1', all_text)
+
         # Remove all superscript numbers if the passage numbers should be hidden
         if not self.show_passage_numbers:
             all_text = common.remove_superscript_numbers_in_passage(all_text)
@@ -326,7 +348,7 @@ class WebExtractor:
 
         if not self.output_as_list:
             # Do any final touch-ups to the passage contents before outputting the string
-            return all_text.strip()
+            return f'{all_text.strip()}{minimal_copyright_text}'
 
         # At this point, the expectation is that the return value is a list of passages.
         # Since the passage separator is placed before the passage number, it can cause an empty first item upon
@@ -336,6 +358,9 @@ class WebExtractor:
         if all_text.strip().startswith(passage_separator):
             all_text = all_text.replace(passage_separator, '', 1)
         passage_list = re.split(passage_separator, all_text.strip())
+        if minimal_copyright_text:
+            # Minimal copyright text is added here to apply any effects of strip_excess_whitespace_from_list
+            passage_list.append(minimal_copyright_text)
         # Since this is the end of the method, the logic may as well return the list comprehension result
         # rather than spend the extra effort to modify the existing passage list and then return the result.
         if self.strip_excess_whitespace_from_list:

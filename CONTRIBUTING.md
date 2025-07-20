@@ -111,6 +111,7 @@ This is the dictionary structure that is passed into `write` and returned from `
     }
   },
   "Info": {
+    "Copyright": "URL to the copyright information for this translation on Bible Gateway",
     "Language": "Translation Language",
     "Translation": "Translation Code",
     "Timestamp": "Timestamp in ISO 8601 format",
