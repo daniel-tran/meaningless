@@ -15,7 +15,8 @@ class WebExtractor:
     """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, output_as_list=False,
-                 strip_excess_whitespace_from_list=False, use_ascii_punctuation=False, add_minimal_copyright=False):
+                 strip_excess_whitespace_from_list=False, use_ascii_punctuation=False, add_minimal_copyright=False,
+                 capitalise_small_caps=False):
         """
         :param translation: Translation code for the particular passage. For example, 'NIV', 'ESV', 'NLT'
         :type translation: str
@@ -36,6 +37,9 @@ class WebExtractor:
                                       separate string at the end of the list.
                                       Defaults to False.
         :type add_minimal_copyright: bool
+        :param capitalise_small_caps: If True, preserves capitalisation of words through specific styling.
+                                      Defaults to False.
+        :type add_minimal_copyright: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
@@ -43,6 +47,7 @@ class WebExtractor:
         self.strip_excess_whitespace_from_list = strip_excess_whitespace_from_list
         self.use_ascii_punctuation = use_ascii_punctuation
         self.add_minimal_copyright = add_minimal_copyright
+        self.capitalise_small_caps = capitalise_small_caps
 
     def get_passage(self, book, chapter, passage):
         """
@@ -294,6 +299,10 @@ class WebExtractor:
         # Note: Python "double colon" syntax for lists is used to retrieve items at every N interval including 0.
         # TODO: If a verse with >2 columns is found, this WILL need to be updated to be more dynamic
         [td.replace_with(f'{td.text} ') for td in soup.find_all('td')[::2]]
+        # If applicable, retain CSS class-based capitalisation
+        if self.capitalise_small_caps:
+            [small_caps.replace_with(small_caps.text.upper()) for small_caps in soup.find_all('span',
+                                                                                              {'class': 'small-caps'})]
         # Preserve paragraph spacing by manually pre-pending a new line
         # THIS MUST BE THE LAST PROCESSING STEP because doing this earlier interferes with other replacements
         [p.replace_with(f'\n{p.text}') for p in soup.find_all('p')]

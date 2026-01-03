@@ -330,6 +330,16 @@ class UnitTests(unittest.TestCase):
                          '“Investigate and you will see that no prophet arises from Galilee.” \n'
                          '[Then each one went to his house.', text, 'Passage is incorrect')
 
+    def test_get_passages_with_small_caps(self):
+        bible = WebExtractor(capitalise_small_caps=True)
+        text = bible.search('Isaiah 42:5')
+        isaiah = ['⁵ This is what God the LORD says—',
+                  'the Creator of the heavens, who stretches them out,',
+                  '    who spreads out the earth with all that springs from it,',
+                  '    who gives breath to its people,',
+                  '    and life to those who walk on it:']
+        self.assertEqual('\n'.join(isaiah), text, 'Passage is incorrect')
+
     # -------------- Tests for the alternative interfaces --------------
     # Given the precondition that directly querying the Bible Gateway site has been tested extensively,
     # these tests are only concerned with ensuring method consistency with the same data.
