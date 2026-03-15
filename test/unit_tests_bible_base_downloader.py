@@ -272,6 +272,17 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(len(downloaded_file['Mark'][9]), 1, 'Incorrect number of passages downloaded')
         self.assertEqual(downloaded_file['Mark'][9][44], expected_contents, 'Passage contents do not match')
 
+    def test_base_download_with_get_raw_output(self):
+        download_path = './tmp/test_base_download_with_dry_run/'
+        bible = BaseDownloader(file_writing_function=yaml_file_interface.write, default_directory=download_path)
+        bible.download_chapter('1 John', 1)
+        downloaded_file = yaml_file_interface.read(f'{download_path}/1 John')
+        # Raw output should be the same as the extractor's output after writing the equivalent file contents
+        bible.get_raw_output = True
+        dry_run_contents = bible.download_chapter('1 John', 1)
+        self.assertEqual(downloaded_file['1 John'], dry_run_contents['1 John'],
+                         'Incorrect number of passages downloaded')
+
 
 if __name__ == "__main__":
     unittest.main()
