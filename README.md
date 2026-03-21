@@ -452,6 +452,42 @@ Output:
     the more knowledge, the more grief.
 ```
 
+## Obtaining raw output from a downloader
+
+All downloaders provide a `get_raw_output` flag which can be used to obtain raw downloaded passage output before its conversion to a specific file format. As such, it does not perform any file operations while the flag is enabled.
+
+The section below is a simple example that downloads a passage from Ecclesiastes 1 and stores the raw output to a variable:
+
+```python
+import json
+from meaningless import YAMLDownloader
+
+if __name__ == '__main__':
+    downloader = YAMLDownloader(get_raw_output=True)
+    passage = downloader.download_passage('Ecclesiastes', 1, 2)
+    print(json.dumps(passage, indent=2, ensure_ascii=False))
+```
+
+Output:
+
+Running the above code would produce the following approximate output:
+```json
+{
+  "Info": {
+    "Language": "English",
+    "Translation": "NIV",
+    "Copyright": "https://www.biblegateway.com/versions/new-international-version-niv-bible/#copy",
+    "Timestamp": "0000-00-00T00:00:00.000000+00:00",
+    "Meaningless": "0.0.0"
+  },
+  "Ecclesiastes": {
+    "1": {
+      "2": "² “Meaningless! Meaningless!”\n    says the Teacher.\n“Utterly meaningless!\n    Everything is meaningless.”"
+    }
+  }
+}
+```
+
 # Q&A
 
 ## How to report potential bugs and other feedback?

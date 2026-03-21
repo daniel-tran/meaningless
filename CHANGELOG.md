@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.4.0
+- Added `get_raw_output` flag to Base Downloader to obtain passage output as a data structure instead of writing to a local file
+- Added `capitalise_small_caps` flag to retain CSS capitalised words
+- Drop library support for Python 3.10
+
 ## 1.3.0
 - Added functionality to include minimal copyright information into the Base Extractor and Web Extractor
 - Added Bible Gateway translation-specific copyright URL to output files
