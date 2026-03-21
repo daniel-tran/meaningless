@@ -39,7 +39,7 @@ class WebExtractor:
         :type add_minimal_copyright: bool
         :param capitalise_small_caps: If True, preserves capitalisation of words through specific styling.
                                       Defaults to False.
-        :type add_minimal_copyright: bool
+        :type capitalise_small_caps: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
