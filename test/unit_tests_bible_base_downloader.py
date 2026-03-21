@@ -263,7 +263,7 @@ class UnitTests(unittest.TestCase):
         self.assertRaises(UnsupportedTranslationError, bible.download_book, 'Ecclesiastes')
 
     def test_base_download_on_translation_with_versenum_tags(self):
-        download_path = './tmp/test_base_download_with_valid_empty_passage/'
+        download_path = './tmp/test_base_download_on_translation_with_versenum_tags/'
         bible = BaseDownloader(file_writing_function=yaml_file_interface.write, default_directory=download_path,
                                translation='NIVUK')
         bible.download_passage('Mark', 9, 44)
@@ -273,7 +273,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(downloaded_file['Mark'][9][44], expected_contents, 'Passage contents do not match')
 
     def test_base_download_with_get_raw_output(self):
-        download_path = './tmp/test_base_download_with_dry_run/'
+        download_path = './tmp/test_base_download_with_get_raw_output/'
         bible = BaseDownloader(file_writing_function=yaml_file_interface.write, default_directory=download_path)
         bible.download_chapter('1 John', 1)
         downloaded_file = yaml_file_interface.read(f'{download_path}/1 John')
