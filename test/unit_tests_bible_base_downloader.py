@@ -272,6 +272,17 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(len(downloaded_file['Mark'][9]), 1, 'Incorrect number of passages downloaded')
         self.assertEqual(downloaded_file['Mark'][9][44], expected_contents, 'Passage contents do not match')
 
+    def test_base_download_with_capitalise_small_caps(self):
+        download_path = './tmp/test_base_download_with_capitalise_small_caps/'
+        # WEB doesn't have any passages that apply "small caps" styling
+        bible = BaseDownloader(file_writing_function=yaml_file_interface.write, default_directory=download_path,
+                               translation='KJV', capitalise_small_caps=True)
+        bible.download_passage('Isaiah', 42, 5)
+        downloaded_file = yaml_file_interface.read(f'{download_path}/Isaiah')
+        static_file_path = f'{self.get_test_directory("KJV")}/test_base_download_with_capitalise_small_caps.yaml'
+        static_file = yaml_file_interface.read(static_file_path)
+        self.assertEqual(downloaded_file['Isaiah'], static_file['Isaiah'], 'Passage contents do not match')
+
     def test_base_download_with_get_raw_output(self):
         download_path = './tmp/test_base_download_with_get_raw_output/'
         bible = BaseDownloader(file_writing_function=yaml_file_interface.write, default_directory=download_path)
