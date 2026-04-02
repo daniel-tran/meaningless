@@ -279,11 +279,6 @@ class UnitTests(unittest.TestCase):
         self.check_baseline_passages(translation)
         self.check_omitted_passages(translation)
 
-    def test_translation_nmb(self):
-        translation = 'NMB'
-        self.check_baseline_passages(translation, translation_contains_ot=False)
-        self.check_omitted_passages(translation)
-
     def test_translation_amp(self):
         translation = 'AMP'
         self.check_baseline_passages(translation)

@@ -661,10 +661,6 @@ BIBLE_TRANSLATIONS = {
         **get_bible_data_for_language('English'),
         BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-Life-Version-NLV-Bible/#copy'
     },
-    'NMB': {
-        **get_bible_data_for_language('English', mode=1),
-        BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/New-Matthew-Bible-NMB/#copy'
-    },
     'NOG': {
         **get_bible_data_for_language('English'),
         BIBLE_KEY_COPYRIGHT: 'https://www.biblegateway.com/versions/Names-of-God-NOG-Bible/#copy'
