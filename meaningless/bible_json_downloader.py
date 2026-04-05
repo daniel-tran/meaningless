@@ -9,7 +9,9 @@ class JSONDownloader(BaseDownloader):
     """
 
     def __init__(self, translation='NIV', show_passage_numbers=True, default_directory=os.getcwd(),
-                 strip_excess_whitespace=False, enable_multiprocessing=True, use_ascii_punctuation=False):
+                 strip_excess_whitespace=False, enable_multiprocessing=True, use_ascii_punctuation=False,
+                 capitalise_small_caps=False, get_raw_output=False):
         super().__init__(json_file_interface.write, translation, show_passage_numbers, default_directory,
                          strip_excess_whitespace, enable_multiprocessing, use_ascii_punctuation,
-                         file_extension='.json', write_key_as_string=False)
+                         file_extension='.json', write_key_as_string=False, capitalise_small_caps=capitalise_small_caps,
+                         get_raw_output=get_raw_output)

@@ -96,7 +96,8 @@ class BaseDownloader:
 
     def __init__(self, file_writing_function, translation='NIV', show_passage_numbers=True,
                  default_directory=os.getcwd(), strip_excess_whitespace=False, enable_multiprocessing=True,
-                 use_ascii_punctuation=False, file_extension='', write_key_as_string=False):
+                 use_ascii_punctuation=False, file_extension='', write_key_as_string=False, capitalise_small_caps=False,
+                 get_raw_output=False):
         """
         :param file_writing_function: Function definition used to specify how to write to a given file.
                                       The function should only take 2 arguments, which are the file path to write to
@@ -124,6 +125,12 @@ class BaseDownloader:
         :param write_key_as_string: If True, specifies that all keys in the downloaded file are converted to strings.
                Defaults to False.
         :type write_key_as_string: bool
+        :param capitalise_small_caps: If True, preserves capitalisation of words through specific styling.
+                                      Defaults to False.
+        :type capitalise_small_caps: bool
+        :param get_raw_output: When True, returns downloaded results as a dictionary instead of writing them to a file.
+                               Defaults to False.
+        :type get_raw_output: bool
         """
         self.translation = translation
         self.show_passage_numbers = show_passage_numbers
@@ -134,6 +141,8 @@ class BaseDownloader:
         self.file_extension = file_extension
         self.file_writing_function = file_writing_function
         self.write_key_as_string = write_key_as_string
+        self.capitalise_small_caps = capitalise_small_caps
+        self.get_raw_output = get_raw_output
 
     def download_passage(self, book, chapter, passage, file_path=''):
         """
@@ -154,7 +163,8 @@ class BaseDownloader:
                           extension.
         :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
-        :rtype: int
+                 If get_raw_output is enabled, a dictionary is returned with the downloaded contents.
+        :rtype: int or dict
         """
         return self.download_passage_range(book, chapter, passage, chapter, passage, file_path)
 
@@ -179,7 +189,8 @@ class BaseDownloader:
                           extension.
         :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
-        :rtype: int
+                 If get_raw_output is enabled, a dictionary is returned with the downloaded contents.
+        :rtype: int or dict
         """
         return self.download_passage_range(book, chapter, passage_from, chapter, passage_to, file_path)
 
@@ -199,7 +210,8 @@ class BaseDownloader:
                           extension.
         :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
-        :rtype: int
+                 If get_raw_output is enabled, a dictionary is returned with the downloaded contents.
+        :rtype: int or dict
         """
         return self.download_passage_range(book, chapter, 1, chapter, common.get_end_of_chapter(), file_path)
 
@@ -221,7 +233,8 @@ class BaseDownloader:
                           extension.
         :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
-        :rtype: int
+                 If get_raw_output is enabled, a dictionary is returned with the downloaded contents.
+        :rtype: int or dict
         """
         return self.download_passage_range(book, chapter_from, 1, chapter_to, common.get_end_of_chapter(), file_path)
 
@@ -237,7 +250,8 @@ class BaseDownloader:
                           extension.
         :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
-        :rtype: int
+                 If get_raw_output is enabled, a dictionary is returned with the downloaded contents.
+        :rtype: int or dict
         """
         return self.download_passage_range(book, 1, 1, common.get_chapter_count(book, self.translation),
                                            common.get_end_of_chapter(), file_path)
@@ -265,7 +279,8 @@ class BaseDownloader:
                           extension.
         :type file_path: str
         :return: 1 if the download was successful. 0 if an error occurred.
-        :rtype: int
+                 If get_raw_output is enabled, a dictionary is returned with the downloaded contents.
+        :rtype: int or dict
         """
         translation = self.translation.upper()
         if common.is_unsupported_translation(translation):
@@ -285,7 +300,8 @@ class BaseDownloader:
 
         online_bible = WebExtractor(translation=translation, show_passage_numbers=self.show_passage_numbers,
                                     output_as_list=True, strip_excess_whitespace_from_list=self.strip_excess_whitespace,
-                                    use_ascii_punctuation=self.use_ascii_punctuation)
+                                    use_ascii_punctuation=self.use_ascii_punctuation,
+                                    capitalise_small_caps=self.capitalise_small_caps)
 
         # Set up the base document with the root-level keys
         # Upon downloading a file, the top-level keys might be ordered differently to when they were inserted.
@@ -343,6 +359,9 @@ class BaseDownloader:
             # When multiprocessing, all process results should be retrieved as a batch operation to minimise
             # the total time cost associated with the "get" method for each result.
             document[book_name] = {self.__key_cast(chapter): process_results.pop(0).get() for chapter in chapter_range}
+
+        if self.get_raw_output:
+            return document
 
         if len(file_path) <= 0:
             file_location = os.path.join(self.default_directory, f'{book_name}{self.file_extension}')
