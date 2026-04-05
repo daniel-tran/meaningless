@@ -4,6 +4,7 @@
 - Added `get_raw_output` flag to Base Downloader to obtain passage output as a data structure instead of writing to a local file
 - Added `capitalise_small_caps` flag to Base Downloader and Web Extractor to retain CSS capitalised words
 - Drop library support for Python 3.10
+- Removed translation support for: NMB
 
 ## 1.3.0
 - Added functionality to include minimal copyright information into the Base Extractor and Web Extractor
