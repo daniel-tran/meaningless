@@ -3,11 +3,11 @@
 Meaningless is a Python library used to retrieve, process and download Bible passages from Bible Gateway.
 
 Features include:
-- Passage retrieval from the [Bible Gateway](https://www.biblegateway.com) site or from a local YAML/JSON/XML/CSV file.
+- Passage retrieval from the [Bible Gateway](https://www.biblegateway.com) site or from a local YAML/JSON/XML/CSV/TOML file.
 - Different output formats for different purposes:
   - Multi-line strings for printing Bible passages.
   - Python list of strings (or in-memory data structure) for passing Bible passages to other Python logic.
-  - YAML/JSON/XML/CSV files for persistent storage of Bible passages or as input for other applications and scripts.
+  - YAML/JSON/XML/CSV/TOML files for persistent storage of Bible passages or as input for other applications and scripts.
 - Handling of edge case passages, such as those with tabular data and omitted passages in certain translations.
 - Flags to enable particular content modifications, such as ignoring passage numbers.
 - Filtering on Bible passages from a local file based on a given text input or regular expression.

@@ -2,3 +2,5 @@
 beautifulsoup4>=4.11.2
 ruamel.yaml>=0.17.21
 xmltodict>=0.13.0
+tomli>=2.0.1
+tomli_w>=1.0.0
